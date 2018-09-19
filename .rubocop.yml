@@ -135,7 +135,8 @@ Rails/UniqBeforePluck:
   EnforcedStyle: aggressive
 RSpec/ReturnFromStub:
   Enabled: false
-
+Style/AccessModifierDeclarations:
+  EnforcedStyle: inline
 Style/AutoResourceCleanup:
   Enabled: true
 # We prefer `alias_method`

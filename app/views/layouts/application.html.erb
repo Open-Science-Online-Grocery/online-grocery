@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HowesGroceryResearcherPortal</title>
+    <title>Howe's Grocery Researcher Portal</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,17 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <%= render 'layouts/primary_navigation' %>
+    </header>
+    <main>
+      <div id="main" class="ui container segment" >
+        <div id="page-content">
+          <%= MessagesPresenter.new(flash, @messages, self).show_messages %>
+
+          <%= yield %>
+        </div>
+      </div>
+    </main>
   </body>
 </html>
