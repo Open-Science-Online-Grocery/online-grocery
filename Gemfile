@@ -12,12 +12,16 @@ gem 'webpacker'
 gem 'coffee-rails', '~> 4.2'
 gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'rake'
 
 group :development, :test do
   gem 'pry-nav'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
+  gem 'rspec-rails'
+  gem 'bundler-audit'
+  # gem 'rspec-instafail'
 end
 
 group :development do
