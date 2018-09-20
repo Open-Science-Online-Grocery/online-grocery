@@ -8,6 +8,18 @@
         title: "Howe's Grocery Researcher Portal (Version #{application_version})"
       )
     %>
+
+    <div class="navigation-separator item"></div>
+
+    <% if current_user %>
+      <%=
+        link_to("Sign out",
+          destroy_user_session_path,
+          method: :delete,
+          class: 'item'
+        )
+      %>
+    <% end %>
   </div>
   <div class="stripe"></div>
 </div>

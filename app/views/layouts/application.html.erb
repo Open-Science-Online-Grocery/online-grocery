@@ -7,12 +7,15 @@
 
     <%= javascript_pack_tag 'application' %>
     <%= stylesheet_pack_tag 'style' %>
+    <%= javascript_include_tag 'application' %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
   </head>
 
   <body>
     <header>
       <%= render 'layouts/primary_navigation' %>
     </header>
+
     <main>
       <div id="main" class="ui container segment" >
         <div id="page-content">

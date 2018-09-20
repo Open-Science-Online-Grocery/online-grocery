@@ -10,5 +10,11 @@
 import 'babel-polyfill';
 import 'semantic-ui-css';
 import jQuery from 'jquery';
+import TableRowLinker from '../TableRowLinker';
+
 window.jQuery = jQuery;
 window.$ = jQuery;
+
+$(document).ready(() => {
+  new TableRowLinker($('body')).initialize();
+});

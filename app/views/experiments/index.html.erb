@@ -1,0 +1,20 @@
+My Experiments
+
+<%= link_to 'Add Experiment', new_experiment_url, class: 'button' %>
+
+<table class="ui compact selectable celled table">
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @experiments.each do |experiment| %>
+      <tr data-action="table-link" data-href="<%= experiment_path(experiment) %>">
+        <td>
+          <%= experiment.name %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

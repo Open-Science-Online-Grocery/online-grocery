@@ -1,0 +1,7 @@
+Add Experiment
+<%= form_for @experiment do |f| %>
+  <%= f.text_field :name %>
+  <%= f.button type: 'submit', class: 'ui primary right floated button' do %>
+    Create Experiment
+  <% end %>
+<% end %>
