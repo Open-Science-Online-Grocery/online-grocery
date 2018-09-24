@@ -1,0 +1,49 @@
+<%= render 'layouts/breadcrumbs' %>
+
+<div class="page-heading">
+  <h2><%= @experiment.name %></h2>
+
+  <div class="buttons">
+    <%= link_to download_data_experiment_url(@experiment), class: 'ui button' do %>
+      <i class="download icon"></i> Download Data
+    <% end %>
+  </div>
+</div>
+
+<br>
+
+<div class="page-sub-heading">
+  <h3>Conditions</h3>
+
+  <div class="buttons">
+    <%= link_to new_condition_experiment_url(@experiment), class: 'ui primary button' do %>
+      <i class="add icon"></i> Add Condition
+    <% end %>
+  </div>
+</div>
+
+<table class="ui compact selectable celled table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @conditions.each do |condition| %>
+      <tr data-action="table-link" data-href="<%= condition_path(condition) %>">
+        <td data-action="cell-link" style="width: 1%">
+          <div>
+            <%= link_to condition_path(condition), method: :delete, data: { modal_confirm: "Delete this condition?" } do %>
+              <i class="red close icon nomargin"></i>
+            <% end %>
+          </div>
+        </td>
+        <td>
+          <%= condition.name %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

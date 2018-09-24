@@ -2,7 +2,9 @@
   <h2>My Experiments</h2>
 
   <div class="buttons">
-    <%= link_to 'Add Experiment', new_experiment_url, class: 'ui button' %>
+    <%= link_to new_experiment_url, class: 'ui primary button' do %>
+      <i class="add icon"></i> Add Experiment
+    <% end %>
   </div>
 </div>
 

@@ -1,13 +1,13 @@
 <%= render 'layouts/breadcrumbs' %>
 
 <div class="page-heading">
-  <h2>Add Experiment</h2>
+  <h2>Add Condition to <%= @experiment.name %></h2>
 </div>
 
-<%= form_for @experiment, html: { class: "ui form" } do |f| %>
+<%= form_for @condition, url: create_condition_experiment_path(@experiment), html: { class: "ui form" } do |f| %>
   <div class="one fields">
     <div class="required field">
-      <%= f.label :name do %>Experiment Name<% end %>
+      <%= f.label :name do %>Condition Name<% end %>
       <%= f.text_field :name %>
     </div>
   </div>
@@ -15,7 +15,7 @@
   <div class="sixteen wide right aligned field">
     <button type="submit" class="ui positive button">
       <i class="check icon"></i>
-      Create Experiment
+      Create Condition
     </button>
   </div>
 <% end %>

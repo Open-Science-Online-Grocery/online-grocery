@@ -5,5 +5,7 @@ class Experiment < ApplicationRecord
 
   belongs_to :user
 
+  has_many :conditions, dependent: :destroy
+
   scope :for_user, ->(user) { where(user: user) }
 end

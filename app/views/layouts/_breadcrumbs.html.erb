@@ -1,0 +1,13 @@
+<% @breadcrumbs ||= [] %>
+
+<div class="ui resources breadcrumbs">
+  <%= link_to 'My Experiments', experiments_path, class: 'section' %>
+
+  <% @breadcrumbs.each do |breadcrumb| %>
+    <i class="right angle icon divider"></i>
+    <%= link_to breadcrumb.name, breadcrumb.path, class: 'section' %>
+  <% end %>
+
+  <i class="right angle icon divider"></i>
+  <span class='active section'><%= @resource_name %></span>
+</div>
