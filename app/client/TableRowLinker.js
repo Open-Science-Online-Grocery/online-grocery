@@ -2,29 +2,41 @@
 export default class TableRowLinker {
   constructor($scope) {
     this.$scope = $scope;
-    this.$linkRows = this.$scope.find('tr[data-action="table-link"]');
+    this.$linkRows = this.$scope.find('tr[data-action="table-link"] td:not([data-action="cell-link"])');
+    this.$linkCells = this.$scope.find('td[data-action="cell-link"]');
   }
 
   initialize() {
     if (this.$linkRows.length) {
       this.setupLinks();
     }
+    if (this.$linkCells.length) {
+      this.setupCellLinks();
+    }
   }
 
   setupLinks() {
     this.$linkRows.click((event) => {
       const $target = $(event.currentTarget);
-      const dataHref = $target.data('href');
-      const firstLinkHref = $target.find('a').attr('href');
+      const dataHref = $target.parent().data('href');
       const checkTarget = $(event.target);
       if (checkTarget.attr('href') !== undefined) {
         return;
       }
-      const path = (dataHref || firstLinkHref);
       if ($target.data('remote')) {
         $.getScript(path);
       } else {
-        window.location.href = path;
+        window.location.href = dataHref;
+      }
+    });
+  }
+
+  setupCellLinks() {
+    this.$linkCells.click((event) => {
+      const $target = $(event.currentTarget);
+      const firstLink = $target.find('a');
+      if (firstLink.length != 0) {
+        firstLink.trigger('click');
       }
     });
   }
