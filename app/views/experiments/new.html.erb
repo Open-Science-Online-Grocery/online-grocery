@@ -1,7 +1,20 @@
-Add Experiment
-<%= form_for @experiment do |f| %>
-  <%= f.text_field :name %>
-  <%= f.button type: 'submit', class: 'ui primary right floated button' do %>
-    Create Experiment
-  <% end %>
+<div class="page-heading">
+  <h2>Add Experiment</h2>
+</div>
+
+<%= form_for @experiment, html: { class: "ui form" } do |f| %>
+  <div class="one fields">
+    <div class="required field">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+  </div>
+
+
+  <div class="sixteen wide right aligned field">
+    <button type="submit" class="ui positive button">
+      <i class="check icon"></i>
+      Create Experiment
+    </button>
+  </div>
 <% end %>

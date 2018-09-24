@@ -1,0 +1,18 @@
+.buttons {
+  text-align: right;
+  float: right;
+}
+
+.ui.button {
+  padding-left: 1em;
+  padding-right: 1em;
+
+  &.hover-primary:hover {
+    background-color: #111111;
+    color: white;
+  }
+}
+
+.centered.button-wrapper {
+  text-align: center;
+}

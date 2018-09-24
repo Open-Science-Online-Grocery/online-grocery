@@ -1,4 +1,31 @@
-.navigation {
+.ui.menu.navigation {
+  background-color: #00529b;
+  border-radius: 0;
+  border: 0;
+  padding-top: 1%;
+  font-family: 'Open Sans', sans-serif;
+  box-shadow: none;
+
+  .item, .item:hover {
+    color: white;
+  }
+
+  .logo, .logo:hover {
+    width: 280px;
+    height: 40px;
+    background-image: image-url('logo.png');
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    background-size: auto 30px;
+    &.test {
+      background-image: image-url('test_logo.png');
+    }
+  }
+
+  .dropdown.item .menu {
+    margin-top: 0.1rem;
+  }
+
   .navigation-separator {
     margin-left: auto;
   }

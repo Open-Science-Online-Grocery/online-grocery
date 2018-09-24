@@ -1,0 +1,16 @@
+#main.content {
+  padding: 1.5rem;
+  margin: 0 auto;
+  background-color: white;
+  transition: background-color 0.5s ease;
+  border-radius: 0;
+  border-top: 0;
+}
+
+.page-heading {
+  height: 3rem;
+
+  h2 {
+    float: left;
+  }
+}

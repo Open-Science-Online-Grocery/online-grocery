@@ -12,18 +12,14 @@
   </head>
 
   <body>
-    <header>
-      <%= render 'layouts/primary_navigation' %>
-    </header>
-
-    <main>
-      <div id="main" class="content ui container segment" >
-        <div id="page-content">
+    <div class="ui centered grid container" id="authentication-main">
+      <div class="doubling two column row">
+        <div class="column">
           <%= MessagesPresenter.new(flash, @messages, self).show_messages %>
+
           <%= yield %>
         </div>
       </div>
-      <%= render 'layouts/confirm_modal' %>
-    </main>
+    </div>
   </body>
 </html>
