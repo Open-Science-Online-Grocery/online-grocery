@@ -5,14 +5,12 @@
 </div>
 
 <%= form_for @experiment, html: { class: "ui form" } do |f| %>
-  <div class="one fields">
-    <div class="required field">
-      <%= f.label :name do %>Experiment Name<% end %>
-      <%= f.text_field :name %>
-    </div>
+  <div class="required field">
+    <%= f.label :name do %>Experiment Name<% end %>
+    <%= f.text_field :name %>
   </div>
 
-  <div class="sixteen wide right aligned field">
+  <div class="button-wrapper right">
     <button type="submit" class="ui positive button">
       <i class="check icon"></i>
       Create Experiment

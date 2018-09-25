@@ -1,0 +1,8 @@
+<div class="ui bottom attached tab segment" data-tab="basic-info">
+  <%= form_for @condition, html: { class: "ui form" } do |form| %>
+    <div class="required field">
+      <%= form.label :name do %>Condition Name<% end %>
+      <%= form.text_field :name %>
+    </div>
+  <% end %>
+</div>

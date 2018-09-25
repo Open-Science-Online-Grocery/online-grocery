@@ -10,18 +10,6 @@
     color: white;
   }
 
-  .logo, .logo:hover {
-    width: 280px;
-    height: 40px;
-    background-image: image-url('logo.png');
-    background-position: 5px center;
-    background-repeat: no-repeat;
-    background-size: auto 30px;
-    &.test {
-      background-image: image-url('test_logo.png');
-    }
-  }
-
   .dropdown.item .menu {
     margin-top: 0.1rem;
   }

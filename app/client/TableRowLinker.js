@@ -6,7 +6,7 @@ export default class TableRowLinker {
     this.$linkCells = this.$scope.find('td[data-action="cell-link"]');
   }
 
-  initialize() {
+  init() {
     if (this.$linkRows.length) {
       this.setupLinks();
     }

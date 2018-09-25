@@ -2,14 +2,23 @@
 
 class ConditionsController < ApplicationController
   before_action :set_condition, only: %i(show update destroy)
-  before_action :set_experiment, only: %i(show)
-  before_action :set_breadcrumbs, only: %i(show)
+  before_action :set_experiment, only: %i(show update)
+  before_action :set_breadcrumbs, only: %i(show update)
 
   def show
     @resource_name = "Condition: #{@condition.name}"
   end
 
   def update
+    @resource_name = "Condition: #{@condition.name}"
+
+    if @condition.update(condition_params)
+      flash.now[:success] = 'Condition successfully updated'
+    else
+      flash_error_messages(@condition)
+    end
+
+    render :show
   end
 
   def destroy
