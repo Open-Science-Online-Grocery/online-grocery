@@ -14,3 +14,4 @@ end
 Bundler::Audit::Task.new
 
 task default: [:spec, :rubocop, 'bundle:audit']
+task ci:      [:spec, :rubocop, 'bundle:audit']

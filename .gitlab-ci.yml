@@ -1,0 +1,35 @@
+image: registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.1
+
+services:
+  - mysql:5.7
+
+variables:
+  # POSTGRES_DB: midas_test
+  # SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
+  RAILS_ENV: test
+  DATABASE_URL: 'mysql2://root@mysql/howes_grocery_test?encoding=utf8&collation=utf8_general_ci'
+  TZ: "America/New_York"
+  MYSQL_ALLOW_EMPTY_PASSWORD: '1'
+
+cache:
+  paths:
+    - vendor/ruby
+
+before_script:
+  - echo '127.0.0.1 mariadb' >> /etc/hosts # So that we can use the same databse hostname with Kubernetes
+  - eval $(ssh-agent -s)
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  - export PATH=$PATH:/usr/local/bin/chrome-linux
+  - chromedriver --version
+  - chrome --version
+
+ci:
+  script:
+    - grep -q '2\.4\.2' .ruby-version # If the Ruby version used by the project changes then a new Docker image needs to be created and used with the correct version.
+    - bundle install -j $(nproc) --path vendor/ruby --without development
+    - bundle exec rake db:create
+    - bundle exec rake db:migrate
+    - bundle exec rake ci
+  tags:
+    - docker
