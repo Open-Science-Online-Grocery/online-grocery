@@ -1,17 +1,15 @@
 # frozen_string_literal: true
 
 class ExperimentsController < ApplicationController
-  before_action :set_experiment, only: %i(
-    new_condition
-    create_condition
+  before_action :set_experiment, only: %i[
     show
     edit
     update
     destroy
     download_data
-  )
+  ]
 
-  before_action :set_breadcrumbs, only: %i(new_condition create_condition)
+  before_action :set_breadcrumbs, only: %i[new_condition create_condition]
 
   def index
     @experiments = Experiment.for_user(current_user).order(created_at: :desc)
@@ -58,24 +56,8 @@ class ExperimentsController < ApplicationController
   end
 
   def download_data
+    # TODO: implement
     redirect_to @experiment
-  end
-
-  def new_condition
-    @condition = Condition.new
-    @resource_name = 'Add Condition'
-  end
-
-  def create_condition
-    @condition = @experiment.conditions.build(condition_params)
-    if @condition.save
-      flash[:success] = 'Condition successfully created'
-      redirect_to @condition
-    else
-      set_error_messages(@condition)
-      @resource_name = 'Add Condition'
-      render :new_condition
-    end
   end
 
   private def set_breadcrumbs

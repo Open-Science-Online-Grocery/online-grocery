@@ -4,12 +4,10 @@ Rails.application.routes.draw do
   resources :experiments do
     member do
       get :download_data
-      get :new_condition
-      post :create_condition
     end
-  end
 
-  resources :conditions
+    resources :conditions
+  end
 
   root 'experiments#index'
 end

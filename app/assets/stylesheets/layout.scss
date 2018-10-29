@@ -8,8 +8,11 @@
 }
 
 .page-heading {
-  height: 3rem;
   display: flex;
+
+  h2 {
+    align-self: center;
+  }
 
   .buttons {
     margin-left: auto;
@@ -18,7 +21,6 @@
 
 .page-sub-heading {
   margin-top: 1rem;
-  height: 2rem;
   display: flex;
 
   h3 {

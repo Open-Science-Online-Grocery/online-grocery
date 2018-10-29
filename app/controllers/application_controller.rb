@@ -34,9 +34,9 @@ class ApplicationController < ActionController::Base
 
   private def humanized_action
     {
-      create: 'add',
-      update: 'update',
-      destroy: 'delete'
-    }[params[:action].to_sym] || 'process'
+      'create' => 'add',
+      'update' => 'update',
+      'destroy' => 'delete'
+    }[params[:action]] || 'process'
   end
 end

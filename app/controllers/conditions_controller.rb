@@ -1,11 +1,29 @@
 # frozen_string_literal: true
 
 class ConditionsController < ApplicationController
-  before_action :set_condition, only: %i(show update destroy)
-  before_action :set_experiment, only: %i(show update)
-  before_action :set_breadcrumbs, only: %i(show update)
+  before_action :set_experiment
+  before_action :set_breadcrumbs
 
-  def show
+  before_action :set_condition, only: %i[edit update destroy]
+
+  def new
+    @resource_name = 'Add Condition'
+    @condition = Condition.new
+  end
+
+  def create
+    @condition = @experiment.conditions.build(condition_params)
+    if @condition.save
+      flash[:success] = 'Condition successfully created'
+      redirect_to edit_experiment_condition_path(@experiment, @condition)
+    else
+      set_error_messages(@condition)
+      @resource_name = 'Add Condition'
+      render :new
+    end
+  end
+
+  def edit
     @resource_name = "Condition: #{@condition.name}"
   end
 
@@ -15,10 +33,10 @@ class ConditionsController < ApplicationController
     if @condition.update(condition_params)
       flash.now[:success] = 'Condition successfully updated'
     else
-      flash_error_messages(@condition)
+      set_error_messages(@condition)
     end
 
-    render :show
+    render :edit
   end
 
   def destroy
@@ -51,6 +69,6 @@ class ConditionsController < ApplicationController
   end
 
   private def set_experiment
-    @experiment = @condition.experiment
+    @experiment = Experiment.find(params[:experiment_id])
   end
 end
