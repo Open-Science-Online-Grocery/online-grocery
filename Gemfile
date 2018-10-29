@@ -16,6 +16,7 @@ gem 'uglifier'
 gem 'webpacker'
 
 group :development, :test do
+  gem 'awesome_print'
   gem 'bundler-audit'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'factory_bot_rails'

@@ -28,20 +28,12 @@
 <table class="ui compact selectable celled table">
   <thead>
     <tr>
-      <th></th>
       <th>Name</th>
     </tr>
   </thead>
   <tbody>
     <% @conditions.each do |condition| %>
       <tr data-action="table-link" data-href="<%= edit_experiment_condition_path(@experiment, condition) %>">
-        <td data-action="cell-link" style="width: 1%">
-          <div>
-            <%= link_to experiment_condition_path(@experiment, condition), method: :delete, data: { modal_confirm: "Delete this condition?" } do %>
-              <i class="red close icon nomargin"></i>
-            <% end %>
-          </div>
-        </td>
         <td>
           <%= condition.name %>
         </td>
@@ -49,7 +41,7 @@
     <% end %>
     <% if @conditions.none? %>
       <tr>
-        <td colspan="2">
+        <td>
           <p class="note">You have not yet added any conditions</p>
         </td>
       </tr>

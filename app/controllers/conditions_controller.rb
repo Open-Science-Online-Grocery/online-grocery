@@ -13,6 +13,7 @@ class ConditionsController < ApplicationController
 
   def create
     @condition = @experiment.conditions.build(condition_params)
+    @condition.uuid = SecureRandom.uuid
     if @condition.save
       flash[:success] = 'Condition successfully created'
       redirect_to edit_experiment_condition_path(@experiment, @condition)

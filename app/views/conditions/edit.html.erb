@@ -2,6 +2,20 @@
 
 <div class="page-heading">
   <h2>Edit Condition</h2>
+  <div class="buttons">
+
+    <%= link_to experiment_condition_path(@experiment, @condition), method: :delete, data: { modal_confirm: 'Are you sure you want to delete this condition and all its data?' }, class: 'ui button' do %>
+      <i class="remove icon"></i> Delete Condition
+    <% end %>
+  </div>
 </div>
+
+
+<% if @condition.persisted? %>
+  <div class="ui short hidden divider"></div>
+  <div class="right aligned">
+    <span class="field-name">URL for this condition:</span> <%= @condition.url %>
+  </div>
+<% end %>
 
 <%= render 'form', experiment: @experiment, condition: @condition %>
