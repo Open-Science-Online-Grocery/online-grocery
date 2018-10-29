@@ -6,18 +6,6 @@
   a {
     cursor: pointer;
   }
-
-  &.invitable-resources {
-    margin-top: 0;
-
-    a {
-      color: #4B2081;
-
-      &:hover {
-        color: #693DA1;
-      }
-    }
-  }
 }
 
 .flash:not(:empty) + .ui.breadcrumbs {

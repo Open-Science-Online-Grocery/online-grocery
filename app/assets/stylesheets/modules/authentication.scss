@@ -1,15 +1,29 @@
+#authentication-header {
+  text-align: center;
+
+  img {
+    height: 5rem;
+  }
+}
+
 #authentication-main {
+  padding-top: 5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  h2 {
+    margin: 0;
+    color: white;
+  }
 
   .flash .ui.message {
     margin-top: 1.5rem;
   }
 
   .ui.form.segment {
-    background-color: #00529b;
+    background-color: $dark-theme-color;
     padding: 5%;
 
     h1 {
@@ -39,33 +53,14 @@
     }
 
     .ui.button {
-      color: #00529b;
+      color: $dark-theme-color;
       background-color: white;
       margin: 1.2rem 0 0.5rem;
     }
   }
 
   a {
-    color: #00529b;
+    color: $dark-theme-color;
     font-weight: bold;
-  }
-}
-
-#authentication-header {
-  color: #222222;
-  font-weight: bold;
-  font-size: 3rem;
-  line-height: 4rem;
-  text-align: center;
-  padding: 0.5rem;
-  border-bottom: 7px solid #DDDDDD;
-  background-color: rgba(206, 223, 255, 0.58);
-
-  img {
-    height: 4rem;
-    width: auto;
-    vertical-align: middle;
-    margin-top: auto;
-    margin-bottom: auto;
   }
 }

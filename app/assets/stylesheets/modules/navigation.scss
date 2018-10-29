@@ -1,5 +1,5 @@
 .ui.menu.navigation {
-  background-color: #00529b;
+  background-color: $dark-theme-color;
   border-radius: 0;
   border: 0;
   padding-top: 1%;
@@ -8,10 +8,6 @@
 
   .item, .item:hover {
     color: white;
-  }
-
-  .dropdown.item .menu {
-    margin-top: 0.1rem;
   }
 
   .navigation-separator {
