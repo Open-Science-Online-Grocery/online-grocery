@@ -1,24 +1,46 @@
-# README
+# Howe's Grocery Researcher Portal
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This application gives researchers the ability to control the behavior of a
+simulated online grocery store used to run experiments.
 
-Things you may want to cover:
 
-* Ruby version
+## Initial setup
 
-* System dependencies
+* Copy `config/database.yml.example` to `config/database.yml` and fill in the
+  needed mysql password (if the `root` database user needs a password).
+* Set the local ruby version to the one defined in `.ruby-version`
+* `bundle install`
+* `yarn install`
 
-* Configuration
 
-* Database creation
+## Starting your local development server
 
-* Database initialization
+### Start the webpack dev server
 
-* How to run the test suite
+Run `./bin/webpack-dev-server` from the root directory of the application.
 
-* Services (job queues, cache servers, search engines, etc.)
+### Start the server
 
-* Deployment instructions
+In the usual fashion (e.g., `rails s`)
 
-* ...
+### (Alternative) Using Foreman
+
+As an alternative to the above three steps you can use
+[Foreman](http://ddollar.github.io/foreman/).
+
+```
+gem install foreman
+foreman start
+```
+
+Note: do not add the foreman gem to the Gemfile, it will not work.
+
+Unfortunately, while this method has more convenient startup, we have not yet
+identified a reliable way to use `pry`. Debugging via RubyMine seems to work
+fine, however.
+
+You can control the rails server's port and other details in the `Procfile`.
+
+
+
+
