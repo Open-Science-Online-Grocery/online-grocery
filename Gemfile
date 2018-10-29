@@ -3,18 +3,16 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.4.2'
 
-gem 'bootsnap', '>= 1.1.0', require: false
-gem 'coffee-rails', '~> 4.2'
+gem 'bootsnap', require: false
 gem 'devise'
-gem 'jbuilder', '~> 2.5'
+gem 'jbuilder'
 gem 'mysql2'
-gem 'puma', '~> 3.11'
-gem 'rails', '~> 5.2.1'
+gem 'puma'
+gem 'rails'
 gem 'rake'
-gem 'sass-rails', '~> 5.0'
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'sass-rails'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier'
 gem 'webpacker'
 
 group :development, :test do
@@ -23,7 +21,6 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'pry-nav'
-  # gem 'rspec-instafail'
   gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
@@ -31,14 +28,15 @@ end
 
 group :development do
   gem 'git_rails_tagger', git: 'git@git.scimedsolutions.com:scimed/git_rails_tagger.git'
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'letter_opener'
+  gem 'listen'
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'web-console', '>= 3.3.0'
+  gem 'spring-watcher-listen'
+  gem 'web-console'
 end
 
 group :test do
-  gem 'capybara', '>= 2.15'
+  gem 'capybara'
   gem 'chromedriver-helper'
   gem 'database_cleaner'
   gem 'selenium-webdriver'
