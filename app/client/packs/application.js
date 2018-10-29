@@ -10,18 +10,11 @@
 import 'babel-polyfill';
 import 'semantic-ui-css';
 import jQuery from 'jquery';
-import TableRowLinker from '../TableRowLinker';
-import ModalConfirm from '../ModalConfirm';
-import ConditionTabs from '../ConditionTabs';
+import Initializer from '../Initializer';
 
 window.jQuery = jQuery;
 window.$ = jQuery;
 
 $(document).ready(() => {
-  new TableRowLinker($('body')).init();
-  new ConditionTabs().init();
-
-  const $modalTriggers = $('body').find('[data-modal-confirm]');
-  $modalTriggers.each((index, element) =>
-    new ModalConfirm($(element)).init());
+  new Initializer($('body')).initialize();
 });

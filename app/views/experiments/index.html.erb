@@ -11,22 +11,23 @@
 <table class="ui compact selectable celled table">
   <thead>
     <tr>
-      <th></th>
       <th>Name</th>
     </tr>
   </thead>
   <tbody>
     <% @experiments.each do |experiment| %>
       <tr data-action="table-link" data-href="<%= experiment_path(experiment) %>">
-        <td data-action="cell-link" style="width: 1%">
-          <div>
-            <%= link_to experiment_path(experiment), method: :delete, data: { modal_confirm: "Delete this experiment?" } do %>
-              <i class="red close icon nomargin"></i>
-            <% end %>
-          </div>
-        </td>
         <td>
           <%= experiment.name %>
+        </td>
+      </tr>
+    <% end %>
+    <% if @experiments.none? %>
+      <tr>
+        <td>
+          <p class="note">
+            You have not yet added any experiments
+          </p>
         </td>
       </tr>
     <% end %>

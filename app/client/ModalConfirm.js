@@ -1,8 +1,10 @@
+import ConfirmationModal from './ConfirmationModal';
+
 export default class ModalConfirm {
   constructor($modalTrigger) {
     this.$modalTrigger = $modalTrigger;
     this.modalMessage = $modalTrigger.data('modal-confirm');
-    this.$modalContainer = $('[data-modal-confirm-container]');
+    this.modal = new ConfirmationModal(this.modalMessage);
   }
 
   init() {
@@ -10,71 +12,88 @@ export default class ModalConfirm {
   }
 
   setListener() {
-    if (this.$modalTrigger.data('modal-confirm-checkbox-event')) {
-      const eventType = this.$modalTrigger.data('modal-confirm-checkbox-event') || 'beforeChecked';
-      this.$modalTrigger.checkbox('setting', eventType, () => this.showCheckboxModal());
-    } else {
-      const eventType = this.$modalTrigger.data('modal-confirm-event') || 'click';
-      this.$modalTrigger.on(eventType, event => this.showLinkModal(event));
-    }
+    this.$modalTrigger[0].addEventListener('click', this.showModal.bind(this));
   }
 
-  showModal(approveFunc, denyFunc) {
-    this.setModalMessage();
-    this.$modalContainer.modal({
-      onApprove: () => {
-        if (approveFunc && typeof approveFunc === 'function') {
-          approveFunc();
-        } else {
-          this.$modalContainer.modal('hide');
-        }
-      },
-      onDeny: () => {
-        if (denyFunc && typeof denyFunc === 'function') {
-          denyFunc();
-        } else {
-          this.$modalContainer.modal('hide');
-        }
-      }
-    });
-    this.$modalContainer.modal('show');
-  }
-
-  showLinkModal(event) {
+  // eslint-disable-next-line consistent-return
+  showModal(event) {
+    if (this.formInvalid()) return false;
     event.preventDefault();
     event.stopPropagation();
-    this.showModal(() => {
-      const $target = $(event.currentTarget);
-      if (!$target.data('nested-delete-link') && $target.data('remote') === undefined && $target.data('method') === undefined && $target.attr('href')) {
-        window.location.href = $target.attr('href');
-      } else if ($target.data('remote')) {
-        $.rails.handleRemote.call(event.currentTarget, event);
+    const approvalCallback = () => {
+      if (this.isRemoteLink()) {
+        this.handleRemoteLink(event);
+      } else if (this.isMethodLink()) {
+        this.handleMethodLink(event);
+      } else if (this.targetIsForm()) {
+        this.submitForm();
+      } else if (this.isCocoonRemoveLink()) {
+        this.triggerCocoonRemoval();
       } else {
-        $.rails.handleMethod.bind(event.currentTarget)(event);
+        this.handleRegularLink();
       }
-    });
+    };
+    this.modal.show(approvalCallback);
   }
 
-  showCheckboxModal() {
-    this.showModal(() => {
-      this.$modalTrigger.checkbox('set checked');
-    }, () => {
-      this.$modalTrigger.checkbox('set unchecked');
-      this.$modalContainer.modal('hide');
-    });
-    // returning false prevents change, making state entirely up to the modal
+  // does the trigger use rails's `remote: true` data attribute for AJAX links?
+  isRemoteLink() {
+    return this.$modalTrigger.data('remote');
+  }
+
+  // does the trigger have a `data-method` attribute to indicate it uses an
+  // HTTP method other than GET?
+  isMethodLink() {
+    return this.$modalTrigger.data('method');
+  }
+
+  targetIsForm() {
+    return this.form().length;
+  }
+
+  isCocoonRemoveLink() {
+    // cocoon adds the class `.remove_fields` to links created via
+    // `link_to_remove_association`
+    return this.$modalTrigger.closest('.remove_fields').length;
+  }
+
+  handleRemoteLink(event) {
+    // allow rails to handle remote links in its usual way
+    $.rails.handleRemote.bind(this.$modalTrigger[0])(event);
+  }
+
+  handleMethodLink(event) {
+    // allow rails to handle link with non-GET method in its usual way
+    $.rails.handleMethod.bind(this.$modalTrigger[0])(event);
+  }
+
+  handleRegularLink() {
+    window.location.href = this.$modalTrigger.attr('href');
+  }
+
+  submitForm() {
+    // See link for reference on why form needs to be submitted
+    // this way: https://github.com/rails/rails/issues/29546
+    Rails.fire(this.form()[0], 'submit');
+  }
+
+  triggerCocoonRemoval() {
+    // the event listener we added in this file interferes with cocoon's
+    // removal behavior. here we remove the event listener we added and click
+    // the link again to trigger cocoon's own behavior.
+    this.$modalTrigger[0].removeEventListener(
+      'click',
+      this.showModal.bind(this)
+    );
+    this.$modalTrigger.click();
+  }
+
+  form() {
+    return this.$modalTrigger.closest('[data-form-confirm]');
+  }
+
+  formInvalid() {
+    if (this.form()[0]) { return !this.form().form('validate form'); }
     return false;
-  }
-
-  showDetachedModal(text, approveFunc, denyFunc) {
-    this.setModalMessage(text);
-    this.showModal(approveFunc, denyFunc);
-  }
-
-  setModalMessage(text) {
-    if (text) {
-      this.modalMessage = text;
-    }
-    this.$modalContainer.find('.content').html(this.modalMessage);
   }
 }

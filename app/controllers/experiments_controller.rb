@@ -5,6 +5,7 @@ class ExperimentsController < ApplicationController
     new_condition
     create_condition
     show
+    edit
     update
     destroy
     download_data
@@ -13,7 +14,7 @@ class ExperimentsController < ApplicationController
   before_action :set_breadcrumbs, only: %i(new_condition create_condition)
 
   def index
-    @experiments = Experiment.for_user(current_user).order('created_at desc')
+    @experiments = Experiment.for_user(current_user).order(created_at: :desc)
   end
 
   def new
@@ -38,6 +39,13 @@ class ExperimentsController < ApplicationController
   end
 
   def update
+    if @experiment.update(experiment_params)
+      flash[:success] = 'Experiment successfully updated'
+      redirect_to @experiment
+    else
+      set_error_messages(@experiment)
+      render :edit
+    end
   end
 
   def destroy

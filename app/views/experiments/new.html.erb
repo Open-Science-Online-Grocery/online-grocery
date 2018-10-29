@@ -4,16 +4,4 @@
   <h2>Add Experiment</h2>
 </div>
 
-<%= form_for @experiment, html: { class: "ui form" } do |f| %>
-  <div class="required field">
-    <%= f.label :name do %>Experiment Name<% end %>
-    <%= f.text_field :name %>
-  </div>
-
-  <div class="button-wrapper right">
-    <button type="submit" class="ui positive button">
-      <i class="check icon"></i>
-      Create Experiment
-    </button>
-  </div>
-<% end %>
+<%= render 'form', experiment: @experiment %>
