@@ -11,6 +11,10 @@ div[data-nutrition-styler] {
   width: 300px;
   display: inline-block;
 
+  div.hovered {
+    background-color: #FCFFBA;
+  }
+
   .nutrition-facts-title {
     font-size: 22px;
     border-bottom: 1px solid black;

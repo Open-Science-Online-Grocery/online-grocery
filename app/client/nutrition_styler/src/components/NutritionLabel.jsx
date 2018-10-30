@@ -2,9 +2,23 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 export default class NutritionLabel extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.handleMouseOver = this.handleMouseOver.bind(this);
+    this.handleMouseOut = this.handleMouseOut.bind(this);
+  }
+
+  handleMouseOver(event) {
+    event.target.classList.add('hovered');
+  }
+
+  handleMouseOut(event) {
+    event.target.classList.remove('hovered');
+  }
+
   render() {
     return (
-      <div className="nutrition-facts-label">
+      <div className="nutrition-facts-label" onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
         <div className="nutrition-facts-title">
           Nutrition Facts
         </div>
