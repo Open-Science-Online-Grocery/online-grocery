@@ -53,7 +53,14 @@ export default class NutritionLabel extends PureComponent {
 
   render() {
     return (
-      <div ref={node => this.node = node} className="nutrition-facts-label" onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
+      <div
+        ref={(node) => { this.node = node; }}
+        className="nutrition-facts-label"
+        onMouseOver={this.handleMouseOver}
+        onFocus={this.handleMouseOver}
+        onMouseOut={this.handleMouseOut}
+        onBlur={this.handleMouseOut}
+      >
         <div className="nutrition-facts-title">
           Nutrition Facts
         </div>
