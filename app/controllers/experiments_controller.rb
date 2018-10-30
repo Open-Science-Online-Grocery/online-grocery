@@ -9,8 +9,6 @@ class ExperimentsController < ApplicationController
     download_data
   ]
 
-  before_action :set_breadcrumbs, only: %i[new_condition create_condition]
-
   def index
     @experiments = Experiment.for_user(current_user).order(created_at: :desc)
   end
@@ -36,6 +34,9 @@ class ExperimentsController < ApplicationController
     @conditions = @experiment.conditions
   end
 
+  def edit
+  end
+
   def update
     if @experiment.update(experiment_params)
       flash[:success] = 'Experiment successfully updated'
@@ -58,15 +59,6 @@ class ExperimentsController < ApplicationController
   def download_data
     # TODO: implement
     redirect_to @experiment
-  end
-
-  private def set_breadcrumbs
-    @breadcrumbs = [
-      OpenStruct.new(
-        name: @experiment.name,
-        path: experiment_url(@experiment)
-      )
-    ]
   end
 
   private def set_experiment

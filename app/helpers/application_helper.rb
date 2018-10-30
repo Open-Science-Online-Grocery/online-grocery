@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# :nodoc:
 module ApplicationHelper
   def application_version
     version = "#{APP_VERSION[:major]}.#{APP_VERSION[:minor]}." \
