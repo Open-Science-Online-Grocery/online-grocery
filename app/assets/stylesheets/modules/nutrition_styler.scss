@@ -5,8 +5,22 @@
     flex-grow: 1;
     margin-right: 1rem;
 
-    p.disabled {
-      color: $disabled-text-color;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      p {
+        margin: 0;
+
+        &.disabled {
+          color: $disabled-text-color;
+        }
+      }
+    }
+
+    .actions {
+      text-align: right;
     }
   }
 
@@ -21,7 +35,7 @@
       }
 
       div.selected {
-        border: 1px solid gray;
+        border: 1px solid $dark-theme-color;
       }
     }
   }

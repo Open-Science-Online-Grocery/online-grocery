@@ -1,34 +1,69 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Icon } from 'semantic-ui-react';
+import { Button, Icon, Select } from 'semantic-ui-react';
+
+const fontOptions = [
+  { text: 'Arial', value: 'Arial' },
+  { text: 'Helvetica', value: 'Helvetica' },
+  { text: 'Times New Roman', value: 'Time New Roman' },
+  { text: 'Courier', value: 'Courier' },
+  { text: 'Veranda', value: 'Veranda' },
+  { text: 'Georgia', value: 'Georgia' },
+  { text: 'Palatino', value: 'Palatino' },
+  { text: 'Garamond', value: 'Garamond' },
+  { text: 'Comic Sans MS', value: 'Comic Sans MS' },
+  { text: 'Trebuchet MS', value: 'Trebuchet MS' },
+  { text: 'Arial Black', value: 'Arial Black' },
+  { text: 'Impact', value: 'Impact' }
+];
 
 export default class StylerForm extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
+
+  getComputedStyles() {
+    if (this.props.activeSelector) {
+      const element = document.querySelector(this.props.activeSelector);
+      return window.getComputedStyle(element);
+    }
+    return null;
+  }
+
+  getCurrentFontFamily() {
+    if (!this.computedStyles) return null;
+    return this.computedStyles['font-family'].split(', ')[0];
+  }
+
+  isDisabled() {
+    return !this.props.activeSelector;
+  }
+
   disabledClass() {
-    return this.props.activeSelector ? '' : 'disabled';
+    return this.isDisabled() ? 'disabled' : '';
   }
 
   render() {
+    this.computedStyles = this.getComputedStyles();
     return (
       <React.Fragment>
-        <p className={this.props.activeSelector ? 'disabled' : ''}>To change nutrition label styling, click part of the label to the left.</p>
+        <div className="header">
+          <p className={this.props.activeSelector ? 'disabled' : ''}>To change nutrition label styling, click part of the label to the left.</p>
+          <Button type="button">
+            <Icon name="undo" />
+            Reset All
+          </Button>
+        </div>
         <div className={`ui segment ${this.disabledClass()}`}>
           <div className="fields">
             <div className="ten wide field">
               <label htmlFor="font-family">Font</label>
-              <select id="font-family" className="ui dropdown">
-                <option>Arial</option>
-                <option>Helvetica</option>
-                <option>Times New Roman</option>
-                <option>Courier</option>
-                <option>Veranda</option>
-                <option>Georgia</option>
-                <option>Palatino</option>
-                <option>Garamond</option>
-                <option>Comic Sans MS</option>
-                <option>Trebuchet MS</option>
-                <option>Arial Black</option>
-                <option>Impact</option>
-              </select>
+              <Select
+                id="font-family"
+                options={fontOptions}
+                disabled={this.isDisabled()}
+                value={this.getCurrentFontFamily()}
+              />
             </div>
             <div className="six wide field">
               <label htmlFor="font-size">Font size</label>
@@ -38,7 +73,7 @@ export default class StylerForm extends PureComponent {
           <div className="fields">
             <div className="four wide field">
               <label htmlFor="font-color">Text color</label>
-              <input id="font-color" type="color" value="#000000" />
+              <input id="font-color" type="color" value={this.computedStyles ? this.computedStyles.color : '#000000'} />
             </div>
             <div className="four wide field">
               <label htmlFor="background-color">Background color</label>
@@ -55,14 +90,10 @@ export default class StylerForm extends PureComponent {
             </div>
           </div>
         </div>
-        <div>
-          <Button disabled={!this.props.activeSelector} type="button">
+        <div className="actions">
+          <Button disabled={this.isDisabled()} type="button">
             <Icon name="undo" />
-            Reset
-          </Button>
-          <Button disabled={!this.props.activeSelector} primary floated="right" type="button">
-            <Icon name="check" />
-            Apply
+            Reset Selection
           </Button>
         </div>
       </React.Fragment>

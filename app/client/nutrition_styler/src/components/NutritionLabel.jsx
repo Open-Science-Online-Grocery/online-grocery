@@ -28,7 +28,7 @@ export default class NutritionLabel extends PureComponent {
     if (element.classList.contains(selectedClassName)) {
       classes.splice(classes.indexOf(selectedClassName), 1);
     }
-    return classes.join(' ');
+    return `.${classes.join('.')}`;
   }
 
   handleMouseOver(event) {
@@ -40,6 +40,7 @@ export default class NutritionLabel extends PureComponent {
   }
 
   handleClick(event) {
+    if (event.target.closest('.styler-form')) return;
     document.querySelectorAll(`.${selectedClassName}`).forEach(
       element => element.classList.remove(selectedClassName)
     );
