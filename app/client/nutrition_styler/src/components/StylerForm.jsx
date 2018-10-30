@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { Button, Icon } from 'semantic-ui-react';
 
 export default class StylerForm extends PureComponent {
   render() {
     return (
       <React.Fragment>
-        <p>To change nutrition label styling, click part of the label to the left </p>
+        <p>To change nutrition label styling, click part of the label to the left.</p>
         <div className="ui disabled segment">
           <div className="fields">
             <div className="ten wide field">
@@ -49,6 +50,16 @@ export default class StylerForm extends PureComponent {
               </div>
             </div>
           </div>
+        </div>
+        <div>
+          <Button disabled type="button">
+            <Icon name="undo" />
+            Reset
+          </Button>
+          <Button disabled primary floated='right' type="button">
+            <Icon name="check" />
+            Apply
+          </Button>
         </div>
       </React.Fragment>
     );
