@@ -5,7 +5,16 @@ import NutritionLabel from './NutritionLabel';
 export default class NutritionStyler extends PureComponent {
   render() {
     return (
-      <NutritionLabel />
+      <div>
+        <NutritionLabel />
+        <style>
+          {this.props.cssRules}
+        </style>
+      </div>
     );
   }
 }
+
+NutritionStyler.propTypes = {
+  cssRules: PropTypes.string.isRequired
+};

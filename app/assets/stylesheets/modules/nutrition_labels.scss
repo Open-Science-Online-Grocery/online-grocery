@@ -91,6 +91,10 @@
 
     div {
       display: inline-block;
+
+      &.fact-percent {
+        float: right;
+      }
     }
   }
 
