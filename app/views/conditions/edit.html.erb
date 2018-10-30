@@ -10,12 +10,9 @@
   </div>
 </div>
 
-
 <% if @condition.persisted? %>
-  <div class="ui short hidden divider"></div>
-  <div class="right aligned">
-    <span class="field-name">URL for this condition:</span> <%= @condition.url %>
-  </div>
+  <span class="field-name">URL for this condition:</span> <%= @condition.url %>
+  <div class="ui hidden divider"></div>
 <% end %>
 
 <%= render 'form', experiment: @experiment, condition: @condition %>

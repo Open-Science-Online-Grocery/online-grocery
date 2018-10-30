@@ -1,6 +1,10 @@
 .ui.button {
   padding-left: 1em;
   padding-right: 1em;
+
+  &.positive {
+    background-color: $dark-theme-color;
+  }
 }
 
 .right.button-wrapper {

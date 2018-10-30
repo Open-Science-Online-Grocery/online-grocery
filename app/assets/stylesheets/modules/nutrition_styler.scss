@@ -5,22 +5,22 @@
     flex-grow: 1;
     margin-right: 1rem;
 
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    p {
+      margin: 0;
 
-      p {
-        margin: 0;
-
-        &.disabled {
-          color: $disabled-text-color;
-        }
+      &.disabled {
+        color: $disabled-text-color;
       }
     }
 
     .actions {
-      text-align: right;
+      span {
+        padding-right: 1rem;
+      }
+
+      button {
+        margin-right: 1rem;
+      }
     }
   }
 

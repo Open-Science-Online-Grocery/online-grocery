@@ -47,13 +47,7 @@ export default class StylerForm extends PureComponent {
     this.computedStyles = this.getComputedStyles();
     return (
       <React.Fragment>
-        <div className="header">
-          <p className={this.props.activeSelector ? 'disabled' : ''}>To change nutrition label styling, click part of the label to the left.</p>
-          <Button type="button">
-            <Icon name="undo" />
-            Reset All
-          </Button>
-        </div>
+        <p className={this.props.activeSelector ? 'disabled' : ''}>To change nutrition label styling, click part of the label to the left.</p>
         <div className={`ui segment ${this.disabledClass()}`}>
           <div className="fields">
             <div className="ten wide field">
@@ -91,9 +85,14 @@ export default class StylerForm extends PureComponent {
           </div>
         </div>
         <div className="actions">
+          <span>Remove all formating on:</span>
           <Button disabled={this.isDisabled()} type="button">
             <Icon name="undo" />
-            Reset Selection
+            Current Selection
+          </Button>
+          <Button type="button">
+            <Icon name="undo" />
+            Entire Label
           </Button>
         </div>
       </React.Fragment>
