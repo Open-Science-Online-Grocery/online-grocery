@@ -12,6 +12,7 @@ export default class Initializer {
     this.initializeModalConfirms();
     this.initializeFormValidation();
     this.initializeTabs();
+    this.initializeDropdowns();
   }
 
   initializeTableRowLinks() {
@@ -38,5 +39,15 @@ export default class Initializer {
     if ($tabs.length) {
       $tabs.tab();
     }
+  }
+
+  initializeDropdowns() {
+    const $dropdowns = this.$scope.find('.ui.dropdown');
+    $dropdowns.dropdown({ placeholder: false });
+    this.$scope.find('.ui.search.dropdown').on('click', (event) => {
+      if (!$(event.target).parent('.menu').length) {
+        $(event.currentTarget).dropdown('show');
+      }
+    });
   }
 }

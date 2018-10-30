@@ -1,9 +1,15 @@
+div[data-nutrition-styler] {
+  text-align: right;
+}
+
 .nutrition-facts-label {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-align: left;
+  font-family: Helvetica, Arial, sans-serif;
   border: 2px solid black;
   margin: 50px 0 10px 0;
   padding: 3px;
   width: 300px;
+  display: inline-block;
 
   .nutrition-facts-title {
     font-size: 22px;

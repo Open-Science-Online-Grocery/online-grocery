@@ -5,12 +5,12 @@ import NutritionLabel from './NutritionLabel';
 export default class NutritionStyler extends PureComponent {
   render() {
     return (
-      <div>
+      <React.Fragment>
         <NutritionLabel />
         <style>
           {this.props.cssRules}
         </style>
-      </div>
+      </React.Fragment>
     );
   }
 }
