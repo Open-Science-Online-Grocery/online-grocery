@@ -1,17 +1,17 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import NutritionLabel from './NutritionLabel';
-import StylerForm from './StylerForm';
+import NutritionLabelContainer from '../containers/NutritionLabelContainer';
+import StylerFormContainer from '../containers/StylerFormContainer';
 
 export default class NutritionStyler extends PureComponent {
   render() {
     return (
       <div className="nutrition-styler">
         <div className="styler-form">
-          <StylerForm />
+          <StylerFormContainer />
         </div>
         <div className="nutrition-label">
-          <NutritionLabel />
+          <NutritionLabelContainer />
           <style>
             {this.props.cssRules}
           </style>

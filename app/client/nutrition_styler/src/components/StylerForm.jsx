@@ -3,11 +3,15 @@ import PropTypes from 'prop-types';
 import { Button, Icon } from 'semantic-ui-react';
 
 export default class StylerForm extends PureComponent {
+  disabledClass() {
+    return this.props.activeSelector ? '' : 'disabled';
+  }
+
   render() {
     return (
       <React.Fragment>
-        <p>To change nutrition label styling, click part of the label to the left.</p>
-        <div className="ui disabled segment">
+        <p className={this.props.activeSelector ? 'disabled' : ''}>To change nutrition label styling, click part of the label to the left.</p>
+        <div className={`ui segment ${this.disabledClass()}`}>
           <div className="fields">
             <div className="ten wide field">
               <label>Font</label>
@@ -52,11 +56,11 @@ export default class StylerForm extends PureComponent {
           </div>
         </div>
         <div>
-          <Button disabled type="button">
+          <Button disabled={!this.props.activeSelector} type="button">
             <Icon name="undo" />
             Reset
           </Button>
-          <Button disabled primary floated='right' type="button">
+          <Button disabled={!this.props.activeSelector} primary floated='right' type="button">
             <Icon name="check" />
             Apply
           </Button>
@@ -66,3 +70,10 @@ export default class StylerForm extends PureComponent {
   }
 }
 
+StylerForm.propTypes = {
+  activeSelector: PropTypes.string
+};
+
+StylerForm.defaultProps = {
+  activeSelector: null
+};

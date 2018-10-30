@@ -1,5 +1,7 @@
 $dark-theme-color: green;
 $border-color: #DDDDDD;
+$disabled-text-color: #DDDDDD;
+$hover-highlight-color: rgba(0,0,0,.05);
 
 @import 'layout';
 @import 'modules/authentication';

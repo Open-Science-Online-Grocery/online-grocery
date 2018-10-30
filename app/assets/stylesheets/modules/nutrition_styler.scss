@@ -4,10 +4,25 @@
   .styler-form {
     flex-grow: 1;
     margin-right: 1rem;
+
+    p.disabled {
+      color: $disabled-text-color;
+    }
   }
 
   .nutrition-label {
     flex-shrink: 1;
     margin-left: 1rem;
+
+    .nutrition-facts-label {
+      div.hovered {
+        background-color: $hover-highlight-color;
+        cursor: pointer;
+      }
+
+      div.selected {
+        border: 1px solid gray;
+      }
+    }
   }
 }
