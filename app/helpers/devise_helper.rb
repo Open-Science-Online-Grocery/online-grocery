@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # See http://stackoverflow.com/a/20835382
 # Override Devise's messages and translate them to flash messages.
 module DeviseHelper

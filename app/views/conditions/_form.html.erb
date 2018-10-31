@@ -1,11 +1,13 @@
+<%= javascript_pack_tag 'nutrition_styler' %>
+
 <%= form_for [experiment, condition], html: { class: "ui form" }, data: { form_validation: true } do |f| %>
   <div class="ui top attached tabular menu">
-    <div class="active item" data-tab="basic-info">Basic Information</div>
+    <div class="item" data-tab="basic-info">Basic Information</div>
     <div class="item" data-tab="labeling">Labeling</div>
     <div class="item" data-tab="sorting">Sorting</div>
     <div class="item" data-tab="categories">Categories</div>
     <div class="item" data-tab="cart-summary">Cart Summary</div>
-    <div class="item" data-tab="nutrition-facts">Nutrition Facts</div>
+    <div class="active item" data-tab="nutrition-facts">Nutrition Facts</div>
     <div class="item" data-tab="budgeting">Budgeting</div>
   </div>
 

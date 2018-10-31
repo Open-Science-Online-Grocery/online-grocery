@@ -1,0 +1,44 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "jquery": true,
+    "jest/globals": true
+  },
+  "globals": {
+    "Rails": true
+   },
+  "extends": "airbnb",
+  "plugins": [
+      "react",
+      "jsx-a11y",
+      "import",
+      "jest"
+  ],
+  "rules": {
+    "strict": 0,
+    "class-methods-use-this": "off",
+    "comma-dangle": ["error", "never"],
+    "function-paren-newline": ["error", "consistent"],
+    "import/extensions": "off",
+    "import/newline-after-import": "off",
+    // paths accessed via webpack's resolve.alias setting are mistakenly
+    // flagged by eslint as violating the two rules below.
+    "import/no-extraneous-dependencies": "off",
+    // the default implementation requires both an `htmlFor` attribute and for
+    // the input to be nested within the label. nesting apparently breaks some
+    // semantic-ui styling.
+    "jsx-a11y/label-has-for": [2, { "required": { "every": ["id"] } }],
+    "jsx-a11y/label-has-associated-control": "off",
+    "no-param-reassign": ["error", { "props": false }],
+    "no-plusplus": "off",
+    "no-underscore-dangle": "off",
+    "prefer-destructuring": "off",
+    "react/destructuring-assignment": "off",
+    "react/jsx-one-expression-per-line": "off"
+  }
+}

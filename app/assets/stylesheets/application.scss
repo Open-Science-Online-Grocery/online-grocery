@@ -1,5 +1,7 @@
 $dark-theme-color: green;
 $border-color: #DDDDDD;
+$disabled-text-color: #DDDDDD;
+$hover-highlight-color: rgba(0,0,0,.05);
 
 @import 'layout';
 @import 'modules/authentication';
@@ -7,8 +9,11 @@ $border-color: #DDDDDD;
 @import 'modules/buttons';
 @import 'modules/data_display';
 @import 'modules/flash';
+@import 'modules/forms';
 @import 'modules/navigation';
 @import 'modules/notes';
+@import 'modules/nutrition_labels';
+@import 'modules/nutrition_styler';
 @import 'modules/page_layout';
 @import 'modules/table_row_links';
 @import 'modules/tables';

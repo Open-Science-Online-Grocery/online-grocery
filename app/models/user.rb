@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
+# represents a researcher who will manage experiments in the rails app
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :timeoutable,
          :recoverable, :rememberable, :validatable, :lockable, :trackable,
          :confirmable
