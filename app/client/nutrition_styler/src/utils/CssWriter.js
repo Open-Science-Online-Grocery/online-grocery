@@ -30,7 +30,7 @@ export default class CssWriter {
       case 'font-size':
         return `${value}px`;
       default:
-        return key;
+        return value;
     }
   }
 }

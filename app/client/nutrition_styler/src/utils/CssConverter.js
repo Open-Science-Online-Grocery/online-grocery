@@ -11,6 +11,7 @@ export default class CssConverter {
   }
 
   fontFamily() {
+    if (this.rules['font-family']) return this.rules['font-family'];
     if (!this.computedStyles) return '';
     return this.computedStyles.fontFamily.split(', ')[0];
   }
@@ -22,6 +23,7 @@ export default class CssConverter {
   }
 
   fontColor() {
+    if (this.rules['font-color']) return this.rules['font-color'];
     if (!this.computedStyles) return '#000000';
     const rgbColor = this.computedStyles.color;
     return `#${rgbToHex(rgbColor)}`;
@@ -33,6 +35,7 @@ export default class CssConverter {
   // background color as perceived by a user, we traverse up the DOM to find an
   // element with a non-transparent background color and return that.
   backgroundColor() {
+    if (this.rules['background-color']) return this.rules['background-color'];
     if (!this.computedStyles) return '#ffffff';
     let rgbColor = this.computedStyles.backgroundColor;
     let targetElement = this.element;
