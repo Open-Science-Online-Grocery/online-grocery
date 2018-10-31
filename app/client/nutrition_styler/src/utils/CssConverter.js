@@ -4,10 +4,6 @@ const rgbToHex = require('rgb-to-hex');
 const transparent = 'rgba(0, 0, 0, 0)';
 
 export default class CssConverter {
-  static isBold(value) {
-    return value === 'bold' || value === '700';
-  }
-
   constructor(activeSelector, rules) {
     this.activeSelector = activeSelector;
     this.rules = rules;
@@ -54,7 +50,14 @@ export default class CssConverter {
   bold() {
     if (this.rules.hasOwnProperty('bold')) return this.rules['bold'];
     if (!this.computedStyles) return false;
-    return CssConverter.isBold(this.computedStyles.fontWeight);
+    const fontWeight = this.computedStyles.fontWeight;
+    return fontWeight === '700' || fontWeight === 'bold';
+  }
+
+  italic() {
+    if (this.rules.hasOwnProperty('italic')) return this.rules['italic'];
+    if (!this.computedStyles) return false;
+    return this.computedStyles.fontStyle === 'italic';
   }
 
   // here we temporarily remove the class that is added on hover to get the

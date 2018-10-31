@@ -10,18 +10,25 @@ export default class CssWriter {
   cssString() {
     let rulesString = '';
     Object.entries(this.rules).forEach(
-      ([key, value]) => rulesString +=
-        `${key}: ${this.convertValue(key, value)} !important;\n`
+      ([key, value]) => rulesString += this.ruleString(key, value)
     );
     return `${this.selector} { ${rulesString} }`;
   }
 
-  convertValue(key, value) {
+  ruleString(key, value) {
+    return `${this.keyValueString(key, value)} !important;\n`;
+  }
+
+  keyValueString(key, value) {
     switch (key) {
       case 'font-size':
-        return `${value}px`;
+        return `${key}: ${value}px`;
+      case 'bold':
+        return `font-weight: ${value ? 'bold' : 'normal'}`;
+      case 'italic':
+        return `font-style: ${value ? 'italic' : 'normal'}`;
       default:
-        return value;
+        return `${key}: ${value}`;
     }
   }
 }
