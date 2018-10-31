@@ -4,10 +4,7 @@ import selectors, * as fromSelectors from './selectors';
 
 /* ****************************** selectors ********************************* */
 export function getCssRules($$state) {
-  const value = fromSelectors.getCssRules($$state.get('selectors'));
-  console.log(value);
-  return value;
-  // return fromSelectors.getCssRules($$state.get('selectors'));
+  return fromSelectors.getCssRules($$state.get('selectors'));
 }
 
 export function getActiveSelector($$state) {

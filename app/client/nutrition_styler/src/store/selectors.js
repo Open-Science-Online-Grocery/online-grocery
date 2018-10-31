@@ -28,4 +28,3 @@ export default function selectors($$state = Immutable.Map(), action) {
       return $$state;
   }
 }
-

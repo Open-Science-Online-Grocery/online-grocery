@@ -4,6 +4,10 @@ const rgbToHex = require('rgb-to-hex');
 const transparent = 'rgba(0, 0, 0, 0)';
 
 export default class CssConverter {
+  static isBold(value) {
+    return value === 'bold' || value === '700';
+  }
+
   constructor(activeSelector, rules) {
     this.activeSelector = activeSelector;
     this.rules = rules;
@@ -23,7 +27,7 @@ export default class CssConverter {
   }
 
   fontColor() {
-    if (this.rules['font-color']) return this.rules['font-color'];
+    if (this.rules['color']) return this.rules['color'];
     if (!this.computedStyles) return '#000000';
     const rgbColor = this.computedStyles.color;
     return `#${rgbToHex(rgbColor)}`;
@@ -44,8 +48,13 @@ export default class CssConverter {
       targetElement = targetElement.parentElement;
       rgbColor = window.getComputedStyle(targetElement).backgroundColor;
     }
-
     return `#${rgbToHex(rgbColor)}`;
+  }
+
+  bold() {
+    if (this.rules.hasOwnProperty('bold')) return this.rules['bold'];
+    if (!this.computedStyles) return false;
+    return CssConverter.isBold(this.computedStyles.fontWeight);
   }
 
   // here we temporarily remove the class that is added on hover to get the

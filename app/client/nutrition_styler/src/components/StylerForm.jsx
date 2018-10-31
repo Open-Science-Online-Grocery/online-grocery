@@ -30,6 +30,13 @@ export default class StylerForm extends PureComponent {
         event.currentTarget.value
       );
     };
+    this.handleButtonChange = (event) => {
+      this.props.setStyle(
+        this.props.activeSelector,
+        event.currentTarget.id,
+        !event.currentTarget.classList.contains('active')
+      );
+    };
   }
 
   disabledClass() {
@@ -61,8 +68,8 @@ export default class StylerForm extends PureComponent {
           </div>
           <div className="fields">
             <div className="four wide field">
-              <label htmlFor="font-color">Text color</label>
-              <input id="font-color" type="color" value={this.props.fontColor} onChange={this.handleInputChange} />
+              <label htmlFor="color">Text color</label>
+              <input id="color" type="color" value={this.props.fontColor} onChange={this.handleInputChange} />
             </div>
             <div className="four wide field">
               <label htmlFor="background-color">Background color</label>
@@ -71,9 +78,17 @@ export default class StylerForm extends PureComponent {
             <div className="eight wide field">
               <label htmlFor="text-style">Text style</label>
               <div id="text-style" className="ui icon buttons">
-                <button type="button" className="ui button"><i className="bold icon" /></button>
+                <Button
+                  icon
+                  type="button"
+                  id="bold"
+                  className={`ui button ${this.props.bold ? 'active' : ''}`}
+                  onClick={this.handleButtonChange}
+                >
+                  <Icon name="bold" />
+                </Button>
                 <button type="button" className="ui button"><i className="italic icon" /></button>
-                <button type="button" className="ui button active"><i className="strikethrough icon" /></button>
+                <button type="button" className="ui button"><i className="strikethrough icon" /></button>
                 <button type="button" className="ui button"><i className="underline icon" /></button>
               </div>
             </div>
@@ -102,6 +117,7 @@ StylerForm.propTypes = {
   fontSize: PropTypes.string.isRequired,
   fontColor: PropTypes.string.isRequired,
   backgroundColor: PropTypes.string.isRequired,
+  bold: PropTypes.bool.isRequired,
   setStyle: PropTypes.func.isRequired
 };
 

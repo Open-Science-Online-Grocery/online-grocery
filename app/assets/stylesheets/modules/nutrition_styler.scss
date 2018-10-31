@@ -13,6 +13,14 @@
       }
     }
 
+    button.ui.button:focus {
+      background-color: $cancel-color;
+
+      &.active {
+        background-color: $cancel-highlight-color;
+      }
+    }
+
     .actions {
       span {
         padding-right: 1rem;

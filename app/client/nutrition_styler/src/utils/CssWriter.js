@@ -11,18 +11,9 @@ export default class CssWriter {
     let rulesString = '';
     Object.entries(this.rules).forEach(
       ([key, value]) => rulesString +=
-        `${this.convertKey(key)}: ${this.convertValue(key, value)} !important;\n`
+        `${key}: ${this.convertValue(key, value)} !important;\n`
     );
     return `${this.selector} { ${rulesString} }`;
-  }
-
-  convertKey(key) {
-    switch (key) {
-      case 'font-color':
-        return 'color';
-      default:
-        return key;
-    }
   }
 
   convertValue(key, value) {
