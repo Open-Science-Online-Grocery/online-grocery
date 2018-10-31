@@ -11,19 +11,19 @@ export default class CssConverter {
   }
 
   fontFamily() {
-    if (this.rules['font-family']) return this.rules['font-family'];
+    if (this._hasRule('font-family')) return this.rules['font-family'];
     if (!this.computedStyles) return '';
     return this.computedStyles.fontFamily.split(', ')[0];
   }
 
   fontSize() {
-    if (this.rules['font-size']) return this.rules['font-size'];
+    if (this._hasRule('font-size')) return this.rules['font-size'];
     if (!this.computedStyles) return '';
     return this.computedStyles.fontSize.replace('px', '');
   }
 
   fontColor() {
-    if (this.rules['color']) return this.rules['color'];
+    if (this._hasRule('color')) return this.rules.color;
     if (!this.computedStyles) return '#000000';
     const rgbColor = this.computedStyles.color;
     return `#${rgbToHex(rgbColor)}`;
@@ -35,7 +35,7 @@ export default class CssConverter {
   // background color as perceived by a user, we traverse up the DOM to find an
   // element with a non-transparent background color and return that.
   backgroundColor() {
-    if (this.rules['background-color']) return this.rules['background-color'];
+    if (this._hasRule('background-color')) return this.rules['background-color'];
     if (!this.computedStyles) return '#ffffff';
     let rgbColor = this.computedStyles.backgroundColor;
     let targetElement = this.element;
@@ -48,28 +48,32 @@ export default class CssConverter {
   }
 
   bold() {
-    if (this.rules.hasOwnProperty('bold')) return this.rules['bold'];
+    if (this._hasRule('bold')) return this.rules.bold;
     if (!this.computedStyles) return false;
     const fontWeight = this.computedStyles.fontWeight;
     return fontWeight === '700' || fontWeight === 'bold';
   }
 
   italic() {
-    if (this.rules.hasOwnProperty('italic')) return this.rules['italic'];
+    if (this._hasRule('italic')) return this.rules.italic;
     if (!this.computedStyles) return false;
     return this.computedStyles.fontStyle === 'italic';
   }
 
   strikethrough() {
-    if (this.rules.hasOwnProperty('strikethrough')) return this.rules['strikethrough'];
+    if (this._hasRule('strikethrough')) return this.rules.strikethrough;
     if (!this.computedStyles) return false;
     return this.computedStyles.textDecorationLine.includes('line-through');
   }
 
   underline() {
-    if (this.rules.hasOwnProperty('underline')) return this.rules['underline'];
+    if (this._hasRule('underline')) return this.rules.underline;
     if (!this.computedStyles) return false;
     return this.computedStyles.textDecorationLine.includes('underline');
+  }
+
+  _hasRule(property) {
+    return typeof this.rules[property] !== 'undefined';
   }
 
   // here we temporarily remove the class that is added on hover to get the

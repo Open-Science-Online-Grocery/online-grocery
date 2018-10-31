@@ -41,8 +41,8 @@ export default class CssWriter {
 
   textDecorationString() {
     let valueString = '';
-    if (this.rules['strikethrough']) valueString += 'line-through';
-    if (this.rules['underline']) valueString += ' underline';
+    if (this.rules.strikethrough) valueString += 'line-through';
+    if (this.rules.underline) valueString += ' underline';
     return `text-decoration: ${valueString} !important\n`;
   }
 }
