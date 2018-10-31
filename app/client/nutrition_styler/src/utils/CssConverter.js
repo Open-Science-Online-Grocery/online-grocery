@@ -4,8 +4,9 @@ const rgbToHex = require('rgb-to-hex');
 const transparent = 'rgba(0, 0, 0, 0)';
 
 export default class CssConverter {
-  constructor(activeSelector) {
+  constructor(activeSelector, rules) {
     this.activeSelector = activeSelector;
+    this.rules = rules;
     this.computedStyles = this._getComputedStyles();
   }
 
@@ -15,6 +16,7 @@ export default class CssConverter {
   }
 
   fontSize() {
+    if (this.rules['font-size']) return this.rules['font-size'];
     if (!this.computedStyles) return '';
     return this.computedStyles.fontSize.replace('px', '');
   }

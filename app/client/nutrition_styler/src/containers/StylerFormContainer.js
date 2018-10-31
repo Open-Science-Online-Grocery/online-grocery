@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 import StylerForm from '../components/StylerForm';
-import { getActiveSelector } from '../store';
+import { getActiveSelector, getActiveRules } from '../store';
 import CssConverter from '../utils/CssConverter';
 import { setStyle } from '../actions';
 
 const mapStateToProps = ($$state) => {
   const activeSelector = getActiveSelector($$state);
-  const cssConverter = new CssConverter(activeSelector);
+  const activeSelectorRules = getActiveRules($$state);
+  const cssConverter = new CssConverter(activeSelector, activeSelectorRules);
   return {
     activeSelector,
     disabled: !activeSelector,

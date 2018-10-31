@@ -2,11 +2,15 @@ import Immutable from 'immutable';
 import { SET_STYLE } from '../actions';
 import CssWriter from '../utils/CssWriter';
 
+export function getRulesForSelector($$state, selector) {
+  return $$state.getIn([selector, 'rules']);
+}
+
 export function getCssRules($$state) {
   let cssString = '';
   $$state.keySeq().forEach(
     (selector) => {
-      const rules = $$state.getIn([selector, 'rules']).toJS();
+      const rules = getRulesForSelector($$state, selector).toJS();
       cssString += new CssWriter(selector, rules).cssString();
     }
   );
