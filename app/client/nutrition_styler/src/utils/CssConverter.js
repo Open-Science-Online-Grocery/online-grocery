@@ -33,7 +33,7 @@ export default class CssConverter {
   // differently than other computed styles. if an element has no explicit
   // background color set, it is considered to be transparent. to get the actual
   // background color as perceived by a user, we traverse up the DOM to find an
-  // element with a non-transparent background color and return that.
+  // a non-transparent background color on an ancestor and return that.
   backgroundColor() {
     if (this._hasRule('background-color')) return this.rules['background-color'];
     if (!this.computedStyles) return '#ffffff';
