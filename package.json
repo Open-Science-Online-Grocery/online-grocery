@@ -20,6 +20,7 @@
     "redux-devtools-extension": "^2.13.5",
     "redux-immutable": "^4.0.0",
     "resolve-url-loader": "^3.0.0",
+    "rgb-to-hex": "^0.0.0",
     "semantic-ui-css": "^2.4.0",
     "semantic-ui-react": "^0.83.0"
   },

@@ -18,36 +18,16 @@ const fontOptions = [
 ];
 
 export default class StylerForm extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
-  getComputedStyles() {
-    if (this.props.activeSelector) {
-      const element = document.querySelector(this.props.activeSelector);
-      return window.getComputedStyle(element);
-    }
-    return null;
-  }
-
-  getCurrentFontFamily() {
-    if (!this.computedStyles) return null;
-    return this.computedStyles['font-family'].split(', ')[0];
-  }
-
-  isDisabled() {
-    return !this.props.activeSelector;
-  }
-
   disabledClass() {
-    return this.isDisabled() ? 'disabled' : '';
+    return this.props.disabled ? 'disabled' : '';
   }
 
   render() {
-    this.computedStyles = this.getComputedStyles();
     return (
       <React.Fragment>
-        <p className={this.props.activeSelector ? 'disabled' : ''}>To change nutrition label styling, click part of the label to the left.</p>
+        <p className={this.disabledClass()}>
+          To change nutrition label styling, click part of the label to the left.
+        </p>
         <div className={`ui segment ${this.disabledClass()}`}>
           <div className="fields">
             <div className="ten wide field">
@@ -55,23 +35,23 @@ export default class StylerForm extends PureComponent {
               <Select
                 id="font-family"
                 options={fontOptions}
-                disabled={this.isDisabled()}
-                value={this.getCurrentFontFamily()}
+                disabled={this.props.disabled}
+                value={this.props.fontFamily}
               />
             </div>
             <div className="six wide field">
               <label htmlFor="font-size">Font size</label>
-              <input id="font-size" type="number" value="8" min="1" />
+              <input id="font-size" type="number" value={this.props.fontSize} min="1" />
             </div>
           </div>
           <div className="fields">
             <div className="four wide field">
               <label htmlFor="font-color">Text color</label>
-              <input id="font-color" type="color" value={this.computedStyles ? this.computedStyles.color : '#000000'} />
+              <input id="font-color" type="color" value={this.props.fontColor} />
             </div>
             <div className="four wide field">
               <label htmlFor="background-color">Background color</label>
-              <input id="background-color" type="color" value="#ffffff" />
+              <input id="background-color" type="color" value={this.props.backgroundColor} />
             </div>
             <div className="eight wide field">
               <label htmlFor="text-style">Text style</label>
@@ -86,7 +66,7 @@ export default class StylerForm extends PureComponent {
         </div>
         <div className="actions">
           <span>Remove all formating on:</span>
-          <Button disabled={this.isDisabled()} type="button">
+          <Button disabled={this.props.disabled} type="button">
             <Icon name="undo" />
             Current Selection
           </Button>
@@ -101,9 +81,9 @@ export default class StylerForm extends PureComponent {
 }
 
 StylerForm.propTypes = {
-  activeSelector: PropTypes.string
-};
-
-StylerForm.defaultProps = {
-  activeSelector: null
+  disabled: PropTypes.bool.isRequired,
+  fontFamily: PropTypes.string.isRequired,
+  fontSize: PropTypes.string.isRequired,
+  fontColor: PropTypes.string.isRequired,
+  backgroundColor: PropTypes.string.isRequired
 };
