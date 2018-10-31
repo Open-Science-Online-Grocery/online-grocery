@@ -19,6 +19,14 @@ export function getActiveRules($$state) {
   return rules ? rules.toJS() : {};
 }
 
+export function getActiveOriginalRules($$state) {
+  const rules = fromSelectors.getOriginalRulesForSelector(
+    $$state.get('selectors'),
+    getActiveSelector($$state)
+  );
+  return rules ? rules.toJS() : {};
+}
+
 /* ******************************* reducers ********************************* */
 export function noOpReducer($$defaultState) {
   return ($$state = $$defaultState) => $$state;

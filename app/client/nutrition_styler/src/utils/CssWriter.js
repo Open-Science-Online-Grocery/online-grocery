@@ -28,14 +28,14 @@ export default class CssWriter {
 
   keyValueString(key, value) {
     switch (key) {
-      case 'font-size':
-        return `${key}: ${value}px`;
+      case 'fontSize':
+        return `font-size: ${value}px`;
       case 'bold':
         return `font-weight: ${value ? 'bold' : 'normal'}`;
       case 'italic':
         return `font-style: ${value ? 'italic' : 'normal'}`;
       default:
-        return `${key}: ${value}`;
+        return `${this.camelCaseToHyphen(key)}: ${value}`;
     }
   }
 
@@ -44,5 +44,9 @@ export default class CssWriter {
     if (this.rules.strikethrough) valueString += 'line-through';
     if (this.rules.underline) valueString += ' underline';
     return `text-decoration: ${valueString} !important\n`;
+  }
+
+  camelCaseToHyphen(key) {
+    return key.replace(/([a-z][A-Z])/g, g => `${g[0]}-${g[1].toLowerCase()}`);
   }
 }

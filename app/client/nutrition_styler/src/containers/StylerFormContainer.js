@@ -1,24 +1,17 @@
 import { connect } from 'react-redux';
 import StylerForm from '../components/StylerForm';
-import { getActiveSelector, getActiveRules } from '../store';
-import CssConverter from '../utils/CssConverter';
-import { setStyle } from '../actions';
+import { getActiveSelector, getActiveRules, getActiveOriginalRules } from '../store';
+import { setStyle, resetSelection } from '../actions';
 
 const mapStateToProps = ($$state) => {
   const activeSelector = getActiveSelector($$state);
   const activeSelectorRules = getActiveRules($$state);
-  const cssConverter = new CssConverter(activeSelector, activeSelectorRules);
+  const activeSelectorOriginalRules = getActiveOriginalRules($$state);
+  const currentRules = Object.assign(activeSelectorOriginalRules, activeSelectorRules);
   return {
     activeSelector,
     disabled: !activeSelector,
-    fontFamily: cssConverter.fontFamily(),
-    fontSize: cssConverter.fontSize(),
-    fontColor: cssConverter.fontColor(),
-    backgroundColor: cssConverter.backgroundColor(),
-    bold: cssConverter.bold(),
-    italic: cssConverter.italic(),
-    strikethrough: cssConverter.strikethrough(),
-    underline: cssConverter.underline()
+    ...currentRules
   };
 };
 

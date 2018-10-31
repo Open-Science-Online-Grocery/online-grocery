@@ -55,9 +55,9 @@ export default class StylerForm extends PureComponent {
         <div className={`ui segment ${this.disabledClass()}`}>
           <div className="fields">
             <div className="ten wide field">
-              <label htmlFor="font-family">Font</label>
+              <label htmlFor="fontFamily">Font</label>
               <Select
-                id="font-family"
+                id="fontFamily"
                 options={fontOptions}
                 disabled={this.props.disabled}
                 value={this.props.fontFamily}
@@ -65,8 +65,8 @@ export default class StylerForm extends PureComponent {
               />
             </div>
             <div className="six wide field">
-              <label htmlFor="font-size">Font size</label>
-              <input id="font-size" type="number" value={this.props.fontSize} min="1" onChange={this.handleInputChange} />
+              <label htmlFor="fontSize">Font size</label>
+              <input id="fontSize" type="number" value={this.props.fontSize} min="1" onChange={this.handleInputChange} />
             </div>
           </div>
           <div className="fields">
@@ -75,8 +75,8 @@ export default class StylerForm extends PureComponent {
               <input id="color" type="color" value={this.props.fontColor} onChange={this.handleInputChange} />
             </div>
             <div className="four wide field">
-              <label htmlFor="background-color">Background color</label>
-              <input id="background-color" type="color" value={this.props.backgroundColor} onChange={this.handleInputChange} />
+              <label htmlFor="backgroundColor">Background color</label>
+              <input id="backgroundColor" type="color" value={this.props.backgroundColor} onChange={this.handleInputChange} />
             </div>
             <div className="eight wide field">
               <label htmlFor="text-style">Text style</label>
@@ -140,18 +140,26 @@ export default class StylerForm extends PureComponent {
 StylerForm.propTypes = {
   activeSelector: PropTypes.string,
   disabled: PropTypes.bool.isRequired,
-  fontFamily: PropTypes.string.isRequired,
-  fontSize: PropTypes.string.isRequired,
-  fontColor: PropTypes.string.isRequired,
-  backgroundColor: PropTypes.string.isRequired,
-  bold: PropTypes.bool.isRequired,
-  italic: PropTypes.bool.isRequired,
-  strikethrough: PropTypes.bool.isRequired,
-  underline: PropTypes.bool.isRequired,
+  fontFamily: PropTypes.string,
+  fontSize: PropTypes.string,
+  fontColor: PropTypes.string,
+  backgroundColor: PropTypes.string,
+  bold: PropTypes.bool,
+  italic: PropTypes.bool,
+  strikethrough: PropTypes.bool,
+  underline: PropTypes.bool,
   setStyle: PropTypes.func.isRequired,
   resetSelection: PropTypes.func.isRequired
 };
 
 StylerForm.defaultProps = {
-  activeSelector: null
+  activeSelector: null,
+  fontFamily: null,
+  fontSize: '',
+  fontColor: '#000000',
+  backgroundColor: '#ffffff',
+  bold: false,
+  italic: false,
+  strikethrough: false,
+  underline: false
 };
