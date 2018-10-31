@@ -8,6 +8,7 @@ export function getCssRules() {
   return `
     .nutrition-facts-label .fat.fact-percent {
       color: red;
+      background-color: yellow;
     }
   `;
 }

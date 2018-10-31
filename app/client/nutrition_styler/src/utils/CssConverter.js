@@ -1,4 +1,7 @@
+import { hoverClassName } from '../components/NutritionLabel';
+
 const rgbToHex = require('rgb-to-hex');
+const transparent = 'rgba(0, 0, 0, 0)';
 
 export default class CssConverter {
   constructor(activeSelector) {
@@ -22,16 +25,34 @@ export default class CssConverter {
     return `#${rgbToHex(rgbColor)}`;
   }
 
+  // it seems that the backgroundColor value in the computed styles works
+  // differently than other computed styles. if an element has no explicit
+  // background color set, it is considered to be transparent. to get the actual
+  // background color as perceived by a user, we traverse up the DOM to find an
+  // element with a non-transparent background color and return that.
   backgroundColor() {
     if (!this.computedStyles) return '#ffffff';
-    const rgbColor = this.computedStyles.backgroundColor;
+    let rgbColor = this.computedStyles.backgroundColor;
+    let targetElement = this.element;
+
+    while (rgbColor === transparent && targetElement.parentElement) {
+      targetElement = targetElement.parentElement;
+      rgbColor = window.getComputedStyle(targetElement).backgroundColor;
+    }
+
     return `#${rgbToHex(rgbColor)}`;
   }
 
+  // here we temporarily remove the class that is added on hover to get the
+  // styles with the "true" background color. we copy the styles because they
+  // are otherwise live and will reflect when we add the hover class back.
   _getComputedStyles() {
     if (this.activeSelector) {
-      const element = document.querySelector(this.activeSelector);
-      return window.getComputedStyle(element);
+      this.element = document.querySelector(this.activeSelector);
+      this.element.classList.remove(hoverClassName);
+      const styles = Object.assign({}, window.getComputedStyle(this.element));
+      this.element.classList.add(hoverClassName);
+      return styles;
     }
     return null;
   }
