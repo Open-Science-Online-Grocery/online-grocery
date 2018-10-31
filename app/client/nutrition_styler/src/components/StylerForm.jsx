@@ -96,8 +96,24 @@ export default class StylerForm extends PureComponent {
                 >
                   <Icon name="italic" />
                 </Button>
-                <button type="button" className="ui button"><i className="strikethrough icon" /></button>
-                <button type="button" className="ui button"><i className="underline icon" /></button>
+                <Button
+                  icon
+                  type="button"
+                  id="strikethrough"
+                  className={`ui button ${this.props.strikethrough ? 'active' : ''}`}
+                  onClick={this.handleButtonChange}
+                >
+                  <Icon name="strikethrough" />
+                </Button>
+                <Button
+                  icon
+                  type="button"
+                  id="underline"
+                  className={`ui button ${this.props.underline ? 'active' : ''}`}
+                  onClick={this.handleButtonChange}
+                >
+                  <Icon name="underline" />
+                </Button>
               </div>
             </div>
           </div>
@@ -127,6 +143,8 @@ StylerForm.propTypes = {
   backgroundColor: PropTypes.string.isRequired,
   bold: PropTypes.bool.isRequired,
   italic: PropTypes.bool.isRequired,
+  strikethrough: PropTypes.bool.isRequired,
+  underline: PropTypes.bool.isRequired,
   setStyle: PropTypes.func.isRequired
 };
 

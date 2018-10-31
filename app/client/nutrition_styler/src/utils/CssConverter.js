@@ -60,6 +60,18 @@ export default class CssConverter {
     return this.computedStyles.fontStyle === 'italic';
   }
 
+  strikethrough() {
+    if (this.rules.hasOwnProperty('strikethrough')) return this.rules['strikethrough'];
+    if (!this.computedStyles) return false;
+    return this.computedStyles.textDecorationLine.includes('line-through');
+  }
+
+  underline() {
+    if (this.rules.hasOwnProperty('underline')) return this.rules['underline'];
+    if (!this.computedStyles) return false;
+    return this.computedStyles.textDecorationLine.includes('underline');
+  }
+
   // here we temporarily remove the class that is added on hover to get the
   // styles with the "true" background color. we copy the styles because they
   // are otherwise live and will reflect when we add the hover class back.

@@ -1,3 +1,5 @@
+const textDecorationKeys = ['strikethrough', 'underline'];
+
 export default class CssWriter {
   // @param {string} selector - a CSS selector
   // @param {object} rules - an object where keys are CSS property names and
@@ -10,8 +12,13 @@ export default class CssWriter {
   cssString() {
     let rulesString = '';
     Object.entries(this.rules).forEach(
-      ([key, value]) => rulesString += this.ruleString(key, value)
+      ([key, value]) => {
+        if (!textDecorationKeys.includes(key)) {
+          rulesString += this.ruleString(key, value);
+        }
+      }
     );
+    rulesString += this.textDecorationString();
     return `${this.selector} { ${rulesString} }`;
   }
 
@@ -30,5 +37,12 @@ export default class CssWriter {
       default:
         return `${key}: ${value}`;
     }
+  }
+
+  textDecorationString() {
+    let valueString = '';
+    if (this.rules['strikethrough']) valueString += 'line-through';
+    if (this.rules['underline']) valueString += ' underline';
+    return `text-decoration: ${valueString} !important\n`;
   }
 }

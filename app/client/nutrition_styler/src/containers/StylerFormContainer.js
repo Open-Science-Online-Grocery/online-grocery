@@ -16,7 +16,9 @@ const mapStateToProps = ($$state) => {
     fontColor: cssConverter.fontColor(),
     backgroundColor: cssConverter.backgroundColor(),
     bold: cssConverter.bold(),
-    italic: cssConverter.italic()
+    italic: cssConverter.italic(),
+    strikethrough: cssConverter.strikethrough(),
+    underline: cssConverter.underline()
   };
 };
 
