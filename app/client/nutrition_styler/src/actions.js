@@ -13,10 +13,10 @@ export function setActiveSelector(activeSelector) {
 
 // used for CSS rules where we are setting the value as a whole (like
 // `font_size: 8px`)
-export function setStyle(property, value) {
+export function setStyle(activeSelector, property, value) {
   return {
     type: SET_STYLE,
-    payload: { property, value }
+    payload: { activeSelector, property, value }
   };
 }
 

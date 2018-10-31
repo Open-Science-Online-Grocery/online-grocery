@@ -1,6 +1,6 @@
-import Immutable from 'immutable';
 import { combineReducers } from 'redux-immutable';
 import { SET_ACTIVE_SELECTOR } from '../actions';
+import selectors from './selectors';
 
 /* ****************************** selectors ********************************* */
 // TODO: implement this
@@ -33,7 +33,7 @@ function activeSelector(state = null, action) {
 
 const rootReducer = combineReducers({
   activeSelector,
-  selectors: noOpReducer(Immutable.Map())
+  selectors
 });
 
 export default rootReducer;

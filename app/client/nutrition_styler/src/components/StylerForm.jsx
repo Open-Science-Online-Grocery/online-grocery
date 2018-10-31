@@ -18,6 +18,15 @@ const fontOptions = [
 ];
 
 export default class StylerForm extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.handleInputChange = (event, data) => {
+      this.props.handleInputChange(this.props.activeSelector, data.id, data.value);
+    };
+
+    this.props.handleInputChange.bind(this, this.props.activeSelector);
+  }
+
   disabledClass() {
     return this.props.disabled ? 'disabled' : '';
   }
@@ -37,6 +46,7 @@ export default class StylerForm extends PureComponent {
                 options={fontOptions}
                 disabled={this.props.disabled}
                 value={this.props.fontFamily}
+                onChange={this.handleInputChange}
               />
             </div>
             <div className="six wide field">
@@ -81,9 +91,15 @@ export default class StylerForm extends PureComponent {
 }
 
 StylerForm.propTypes = {
+  activeSelector: PropTypes.string,
   disabled: PropTypes.bool.isRequired,
   fontFamily: PropTypes.string.isRequired,
   fontSize: PropTypes.string.isRequired,
   fontColor: PropTypes.string.isRequired,
-  backgroundColor: PropTypes.string.isRequired
+  backgroundColor: PropTypes.string.isRequired,
+  handleInputChange: PropTypes.func.isRequired
+};
+
+StylerForm.defaultProps = {
+  activeSelector: null
 };
