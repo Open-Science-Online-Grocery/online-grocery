@@ -19,7 +19,7 @@ const mapStateToProps = ($$state) => {
 
 const mapDispatchToProps = dispatch => (
   {
-    handleInputChange: (activeSelector, property, value) => {
+    setStyle: (activeSelector, property, value) => {
       dispatch(setStyle(activeSelector, property, value));
     }
   }

@@ -48,10 +48,15 @@ export default class CssConverter {
   // are otherwise live and will reflect when we add the hover class back.
   _getComputedStyles() {
     if (this.activeSelector) {
+      let styles = {};
       this.element = document.querySelector(this.activeSelector);
-      this.element.classList.remove(hoverClassName);
-      const styles = Object.assign({}, window.getComputedStyle(this.element));
-      this.element.classList.add(hoverClassName);
+      if (this.element.classList.contains(hoverClassName)) {
+        this.element.classList.remove(hoverClassName);
+        styles = Object.assign({}, window.getComputedStyle(this.element));
+        this.element.classList.add(hoverClassName);
+      } else {
+        styles = Object.assign({}, window.getComputedStyle(this.element));
+      }
       return styles;
     }
     return null;

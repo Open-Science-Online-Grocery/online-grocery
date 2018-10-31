@@ -1,16 +1,13 @@
 import { combineReducers } from 'redux-immutable';
 import { SET_ACTIVE_SELECTOR } from '../actions';
-import selectors from './selectors';
+import selectors, * as fromSelectors from './selectors';
 
 /* ****************************** selectors ********************************* */
-// TODO: implement this
-export function getCssRules() {
-  return `
-    .nutrition-facts-label .fat.fact-percent {
-      color: red;
-      background-color: yellow;
-    }
-  `;
+export function getCssRules($$state) {
+  const value = fromSelectors.getCssRules($$state.get('selectors'));
+  console.log(value);
+  return value;
+  // return fromSelectors.getCssRules($$state.get('selectors'));
 }
 
 export function getActiveSelector($$state) {

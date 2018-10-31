@@ -20,11 +20,16 @@ const fontOptions = [
 export default class StylerForm extends PureComponent {
   constructor(props) {
     super(props);
-    this.handleInputChange = (event, data) => {
-      this.props.handleInputChange(this.props.activeSelector, data.id, data.value);
+    this.handleSelectChange = (event, data) => {
+      this.props.setStyle(this.props.activeSelector, data.id, data.value);
     };
-
-    this.props.handleInputChange.bind(this, this.props.activeSelector);
+    this.handleInputChange = (event) => {
+      this.props.setStyle(
+        this.props.activeSelector,
+        event.currentTarget.id,
+        event.currentTarget.value
+      );
+    };
   }
 
   disabledClass() {
@@ -46,22 +51,22 @@ export default class StylerForm extends PureComponent {
                 options={fontOptions}
                 disabled={this.props.disabled}
                 value={this.props.fontFamily}
-                onChange={this.handleInputChange}
+                onChange={this.handleSelectChange}
               />
             </div>
             <div className="six wide field">
               <label htmlFor="font-size">Font size</label>
-              <input id="font-size" type="number" value={this.props.fontSize} min="1" />
+              <input id="font-size" type="number" value={this.props.fontSize} min="1" onChange={this.handleInputChange} />
             </div>
           </div>
           <div className="fields">
             <div className="four wide field">
               <label htmlFor="font-color">Text color</label>
-              <input id="font-color" type="color" value={this.props.fontColor} />
+              <input id="font-color" type="color" value={this.props.fontColor} onChange={this.handleInputChange} />
             </div>
             <div className="four wide field">
               <label htmlFor="background-color">Background color</label>
-              <input id="background-color" type="color" value={this.props.backgroundColor} />
+              <input id="background-color" type="color" value={this.props.backgroundColor} onChange={this.handleInputChange} />
             </div>
             <div className="eight wide field">
               <label htmlFor="text-style">Text style</label>
@@ -97,7 +102,7 @@ StylerForm.propTypes = {
   fontSize: PropTypes.string.isRequired,
   fontColor: PropTypes.string.isRequired,
   backgroundColor: PropTypes.string.isRequired,
-  handleInputChange: PropTypes.func.isRequired
+  setStyle: PropTypes.func.isRequired
 };
 
 StylerForm.defaultProps = {
