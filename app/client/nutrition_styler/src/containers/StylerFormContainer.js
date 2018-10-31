@@ -26,6 +26,9 @@ const mapDispatchToProps = dispatch => (
   {
     setStyle: (activeSelector, property, value) => {
       dispatch(setStyle(activeSelector, property, value));
+    },
+    resetSelection: (activeSelector) => {
+      dispatch(resetSelection(activeSelector));
     }
   }
 );

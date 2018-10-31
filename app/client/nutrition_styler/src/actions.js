@@ -1,6 +1,7 @@
 export const SET_ACTIVE_SELECTOR = 'SET_ACTIVE_SELECTOR';
 export const SET_STYLE = 'SET_STYLE';
-export const RESET = 'RESET';
+export const RESET_SELECTION = 'RESET_SELECTION';
+export const RESET_ALL = 'RESET_ALL';
 
 export function setActiveSelector(activeSelector) {
   return {
@@ -16,6 +17,13 @@ export function setStyle(activeSelector, property, value) {
   };
 }
 
-export function reset() {
-  return { type: RESET };
+export function resetSelection(activeSelector) {
+  return {
+    type: RESET_SELECTION,
+    payload: { activeSelector }
+  };
+}
+
+export function resetAll() {
+  return { type: RESET_ALL };
 }

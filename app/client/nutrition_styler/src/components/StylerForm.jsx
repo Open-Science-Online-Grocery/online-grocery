@@ -37,6 +37,9 @@ export default class StylerForm extends PureComponent {
         !event.currentTarget.classList.contains('active')
       );
     };
+    this.handleResetSelection = () => {
+      this.props.resetSelection(this.props.activeSelector);
+    };
   }
 
   disabledClass() {
@@ -120,7 +123,7 @@ export default class StylerForm extends PureComponent {
         </div>
         <div className="actions">
           <span>Remove all formating on:</span>
-          <Button disabled={this.props.disabled} type="button">
+          <Button disabled={this.props.disabled} type="button" onClick={this.handleResetSelection}>
             <Icon name="undo" />
             Current Selection
           </Button>
@@ -145,7 +148,8 @@ StylerForm.propTypes = {
   italic: PropTypes.bool.isRequired,
   strikethrough: PropTypes.bool.isRequired,
   underline: PropTypes.bool.isRequired,
-  setStyle: PropTypes.func.isRequired
+  setStyle: PropTypes.func.isRequired,
+  resetSelection: PropTypes.func.isRequired
 };
 
 StylerForm.defaultProps = {
