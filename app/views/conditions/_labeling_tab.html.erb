@@ -15,6 +15,7 @@
           </div>
           <div class="ui segment nested-fields">
             <%= f.fields_for :label, condition.custom_label do |custom_label_fields| %>
+              <%= custom_label_fields.hidden_field :built_in %>
               <div class="field">
                 <%= custom_label_fields.label :name %>
                 <%= custom_label_fields.text_field :name %>
@@ -43,6 +44,9 @@
             <label>Use provided label</label>
           </div>
           <div class="ui segment nested-fields">
+            <div class="field">
+              <%= f.collection_select(:label_id, Label.built_in, :id, :name, { include_blank: true }, class: 'ui dropdown') %>
+            </div>
           </div>
         </div>
       </div>

@@ -4,6 +4,8 @@
 class Label < ApplicationRecord
   has_one_attached :image
 
+  scope :built_in, -> { where(built_in: true) }
+
   def custom?
     !built_in
   end
