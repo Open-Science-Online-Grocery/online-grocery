@@ -65,6 +65,8 @@ export default class NutritionLabel extends PureComponent {
         <div className="nutrition-facts-title">
           Nutrition Facts
         </div>
+        <div className="nutrition-facts-title-divider divider" />
+
         <div className="nutrition-facts-servings">
           8 servings per container
         </div>
@@ -74,9 +76,13 @@ export default class NutritionLabel extends PureComponent {
         <div className="nutrition-facts-amount">
           Amount per serving
         </div>
+        <div className="nutrition-serving-size-divider divider" />
+
         <div className="nutrition-facts-calories">
           <div className="calories-label">Calories</div><div className="calories-value">230</div>
         </div>
+        <div className="nutrition-calories-divider divider" />
+
         <div className="nutrition-facts-percent">
           % Daily Value
         </div>
@@ -123,9 +129,12 @@ export default class NutritionLabel extends PureComponent {
           <div className="protein fact-value">3g</div>
           <div className="protein fact-percent">6%</div>
         </div>
+
+        <div className="nutrition-facts-vitamins-top-divider divider" />
         <div className="nutrition-facts-vitamins">
           4% Vitamin A 0% Vitamin C 2% Calcium 4% Iron
         </div>
+        <div className="nutrition-facts-vitamins-bottom-divider divider" />
         <div className="nutrition-facts-daily-value">
           The % Daily Value (DV) tells you how much a nutrient in a serving of
           food contributes to a daily diet. 2,000 calories a day is used for
