@@ -16,13 +16,10 @@ module Seeds
           subcategory_ids_by_name[subcategory.name] = subcategory.id
         end
 
-        sampled_ids = (2..14534).to_a.sample(1000)
-
         csv = Rails.root.join('db', 'seeds', 'base', 'products.csv')
         i = 0
         CSV.foreach(csv, headers: true) do |row|
           i += 1
-          next if Rails.env.development? && !row['id'].to_i.in?(sampled_ids)
 
           puts "row #{i}" if i % 1000 == 0
           category_id = category_ids_by_name[row['category_name']]
