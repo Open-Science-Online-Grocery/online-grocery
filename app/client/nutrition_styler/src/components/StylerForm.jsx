@@ -5,7 +5,7 @@ import { Button, Icon, Select } from 'semantic-ui-react';
 const fontOptions = [
   { text: 'Arial', value: 'Arial' },
   { text: 'Helvetica', value: 'Helvetica' },
-  { text: 'Times New Roman', value: 'Time New Roman' },
+  { text: 'Times New Roman', value: 'Times New Roman' },
   { text: 'Courier', value: 'Courier' },
   { text: 'Veranda', value: 'Veranda' },
   { text: 'Georgia', value: 'Georgia' },

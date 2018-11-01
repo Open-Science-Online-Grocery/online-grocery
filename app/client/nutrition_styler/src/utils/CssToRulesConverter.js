@@ -12,7 +12,7 @@ export default class CssToRulesConverter {
 
   rules() {
     return {
-      fontFamily: this.computedStyles.fontFamily.split(', ')[0],
+      fontFamily: this.computedStyles.fontFamily.split(', ')[0].replace(/"/g, ''),
       fontSize: this.computedStyles.fontSize.replace('px', ''),
       color: this._getColor(),
       backgroundColor: this._getBackgroundColor(),
