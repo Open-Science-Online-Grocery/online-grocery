@@ -27,6 +27,13 @@ export function getActiveOriginalRules($$state) {
   return rules ? rules.toJS() : {};
 }
 
+export function getInputValue($$state) {
+  return JSON.stringify(
+    fromSelectors.getInputValue($$state.get('selectors')).toJS()
+  );
+}
+
+
 /* ******************************* reducers ********************************* */
 export function noOpReducer($$defaultState) {
   return ($$state = $$defaultState) => $$state;

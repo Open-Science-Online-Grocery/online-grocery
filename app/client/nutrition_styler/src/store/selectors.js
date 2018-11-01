@@ -27,6 +27,10 @@ export function getCssRules($$state) {
   return cssString;
 }
 
+export function getInputValue($$state) {
+  return $$state.map(value => Immutable.Map({ rules: value.get('rules') }));
+}
+
 export default function selectors($$state = Immutable.Map(), action) {
   switch (action.type) {
     case SET_ACTIVE_SELECTOR: {

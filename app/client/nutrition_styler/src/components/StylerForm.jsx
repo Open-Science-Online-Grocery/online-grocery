@@ -49,9 +49,10 @@ export default class StylerForm extends PureComponent {
   render() {
     return (
       <React.Fragment>
-        <p className={this.disabledClass()}>
+        <p className={this.props.disabled ? '' : 'disabled'}>
           To change nutrition label styling, click part of the label to the left.
         </p>
+        <input type="hidden" name="styles" value={this.props.inputValue} />
         <div className={`ui segment ${this.disabledClass()}`}>
           <div className="fields">
             <div className="ten wide field">
@@ -138,6 +139,7 @@ export default class StylerForm extends PureComponent {
 }
 
 StylerForm.propTypes = {
+  inputValue: PropTypes.string,
   activeSelector: PropTypes.string,
   disabled: PropTypes.bool.isRequired,
   fontFamily: PropTypes.string,
