@@ -124,11 +124,11 @@ export default class StylerForm extends PureComponent {
         <div className="actions">
           <span>Remove all formating on:</span>
           <Button disabled={this.props.disabled} type="button" onClick={this.handleResetSelection}>
-            <Icon name="undo" />
+            <Icon name="remove" />
             Current Selection
           </Button>
           <Button type="button" onClick={this.props.resetAll}>
-            <Icon name="undo" />
+            <Icon name="remove" />
             Entire Label
           </Button>
         </div>
