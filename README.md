@@ -42,5 +42,6 @@ fine, however.
 You can control the rails server's port and other details in the `Procfile`.
 
 
+## Logging in
 
-
+You can log in with email: `admin@admin.com`, password: `adminadmin!1`
