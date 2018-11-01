@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import StylerForm from '../components/StylerForm';
-import { setStyle, resetSelection } from '../actions';
+import { setStyle, resetSelection, resetAll } from '../actions';
 import {
   getActiveSelector,
   getActiveRules,
@@ -29,6 +29,9 @@ const mapDispatchToProps = dispatch => (
     },
     resetSelection: (activeSelector) => {
       dispatch(resetSelection(activeSelector));
+    },
+    resetAll: () => {
+      dispatch(resetAll());
     }
   }
 );

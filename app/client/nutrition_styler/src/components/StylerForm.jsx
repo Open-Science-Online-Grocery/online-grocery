@@ -127,7 +127,7 @@ export default class StylerForm extends PureComponent {
             <Icon name="undo" />
             Current Selection
           </Button>
-          <Button type="button">
+          <Button type="button" onClick={this.props.resetAll}>
             <Icon name="undo" />
             Entire Label
           </Button>
@@ -149,7 +149,8 @@ StylerForm.propTypes = {
   strikethrough: PropTypes.bool,
   underline: PropTypes.bool,
   setStyle: PropTypes.func.isRequired,
-  resetSelection: PropTypes.func.isRequired
+  resetSelection: PropTypes.func.isRequired,
+  resetAll: PropTypes.func.isRequired
 };
 
 StylerForm.defaultProps = {

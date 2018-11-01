@@ -1,7 +1,12 @@
 import Immutable from 'immutable';
-import { SET_STYLE, RESET_SELECTION, SET_ACTIVE_SELECTOR } from '../actions';
 import CssWriter from '../utils/CssWriter';
 import CssToRulesConverter from '../utils/CssToRulesConverter';
+import {
+  SET_STYLE,
+  RESET_SELECTION,
+  SET_ACTIVE_SELECTOR,
+  RESET_ALL
+} from '../actions';
 
 export function getRulesForSelector($$state, selector) {
   return $$state.getIn([selector, 'rules']) || Immutable.Map();
@@ -45,6 +50,8 @@ export default function selectors($$state = Immutable.Map(), action) {
         [action.payload.activeSelector, 'rules'],
         Immutable.Map()
       );
+    case RESET_ALL:
+      return Immutable.Map();
     default:
       return $$state;
   }
