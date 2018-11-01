@@ -52,7 +52,7 @@ export default class StylerForm extends PureComponent {
         <p className={this.props.disabled ? '' : 'disabled'}>
           To change nutrition label styling, click part of the label to the left.
         </p>
-        <input type="hidden" name="styles" value={this.props.inputValue} />
+        <input type="hidden" name="condition[nutrition_styles]" value={this.props.inputValue} />
         <div className={`ui segment ${this.disabledClass()}`}>
           <div className="fields">
             <div className="ten wide field">

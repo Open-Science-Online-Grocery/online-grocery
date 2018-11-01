@@ -6,7 +6,6 @@ class Condition < ApplicationRecord
   validates :name, uniqueness: { scope: :experiment_id }
 
   belongs_to :experiment
-  has_many :nutrition_styles
 
   # TODO: update if needed
   def url

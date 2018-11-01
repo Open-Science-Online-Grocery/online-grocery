@@ -5,7 +5,7 @@ import configureStore from './store/store';
 import NutritionStylerContainer from './containers/NutritionStylerContainer';
 
 export default function initialize(wrapperElement) {
-  const props = {}; // TODO: pass in initial props
+  const props = { selectors: JSON.parse(wrapperElement.dataset.styles) };
   const store = configureStore(props);
   render(
     <Provider store={store}>
