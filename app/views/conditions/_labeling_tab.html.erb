@@ -1,2 +1,34 @@
-<div class="ui bottom attached tab segment" data-tab="labeling">
+<div class="ui bottom attached active tab segment" data-tab="labeling">
+  <div class="ui grid">
+    <div class="eight wide column">
+      <div class="grouped fields">
+        <div class="field">
+          <div class="ui radio checkbox">
+            <%= f.radio_button :label_type, nil %>
+            <label>No label</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <%= f.radio_button :label_type, 'custom' %>
+            <label>Use custom label</label>
+          </div>
+          <div class="nested-field">
+            <%= f.file_field :custom_label %>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <%= f.radio_button :label_type, 'provided' %>
+            <label>Use provided label</label>
+          </div>
+          <div class="nested-field">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="eight wide column">
+    </div>
+  </div>
 </div>
