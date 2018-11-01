@@ -16,16 +16,20 @@ module Seeds
           subcategory_ids_by_name[subcategory.name] = subcategory.id
         end
 
+        sampled_ids = (2..14534).to_a.sample(1000)
+
         csv = Rails.root.join('db', 'seeds', 'base', 'products.csv')
         i = 0
         CSV.foreach(csv, headers: true) do |row|
-          puts "row #{i}" if i % 100 == 0
+          i += 1
+          next if Rails.env.development? && !row['id'].to_i.in?(sampled_ids)
+
+          puts "row #{i}" if i % 1000 == 0
           category_id = category_ids_by_name[row['category_name']]
           subcategory_id = subcategory_ids_by_name[row['subcategory_name']]
 
           product_attrs = row.to_h.except('id', 'category_name', 'subcategory_name', 'newcategory', 'newsubid', 'newsubsubid')
           Product.create!(product_attrs.merge(category_id: category_id, subcategory_id: subcategory_id))
-          i += 1
         end
       end
     end
