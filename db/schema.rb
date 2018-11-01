@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_01_134850) do
+ActiveRecord::Schema.define(version: 2018_11_01_144453) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -33,6 +33,46 @@ ActiveRecord::Schema.define(version: 2018_11_01_134850) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_experiments_on_user_id"
+  end
+
+  create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "size"
+    t.text "description"
+    t.string "imageSrc"
+    t.string "servingSize"
+    t.string "servings"
+    t.integer "caloriesFromFat"
+    t.integer "calories"
+    t.integer "totalFat"
+    t.integer "saturatedFat"
+    t.integer "transFat"
+    t.integer "polyFat"
+    t.integer "monoFat"
+    t.string "cholesterol"
+    t.integer "sodium"
+    t.integer "potassium"
+    t.integer "carbs"
+    t.integer "fiber"
+    t.integer "sugar"
+    t.integer "protein"
+    t.text "vitamins"
+    t.text "ingredients"
+    t.text "allergens"
+    t.decimal "price", precision: 64, scale: 12
+    t.integer "category"
+    t.integer "subcategory"
+    t.integer "starpoints"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "subcategories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "category_id"
+    t.integer "display_order"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
