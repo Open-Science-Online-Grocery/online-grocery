@@ -1,14 +1,17 @@
 .nutrition-facts-label {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   border: 2px solid black;
   padding: 3px;
   width: 300px;
   display: inline-block;
+  box-sizing: content-box;
+  line-height: normal;
 
   .nutrition-facts-title {
     font-size: 22px;
     border-bottom: 1px solid black;
-    font-weight: bold;
+    font-weight: 600;
+    text-align: center;
   }
 
   .nutrition-facts-servings {

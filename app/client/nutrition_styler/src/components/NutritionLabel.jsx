@@ -124,26 +124,7 @@ export default class NutritionLabel extends PureComponent {
           <div className="protein fact-percent">6%</div>
         </div>
         <div className="nutrition-facts-vitamins">
-          <div className="vitamin-d vitamin-facts-line">
-            <div className="vitamin-d fact-label">Vitamin D</div>{' '}
-            <div className="vitamin-d fact-value">2mcg</div>
-            <div className="vitamin-d fact-percent">10%</div>
-          </div>
-          <div className="calcium vitamin-facts-line">
-            <div className="calcium fact-label">Calcium</div>{' '}
-            <div className="calcium fact-value">260mg</div>
-            <div className="calcium fact-percent">20%</div>
-          </div>
-          <div className="iron vitamin-facts-line">
-            <div className="iron fact-label">Iron</div>{' '}
-            <div className="iron fact-value">260mg</div>
-            <div className="iron fact-percent">10%</div>
-          </div>
-          <div className="potassium vitamin-facts-line">
-            <div className="potassium fact-label">Potassium</div>{' '}
-            <div className="potassium fact-value">235mg</div>
-            <div className="potassium fact-percent">6%</div>
-          </div>
+          4% Vitamin A 0% Vitamin C 2% Calcium 4% Iron
         </div>
         <div className="nutrition-facts-daily-value">
           The % Daily Value (DV) tells you how much a nutrient in a serving of
