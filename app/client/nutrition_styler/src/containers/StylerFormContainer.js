@@ -1,13 +1,20 @@
 import { connect } from 'react-redux';
 import StylerForm from '../components/StylerForm';
-import { getActiveSelector, getActiveRules, getActiveOriginalRules } from '../store';
 import { setStyle, resetSelection } from '../actions';
+import {
+  getActiveSelector,
+  getActiveRules,
+  getActiveOriginalRules
+} from '../store';
 
 const mapStateToProps = ($$state) => {
   const activeSelector = getActiveSelector($$state);
   const activeSelectorRules = getActiveRules($$state);
   const activeSelectorOriginalRules = getActiveOriginalRules($$state);
-  const currentRules = Object.assign(activeSelectorOriginalRules, activeSelectorRules);
+  const currentRules = Object.assign(
+    activeSelectorOriginalRules,
+    activeSelectorRules
+  );
   return {
     activeSelector,
     disabled: !activeSelector,

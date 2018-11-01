@@ -1,3 +1,5 @@
+import { hoverClassName } from '../components/NutritionLabel';
+
 const rgbToHex = require('rgb-to-hex');
 const transparent = 'rgba(0, 0, 0, 0)';
 
@@ -5,7 +7,7 @@ export default class CssToRulesConverter {
   constructor(activeSelector) {
     this.activeSelector = activeSelector;
     this.element = document.querySelector(this.activeSelector);
-    this.computedStyles = window.getComputedStyle(this.element);
+    this.computedStyles = this._getComputedStyles();
   }
 
   rules() {
@@ -45,5 +47,23 @@ export default class CssToRulesConverter {
   _getBold() {
     const fontWeight = this.computedStyles.fontWeight;
     return fontWeight === '700' || fontWeight === 'bold';
+  }
+
+  // here we temporarily remove the class that is added on hover to get the
+  // styles with the "true" background color. we copy the styles because they
+  // are otherwise live and will reflect when we add the hover class back.
+  _getComputedStyles() {
+    if (this.activeSelector) {
+      let styles = {};
+      if (this.element.classList.contains(hoverClassName)) {
+        this.element.classList.remove(hoverClassName);
+        styles = Object.assign({}, window.getComputedStyle(this.element));
+        this.element.classList.add(hoverClassName);
+      } else {
+        styles = Object.assign({}, window.getComputedStyle(this.element));
+      }
+      return styles;
+    }
+    return null;
   }
 }
