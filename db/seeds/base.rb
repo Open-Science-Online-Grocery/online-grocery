@@ -6,6 +6,7 @@ module Seeds
       Seeds.seed_from(Seeds::Base::Categories)
       Seeds.seed_from(Seeds::Base::Subcategories)
       Seeds.seed_from(Seeds::Base::Products)
+      Seeds.seed_from(Seeds::Base::Labels)
     end
   end
 end
