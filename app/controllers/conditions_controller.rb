@@ -8,7 +8,7 @@ class ConditionsController < ApplicationController
 
   def new
     @resource_name = 'Add Condition'
-    @condition = Condition.new
+    @condition = ConditionPresenter.new(Condition.new)
   end
 
   def create
@@ -53,12 +53,15 @@ class ConditionsController < ApplicationController
   end
 
   private def set_condition
-    @condition = Condition.find(params[:id])
-    @experiment = @condition.experiment
+    @condition = ConditionPresenter.new(Condition.find(params[:id]))
   end
 
   private def condition_params
-    params.require(:condition).permit(:name, :nutrition_styles)
+    params.require(:condition).permit(
+      :name,
+      :nutrition_styles,
+      label_attributes: %i[id image name]
+    )
   end
 
   private def set_breadcrumbs

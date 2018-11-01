@@ -8,8 +8,9 @@ class Condition < ApplicationRecord
   validates :name, uniqueness: { scope: :experiment_id }
 
   belongs_to :experiment
+  belongs_to :label, optional: true
 
-  has_one_attached :custom_image
+  accepts_nested_attributes_for :label
 
   # TODO: update if needed
   def url

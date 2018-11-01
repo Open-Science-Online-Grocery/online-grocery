@@ -13,8 +13,28 @@
             <%= f.radio_button :label_type, 'custom' %>
             <label>Use custom label</label>
           </div>
-          <div class="nested-field">
-            <%= f.file_field :custom_label %>
+          <div class="ui segment nested-fields">
+            <%= f.fields_for :label, condition.custom_label do |custom_label_fields| %>
+              <div class="field">
+                <%= custom_label_fields.label :name %>
+                <%= custom_label_fields.text_field :name %>
+              </div>
+              <% if custom_label_fields.object.image %>
+                <div class="field">
+                  <label>Current image</label>
+                  <%= link_to(custom_label_fields.object.name, url_for(custom_label_fields.object.image)) %>
+                </div>
+                <div class="field">
+                  <%= custom_label_fields.label :image, 'Replace image' %>
+                  <%= custom_label_fields.file_field :image %>
+                </div>
+              <% else %>
+                <div class="field">
+                  <%= custom_label_fields.label :image, 'Upload image' %>
+                  <%= custom_label_fields.file_field :image %>
+                </div>
+              <% end %>
+            <% end %>
           </div>
         </div>
         <div class="field">
