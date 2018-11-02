@@ -38,3 +38,5 @@ yarn-debug.log*
 config/database.yml
 
 package-lock.json
+
+**/coverage/**/*

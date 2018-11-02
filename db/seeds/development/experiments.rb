@@ -5,7 +5,7 @@ module Seeds
     module Experiments
       def self.seed_experiments
         User.find_each do |user|
-          return if user.experiments.any?
+          break if user.experiments.any?
 
           3.times do
             Experiment.create!(

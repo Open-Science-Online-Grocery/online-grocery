@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# responsible for any extra data manipulation needed when saving a Condition
 class ConditionSaver
   attr_reader :errors
 
@@ -24,14 +25,10 @@ class ConditionSaver
   end
 
   private def clear_unselected_label_fields
-    if @params[:label_type].in?(['none', 'provided'])
+    if @params[:label_type].in?(%w[none provided])
       @params.delete(:label_attributes)
     end
-    if @params[:label_type] == 'custom'
-      @params.delete(:label_id)
-    end
-    if @params[:label_type] == 'none'
-      @params[:label_id] = nil
-    end
+    @params.delete(:label_id) if @params[:label_type] == 'custom'
+    @params[:label_id] = nil if @params[:label_type] == 'none'
   end
 end

@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe ConditionSaver do
   let(:condition) { Condition.new }
+
   subject { described_class.new(condition, params) }
 
   before do

@@ -1,4 +1,4 @@
-<div class="ui bottom attached active tab segment" data-tab="labeling" data-radio-button-subform>
+<div class="ui bottom attached tab segment" data-tab="labeling" data-radio-button-subform>
   <div class="ui grid">
     <div class="eight wide column">
       <div class="grouped fields">
@@ -45,6 +45,7 @@
           </div>
           <div class="ui segment nested-fields">
             <div class="field">
+              <%= f.label :label_id %>
               <%= f.collection_select(:label_id, Label.built_in, :id, :name, { include_blank: true }, class: 'ui dropdown') %>
             </div>
           </div>

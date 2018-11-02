@@ -156,6 +156,7 @@ StylerForm.propTypes = {
 };
 
 StylerForm.defaultProps = {
+  inputValue: null,
   activeSelector: null,
   fontFamily: null,
   fontSize: '',

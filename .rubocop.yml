@@ -14,6 +14,7 @@ AllCops:
     - '**/Rakefile'
     - '**/Vagrantfile'
     - '**/db/schema.rb'
+    - 'db/migrate/*_create_active_storage_tables.active_storage.rb'
   TargetRubyVersion: 2.4
   TargetRailsVersion: 5.2
 
@@ -50,6 +51,10 @@ Metrics/BlockLength:
     - '**/helpers/**/*'
     - '**/db/migrate/**/*'
     - '**/spec/**/*'
+Metrics/ClassLength:
+  Exclude:
+    - '**/db/migrate/**/*'
+    - '**/db/seeds/**/*'
 Metrics/CyclomaticComplexity:
   Max: 5
 Metrics/LineLength:
@@ -57,12 +62,14 @@ Metrics/LineLength:
     - '**/bin/**/*'
     - '**/config/**/*'
     - '**/db/migrate/**/*'
+    - '**/db/seeds/**/*'
     - '**/spec/**/*'
   Max: 80
 Metrics/MethodLength:
   Max: 15
   Exclude:
     - '**/db/migrate/**/*'
+    - '**/db/seeds/**/*'
 Metrics/PerceivedComplexity:
   Max: 5
 
@@ -107,6 +114,12 @@ Rails/Output:
     - '**/lib/tasks/**/*'
 Rails/UniqBeforePluck:
   EnforcedStyle: aggressive
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - development
+    - test
+    - staging
 
 # Prefer eql
 RSpec/BeEql:
@@ -128,6 +141,8 @@ RSpec/MultipleExpectations:
 RSpec/NamedSubject:
   Enabled: false
 RSpec/NestedGroups:
+  Enabled: false
+RSpec/MessageSpies:
   Enabled: false
 RSpec/SubjectStub:
   Enabled: false
@@ -175,7 +190,7 @@ Style/StringMethods:
 Layout/CaseIndentation:
   Enabled: false
 Layout/EmptyLineAfterGuardClause:
-  Enabled: true
+  Enabled: false
 
 Rails/SaveBang:
   Enabled: true

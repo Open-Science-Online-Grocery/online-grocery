@@ -28,6 +28,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'chromedriver-helper'
   gem 'git_rails_tagger', git: 'git@git.scimedsolutions.com:scimed/git_rails_tagger.git'
   gem 'letter_opener'
   gem 'listen'
@@ -38,9 +39,11 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'chromedriver-helper'
+  gem 'capybara-screenshot'
   gem 'database_cleaner'
+  gem 'headless'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
+  gem 'simplecov'
 end
 
