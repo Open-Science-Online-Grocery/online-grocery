@@ -1,4 +1,13 @@
+
 <div class="ui bottom attached active tab segment" data-tab="labeling" data-radio-button-subform>
+  <style>
+    .overlay {
+      background-image: url('<%= url_for(condition.label.image) %>');
+      background-position: <%= condition.label_position %>;
+      background-size: <%= condition.label_size %>%;
+    }
+  </style>
+
   <div class="ui grid">
     <div class="eight wide column">
       <div class="grouped fields">
@@ -72,6 +81,7 @@
         <label>Preview</label>
         <div class="ui segment">
           <%= image_tag 'apple.png' %>
+          <div class="overlay"></div>
         </div>
       </div>
     </div>
