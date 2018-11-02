@@ -1,6 +1,7 @@
 import TableRowLinker from './TableRowLinker';
 import FormValidator from './FormValidator';
 import ModalConfirm from './ModalConfirm';
+import FormRefresher from './FormRefresher';
 
 export default class Initializer {
   constructor($scope) {
@@ -14,6 +15,7 @@ export default class Initializer {
     this.initializeTabs();
     this.initializeDropdowns();
     this.initializeCheckboxes();
+    this.initializeFormRefreshing();
   }
 
   initializeTableRowLinks() {
@@ -57,5 +59,12 @@ export default class Initializer {
     if ($checkboxes.length) {
       $checkboxes.checkbox();
     }
+  }
+
+  initializeFormRefreshing() {
+    const $refreshableForms = this.$scope.find('form[data-refresh-url]');
+    $refreshableForms.each((index, element) => (
+      new FormRefresher($(element)).init()
+    ));
   }
 }

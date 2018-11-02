@@ -18,3 +18,8 @@ window.$ = jQuery;
 $(document).ready(() => {
   new Initializer($('body')).initialize();
 });
+
+$(document).on('initialize', (_event, insertedItem) => {
+  const $insertedItem = $(insertedItem);
+  new Initializer($insertedItem).initialize();
+});

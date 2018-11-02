@@ -3,25 +3,28 @@
 class ConditionsController < ApplicationController
   before_action :set_experiment
   before_action :set_breadcrumbs
+  before_action :set_condition
 
-  before_action :set_condition, only: %i[edit update destroy]
+  def refresh_form
+    manager = ConditionManager.new(@condition, condition_params)
+    manager.assign_params
+    render @condition.id? ? 'edit' : 'new'
+  end
 
   def new
     @resource_name = 'Add Condition'
-    @condition = ConditionPresenter.new(Condition.new)
   end
 
   def create
-    @condition = @experiment.conditions.build
-    saver = ConditionSaver.new(@condition, condition_params)
-    if saver.save_condition
+    manager = ConditionManager.new(@condition, condition_params)
+    if manager.update_condition
       flash[:success] = 'Condition successfully created'
       redirect_to edit_experiment_condition_path(@experiment, @condition)
     else
       @messages = {
         error: {
           header: 'Unable to save condition',
-          messages: saver.errors
+          messages: manager.errors
         }
       }
       @resource_name = 'Add Condition'
@@ -34,14 +37,14 @@ class ConditionsController < ApplicationController
   end
 
   def update
-    saver = ConditionSaver.new(@condition, condition_params)
-    if saver.save_condition
+    manager = ConditionManager.new(@condition, condition_params)
+    if manager.update_condition
       flash.now[:success] = 'Condition successfully updated'
     else
       @messages = {
         error: {
           header: 'Unable to save condition',
-          messages: saver.errors
+          messages: manager.errors
         }
       }
     end
@@ -64,7 +67,12 @@ class ConditionsController < ApplicationController
   end
 
   private def set_condition
-    @condition = ConditionPresenter.new(Condition.find(params[:id]))
+    if params[:id].present?
+      condition = Condition.find(params[:id])
+    else
+      condition = @experiment.conditions.build
+    end
+    @condition = ConditionPresenter.new(condition)
   end
 
   private def condition_params

@@ -1,25 +1,27 @@
 
 <div class="ui bottom attached active tab segment" data-tab="labeling" data-radio-button-subform>
-  <style>
-    .overlay {
-      background-image: url('<%= url_for(condition.label.image) %>');
-      background-position: <%= condition.label_position %>;
-      background-size: <%= condition.label_size %>%;
-    }
-  </style>
+  <% if condition.label && condition.label.image.attached? %>
+    <style>
+      .overlay {
+        background-image: url('<%= url_for(condition.label.image) %>');
+        background-position: <%= condition.label_position %>;
+        background-size: <%= condition.label_size %>%;
+      }
+    </style>
+  <% end %>
 
   <div class="ui grid">
     <div class="eight wide column">
       <div class="grouped fields">
         <div class="field">
           <div class="ui radio checkbox">
-            <%= f.radio_button :label_type, 'none' %>
+            <%= f.radio_button :label_type, 'none', data: { refresh_form: true } %>
             <label>No label</label>
           </div>
         </div>
         <div class="field">
           <div class="ui radio checkbox">
-            <%= f.radio_button :label_type, 'custom' %>
+            <%= f.radio_button :label_type, 'custom', data: { refresh_form: true } %>
             <label>Use custom label</label>
           </div>
           <div class="ui segment nested-fields">
@@ -55,7 +57,17 @@
           <div class="ui segment nested-fields">
             <div class="field">
               <%= f.label :label_id %>
-              <%= f.collection_select(:label_id, Label.built_in, :id, :name, { include_blank: true }, class: 'ui dropdown') %>
+              <%=
+                f.collection_select(
+                  :label_id,
+                  Label.built_in,
+                  :id,
+                  :name,
+                  { include_blank: true },
+                  class: 'ui dropdown',
+                  data: { refresh_form: true }
+                )
+              %>
             </div>
           </div>
         </div>
