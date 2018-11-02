@@ -34,16 +34,16 @@
               <% if custom_label_fields.object.image.attached? %>
                 <div class="field">
                   <label>Current image</label>
-                  <%= link_to(custom_label_fields.object.name, url_for(custom_label_fields.object.image)) %>
+                  <%= link_to(custom_label_fields.object.name.presence || 'Unnamed', url_for(custom_label_fields.object.image)) %>
                 </div>
                 <div class="field">
                   <%= custom_label_fields.label :image, 'Replace image' %>
-                  <%= custom_label_fields.file_field :image %>
+                  <%= custom_label_fields.file_field :image, data: { refresh_form: true } %>
                 </div>
               <% else %>
                 <div class="required field">
                   <%= custom_label_fields.label :image, 'Upload image' %>
-                  <%= custom_label_fields.file_field :image %>
+                  <%= custom_label_fields.file_field :image, data: { refresh_form: true } %>
                 </div>
               <% end %>
             <% end %>
@@ -76,12 +76,12 @@
       <div class="two fields">
         <div class="field">
           <%= f.label :label_position %>
-          <%= f.select(:label_position, condition.label_position_options, {}, class: 'ui dropdown') %>
+          <%= f.select(:label_position, condition.label_position_options, {}, class: 'ui dropdown', data: { refresh_form: true }) %>
         </div>
         <div class="field">
           <%= f.label :label_size %>
           <div class="ui right labeled input">
-            <%= f.number_field :label_size, min: 0 %>
+            <%= f.text_field :label_size, data: { refresh_form: true } %>
             <div class="ui basic label">%</div>
           </div>
         </div>
