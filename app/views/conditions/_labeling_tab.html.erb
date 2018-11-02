@@ -4,7 +4,7 @@
       <div class="grouped fields">
         <div class="field">
           <div class="ui radio checkbox">
-            <%= f.radio_button :label_type, nil %>
+            <%= f.radio_button :label_type, 'none' %>
             <label>No label</label>
           </div>
         </div>
@@ -20,7 +20,7 @@
                 <%= custom_label_fields.label :name %>
                 <%= custom_label_fields.text_field :name %>
               </div>
-              <% if custom_label_fields.object.image %>
+              <% if custom_label_fields.object.image.attached? %>
                 <div class="field">
                   <label>Current image</label>
                   <%= link_to(custom_label_fields.object.name, url_for(custom_label_fields.object.image)) %>
@@ -30,7 +30,7 @@
                   <%= custom_label_fields.file_field :image %>
                 </div>
               <% else %>
-                <div class="field">
+                <div class="required field">
                   <%= custom_label_fields.label :image, 'Upload image' %>
                   <%= custom_label_fields.file_field :image %>
                 </div>

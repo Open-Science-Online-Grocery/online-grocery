@@ -2,7 +2,7 @@
 
 # represents an experimental condition
 class Condition < ApplicationRecord
-  attr_accessor :label_type
+  attr_writer :label_type
 
   validates :name, :uuid, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
