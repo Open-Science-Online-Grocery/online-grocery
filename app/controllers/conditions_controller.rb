@@ -77,6 +77,7 @@ class ConditionsController < ApplicationController
 
   private def condition_params
     params.require(:condition).permit(
+      :id,
       :name,
       :label_type,
       :label_id,

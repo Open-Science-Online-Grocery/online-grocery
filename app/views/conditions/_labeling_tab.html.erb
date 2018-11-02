@@ -1,5 +1,5 @@
 
-<div class="ui bottom attached active tab segment" data-tab="labeling" data-radio-button-subform>
+<div class="ui bottom attached tab segment" data-tab="labeling" data-radio-button-subform>
   <% if condition.label && condition.label.image.attached? %>
     <style>
       .overlay {
@@ -51,7 +51,7 @@
         </div>
         <div class="field">
           <div class="ui radio checkbox">
-            <%= f.radio_button :label_type, 'provided' %>
+            <%= f.radio_button :label_type, 'provided', data: { refresh_form: true } %>
             <label>Use provided label</label>
           </div>
           <div class="ui segment nested-fields">

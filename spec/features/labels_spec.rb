@@ -18,8 +18,13 @@ RSpec.describe 'Configuring condition labels', :feature do
 
     expect(find('#condition_label_type_none')).to be_checked
 
-    force_click(first('label', text: 'Use provided label'))
-    semantic_select('Label', 'Organic')
+    expect_form_refresh do
+      force_click(first('label', text: 'Use provided label'))
+    end
+    expect_form_refresh do
+      semantic_select('Label', 'Organic')
+    end
+
     force_click_on 'Save'
 
     expect(page).to have_content 'Condition successfully updated'
