@@ -12,7 +12,9 @@ class ConditionSaver
   def save_condition
     add_uuid_to_new_record
     clear_unselected_label_fields
-    @errors += @condition.errors.full_messages unless @condition.update(@params)
+
+    @condition.attributes = @params
+    @errors += @condition.errors.full_messages unless @condition.save
     @errors.none?
   end
 
