@@ -71,8 +71,10 @@ class ConditionsController < ApplicationController
     params.require(:condition).permit(
       :name,
       :label_type,
-      :nutrition_styles,
       :label_id,
+      :label_position,
+      :label_size,
+      :nutrition_styles,
       label_attributes: %i[id image name built_in]
     )
   end

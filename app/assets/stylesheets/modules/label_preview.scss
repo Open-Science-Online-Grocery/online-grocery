@@ -1,0 +1,14 @@
+.label-preview {
+  padding-left: 20%;
+  padding-top: 10%;
+
+  .ui.segment {
+    height: 300px;
+    width: 300px;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-<div class="ui bottom attached tab segment" data-tab="labeling" data-radio-button-subform>
+<div class="ui bottom attached active tab segment" data-tab="labeling" data-radio-button-subform>
   <div class="ui grid">
     <div class="eight wide column">
       <div class="grouped fields">
@@ -51,9 +51,29 @@
           </div>
         </div>
       </div>
+      <div class="ui hidden divider"></div>
+      <div class="two fields">
+        <div class="field">
+          <%= f.label :label_position %>
+          <%= f.select(:label_position, condition.label_position_options, {}, class: 'ui dropdown') %>
+        </div>
+        <div class="field">
+          <%= f.label :label_size %>
+          <div class="ui right labeled input">
+            <%= f.number_field :label_size, min: 0 %>
+            <div class="ui basic label">%</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="eight wide column">
+      <div class="field label-preview">
+        <label>Preview</label>
+        <div class="ui segment">
+          <%= image_tag 'apple.png' %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

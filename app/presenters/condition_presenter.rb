@@ -12,4 +12,18 @@ class ConditionPresenter < SimpleDelegator
     return 'none' if label.nil?
     label.built_in? ? 'provided' : 'custom'
   end
+
+  def label_position_options
+    [
+      'top left',
+      'top center',
+      'top right',
+      'center left',
+      'center',
+      'center right',
+      'bottom left',
+      'bottom center',
+      'bottom right'
+    ]
+  end
 end
