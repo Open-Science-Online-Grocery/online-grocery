@@ -9,6 +9,8 @@ RSpec.describe 'Experiment model CRUD', :feature do
   end
 
   it 'allows creating, updating, and deleting experiments', :js do
+    expect(page).to have_content 'You have not yet added any experiments'
+
     force_click_on('Add Experiment')
 
     # invalid creation
