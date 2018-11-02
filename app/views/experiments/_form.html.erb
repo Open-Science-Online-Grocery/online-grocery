@@ -1,6 +1,6 @@
 <%= form_for experiment, html: { class: "ui form" }, data: { form_validation: true } do |f| %>
   <div class="required field">
-    <%= f.label :name do %>Experiment Name<% end %>
+    <%= f.label :name %>
     <%= f.text_field :name, data: { validation: 'empty|maxLength[255]' } %>
   </div>
 

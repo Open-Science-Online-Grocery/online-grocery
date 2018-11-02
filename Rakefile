@@ -2,12 +2,12 @@
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
 require_relative 'config/application'
-require 'rspec/core/rake_task'
-require 'bundler/audit/task'
 
 Rails.application.load_tasks
 
 if Rails.env.test? || Rails.env.development?
+  require 'rspec/core/rake_task'
+
   task :rubocop do
     sh 'rubocop --fail-level convention'
   end

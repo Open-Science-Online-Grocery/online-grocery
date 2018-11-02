@@ -44,6 +44,6 @@ group :test do
   gem 'headless'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
-  gem 'simplecov'
+  gem 'simplecov', require: false
 end
 
