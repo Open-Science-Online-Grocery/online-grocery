@@ -1,0 +1,32 @@
+.calculator {
+  > div {
+    margin-bottom: 1rem;
+
+    &.ui.buttons {
+      margin-bottom: 0.5rem;
+
+      &.digits {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  .insert-field {
+    display: flex;
+
+    .dropdown.selection {
+      flex-grow: 1;
+    }
+
+    .button {
+      margin-left: 1rem;
+      margin-right: 0;
+    }
+  }
+
+  .ui.buttons.operators {
+    .ui.button {
+      width: 12.5%;
+    }
+  }
+}
