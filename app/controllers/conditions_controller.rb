@@ -2,8 +2,9 @@
 
 class ConditionsController < ApplicationController
   before_action :set_experiment
-  before_action :set_breadcrumbs
   before_action :set_condition
+  before_action :set_breadcrumbs
+  before_action :set_tab
 
   def refresh_form
     manager = ConditionManager.new(@condition, condition_params)
@@ -92,6 +93,10 @@ class ConditionsController < ApplicationController
     @breadcrumbs = [
       OpenStruct.new(name: @experiment.name, path: experiment_path(@experiment))
     ]
+  end
+
+  private def set_tab
+    @tab = params[:tab] || 'basic-info'
   end
 
   private def set_experiment

@@ -14,8 +14,10 @@
     ) do |f|
   %>
     <%= hidden_field_tag :id, condition.id %>
+    <%= hidden_field_tag :tab, @tab %>
+
     <div class="ui top attached tabular menu">
-      <div class="active item" data-tab="basic-info">Basic Information</div>
+      <div class="item" data-tab="basic-info">Basic Information</div>
       <div class="item" data-tab="labeling">Labeling</div>
       <div class="item" data-tab="sorting">Sorting</div>
       <div class="item" data-tab="categories">Categories</div>

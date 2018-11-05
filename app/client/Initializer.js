@@ -38,10 +38,17 @@ export default class Initializer {
   }
 
   initializeTabs() {
+    const currentTabInput = $('input[name="tab"]');
+    const currentTab = currentTabInput.val();
     const $tabs = this.$scope.find('.menu .item[data-tab]');
-    if ($tabs.length) {
-      $tabs.tab();
-    }
+    $tabs.each((index, element) => {
+      const $tab = $(element);
+      if ($tab.data('tab') === currentTab) {
+        $tab.addClass('active');
+        $(`.tab.segment[data-tab="${currentTab}"]`).addClass('active');
+      }
+      $tab.tab({ onVisible: tab => currentTabInput.val(tab) });
+    });
   }
 
   initializeDropdowns() {
