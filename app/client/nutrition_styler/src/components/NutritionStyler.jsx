@@ -11,10 +11,10 @@ export default class NutritionStyler extends PureComponent {
           <StylerFormContainer />
         </div>
         <div className="nutrition-label">
-          <NutritionLabelContainer />
           <style>
             {this.props.cssRules}
           </style>
+          <NutritionLabelContainer />
         </div>
       </div>
     );

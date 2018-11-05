@@ -7,8 +7,6 @@ export const selectedClassName = 'selected';
 export default class NutritionLabel extends PureComponent {
   constructor(props) {
     super(props);
-    this.handleMouseOver = this.handleMouseOver.bind(this);
-    this.handleMouseOut = this.handleMouseOut.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -22,13 +20,15 @@ export default class NutritionLabel extends PureComponent {
 
   getActiveSelector(element) {
     const classes = Array.from(element.classList);
+    // we remove the hover and selected class names because they are temporary
+    // and won't help us identify the target element later.
     if (element.classList.contains(hoverClassName)) {
       classes.splice(classes.indexOf(hoverClassName), 1);
     }
     if (element.classList.contains(selectedClassName)) {
       classes.splice(classes.indexOf(selectedClassName), 1);
     }
-    return classes.join(' ');
+    return `.${classes.join('.')}`;
   }
 
   handleMouseOver(event) {
@@ -40,6 +40,7 @@ export default class NutritionLabel extends PureComponent {
   }
 
   handleClick(event) {
+    if (event.target.closest('.styler-form')) return;
     document.querySelectorAll(`.${selectedClassName}`).forEach(
       element => element.classList.remove(selectedClassName)
     );

@@ -5,8 +5,30 @@
     flex-grow: 1;
     margin-right: 1rem;
 
-    p.disabled {
-      color: $disabled-text-color;
+    p {
+      margin: 0;
+
+      &.disabled {
+        color: $disabled-text-color;
+      }
+    }
+
+    button.ui.button:focus {
+      background-color: $cancel-color;
+
+      &.active {
+        background-color: $cancel-highlight-color;
+      }
+    }
+
+    .actions {
+      span {
+        padding-right: 1rem;
+      }
+
+      button {
+        margin-right: 1rem;
+      }
     }
   }
 
@@ -21,7 +43,7 @@
       }
 
       div.selected {
-        border: 1px solid gray;
+        border: 1px solid $dark-theme-color;
       }
     }
   }

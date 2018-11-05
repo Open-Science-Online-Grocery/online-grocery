@@ -1,8 +1,7 @@
 export const SET_ACTIVE_SELECTOR = 'SET_ACTIVE_SELECTOR';
 export const SET_STYLE = 'SET_STYLE';
-export const TOGGLE_LIST_STYLE = 'TOGGLE_LIST_STYLE';
-export const APPLY_STYLES = 'APPLY_STYLES';
-export const RESET = 'RESET';
+export const RESET_SELECTION = 'RESET_SELECTION';
+export const RESET_ALL = 'RESET_ALL';
 
 export function setActiveSelector(activeSelector) {
   return {
@@ -11,30 +10,20 @@ export function setActiveSelector(activeSelector) {
   };
 }
 
-// used for CSS rules where we are setting the value as a whole (like
-// `font_size: 8px`)
-export function setStyle(property, value) {
+export function setStyle(activeSelector, property, value) {
   return {
     type: SET_STYLE,
-    payload: { property, value }
+    payload: { activeSelector, property, value }
   };
 }
 
-// used for CSS rules where the value is a list and we are only adding/removing
-// a single element in the list at a time (like `text-decoration:
-// line-through, underline`).  only one value (like `underline`) is passed to
-// this function at a time.
-export function setListStyle(property, value) {
+export function resetSelection(activeSelector) {
   return {
-    type: TOGGLE_LIST_STYLE,
-    payload: { property, value }
+    type: RESET_SELECTION,
+    payload: { activeSelector }
   };
 }
 
-export function applyStyles() {
-  return { type: APPLY_STYLES };
-}
-
-export function reset() {
-  return { type: RESET };
+export function resetAll() {
+  return { type: RESET_ALL };
 }
