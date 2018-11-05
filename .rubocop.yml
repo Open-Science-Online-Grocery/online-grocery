@@ -50,6 +50,7 @@ Metrics/BlockLength:
     - '**/config/**/*'
     - '**/helpers/**/*'
     - '**/db/migrate/**/*'
+    - '**/db/seeds/**/*'
     - '**/spec/**/*'
 Metrics/ClassLength:
   Exclude:

@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux-immutable';
 import { SET_ACTIVE_SELECTOR } from '../actions';
-import selectors, * as fromSelectors from './selectors';
+import cssSelectors, * as fromCssSelectors from './cssSelectors';
 
 /* ****************************** selectors ********************************* */
 export function getCssRules($$state) {
-  return fromSelectors.getCssRules($$state.get('selectors'));
+  return fromCssSelectors.getCssRules($$state.get('cssSelectors'));
 }
 
 export function getActiveSelector($$state) {
@@ -12,16 +12,16 @@ export function getActiveSelector($$state) {
 }
 
 export function getActiveRules($$state) {
-  const rules = fromSelectors.getRulesForSelector(
-    $$state.get('selectors'),
+  const rules = fromCssSelectors.getRulesForSelector(
+    $$state.get('cssSelectors'),
     getActiveSelector($$state)
   );
   return rules ? rules.toJS() : {};
 }
 
 export function getActiveOriginalRules($$state) {
-  const rules = fromSelectors.getOriginalRulesForSelector(
-    $$state.get('selectors'),
+  const rules = fromCssSelectors.getOriginalRulesForSelector(
+    $$state.get('cssSelectors'),
     getActiveSelector($$state)
   );
   return rules ? rules.toJS() : {};
@@ -29,7 +29,7 @@ export function getActiveOriginalRules($$state) {
 
 export function getInputValue($$state) {
   return JSON.stringify(
-    fromSelectors.getInputValue($$state.get('selectors')).toJS()
+    fromCssSelectors.getInputValue($$state.get('cssSelectors')).toJS()
   );
 }
 
@@ -50,7 +50,7 @@ function activeSelector(state = null, action) {
 
 const rootReducer = combineReducers({
   activeSelector,
-  selectors
+  cssSelectors
 });
 
 export default rootReducer;
