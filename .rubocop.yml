@@ -49,6 +49,7 @@ Metrics/BlockLength:
     - '**/config/**/*'
     - '**/helpers/**/*'
     - '**/db/migrate/**/*'
+    - '**/db/seeds/**/*'
     - '**/spec/**/*'
 Metrics/CyclomaticComplexity:
   Max: 5
@@ -57,12 +58,14 @@ Metrics/LineLength:
     - '**/bin/**/*'
     - '**/config/**/*'
     - '**/db/migrate/**/*'
+    - '**/db/seeds/**/*'
     - '**/spec/**/*'
   Max: 80
 Metrics/MethodLength:
   Max: 15
   Exclude:
     - '**/db/migrate/**/*'
+    - '**/db/seeds/**/*'
 Metrics/PerceivedComplexity:
   Max: 5
 
@@ -107,6 +110,12 @@ Rails/Output:
     - '**/lib/tasks/**/*'
 Rails/UniqBeforePluck:
   EnforcedStyle: aggressive
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - development
+    - test
+    - staging
 
 # Prefer eql
 RSpec/BeEql:
@@ -175,7 +184,7 @@ Style/StringMethods:
 Layout/CaseIndentation:
   Enabled: false
 Layout/EmptyLineAfterGuardClause:
-  Enabled: true
+  Enabled: false
 
 Rails/SaveBang:
   Enabled: true

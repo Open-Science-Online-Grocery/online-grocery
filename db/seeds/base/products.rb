@@ -5,6 +5,7 @@ require 'csv'
 module Seeds
   module Base
     module Products
+      # rubocop:disable Metrics/AbcSize
       def self.seed_products
         return if Product.any?
         category_ids_by_name = {}
@@ -17,11 +18,7 @@ module Seeds
         end
 
         csv = Rails.root.join('db', 'seeds', 'base', 'products.csv')
-        i = 0
         CSV.foreach(csv, headers: true) do |row|
-          i += 1
-
-          puts "row #{i}" if i % 1000 == 0
           category_id = category_ids_by_name[row['category_name']]
           subcategory_id = subcategory_ids_by_name[row['subcategory_name']]
 
@@ -29,6 +26,7 @@ module Seeds
           Product.create!(product_attrs.merge(category_id: category_id, subcategory_id: subcategory_id))
         end
       end
+      # rubocop:enable Metrics/AbcSize
     end
   end
 end
