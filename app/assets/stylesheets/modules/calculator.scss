@@ -11,6 +11,21 @@
     }
   }
 
+  .token {
+    display: inline-block;
+    margin: 0 0.3rem;
+
+    &.digit {
+      margin: 0;
+    }
+
+    &.variable {
+      background-color: #ddd;
+      padding: 0.3rem 0.5rem;
+      border-radius: 12px;
+    }
+  }
+
   .insert-field {
     display: flex;
 
@@ -28,5 +43,9 @@
     .ui.button {
       width: 12.5%;
     }
+  }
+
+  .test-button {
+    text-align: right;
   }
 }

@@ -98,13 +98,22 @@
       </div>
     </div>
 
-    <div class="eight wide column">
+    <div class="ten wide column">
       <div class="calculator">
         <div>
           <strong>Show this label on all products where:</strong>
         </div>
         <div>
           <div class="ui segment">
+            <div class="token">(</div>
+            <div class="token variable">GramsOfSugar</div>
+            <div class="token">+</div>
+            <div class="token variable">GramsOfSaturatedFat</div>
+            <div class="token">/</div>
+            <div class="token variable">GramsOfProtein</div>
+            <div class="token">)</div>
+            <div class="token">></div>
+            <div class="token digit">0</div><div class="token digit">.</div><div class="token digit">7</div>
           </div>
         </div>
         <div class="insert-field">
@@ -159,8 +168,9 @@
           <button class="ui button">7</button>
           <button class="ui button">8</button>
           <button class="ui button">9</button>
+          <button class="ui button">.</button>
         </div>
-        <div>
+        <div class="test-button">
           <button class="ui primary button">
             <i class="calculator icon"></i>
             Test calculation
