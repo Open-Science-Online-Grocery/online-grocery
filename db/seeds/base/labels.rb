@@ -21,13 +21,11 @@ module Seeds
         }
         names_to_images.each do |name, image|
           filepath = image_dir.join(image)
-          label = Label.find_or_create_by!(name: name, built_in: true)
-          label.image.attach(
-            io: StringIO.new(File.read(filepath)),
-            filename: image,
-            content_type: 'image/png'
-          )
-          sleep(1) # i don't understand why, but things get stuck without this
+          label = Label.find_or_initialize_by(name: name, built_in: true)
+          File.open(filepath) do |f|
+            label.image = f
+          end
+          label.save!
         end
       end
     end

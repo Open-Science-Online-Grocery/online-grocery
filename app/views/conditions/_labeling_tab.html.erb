@@ -1,9 +1,8 @@
-
 <div class="ui bottom attached tab segment" data-tab="labeling" data-radio-button-subform>
-  <% if condition.label && condition.label.image.attached? %>
+  <% if condition.label && condition.label.image? %>
     <style>
       .overlay {
-        background-image: url('<%= url_for(condition.label.image) %>');
+        background-image: url('<%= condition.label.image.url %>');
         background-position: <%= condition.label_position %>;
         background-size: <%= condition.label_size %>%;
       }
@@ -31,14 +30,15 @@
                 <%= custom_label_fields.label :name %>
                 <%= custom_label_fields.text_field :name %>
               </div>
-              <% if custom_label_fields.object.image.attached? %>
+              <% if custom_label_fields.object.image? %>
                 <div class="field">
                   <label>Current image</label>
-                  <%= link_to(custom_label_fields.object.name.presence || 'Unnamed', url_for(custom_label_fields.object.image)) %>
+                  <%= link_to(custom_label_fields.object.name.presence || 'Unnamed', custom_label_fields.object.image_url) %>
                 </div>
                 <div class="field">
                   <%= custom_label_fields.label :image, 'Replace image' %>
                   <%= custom_label_fields.file_field :image, data: { refresh_form: true } %>
+                  <%= custom_label_fields.hidden_field :image_cache %>
                 </div>
               <% else %>
                 <div class="required field">

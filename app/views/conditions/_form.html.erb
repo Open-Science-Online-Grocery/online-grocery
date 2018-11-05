@@ -5,7 +5,7 @@
   <%=
     form_for(
       [experiment, condition],
-      html: { class: "ui form" },
+      html: { class: 'ui form', multipart: true },
       data: {
         form_validation: true,
         refresh_url: refresh_form_experiment_conditions_path(experiment),

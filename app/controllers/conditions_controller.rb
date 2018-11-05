@@ -7,7 +7,7 @@ class ConditionsController < ApplicationController
   before_action :set_tab
 
   def refresh_form
-    manager = ConditionManager.new(@condition, condition_params)
+    manager = ConditionManager.new(@condition, adjusted_condition_params)
     manager.assign_params
     render @condition.id? ? 'edit' : 'new'
   end
@@ -17,7 +17,7 @@ class ConditionsController < ApplicationController
   end
 
   def create
-    manager = ConditionManager.new(@condition, condition_params)
+    manager = ConditionManager.new(@condition, adjusted_condition_params)
     if manager.update_condition
       flash[:success] = 'Condition successfully created'
       redirect_to edit_experiment_condition_path(@experiment, @condition)
@@ -38,7 +38,7 @@ class ConditionsController < ApplicationController
   end
 
   def update
-    manager = ConditionManager.new(@condition, condition_params)
+    manager = ConditionManager.new(@condition, adjusted_condition_params)
     if manager.update_condition
       flash.now[:success] = 'Condition successfully updated'
     else
@@ -76,6 +76,11 @@ class ConditionsController < ApplicationController
     @condition = ConditionPresenter.new(condition)
   end
 
+  private def adjusted_condition_params
+    adjusted_params = condition_params.dup
+    adjusted_params
+  end
+
   private def condition_params
     params.require(:condition).permit(
       :id,
@@ -85,7 +90,7 @@ class ConditionsController < ApplicationController
       :label_position,
       :label_size,
       :nutrition_styles,
-      label_attributes: %i[id image name built_in]
+      label_attributes: %i[id image image_cache name built_in]
     )
   end
 

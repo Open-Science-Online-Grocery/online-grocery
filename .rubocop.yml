@@ -14,7 +14,6 @@ AllCops:
     - '**/Rakefile'
     - '**/Vagrantfile'
     - '**/db/schema.rb'
-    - 'db/migrate/*_create_active_storage_tables.active_storage.rb'
   TargetRubyVersion: 2.4
   TargetRailsVersion: 5.2
 
