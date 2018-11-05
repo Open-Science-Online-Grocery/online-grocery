@@ -26,6 +26,11 @@
     }
   }
 
+  .cursor {
+    display: inline-block;
+    animation: 1s blink step-end infinite;
+  }
+
   .insert-field {
     display: flex;
 
@@ -47,5 +52,46 @@
 
   .test-button {
     text-align: right;
+  }
+}
+
+@keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+@-moz-keyframes blink {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+@-webkit-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+@-ms-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+@-o-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
   }
 }
