@@ -31,7 +31,7 @@ export function getInputValue($$state) {
   return $$state.map(value => Immutable.Map({ rules: value.get('rules') }));
 }
 
-export default function selectors($$state = Immutable.Map(), action) {
+export default function cssSelectors($$state = Immutable.Map(), action) {
   switch (action.type) {
     case SET_ACTIVE_SELECTOR: {
       const selector = action.payload.activeSelector;
