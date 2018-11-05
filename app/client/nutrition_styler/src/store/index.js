@@ -33,12 +33,7 @@ export function getInputValue($$state) {
   );
 }
 
-
 /* ******************************* reducers ********************************* */
-export function noOpReducer($$defaultState) {
-  return ($$state = $$defaultState) => $$state;
-}
-
 function activeSelector(state = null, action) {
   switch (action.type) {
     case SET_ACTIVE_SELECTOR:
