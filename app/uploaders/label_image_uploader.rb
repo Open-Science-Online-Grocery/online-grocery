@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Carrierwave uploader to add images to Label objects
 class LabelImageUploader < CarrierWave::Uploader::Base
   storage :file
 
