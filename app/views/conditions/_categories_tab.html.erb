@@ -1,2 +1,138 @@
 <div class="ui bottom attached tab segment" data-tab="categories">
+  <div class="page-heading">
+    <h2>Custom Categories</h2>
+
+    <div class="heading-buttons">
+      <%= link_to nil, class: 'ui right floated button' do %>
+        <i class="download icon"></i> Download Product Data
+      <% end %>
+    </div>
+  </div>
+
+  <div class="page-sub-heading">
+    TODO: Add some instructional text here explaining download and re-upload process, file replacement
+  </div>
+
+  <div class="ui hidden divider"></div>
+
+  <%#= f.fields_for :condition, condition.custom do |custom_label_fields| %>
+  <div class="ui basic segment two fields">
+    <div class="field">
+      <label>Current file</label>
+      <%= link_to 'current_file.csv', nil %>
+      <i class="red remove icon"></i>
+    </div>
+
+    <div class="field">
+      <%= f.label :csv_file, 'Replace file' %>
+      <%= f.file_field :csv_file %>
+    </div>
+  </div>
+
+  <div class="ui hidden divider"></div>
+
+  <div class="ui grid">
+    <div class="eight wide column">
+      <h4>Active categories and subcategories</h4>
+      <table class="ui celled table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Subcategory</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <%# subcategories.each do |subcategory| %>
+            <tr>
+              <td>
+                <%#= subcategory.category %>
+                Vegan
+              </td>
+              <td>
+                <%#= subcategory %>
+                Breakfast Foods
+              </td>
+            </tr>
+          <%# end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="eight wide column">
+      <h4>Previously uploaded files</h4>
+      <table class="ui celled table">
+        <thead>
+          <tr>
+            <th>File</th>
+            <th>Uploaded on</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <%# uploaded_files.each do |file| %>
+            <tr>
+              <td>
+                <%#= link_to file %>
+                <%= link_to 'an_old_file.csv', nil %>
+              </td>
+              <td>
+                <%#= file.created_at.to_date %>
+                3/15/2018
+              </td>
+            </tr>
+          <%# end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="ui divider"></div>
+
+  <div class="ui basic segment">
+    <h3>Additional Categories</h3>
+    <h4>Allow users to browse these additional categories:</h4>
+
+    <div class="ui three fields">
+      <div class="field">
+        <div class="ui radio checkbox">
+          <input type="checkbox">
+          <label>WIC approved</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui radio checkbox">
+          <input type="checkbox">
+          <label>Eating disorder recovery</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui radio checkbox">
+          <input type="checkbox">
+          <label>Locally sourced</label>
+        </div>
+      </div>
+    </div>
+    <div class="ui three fields">
+      <div class="field">
+        <div class="ui radio checkbox">
+          <input type="checkbox">
+          <label>SNAP approved</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui radio checkbox">
+          <input type="checkbox">
+          <label>Ketogenic diet</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui radio checkbox">
+          <input type="checkbox">
+          <label>Organic</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%# end %>
 </div>
