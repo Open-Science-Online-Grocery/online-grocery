@@ -18,6 +18,10 @@ export function getInputName($$state) {
   return $$state.get('inputName');
 }
 
+export function getEquationType($$state) {
+  return $$state.get('equationType');
+}
+
 function getTokens($$state) {
   return $$state.get('tokens').toJS();
 }
@@ -79,7 +83,8 @@ const rootReducer = combineReducers({
   cursorPosition,
   tokens,
   variables: noOpReducer(Immutable.Map()),
-  inputName: noOpReducer('')
+  inputName: noOpReducer(''),
+  equationType: noOpReducer('')
 });
 
 export default rootReducer;

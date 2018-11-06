@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import Calculator from '../components/Calculator';
 import { getInputName, getTokensJson } from '../store';
+import { testCalculation } from '../actions';
 
 const mapStateToProps = $$state => (
   {
@@ -9,4 +10,8 @@ const mapStateToProps = $$state => (
   }
 );
 
-export default connect(mapStateToProps)(Calculator);
+const mapDispatchToProps = dispatch => (
+  { testCalculation: () => dispatch(testCalculation()) }
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calculator);

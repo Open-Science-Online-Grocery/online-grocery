@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { Button, Icon } from 'semantic-ui-react';
 import VariableSelectorContainer from '../containers/VariableSelectorContainer';
 import EquationEditorContainer from '../containers/EquationEditorContainer';
 import OperatorButtonRowContainer from '../containers/OperatorButtonRowContainer';
@@ -24,10 +25,10 @@ export default class Calculator extends PureComponent {
         <OperatorButtonRowContainer values={operators3} className="operators" />
         <DigitButtonRowContainer values={digits} className="digits" />
         <div className="test-button">
-          <button type="button" className="ui primary button">
-            <i className="calculator icon" />
-            Test calculation
-          </button>
+          <Button type="button" className="primary" onClick={this.props.testCalculation}>
+            <Icon name="calculator" />
+            Test Calculation
+          </Button>
         </div>
         <input type="hidden" name={this.props.inputName} value={this.props.tokensJson} />
       </div>
@@ -37,5 +38,6 @@ export default class Calculator extends PureComponent {
 
 Calculator.propTypes = {
   inputName: PropTypes.string.isRequired,
-  tokensJson: PropTypes.string.isRequired
+  tokensJson: PropTypes.string.isRequired,
+  testCalculation: PropTypes.func.isRequired
 };
