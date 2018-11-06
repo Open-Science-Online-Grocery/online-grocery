@@ -99,7 +99,12 @@
     </div>
 
     <div class="ten wide column">
-      <div data-calculator data-variables="<%= Calculator.individual_product_variables.to_json %>"></div>
+      <div
+        data-calculator
+        data-variables="<%= Calculator.individual_product_variables.to_json %>"
+        data-input-name="condition[label_equation_tokens]"
+        data-tokens="<%= condition.label_equation_tokens || [] %>"
+      ></div>
     </div>
   </div>
 </div>

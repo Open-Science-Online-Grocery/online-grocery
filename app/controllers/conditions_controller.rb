@@ -84,6 +84,7 @@ class ConditionsController < ApplicationController
       :label_id,
       :label_position,
       :label_size,
+      :label_equation_tokens,
       :nutrition_styles,
       label_attributes: %i[id image image_cache name built_in]
     )

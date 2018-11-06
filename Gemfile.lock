@@ -87,6 +87,7 @@ GEM
     concurrent-ruby (1.0.5)
     crass (1.0.4)
     database_cleaner (1.7.0)
+    dentaku (3.2.1)
     devise (4.5.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -297,6 +298,7 @@ DEPENDENCIES
   carrierwave
   chromedriver-helper
   database_cleaner
+  dentaku
   devise
   factory_bot_rails
   faker

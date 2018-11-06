@@ -14,6 +14,10 @@ export function getCursorPosition($$state) {
   return $$state.get('cursorPosition');
 }
 
+export function getInputName($$state) {
+  return $$state.get('inputName');
+}
+
 function getTokens($$state) {
   return $$state.get('tokens').toJS();
 }
@@ -28,6 +32,10 @@ export function getTokensWithName($$state) {
   return tokensArray.map(
     token => Object.assign(token, { name: getTokenName($$state, token) })
   );
+}
+
+export function getTokensJson($$state) {
+  return JSON.stringify(getTokens($$state));
 }
 
 /* ******************************* reducers ********************************* */
@@ -70,7 +78,8 @@ function tokens($$state = Immutable.List(), action) {
 const rootReducer = combineReducers({
   cursorPosition,
   tokens,
-  variables: noOpReducer(Immutable.Map())
+  variables: noOpReducer(Immutable.Map()),
+  inputName: noOpReducer('')
 });
 
 export default rootReducer;
