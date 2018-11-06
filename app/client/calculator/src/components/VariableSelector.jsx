@@ -5,13 +5,17 @@ import { Button, Icon, Select } from 'semantic-ui-react';
 export default class VariableSelector extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = { selectedVariable: null };
+    this.state = { selectedVariable: '' };
     this.handleSelectChange = (event, data) => (
       this.setState({ selectedVariable: data.value })
     );
-    this.handleButtonClick = () => (
-      this.props.selectToken(this.state.selectedVariable)
-    );
+    this.onButtonClick = this.handleButtonClick.bind(this);
+  }
+
+  handleButtonClick() {
+    if (this.state.selectedVariable.length) {
+      this.props.selectToken(this.state.selectedVariable);
+    }
   }
 
   options() {
@@ -30,7 +34,7 @@ export default class VariableSelector extends PureComponent {
           onChange={this.handleSelectChange}
           placeholder="Select a field"
         />
-        <Button type="button" onClick={this.handleButtonClick}>
+        <Button type="button" onClick={this.onButtonClick}>
           <Icon name="plus" />
           Insert field into calculation
         </Button>
