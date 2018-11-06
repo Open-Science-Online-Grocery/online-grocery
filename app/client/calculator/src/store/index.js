@@ -7,6 +7,10 @@ export function getVariables($$state) {
   return $$state.get('variables').toJS();
 }
 
+export function getCursorPosition($$state) {
+  return $$state.get('cursorPosition');
+}
+
 /* ******************************* reducers ********************************* */
 
 export function noOpReducer($$defaultState) {
