@@ -2,6 +2,8 @@ import Immutable from 'immutable';
 import { combineReducers } from 'redux-immutable';
 import { INSERT_TOKEN } from '../actions';
 
+const uuidv1 = require('uuid/v1');
+
 /* ****************************** selectors ********************************* */
 
 export function getVariables($$state) {
@@ -49,6 +51,7 @@ function tokens($$state = Immutable.List(), action) {
       return $$state.set(
         action.payload.position,
         Immutable.Map({
+          id: uuidv1(), // react needs unique keys for rendering
           type: action.payload.type,
           value: action.payload.value
         })

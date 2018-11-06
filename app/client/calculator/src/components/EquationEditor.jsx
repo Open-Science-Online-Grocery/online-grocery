@@ -4,17 +4,20 @@ import PropTypes from 'prop-types';
 export default class EquationEditor extends PureComponent {
   cursor() {
     return (
-      <div className="cursor">|</div>
+      <div key="cursor" className="cursor">|</div>
     );
   }
 
   tokensWithCursor() {
     const tokens = this.props.tokens.map(
       token => (
-        <div className={`token ${token.type}`}>{token.name || token.value}</div>
+        <div key={token.id} className={`token ${token.type}`}>
+          {token.name || token.value}
+        </div>
       )
     );
-    return tokens.splice(this.props.cursorPosition, 0, this.cursor());
+    tokens.splice(this.props.cursorPosition, 0, this.cursor());
+    return tokens;
   }
 
   render() {
@@ -31,6 +34,7 @@ export default class EquationEditor extends PureComponent {
 EquationEditor.propTypes = {
   tokens: PropTypes.arrayOf(
     PropTypes.shape({
+      id: PropTypes.string.isRequired,
       type: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
       name: PropTypes.string
