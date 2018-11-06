@@ -1,5 +1,6 @@
 import Immutable from 'immutable';
 import { combineReducers } from 'redux-immutable';
+import { INSERT_TOKEN } from '../actions';
 
 /* ****************************** selectors ********************************* */
 
@@ -21,8 +22,8 @@ function getTokenName($$state, token) {
 }
 
 export function getTokensWithName($$state) {
-  const tokens = getTokens($$state);
-  return tokens.map(
+  const tokensArray = getTokens($$state);
+  return tokensArray.map(
     token => Object.assign(token, { name: getTokenName($$state, token) })
   );
 }
@@ -33,10 +34,34 @@ export function noOpReducer($$defaultState) {
   return ($$state = $$defaultState) => $$state;
 }
 
+function cursorPosition(state = 0, action) {
+  switch (action.type) {
+    case INSERT_TOKEN:
+      return state + 1;
+    default:
+      return state;
+  }
+}
+
+function tokens($$state = Immutable.List(), action) {
+  switch (action.type) {
+    case INSERT_TOKEN:
+      return $$state.set(
+        action.payload.position,
+        Immutable.Map({
+          type: action.payload.type,
+          value: action.payload.value
+        })
+      );
+    default:
+      return $$state;
+  }
+}
+
 const rootReducer = combineReducers({
-  variables: noOpReducer(Immutable.Map()),
-  cursorPosition: noOpReducer(0), // TODO,
-  tokens: noOpReducer(Immutable.List()) // TODO
+  cursorPosition,
+  tokens,
+  variables: noOpReducer(Immutable.Map())
 });
 
 export default rootReducer;
