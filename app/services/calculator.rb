@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# responsible for evaluating equations that users specify using
+# the `calculator` React widget
 class Calculator
   def self.individual_product_variables
     {

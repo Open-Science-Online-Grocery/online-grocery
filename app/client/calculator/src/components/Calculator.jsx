@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import VariableSelectorContainer from '../containers/VariableSelectorContainer';
 import EquationEditorContainer from '../containers/EquationEditorContainer';
 import OperatorButtonRowContainer from '../containers/OperatorButtonRowContainer';
@@ -10,6 +9,7 @@ const operators2 = ['<', '>', '<=', '>=', '!=', '=', '(', ')'];
 const operators3 = ['IF', 'AND', 'OR', 'NOT', 'MIN', 'MAX', 'SUM', 'AVG'];
 const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
 
+// eslint-disable-next-line react/prefer-stateless-function
 export default class Calculator extends PureComponent {
   render() {
     return (
