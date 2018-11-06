@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-# responsible for any extra data manipulation needed when saving a Condition
-class ConditionSaver
+# responsible for any extra data manipulation needed when setting attributes on
+# or saving a condition
+class ConditionManager
   attr_reader :errors
 
   def initialize(condition, params)
@@ -10,11 +11,14 @@ class ConditionSaver
     @errors = []
   end
 
-  def save_condition
+  def assign_params
     add_uuid_to_new_record
     clear_unselected_label_fields
-
     @condition.attributes = @params
+  end
+
+  def update_condition
+    assign_params
     @errors += @condition.errors.full_messages unless @condition.save
     @errors.none?
   end

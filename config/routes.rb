@@ -6,7 +6,11 @@ Rails.application.routes.draw do
       get :download_data
     end
 
-    resources :conditions
+    resources :conditions do
+      collection do
+        put :refresh_form
+      end
+    end
   end
 
   root 'experiments#index'

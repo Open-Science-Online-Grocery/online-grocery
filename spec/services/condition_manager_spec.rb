@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ConditionSaver do
+RSpec.describe ConditionManager do
   let(:condition) { Condition.new }
 
   subject { described_class.new(condition, params) }
@@ -19,7 +19,7 @@ RSpec.describe ConditionSaver do
     it 'sets the uuid' do
       expect(condition.uuid).to be_nil
       expect(condition).to receive(:save)
-      expect(subject.save_condition).to eq true
+      expect(subject.update_condition).to eq true
       expect(subject.errors).to be_empty
       expect(condition.uuid).not_to be_nil
     end
@@ -33,7 +33,7 @@ RSpec.describe ConditionSaver do
       end
 
       it 'returns false and has errors' do
-        expect(subject.save_condition).to eq false
+        expect(subject.update_condition).to eq false
         expect(subject.errors).to include 'an error!'
       end
     end
@@ -49,7 +49,7 @@ RSpec.describe ConditionSaver do
     end
 
     it 'removes the label_id' do
-      subject.save_condition
+      subject.update_condition
       expect(condition.label_id).to be_nil
     end
   end
@@ -64,7 +64,7 @@ RSpec.describe ConditionSaver do
     end
 
     it 'removes the label_id' do
-      subject.save_condition
+      subject.update_condition
       expect(condition.label_id).to be_nil
     end
   end

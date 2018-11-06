@@ -1,29 +1,44 @@
 <%= javascript_pack_tag 'nutrition_styler' %>
 <%= javascript_pack_tag 'radio_button_subform' %>
 
-<%= form_for [experiment, condition], html: { class: "ui form" }, data: { form_validation: true } do |f| %>
-  <div class="ui top attached tabular menu">
-    <div class="active item" data-tab="basic-info">Basic Information</div>
-    <div class="item" data-tab="labeling">Labeling</div>
-    <div class="item" data-tab="sorting">Sorting</div>
-    <div class="item" data-tab="categories">Categories</div>
-    <div class="item" data-tab="cart-summary">Cart Summary</div>
-    <div class="item" data-tab="nutrition-facts">Nutrition Facts</div>
-    <div class="item" data-tab="budgeting">Budgeting</div>
-  </div>
+<div data-condition-form>
+  <%=
+    form_for(
+      [experiment, condition],
+      html: { class: 'ui form', multipart: true },
+      data: {
+        form_validation: true,
+        refresh_url: refresh_form_experiment_conditions_path(experiment),
+        refresh_replace_selector: '[data-condition-form]'
+      }
+    ) do |f|
+  %>
+    <%= hidden_field_tag :id, condition.id %>
+    <%= hidden_field_tag :tab, @tab %>
 
-  <%= render "basic_info_tab", f: f %>
-  <%= render "labeling_tab", f: f, condition: condition %>
-  <%= render "sorting_tab", f: f %>
-  <%= render "categories_tab", f: f %>
-  <%= render "cart_summary_tab", f: f %>
-  <%= render "nutrition_facts_tab", f: f, condition: condition %>
-  <%= render "budgeting_tab", f: f %>
+    <div class="ui top attached tabular menu">
+      <div class="item" data-tab="basic-info">Basic Information</div>
+      <div class="item" data-tab="labeling">Labeling</div>
+      <div class="item" data-tab="sorting">Sorting</div>
+      <div class="item" data-tab="categories">Categories</div>
+      <div class="item" data-tab="cart-summary">Cart Summary</div>
+      <div class="item" data-tab="nutrition-facts">Nutrition Facts</div>
+      <div class="item" data-tab="budgeting">Budgeting</div>
+    </div>
 
-  <div class="button-wrapper right">
-    <button type="submit" class="ui positive button" data-tab-submit>
-      <i class="check icon"></i>
-      Save
-    </button>
-  </div>
-<% end %>
+    <%= render "basic_info_tab", f: f %>
+    <%= render "labeling_tab", f: f, condition: condition %>
+    <%= render "sorting_tab", f: f %>
+    <%= render "categories_tab", f: f %>
+    <%= render "cart_summary_tab", f: f %>
+    <%= render "nutrition_facts_tab", f: f, condition: condition %>
+    <%= render "budgeting_tab", f: f %>
+
+    <div class="button-wrapper right">
+      <button type="submit" class="ui positive button" data-tab-submit>
+        <i class="check icon"></i>
+        Save
+      </button>
+    </div>
+  <% end %>
+</div>

@@ -8,8 +8,17 @@ class ConditionPresenter < SimpleDelegator
     label.try(:custom?) ? label : Label.new(built_in: false)
   end
 
-  def label_type
-    return 'none' if label.nil?
-    label.built_in? ? 'provided' : 'custom'
+  def label_position_options
+    [
+      'top left',
+      'top center',
+      'top right',
+      'center left',
+      'center',
+      'center right',
+      'bottom left',
+      'bottom center',
+      'bottom right'
+    ]
   end
 end

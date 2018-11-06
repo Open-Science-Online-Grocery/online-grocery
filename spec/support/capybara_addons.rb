@@ -15,12 +15,18 @@ module CapybaraAddons
     Capybara.current_session.driver.browser.execute_script(script, target)
   end
 
+  def force_change(element)
+    script = "arguments[0].click(); $(arguments[0]).trigger('change');"
+    target = get_target(element)
+    Capybara.current_session.driver.browser.execute_script(script, target)
+  end
+
   def force_click_on(link_or_button_text)
     force_click(first('a, button', text: link_or_button_text))
   end
 
   def semantic_select(label_text, option_text)
-    within(parent_of(find('label', text: label_text))) do
+    within(parent_of(find('label', text: label_text, exact_text: true))) do
       force_click find('.ui.selection.dropdown')
       force_click find('div.item', text: option_text, exact_text: true)
     end
@@ -39,6 +45,12 @@ module CapybaraAddons
     label = find('label', text: label_text)
     input = find("##{label[:for]}")
     force_fill_input(input, datetime)
+  end
+
+  def expect_form_refresh
+    auth_token = find('input[name="authenticity_token"]').value
+    yield
+    expect(page).to have_no_selector("input[value='#{auth_token}']")
   end
 
   private def get_target(element)

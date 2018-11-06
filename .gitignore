@@ -40,3 +40,6 @@ config/database.yml
 package-lock.json
 
 **/coverage/**/*
+
+public/uploads/**/*
+uploads/

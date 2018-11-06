@@ -2,7 +2,7 @@
 
 # represents a picture that can be shown on a product
 class Label < ApplicationRecord
-  has_one_attached :image
+  mount_uploader :image, LabelImageUploader
 
   scope :built_in, -> { where(built_in: true) }
 

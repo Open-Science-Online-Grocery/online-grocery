@@ -16,4 +16,10 @@ class Condition < ApplicationRecord
   def url
     "http://www.howesgrocery.com?condId=#{uuid}"
   end
+
+  def label_type
+    return @label_type if @label_type
+    return 'none' if label.nil?
+    label.built_in? ? 'provided' : 'custom'
+  end
 end
