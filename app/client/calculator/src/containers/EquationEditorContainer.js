@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import EquationEditor from '../components/EquationEditor';
 import { getTokensWithName, getCursorPosition } from '../store';
-import { moveCursor } from '../actions';
+import { moveCursor, deletePreviousToken } from '../actions';
 
 const mapStateToProps = $$state => (
   {
@@ -11,7 +11,10 @@ const mapStateToProps = $$state => (
 );
 
 const mapDispatchToProps = dispatch => (
-  { moveCursor: forwards => dispatch(moveCursor(forwards)) }
+  {
+    moveCursor: forwards => dispatch(moveCursor(forwards)),
+    deletePreviousToken: () => dispatch(deletePreviousToken())
+  }
 );
 
 export default connect(mapStateToProps, mapDispatchToProps)(EquationEditor);

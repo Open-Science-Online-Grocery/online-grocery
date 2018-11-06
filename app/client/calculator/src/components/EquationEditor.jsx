@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const RIGHT = 39;
 const LEFT = 37;
+const BACKSPACE = 8;
 
 export default class EquationEditor extends PureComponent {
   componentDidMount() {
@@ -14,8 +15,9 @@ export default class EquationEditor extends PureComponent {
   }
 
   handleKeydown(event) {
-    if (event.keyCode === RIGHT) this.props.moveCursor(true);
-    if (event.keyCode === LEFT) this.props.moveCursor(false);
+    if (event.keyCode === RIGHT) return this.props.moveCursor(true);
+    if (event.keyCode === LEFT) return this.props.moveCursor(false);
+    if (event.keyCode === BACKSPACE) return this.props.deletePreviousToken();
   }
 
   cursor() {
@@ -57,5 +59,6 @@ EquationEditor.propTypes = {
     })
   ).isRequired,
   cursorPosition: PropTypes.number.isRequired,
-  moveCursor: PropTypes.func.isRequired
+  moveCursor: PropTypes.func.isRequired,
+  deletePreviousToken: PropTypes.func.isRequired
 };

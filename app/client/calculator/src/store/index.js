@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 import { combineReducers } from 'redux-immutable';
-import { INSERT_TOKEN, MOVE_CURSOR } from '../actions';
+import { INSERT_TOKEN, MOVE_CURSOR, REMOVE_TOKEN } from '../actions';
 
 const uuidv1 = require('uuid/v1');
 
@@ -41,7 +41,9 @@ function cursorPosition(state = 0, action) {
     case INSERT_TOKEN:
       return state + 1;
     case MOVE_CURSOR:
-      return action.payload.forwards ? state + 1 : state - 1;
+      return action.payload.forwards ? state + 1 : Math.max(state - 1, 0);
+    case REMOVE_TOKEN:
+      return Math.max(state - 1, 0);
     default:
       return state;
   }
@@ -58,6 +60,8 @@ function tokens($$state = Immutable.List(), action) {
           value: action.payload.value
         })
       );
+    case REMOVE_TOKEN:
+      return $$state.delete(action.payload.position);
     default:
       return $$state;
   }
