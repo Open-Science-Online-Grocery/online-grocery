@@ -35,7 +35,7 @@ export function getValidationMessage($$state) {
   return $$state.get('validationMessage');
 }
 
-function getTokens($$state) {
+export function getTokens($$state) {
   return $$state.get('tokens').toJS();
 }
 

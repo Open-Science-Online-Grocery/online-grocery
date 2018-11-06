@@ -27,7 +27,12 @@ export default class Calculator extends PureComponent {
         <OperatorButtonRowContainer values={operators3} className="operators" />
         <DigitButtonRowContainer values={digits} className="digits" />
         <div className="test-button">
-          <Button type="button" className="primary" onClick={this.props.testCalculation}>
+          <Button
+            type="button"
+            className="primary"
+            onClick={this.props.testCalculation}
+            disabled={!this.props.testable}
+          >
             <Icon name="calculator" />
             Test Calculation
           </Button>
@@ -41,5 +46,6 @@ export default class Calculator extends PureComponent {
 Calculator.propTypes = {
   inputName: PropTypes.string.isRequired,
   tokensJson: PropTypes.string.isRequired,
-  testCalculation: PropTypes.func.isRequired
+  testCalculation: PropTypes.func.isRequired,
+  testable: PropTypes.bool.isRequired
 };
