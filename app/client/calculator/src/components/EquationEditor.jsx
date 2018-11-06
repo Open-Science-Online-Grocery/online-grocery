@@ -22,7 +22,7 @@ export default class EquationEditor extends PureComponent {
 
   render() {
     return (
-      <div>
+      <div className="equation-editor">
         <div className="ui segment">
           {this.tokensWithCursor()}
         </div>

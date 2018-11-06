@@ -11,9 +11,15 @@
     }
   }
 
+  .equation-editor {
+    .ui.segment {
+      min-height: 3.75rem;
+      padding: 0.5rem;
+    }
+  }
   .token {
     display: inline-block;
-    margin: 0 0.3rem;
+    margin: 0.3rem;
 
     &.digit {
       margin: 0;
@@ -29,6 +35,7 @@
   .cursor {
     display: inline-block;
     animation: 1s blink step-end infinite;
+    line-height: 2.5rem;
   }
 
   .insert-field {
