@@ -1,6 +1,11 @@
 import Immutable from 'immutable';
 import { combineReducers } from 'redux-immutable';
-import { INSERT_TOKEN, MOVE_CURSOR, REMOVE_TOKEN } from '../actions';
+import {
+  INSERT_TOKEN,
+  MOVE_CURSOR,
+  REMOVE_TOKEN,
+  REPORT_TEST_RESULTS
+} from '../actions';
 
 const uuidv1 = require('uuid/v1');
 
@@ -20,6 +25,14 @@ export function getInputName($$state) {
 
 export function getEquationType($$state) {
   return $$state.get('equationType');
+}
+
+export function getValid($$state) {
+  return $$state.get('valid');
+}
+
+export function getValidationMessage($$state) {
+  return $$state.get('validationMessage');
 }
 
 function getTokens($$state) {
@@ -79,9 +92,29 @@ function tokens($$state = Immutable.List(), action) {
   }
 }
 
+function valid(state = null, action) {
+  switch (action.type) {
+    case REPORT_TEST_RESULTS:
+      return action.payload.valid;
+    default:
+      return state;
+  }
+}
+
+function validationMessage(state = null, action) {
+  switch (action.type) {
+    case REPORT_TEST_RESULTS:
+      return action.payload.validationMessage;
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
   cursorPosition,
   tokens,
+  valid,
+  validationMessage,
   variables: noOpReducer(Immutable.Map()),
   inputName: noOpReducer(''),
   equationType: noOpReducer('')

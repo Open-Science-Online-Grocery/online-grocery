@@ -55,7 +55,10 @@ function testCalculationFailure(error) {
 function reportTestResults(testResults) {
   return {
     type: REPORT_TEST_RESULTS,
-    payload: { testResults }
+    payload: {
+      valid: testResults.data.valid,
+      validationMessage: testResults.errors.map(e => e.title).join(', ')
+    }
   };
 }
 
