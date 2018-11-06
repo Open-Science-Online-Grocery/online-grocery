@@ -15,6 +15,8 @@
     .ui.segment {
       min-height: 3.75rem;
       padding: 0.5rem;
+      box-shadow: none;
+      -webkit-box-shadow: none;
     }
   }
   .token {
@@ -44,11 +46,15 @@
 
     .dropdown.selection {
       flex-grow: 1;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: none;
     }
 
-    .button {
-      margin-left: 1rem;
-      margin-right: 0;
+    .button.insert {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      margin-right: 1rem;
     }
   }
 

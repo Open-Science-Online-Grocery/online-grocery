@@ -1,7 +1,7 @@
 .ui.button {
   padding-left: 1em;
   padding-right: 1em;
-  border: 1px solid $cancel-highlight-color;
+  border: 1px solid $border-color;
 
   &.positive {
     background-color: $dark-theme-color;
@@ -17,12 +17,12 @@
 }
 
 .ui.buttons {
-  border: 1px solid $cancel-highlight-color;
+  border: 1px solid $border-color;
   border-radius: 4px;
 
   .button {
     border: none;
-    border-right: 1px solid $cancel-highlight-color;
+    border-right: 1px solid $border-color;
 
     &:last-of-type {
       border-right: none;

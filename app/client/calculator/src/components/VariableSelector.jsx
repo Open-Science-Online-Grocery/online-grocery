@@ -34,9 +34,12 @@ export default class VariableSelector extends PureComponent {
           onChange={this.handleSelectChange}
           placeholder="Select a field"
         />
-        <Button type="button" onClick={this.onButtonClick}>
+        <Button className="insert" type="button" onClick={this.onButtonClick}>
           <Icon name="plus" />
           Insert field into calculation
+        </Button>
+        <Button icon type="button" onClick={this.props.deletePreviousToken}>
+          <Icon name="arrow left" />
         </Button>
       </div>
     );
@@ -45,5 +48,6 @@ export default class VariableSelector extends PureComponent {
 
 VariableSelector.propTypes = {
   variables: PropTypes.objectOf(PropTypes.string).isRequired,
-  selectToken: PropTypes.func.isRequired
+  selectToken: PropTypes.func.isRequired,
+  deletePreviousToken: PropTypes.func.isRequired
 };
