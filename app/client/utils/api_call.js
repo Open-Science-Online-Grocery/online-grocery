@@ -1,0 +1,56 @@
+import humps from 'humps';
+import fetch from 'isomorphic-fetch';
+import UnauthorizedRequestHandler from './UnauthorizedRequestHandler';
+
+function parameterizeData(data) {
+  return Object.keys(data).map(key => (
+    `${key}=${encodeURIComponent(data[key])}`
+  )).join('&');
+}
+
+function jsonPost(route, data) {
+  return fetch(
+    route.url,
+    {
+      credentials: 'include',
+      method: route.method,
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.querySelector('meta[name=csrf-token]').content
+      },
+      body: JSON.stringify(data)
+    }
+  );
+}
+
+function jsonGet(route, data) {
+  const url = `${route.url}?${parameterizeData(data)}`;
+  return fetch(url, { credentials: 'include' });
+}
+
+function checkResponse(response) {
+  if (response.ok) { return response.json(); }
+  return Promise.reject(response);
+}
+
+function handleFailure(response, failureCallback) {
+  if (response.status === 401) {
+    new UnauthorizedRequestHandler().showFlash();
+  } else {
+    failureCallback(response.statusText || response);
+  }
+}
+
+function callApi(route, data) {
+  return route.method === 'GET' ? jsonGet(route, data) : jsonPost(route, data);
+}
+
+/* eslint-disable import/prefer-default-export */
+export function jsonApiCall(route, data, successFunc, failureFunc) {
+  const underscoredData = humps.decamelizeKeys(data);
+  callApi(route, underscoredData)
+    .then(response => checkResponse(response))
+    .then(json => successFunc(humps.camelizeKeys(json)))
+    .catch(response => handleFailure(response, failureFunc));
+}
+/* eslint-enable import/prefer-default-export */

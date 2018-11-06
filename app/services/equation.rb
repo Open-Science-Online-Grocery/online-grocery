@@ -59,6 +59,7 @@ class Equation
   end
 
   private def returns_expected_type
+    # the dentaku gem returns nil if there are any errors in the equation
     if test_value.nil?
       errors.add(
         :base,
