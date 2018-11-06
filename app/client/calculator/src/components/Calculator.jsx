@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import VariableSelectorContainer from '../containers/VariableSelectorContainer';
+import EquationEditorContainer from '../containers/EquationEditorContainer';
 
 export default class Calculator extends PureComponent {
   render() {
@@ -9,20 +10,7 @@ export default class Calculator extends PureComponent {
         <div>
           <strong>Show this label on all products where:</strong>
         </div>
-        <div>
-          <div className="ui segment">
-            <div className="token">(</div>
-            <div className="token variable">GramsOfSugar</div>
-            <div className="token">+</div>
-            <div className="cursor">|</div>
-            <div className="token variable">GramsOfSaturatedFat</div>
-            <div className="token">/</div>
-            <div className="token variable">GramsOfProtein</div>
-            <div className="token">)</div>
-            <div className="token">{'>'}</div>
-            <div className="token digit">0</div><div className="token digit">.</div><div className="token digit">7</div>
-          </div>
-        </div>
+        <EquationEditorContainer />
         <VariableSelectorContainer />
 
         <div className="ui buttons operators">
