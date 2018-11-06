@@ -4,6 +4,30 @@ This application gives researchers the ability to control the behavior of a
 simulated online grocery store used to run experiments.
 
 
+## Background
+
+The client originally hired CS students to build a React app that is a simulated
+online grocery store. The Researcher Portal is a companion Rails app to allow
+researchers to customize the behavior of the React app.
+
+This means that several database tables in this application existed before this
+Rails app and therefore do not conform to Rails naming conventions for database
+columns. Within this Rails app, we can use `alias_attribute` within models to
+alias the columns to names with the expected Rails conventions (see `Product`
+model for an example).
+
+Any changes to the database schema must be coordinated with the
+client's student developers, and they should be included on any merge requests
+that affect the pre-existing database tables or the grocery store React app.
+
+The pre-existing database tables are:
+
+* `categories`
+* `subcategories`
+* `products`
+* `users`
+
+
 ## Initial setup
 
 * Copy `config/database.yml.example` to `config/database.yml` and fill in the
