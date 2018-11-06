@@ -1,6 +1,14 @@
 import Immutable from 'immutable';
 import { combineReducers } from 'redux-immutable';
 
+/* ****************************** selectors ********************************* */
+
+export function getVariables($$state) {
+  return $$state.get('variables').toJS();
+}
+
+/* ******************************* reducers ********************************* */
+
 export function noOpReducer($$defaultState) {
   return ($$state = $$defaultState) => $$state;
 }

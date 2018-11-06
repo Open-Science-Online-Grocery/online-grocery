@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import VariableSelectorContainer from '../containers/VariableSelectorContainer';
 
 export default class Calculator extends PureComponent {
   render() {
@@ -22,16 +23,7 @@ export default class Calculator extends PureComponent {
             <div className="token digit">0</div><div className="token digit">.</div><div className="token digit">7</div>
           </div>
         </div>
-        <div className="insert-field">
-          <select className="ui dropdown">
-            <option>Grams of sugar per serving</option>
-            <option>Grams of saturated fat per serving</option>
-          </select>
-          <button type="button" className="ui button">
-            <i className="plus icon" />
-            Insert field into calculation
-          </button>
-        </div>
+        <VariableSelectorContainer />
 
         <div className="ui buttons operators">
           <button type="button" className="ui button">+</button>
