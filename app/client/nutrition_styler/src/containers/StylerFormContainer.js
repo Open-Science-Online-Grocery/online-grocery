@@ -4,7 +4,8 @@ import { setStyle, resetSelection, resetAll } from '../actions';
 import {
   getActiveSelector,
   getActiveRules,
-  getActiveOriginalRules
+  getActiveOriginalRules,
+  getInputValue
 } from '../store';
 
 const mapStateToProps = ($$state) => {
@@ -18,6 +19,7 @@ const mapStateToProps = ($$state) => {
   return {
     activeSelector,
     disabled: !activeSelector,
+    inputValue: getInputValue($$state),
     ...currentRules
   };
 };

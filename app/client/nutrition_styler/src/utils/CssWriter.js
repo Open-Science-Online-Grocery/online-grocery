@@ -28,6 +28,8 @@ export default class CssWriter {
 
   keyValueString(key, value) {
     switch (key) {
+      case 'fontFamily':
+        return `font-family: "${value}"`;
       case 'fontSize':
         return `font-size: ${value}px`;
       case 'bold':

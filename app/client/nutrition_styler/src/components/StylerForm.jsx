@@ -5,7 +5,7 @@ import { Button, Icon, Select } from 'semantic-ui-react';
 const fontOptions = [
   { text: 'Arial', value: 'Arial' },
   { text: 'Helvetica', value: 'Helvetica' },
-  { text: 'Times New Roman', value: 'Time New Roman' },
+  { text: 'Times New Roman', value: 'Times New Roman' },
   { text: 'Courier', value: 'Courier' },
   { text: 'Veranda', value: 'Veranda' },
   { text: 'Georgia', value: 'Georgia' },
@@ -49,9 +49,10 @@ export default class StylerForm extends PureComponent {
   render() {
     return (
       <React.Fragment>
-        <p className={this.disabledClass()}>
+        <p className={this.props.disabled ? '' : 'disabled'}>
           To change nutrition label styling, click part of the label to the left.
         </p>
+        <input type="hidden" name="condition[nutrition_styles]" value={this.props.inputValue} />
         <div className={`ui segment ${this.disabledClass()}`}>
           <div className="fields">
             <div className="ten wide field">
@@ -138,6 +139,7 @@ export default class StylerForm extends PureComponent {
 }
 
 StylerForm.propTypes = {
+  inputValue: PropTypes.string,
   activeSelector: PropTypes.string,
   disabled: PropTypes.bool.isRequired,
   fontFamily: PropTypes.string,
@@ -154,6 +156,7 @@ StylerForm.propTypes = {
 };
 
 StylerForm.defaultProps = {
+  inputValue: null,
   activeSelector: null,
   fontFamily: null,
   fontSize: '',

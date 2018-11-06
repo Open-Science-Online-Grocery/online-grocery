@@ -29,14 +29,12 @@ class ConditionsController < ApplicationController
   end
 
   def update
-    @resource_name = "Condition: #{@condition.name}"
-
     if @condition.update(condition_params)
       flash.now[:success] = 'Condition successfully updated'
     else
       set_error_messages(@condition)
     end
-
+    @resource_name = "Condition: #{@condition.name}"
     render :edit
   end
 
@@ -60,7 +58,7 @@ class ConditionsController < ApplicationController
   end
 
   private def condition_params
-    params.require(:condition).permit(:name)
+    params.require(:condition).permit(:name, :nutrition_styles)
   end
 
   private def set_breadcrumbs

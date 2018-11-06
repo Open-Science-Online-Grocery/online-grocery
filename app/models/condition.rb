@@ -7,6 +7,7 @@ class Condition < ApplicationRecord
 
   belongs_to :experiment
 
+  # TODO: update if needed
   def url
     "http://www.howesgrocery.com?condId=#{uuid}"
   end
