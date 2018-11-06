@@ -36,6 +36,11 @@ The pre-existing database tables are:
 * `bundle install`
 * `yarn install`
 
+## Database setup
+
+* `bundle exec rake db:create`
+* `bundle exec rake db:migrate`
+* `bundle exec rake db:seed`
 
 ## Starting your local development server
 
