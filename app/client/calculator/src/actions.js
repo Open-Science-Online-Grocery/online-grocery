@@ -1,9 +1,7 @@
 import { getCursorPosition } from './store';
 
-export const SELECT_TOKEN = 'SELECT_TOKEN';
 export const INSERT_TOKEN = 'INSERT_TOKEN';
 export const MOVE_CURSOR = 'MOVE_CURSOR';
-export const DELETE_PREVIOUS_TOKEN = 'DELETE_PREVIOUS_TOKEN';
 export const REMOVE_TOKEN = 'REMOVE_TOKEN';
 
 function insertToken(type, value, position) {

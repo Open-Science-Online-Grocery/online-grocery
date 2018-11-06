@@ -60,7 +60,7 @@ function cursorPosition(state = 0, action) {
 function tokens($$state = Immutable.List(), action) {
   switch (action.type) {
     case INSERT_TOKEN:
-      return $$state.set(
+      return $$state.insert(
         action.payload.position,
         Immutable.Map({
           id: uuidv1(), // react needs unique keys for rendering
