@@ -1,2 +1,59 @@
-<div class="ui bottom attached tab segment" data-tab="labeling">
+<div class="ui bottom attached tab segment" data-tab="labeling" data-radio-button-subform>
+  <div class="ui grid">
+    <div class="eight wide column">
+      <div class="grouped fields">
+        <div class="field">
+          <div class="ui radio checkbox">
+            <%= f.radio_button :label_type, 'none' %>
+            <label>No label</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <%= f.radio_button :label_type, 'custom' %>
+            <label>Use custom label</label>
+          </div>
+          <div class="ui segment nested-fields">
+            <%= f.fields_for :label, condition.custom_label do |custom_label_fields| %>
+              <%= custom_label_fields.hidden_field :built_in %>
+              <div class="field">
+                <%= custom_label_fields.label :name %>
+                <%= custom_label_fields.text_field :name %>
+              </div>
+              <% if custom_label_fields.object.image.attached? %>
+                <div class="field">
+                  <label>Current image</label>
+                  <%= link_to(custom_label_fields.object.name, url_for(custom_label_fields.object.image)) %>
+                </div>
+                <div class="field">
+                  <%= custom_label_fields.label :image, 'Replace image' %>
+                  <%= custom_label_fields.file_field :image %>
+                </div>
+              <% else %>
+                <div class="required field">
+                  <%= custom_label_fields.label :image, 'Upload image' %>
+                  <%= custom_label_fields.file_field :image %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <%= f.radio_button :label_type, 'provided' %>
+            <label>Use provided label</label>
+          </div>
+          <div class="ui segment nested-fields">
+            <div class="field">
+              <%= f.label :label_id %>
+              <%= f.collection_select(:label_id, Label.built_in, :id, :name, { include_blank: true }, class: 'ui dropdown') %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="eight wide column">
+    </div>
+  </div>
 </div>

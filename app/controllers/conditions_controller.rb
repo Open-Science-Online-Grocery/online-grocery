@@ -8,17 +8,22 @@ class ConditionsController < ApplicationController
 
   def new
     @resource_name = 'Add Condition'
-    @condition = Condition.new
+    @condition = ConditionPresenter.new(Condition.new)
   end
 
   def create
-    @condition = @experiment.conditions.build(condition_params)
-    @condition.uuid = SecureRandom.uuid
-    if @condition.save
+    @condition = @experiment.conditions.build
+    saver = ConditionSaver.new(@condition, condition_params)
+    if saver.save_condition
       flash[:success] = 'Condition successfully created'
       redirect_to edit_experiment_condition_path(@experiment, @condition)
     else
-      set_error_messages(@condition)
+      @messages = {
+        error: {
+          header: 'Unable to save condition',
+          messages: saver.errors
+        }
+      }
       @resource_name = 'Add Condition'
       render :new
     end
@@ -29,10 +34,16 @@ class ConditionsController < ApplicationController
   end
 
   def update
-    if @condition.update(condition_params)
+    saver = ConditionSaver.new(@condition, condition_params)
+    if saver.save_condition
       flash.now[:success] = 'Condition successfully updated'
     else
-      set_error_messages(@condition)
+      @messages = {
+        error: {
+          header: 'Unable to save condition',
+          messages: saver.errors
+        }
+      }
     end
     @resource_name = "Condition: #{@condition.name}"
     render :edit
@@ -53,12 +64,17 @@ class ConditionsController < ApplicationController
   end
 
   private def set_condition
-    @condition = Condition.find(params[:id])
-    @experiment = @condition.experiment
+    @condition = ConditionPresenter.new(Condition.find(params[:id]))
   end
 
   private def condition_params
-    params.require(:condition).permit(:name, :nutrition_styles)
+    params.require(:condition).permit(
+      :name,
+      :label_type,
+      :nutrition_styles,
+      :label_id,
+      label_attributes: %i[id image name built_in]
+    )
   end
 
   private def set_breadcrumbs

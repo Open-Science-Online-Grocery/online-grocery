@@ -13,6 +13,7 @@ export default class Initializer {
     this.initializeFormValidation();
     this.initializeTabs();
     this.initializeDropdowns();
+    this.initializeCheckboxes();
   }
 
   initializeTableRowLinks() {
@@ -49,5 +50,12 @@ export default class Initializer {
         $(event.currentTarget).dropdown('show');
       }
     });
+  }
+
+  initializeCheckboxes() {
+    const $checkboxes = this.$scope.find('.checkbox');
+    if ($checkboxes.length) {
+      $checkboxes.checkbox();
+    }
   }
 }
