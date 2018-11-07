@@ -48,19 +48,22 @@ export default class ProductCard extends React.Component {
         })
     }
 
-    convertToStars(starpoints) {
-        if (starpoints < 0) {
-            return 0
-        }
-        if (starpoints == 1 || starpoints == 2) {
-            return 1
-        }
-        if (starpoints == 3 || starpoints == 4) {
-            return 2
-        }
-        else {
-            return 3
-        }
+    // webpack's `require` seems to have problems with interpolated strings and
+    // method calls within it. using a literal string works, however.
+    starImagePath() {
+      const starpoints = this.props.product.starpoints
+      if (starpoints < 0) {
+        return require('../../images/0howestars.png');
+      }
+      if (starpoints == 1 || starpoints == 2) {
+        return require('../../images/1howestar.png');
+      }
+      if (starpoints == 3 || starpoints == 4) {
+        return require('../../images/2howestars.png');
+      }
+      else {
+        return require('../../images/3howestars.png');
+      }
     }
 
     render() {
@@ -74,7 +77,7 @@ export default class ProductCard extends React.Component {
                 <div className='product-card-price bold'>${parseFloat(Math.round(this.props.product.price * 100) / 100).toFixed(2)}</div>
                 <div className='product-card-buttons'>
                     <img onClick={this.handleAddToCart} className='product-card-add-to-cart'
-                         src={`${path.join(__dirname, 'images/trolley-clipart.png')}`}/>
+                         src={require('../../images/trolley-clipart-white.png')} />
                     <div className='product-card-quantity'>
                         <div className='product-card-quantity-change' onClick={this.subtractQuantity}>-</div>
                         {this.state.quantity}
@@ -82,8 +85,10 @@ export default class ProductCard extends React.Component {
                     </div>
                     <div className="tooltip--triangle" data-tooltip="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!">
                         <a href="https://guidingstars.com/what-is-guiding-stars/">
-                            <img className='product-card-guiding-stars'
-                                 src={`${path.join(__dirname, 'images/' + this.convertToStars(this.props.product.starpoints) + 'howestars.png')}`}/>
+                            <img
+                              className='product-card-guiding-stars'
+                               src={this.starImagePath()}
+                            />
                         </a>
                     </div>
                 </div>
