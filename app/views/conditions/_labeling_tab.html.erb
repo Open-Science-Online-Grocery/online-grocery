@@ -1,4 +1,4 @@
-<div class="ui bottom attached tab segment" data-tab="labeling" data-radio-button-subform>
+<div class="ui bottom attached tab segment" data-tab="labeling">
   <% if condition.label && condition.label.image %>
     <style>
       .overlay {
@@ -23,12 +23,12 @@
             <%= f.radio_button :label_type, 'custom', data: { refresh_form: true } %>
             <label>Use custom label</label>
           </div>
-          <div class="ui segment nested-fields">
+          <div class="ui segment nested-fields <%= 'disabled' unless condition.label_type == 'custom' %>">
             <%= f.fields_for :label, condition.custom_label do |custom_label_fields| %>
               <%= custom_label_fields.hidden_field :built_in %>
               <div class="field">
                 <%= custom_label_fields.label :name %>
-                <%= custom_label_fields.text_field :name %>
+                <%= custom_label_fields.text_field :name, disabled: condition.label_type != 'custom' %>
               </div>
               <% if custom_label_fields.object.image? %>
                 <div class="field">
@@ -37,13 +37,13 @@
                 </div>
                 <div class="field">
                   <%= custom_label_fields.label :image, 'Replace image' %>
-                  <%= custom_label_fields.file_field :image, data: { refresh_form: true } %>
+                  <%= custom_label_fields.file_field :image, data: { refresh_form: true }, disabled: condition.label_type != 'custom' %>
                   <%= custom_label_fields.hidden_field :image_cache %>
                 </div>
               <% else %>
                 <div class="required field">
                   <%= custom_label_fields.label :image, 'Upload image' %>
-                  <%= custom_label_fields.file_field :image, data: { refresh_form: true } %>
+                  <%= custom_label_fields.file_field :image, data: { refresh_form: true }, disabled: condition.label_type != 'custom' %>
                 </div>
               <% end %>
             <% end %>
@@ -54,7 +54,7 @@
             <%= f.radio_button :label_type, 'provided', data: { refresh_form: true } %>
             <label>Use provided label</label>
           </div>
-          <div class="ui segment nested-fields">
+          <div class="ui segment nested-fields <%= 'disabled' unless condition.label_type == 'provided' %>">
             <div class="field">
               <%= f.label :label_id %>
               <%=
@@ -65,7 +65,8 @@
                   :name,
                   { include_blank: true },
                   class: 'ui dropdown',
-                  data: { refresh_form: true }
+                  data: { refresh_form: true },
+                  disabled: condition.label_type != 'provided'
                 )
               %>
             </div>
@@ -81,7 +82,7 @@
         <div class="field">
           <%= f.label :label_size %>
           <div class="ui right labeled input">
-            <%= f.text_field :label_size, data: { refresh_form: true } %>
+            <%= f.text_field :label_size, value: (condition.label_size || 100), data: { refresh_form: true } %>
             <div class="ui basic label">%</div>
           </div>
         </div>
