@@ -17,7 +17,7 @@ export default function initialize(wrapperElement) {
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route exact path="/" component={SessionIDPage} />
+          <Route exact path="/store" component={SessionIDPage} />
           <Route path="/home" component={HomePage} />
           <Route path="/product" component={ProductViewPage} />
           <Route path="/search" component={SearchPageContainer} />

@@ -17,5 +17,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :store, only: [:show]
+
   root 'experiments#index'
 end
