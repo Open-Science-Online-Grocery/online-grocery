@@ -41,7 +41,7 @@ export default class TopNav extends React.Component{
         let subcats = Object.assign([], this.props.subcategories)
         let tabs = this.props.categories.map((tab, key)=> {
             let tabSubcats = []
-            while (subcats.length > 0 && subcats[0].id == tab.id) {
+            while (subcats.length > 0 && subcats[0].category_id == tab.id) {
                 tabSubcats.push(subcats.shift())
             }
             return (
