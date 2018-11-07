@@ -3,7 +3,16 @@
     <h2>Custom Categories</h2>
 
     <div class="heading-buttons">
-      <%= link_to nil, class: 'ui right floated button' do %>
+      <%=
+        link_to(
+          download_product_data_experiment_conditions_path(
+            experiment.id,
+            condition.id,
+            format: :csv
+          ),
+          class: 'ui right floated button'
+          ) do
+      %>
         <i class="download icon"></i> Download Product Data
       <% end %>
     </div>

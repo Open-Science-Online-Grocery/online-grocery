@@ -6,14 +6,15 @@ class TagImporter
 
   attr_reader :errors
 
-  # TODO: Create and translate from displayed csv headers to code headers
   def initialize(file)
     @file = file
     @errors = []
-    @required_attributes = %i(product_name category subcategory)
-    # the order of these 2 sets of attributes will determine pairings
-    @tag_attributes = %i(custom_category1)
-    @subtag_attributes = %i(custom_subcategory1)
+    @required_attributes = ProductDataCsvManager
+      .built_in_category_attributes
+      .values
+    @custom_category_attributes = ProductDataCsvManager
+      .custom_category_attributes
+      .values
   end
 
   def import
@@ -30,6 +31,7 @@ class TagImporter
   private def create_data_from_import
     ActiveRecord::Base.transaction do
       CSV.foreach(@file.path, headers: true).with_index do |row, row_number|
+        # TODO: Create and translate from displayed csv headers to code headers
         row_data = row.to_h.with_indifferent_access
         validate_row(row_data, row_number)
         create_tags(row_data, row_number)
@@ -47,20 +49,18 @@ class TagImporter
 
   # TODO: Remove this validation if subtags are optional
   private def validate_tags(row_data, row_number)
-    @tag_attributes.each_with_index do |tag, i|
-      subtag = @subtag_attributes[i]
-      tag_name = row_data[tag]
-      subtag_name = row_data[subtag]
+    @custom_category_attributes.each_slice(2) do |category, subcategory|
+      tag_name = row_data[category]
+      subtag_name = row_data[subcategory]
 
       require_attribute(tag, tag_name, row_number) if subtag_name.present?
     end
   end
 
   private def create_tags(row_data, row_number)
-    @tag_attributes.each_with_index do |tag, i|
-      subtag = @subtag_attributes[i]
-      tag_name = row_data[tag]
-      subtag_name = row_data[subtag]
+    @custom_category_attributes.each_slice(2) do |category, subcategory|
+      tag_name = row_data[category]
+      subtag_name = row_data[subcategory]
       product_name = row_data[:product_name]
 
       create_single_tag(tag_name, subtag_name, product_name, row_number)
