@@ -31,7 +31,7 @@ export default class Tab extends React.Component{
       return this.props.subcats.map((subcat, key) => {
         return(
           <div className="tab-subcat-bar" key={key} onClick={() => {
-            axios.get('/api/category', {params: {category: this.props.index, subcategory: subcat.subid}})
+            axios.get('/api/category', {params: {category: this.props.index, subcategory: subcat.display_order}})
               .then(res => {
                 console.log(res.data)
                 this.props.handleSetProducts(res.data)
@@ -39,7 +39,7 @@ export default class Tab extends React.Component{
               .catch(err => {
                 console.log(err)
               })
-            this.props.handleSetCategory(this.props.index, subcat.subid)
+            this.props.handleSetCategory(this.props.index, subcat.category_id)
           }}>
             <div className="tab-subcat-title" key={key}>
               {subcat.name}
