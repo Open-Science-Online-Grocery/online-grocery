@@ -2,6 +2,8 @@
 
 module Api
   class ProductSearchesController < ApplicationController
+    skip_before_action :authenticate_user!
+
     def show
       products = Product.where(
         Product.arel_table[:name].matches("%#{params[:search]}%")

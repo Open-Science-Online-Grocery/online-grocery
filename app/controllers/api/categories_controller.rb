@@ -2,6 +2,8 @@
 
 module Api
   class CategoriesController < ApplicationController
+    skip_before_action :authenticate_user!
+
     # the params that come in do not map to model attributes precisely:
     #   - param :category is a category id
     #   - param :subcategory is a subcategory's display order

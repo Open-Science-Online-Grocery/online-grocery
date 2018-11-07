@@ -2,6 +2,8 @@
 
 module Api
   class SubcategoriesController < ApplicationController
+    skip_before_action :authenticate_user!
+
     def index
       render json: Category.order(:id).to_json
     end
