@@ -2,6 +2,8 @@ import TableRowLinker from './TableRowLinker';
 import FormValidator from './FormValidator';
 import ModalConfirm from './ModalConfirm';
 import FormRefresher from './FormRefresher';
+import calculator from './calculator/src/index';
+import nutritionStyler from './nutrition_styler/src/index';
 
 export default class Initializer {
   constructor($scope) {
@@ -16,6 +18,8 @@ export default class Initializer {
     this.initializeDropdowns();
     this.initializeCheckboxes();
     this.initializeFormRefreshing();
+    this.initializeCalculators();
+    this.initializeNutritionStylers();
   }
 
   initializeTableRowLinks() {
@@ -72,6 +76,18 @@ export default class Initializer {
     const $refreshableForms = this.$scope.find('form[data-refresh-url]');
     $refreshableForms.each((index, element) => (
       new FormRefresher($(element)).init()
+    ));
+  }
+
+  initializeCalculators() {
+    this.$scope.find('[data-calculator]').each((index, element) => (
+      calculator(element)
+    ));
+  }
+
+  initializeNutritionStylers() {
+    this.$scope.find('[data-nutrition-styler]').each((index, element) => (
+      nutritionStyler(element)
     ));
   }
 }
