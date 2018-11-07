@@ -2,5 +2,5 @@
 
 # represents a category a product may belong to
 class Category < ApplicationRecord
-  has_many :subcategories
+  has_many :subcategories, dependent: false
 end

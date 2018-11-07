@@ -5,10 +5,6 @@ module Api
     skip_before_action :authenticate_user!
 
     def index
-      render json: Category.order(:id).to_json
-    end
-
-    def index
       render json: Subcategory.order(:category_id, :display_order).to_json
     end
   end
