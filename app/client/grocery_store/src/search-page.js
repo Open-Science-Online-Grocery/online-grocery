@@ -13,7 +13,7 @@ class SearchPage extends React.Component{
     return(
     <div>
         <CartDropdownContainer/>
-        <img className='logo-style' src={`${path.join(__dirname, 'images/howesgrocerybanner.png')}`}/>
+        <img className='logo-style' src={require('./images/howesgrocerybanner.png')}/>
         <div className= 'title'> Search Results: </div>
         <ProductGridContainer />
     </div>

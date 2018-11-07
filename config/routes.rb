@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resource :equation_validation, only: [:show]
     resources :participant_actions, only: [:create]
     resources :subcategories, only: [:index]
+    resource :product_search, only: [:show]
   end
 
   resources :experiments do
