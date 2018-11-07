@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       get :checkout
     end
   end
-  get '/store/thank-you', to: 'store#thank_you'
+  get '/store/thank-you', to: 'stores#thank_you'
 
   root 'experiments#index'
 end

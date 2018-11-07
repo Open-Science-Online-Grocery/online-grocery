@@ -7,7 +7,7 @@ export default class OrderSummary extends React.Component{
     removeFromCart(product) {
         this.props.handleRemoveFromCart(product)
 
-        axios.post('/user', {
+        axios.post('/api/participant_actions', {
           sessionID: this.props.sessionID,
           actionType: "delete",
           product: product.name,
@@ -20,7 +20,7 @@ export default class OrderSummary extends React.Component{
     clearCart() {
         this.props.handleClearCart()
         this.props.cart.items.forEach((item) =>{
-          axios.post('/user', {
+          axios.post('/api/participant_actions', {
             sessionID:this.props.sessionID,
             actionType: "checkout",
             product: item.name,

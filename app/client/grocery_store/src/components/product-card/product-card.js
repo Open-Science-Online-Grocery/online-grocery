@@ -20,7 +20,7 @@ export default class ProductCard extends React.Component {
 
     handleAddToCart() {
         this.props.handleAddToCart(this.props.product, this.state.quantity)
-        axios.post('/user', {
+        axios.post('/api/participant_actions', {
           sessionID: this.props.sessionID,
           actionType: "add",
           product: this.props.product.name,
