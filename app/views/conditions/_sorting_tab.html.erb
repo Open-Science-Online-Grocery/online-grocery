@@ -1,2 +1,47 @@
 <div class="ui bottom attached tab segment" data-tab="sorting">
+  <div class="ui grid">
+    <div class="eight wide column">
+      <div class="grouped fields">
+        <label>By default, sort products by:</label>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <%= f.radio_button :sort_type, 'none', data: { refresh_form: true } %>
+            <label>System default (product ID number)</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <%= f.radio_button :sort_type, 'field', data: { refresh_form: true } %>
+            <label>A specified field</label>
+          </div>
+          <div class="ui segment nested-fields <%= 'disabled' unless condition.sort_type == 'field' %>">
+            <div class="equal width fields">
+              <div class="field">
+                <%= f.label :default_sort_field, 'Field' %>
+                <%=
+                  f.select(
+                    :default_sort_field,
+                    Product.sort_fields,
+                    { include_blank: true },
+                    class: 'ui dropdown'
+                  )
+                %>
+              </div>
+              <div class="field">
+                <%= f.label :default_sort_order, 'Order' %>
+                <%=
+                  f.select(
+                    :default_sort_order,
+                    [['Ascending', 'asc'], ['Descending', 'desc']],
+                    { include_blank: true },
+                    class: 'ui dropdown'
+                  )
+                %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

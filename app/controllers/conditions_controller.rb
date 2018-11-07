@@ -85,6 +85,9 @@ class ConditionsController < ApplicationController
       :label_position,
       :label_size,
       :label_equation_tokens,
+      :sort_type,
+      :default_sort_field,
+      :default_sort_order,
       :nutrition_styles,
       label_attributes: %i[id image image_cache name built_in]
     )

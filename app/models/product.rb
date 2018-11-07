@@ -14,4 +14,24 @@ class Product < ApplicationRecord
   alias_attribute :mono_fat, :monoFat
   alias_attribute :category_id, :category
   alias_attribute :subcategory_id, :subcategory
+
+  def self.sort_fields
+    {
+      'Calories from fat' => :caloriesFromFat,
+      'Calories' => :calories,
+      'Total fat' => :totalFat,
+      'Saturated fat' => :saturatedFat,
+      'Trans fat' => :transFat,
+      'Cholesterol' => :cholesterol,
+      'Sodium' => :sodium,
+      'Total carbohydrates' => :carbs,
+      'Dietary fiber' => :fiber,
+      'Sugars' => :sugar,
+      'Protein' => :protein,
+      'Star points' => :starpoints,
+      'Price' => :price,
+      'Name' => :name,
+      'Custom label' => :customLabel
+    }
+  end
 end

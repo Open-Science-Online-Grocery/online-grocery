@@ -2,7 +2,7 @@
 
 # represents an experimental condition
 class Condition < ApplicationRecord
-  attr_writer :label_type
+  attr_writer :label_type, :sort_type
 
   validates :name, :uuid, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
@@ -21,5 +21,11 @@ class Condition < ApplicationRecord
     return @label_type if @label_type
     return 'none' if label.nil?
     label.built_in? ? 'provided' : 'custom'
+  end
+
+  def sort_type
+    return @sort_type if @sort_type
+    return 'field' if default_sort_field
+    'none'
   end
 end
