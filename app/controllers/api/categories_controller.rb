@@ -16,5 +16,9 @@ module Api
       )
       render json: products.to_json
     end
+
+    def index
+      render json: Category.order(:id).to_json
+    end
   end
 end

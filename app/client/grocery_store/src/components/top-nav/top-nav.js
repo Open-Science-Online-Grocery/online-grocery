@@ -15,7 +15,7 @@ export default class TopNav extends React.Component{
                 console.log(err)
             })
 
-        axios.get('/categories')
+        axios.get('/api/categories')
             .then(res => {
                 this.props.handleSetCategories(res.data)
             })
@@ -23,7 +23,7 @@ export default class TopNav extends React.Component{
                 console.log(err)
             })
 
-        axios.get('/subcategories')
+        axios.get('/api/subcategories')
             .then(res => {
                 this.props.handleSetSubcategories(res.data)
             })

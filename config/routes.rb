@@ -2,9 +2,10 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :api, defaults: { format: :json } do
-    resource :equation_validation, only: [:show]
     resource :category, only: [:show]
     resources :categories, only: [:index]
+    resource :equation_validation, only: [:show]
+    resources :subcategories, only: [:index]
   end
 
   resources :experiments do
