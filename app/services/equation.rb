@@ -33,6 +33,7 @@ class Equation
   #       { id: <some uuid>, type: 'operator', value: '>' },
   #       { id: <some uuid>, type: 'digit', value: '2' }
   #     ]
+  #   note: `id` is not strictly needed here and is only used by the React code
   def initialize(token_string, type)
     @tokens = JSON.parse(token_string).map(&:with_indifferent_access)
     @type = type
@@ -58,16 +59,17 @@ class Equation
     }[@type]
   end
 
-  # here we test the equation by evaluating it against a random food and
+  # here we test the equation by evaluating it against fake food attributes
   # checking that it returns the right kind of value.
-  #
-  # TODO: currently, cholesterol is nil for many foods. need to set a default
-  # value in the db or
   private def test_value
-    @test_value ||= calculator.evaluate(
-      to_s,
-      { cholesterol: 0 }.merge(Product.first.attributes)
-    )
+    @test_value ||= calculator.evaluate(to_s, fake_product_data)
+  end
+
+  private def fake_product_data
+    self.class.individual_product_variables.reduce({}) do |data, (colname, _)|
+      data[colname] = 1
+      data
+    end
   end
 
   private def calculator
