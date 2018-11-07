@@ -15,9 +15,9 @@ export default class EquationEditor extends PureComponent {
   }
 
   handleKeydown(event) {
-    if (event.keyCode === RIGHT) return this.props.moveCursor(true);
-    if (event.keyCode === LEFT) return this.props.moveCursor(false);
-    if (event.keyCode === BACKSPACE) return this.props.deletePreviousToken();
+    if (event.keyCode === RIGHT) this.props.moveCursor(true);
+    if (event.keyCode === LEFT) this.props.moveCursor(false);
+    if (event.keyCode === BACKSPACE) this.props.deletePreviousToken();
   }
 
   cursor() {

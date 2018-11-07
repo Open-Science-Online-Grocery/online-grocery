@@ -5,11 +5,11 @@ require 'rails_helper'
 RSpec.describe Equation do
   let(:token_string) do
     [
-      { "type" => "variable", "value" => "calories" },
-      { "type" => "operator", "value" => "<" },
-      { "type" => "digit", "value" => "5" },
-      { "type" => "digit", "value" => "0" },
-      { "type" => "digit", "value" => "0" }
+      { 'type' => 'variable', 'value' => 'calories' },
+      { 'type' => 'operator', 'value' => '<' },
+      { 'type' => 'digit', 'value' => '5' },
+      { 'type' => 'digit', 'value' => '0' },
+      { 'type' => 'digit', 'value' => '0' }
     ].to_json
   end
   let(:type) { 'label' }
@@ -26,11 +26,11 @@ RSpec.describe Equation do
     context 'when it parses but returns the wrong type' do
       let(:token_string) do
         [
-          { "type" => "variable", "value" => "calories" },
-          { "type" => "operator", "value" => "+" },
-          { "type" => "digit", "value" => "5" },
-          { "type" => "digit", "value" => "0" },
-          { "type" => "digit", "value" => "0" }
+          { 'type' => 'variable', 'value' => 'calories' },
+          { 'type' => 'operator', 'value' => '+' },
+          { 'type' => 'digit', 'value' => '5' },
+          { 'type' => 'digit', 'value' => '0' },
+          { 'type' => 'digit', 'value' => '0' }
         ].to_json
       end
 
@@ -42,11 +42,11 @@ RSpec.describe Equation do
     context 'when it does not parse' do
       let(:token_string) do
         [
-          { "type" => "variable", "value" => "calories" },
-          { "type" => "operator", "value" => "1" },
-          { "type" => "digit", "value" => "5" },
-          { "type" => "digit", "value" => "0" },
-          { "type" => "digit", "value" => "0" }
+          { 'type' => 'variable', 'value' => 'calories' },
+          { 'type' => 'operator', 'value' => '1' },
+          { 'type' => 'digit', 'value' => '5' },
+          { 'type' => 'digit', 'value' => '0' },
+          { 'type' => 'digit', 'value' => '0' }
         ].to_json
       end
 

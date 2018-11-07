@@ -5,7 +5,7 @@
 class Equation
   include ActiveModel::Model
 
-  validate :returns_expected_type
+  validate :parses_correctly, :returns_expected_type
 
   def self.individual_product_variables
     {
@@ -66,10 +66,11 @@ class Equation
   end
 
   private def fake_product_data
-    self.class.individual_product_variables.reduce({}) do |data, (colname, _)|
-      data[colname] = 1
-      data
-    end
+    self.class.individual_product_variables.keys
+      .each_with_object({}) do |colname, data|
+        data[colname] = 1
+        data
+      end
   end
 
   private def calculator
@@ -80,15 +81,19 @@ class Equation
     [true, false].include?(test_value)
   end
 
-  private def returns_expected_type
+  private def parses_correctly
     # the dentaku gem returns nil if there are any errors in the equation
-    if test_value.nil?
-      errors.add(
-        :base,
-        'This calculation has an error. Please change the calculation and try '\
-        'again.'
-      )
-    elsif should_return_boolean? && !returns_boolean?
+    return unless test_value.nil?
+    errors.add(
+      :base,
+      'This calculation has an error. Please change the calculation and try '\
+      'again.'
+    )
+  end
+
+  # rubocop:disable Metrics/PerceivedComplexity
+  private def returns_expected_type
+    if should_return_boolean? && !returns_boolean?
       errors.add(
         :base,
         'This equation returns a number but should return TRUE or FALSE instead'
@@ -100,4 +105,5 @@ class Equation
       )
     end
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 end
