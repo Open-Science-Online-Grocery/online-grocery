@@ -41,6 +41,24 @@
             </div>
           </div>
         </div>
+
+        <div class="field">
+          <div class="ui radio checkbox">
+            <%= f.radio_button :sort_type, 'calculation', data: { refresh_form: true } %>
+            <label>The following calculation</label>
+          </div>
+        </div>
+      </div>
+      <div class="ui segment nested-calculator <%= 'disabled' unless condition.sort_type == 'calculation' %>">
+        <div class="ten wide column">
+          <div
+            data-calculator
+            data-variables="<%= Equation.individual_product_variables.to_json %>"
+            data-input-name="condition[label_equation_tokens]"
+            data-tokens="<%= condition.label_equation_tokens || [] %>"
+            data-equation-type="label"
+          ></div>
+        </div>
       </div>
     </div>
   </div>

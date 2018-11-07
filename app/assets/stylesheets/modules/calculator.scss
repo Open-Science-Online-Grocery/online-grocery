@@ -1,3 +1,7 @@
+.ui.segment.nested-calculator {
+  margin-left: 2rem;
+}
+
 .calculator {
   > div {
     margin-bottom: 1rem;
@@ -28,7 +32,7 @@
     }
 
     &.variable {
-      background-color: #ddd;
+      background-color: $disabled-text-color;
       padding: 0.3rem 0.5rem;
       border-radius: 12px;
     }
