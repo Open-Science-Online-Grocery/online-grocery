@@ -15,19 +15,25 @@
 
   <div class="ui hidden divider"></div>
 
-  <%#= f.fields_for :condition, condition.custom do |custom_label_fields| %>
-  <div class="ui basic segment two fields">
-    <div class="field">
-      <label>Current file</label>
-      <%= link_to 'current_file.csv', nil %>
-      <i class="red remove icon"></i>
-    </div>
+  <%= f.fields_for :tag_csv_files, condition.current_tag_csv_file do |tag_csv_files_fields| %>
+    <div class="ui basic segment two fields">
+      <div class="field">
+        <label>Current file</label>
+        <% if condition.current_tag_csv_file.persisted? %>
+          <%= link_to condition.current_tag_csv_file.to_s, condition.current_tag_csv_file.url %>
+          <i class="red remove icon"></i>
+        <% else %>
+          None
+        <% end %>
+      </div>
 
-    <div class="field">
-      <%= f.label :csv_file, 'Replace file' %>
-      <%= f.file_field :csv_file %>
+      <div class="field">
+        <%= tag_csv_files_fields.label :csv_file, 'Replace file' %>
+        <%= tag_csv_files_fields.file_field :csv_file %>
+        <%= tag_csv_files_fields.hidden_field :csv_file_cache %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <div class="ui hidden divider"></div>
 
@@ -134,5 +140,4 @@
       </div>
     </div>
   </div>
-  <%# end %>
 </div>

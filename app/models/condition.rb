@@ -10,7 +10,9 @@ class Condition < ApplicationRecord
   belongs_to :experiment
   belongs_to :label, optional: true
 
-  accepts_nested_attributes_for :label
+  has_many :tag_csv_files
+
+  accepts_nested_attributes_for :label, :tag_csv_files
 
   # TODO: update if needed
   def url
@@ -21,5 +23,15 @@ class Condition < ApplicationRecord
     return @label_type if @label_type
     return 'none' if label.nil?
     label.built_in? ? 'provided' : 'custom'
+  end
+
+  def current_tag_csv_file
+    tag_csv_files.order(created_at: :desc).first || TagCsvFile.new
+  end
+
+  def historical_tag_csv_files
+    tag_csv_files
+      .where.not(id: current_tag_csv_file.id)
+      .order(created_at: :desc)
   end
 end

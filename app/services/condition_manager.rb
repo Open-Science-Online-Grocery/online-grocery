@@ -19,6 +19,8 @@ class ConditionManager
 
   def update_condition
     assign_params
+    import_tags
+    return false if @errors.any?
     @errors += @condition.errors.full_messages unless @condition.save
     @errors.none?
   end
@@ -34,5 +36,12 @@ class ConditionManager
     end
     @params.delete(:label_id) if @params[:label_type] == 'custom'
     @params[:label_id] = nil if @params[:label_type] == 'none'
+  end
+
+  private def import_tags
+    # users can only upload one file at a time
+    uploaded_csv_file = @params[:tag_csv_files][0][:csv_file]
+    tag_importer = TagImporter.new(uploaded_csv_file)
+    @errors += importer.errors unless tag_importer.import
   end
 end
