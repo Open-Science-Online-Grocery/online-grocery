@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     resource :equation_validation, only: [:show]
+    resource :category, only: [:show]
+    resources :categories, only: [:index]
   end
 
   resources :experiments do
