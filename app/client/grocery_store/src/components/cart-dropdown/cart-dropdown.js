@@ -61,7 +61,7 @@ export default class CartDropdown extends React.Component {
         })
         cartItems.unshift(
 
-            <Link to={{ pathname: '/checkout'}} className='no-underline'>
+            <Link to={{ pathname: '/store/checkout'}} className='no-underline'>
                 <div className='cart-item cart-checkout-bar'>Checkout
                     <span className='cart-detail' >Total: ${parseFloat(Math.round(this.props.cart.price * 100) / 100).toFixed(2)}</span>
                 </div>

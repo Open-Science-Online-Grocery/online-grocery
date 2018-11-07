@@ -17,7 +17,15 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :store, only: [:show]
+  resource :store, only: [:show] do
+    collection do
+      get :home
+      get :product
+      get :search
+      get :checkout
+    end
+  end
+  get '/store/thank-you', to: 'store#thank_you'
 
   root 'experiments#index'
 end

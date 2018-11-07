@@ -18,11 +18,11 @@ export default function initialize(wrapperElement) {
       <Router>
         <Switch>
           <Route exact path="/store" component={SessionIDPage} />
-          <Route path="/home" component={HomePage} />
-          <Route path="/product" component={ProductViewPage} />
-          <Route path="/search" component={SearchPageContainer} />
-          <Route path="/checkout" component={CheckoutPage} />
-          <Route path="/thank-you" component={ThankYouPage} />
+          <Route path="/store/home" component={HomePage} />
+          <Route path="/store/product" component={ProductViewPage} />
+          <Route path="/store/search" component={SearchPageContainer} />
+          <Route path="/store/checkout" component={CheckoutPage} />
+          <Route path="/store/thank-you" component={ThankYouPage} />
         </Switch>
       </Router>
     </Provider>,

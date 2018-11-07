@@ -24,7 +24,7 @@ class Search extends React.Component{
     .then(res => {
         this.props.handleSetProducts(res.data)
         this.props.history.push({
-          pathname: '/search'
+          pathname: '/store/search'
         })
     })
     .catch(err => {
