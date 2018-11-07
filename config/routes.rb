@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resource :category, only: [:show]
     resources :categories, only: [:index]
     resource :equation_validation, only: [:show]
+    resources :participant_actions, only: [:create]
     resources :subcategories, only: [:index]
   end
 

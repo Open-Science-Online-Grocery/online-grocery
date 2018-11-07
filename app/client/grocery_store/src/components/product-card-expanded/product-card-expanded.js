@@ -20,7 +20,7 @@ export default class ProductCardExpanded extends React.Component {
 
     handleAddToCart() {
         this.props.handleAddToCart(this.props, this.state.quantity)
-        axios.post('/user', {
+        axios.post('/api/participant_actions', {
           sessionID:this.props.sessionID,
           actionType: "add",
           product: this.props.name,
@@ -62,8 +62,26 @@ export default class ProductCardExpanded extends React.Component {
         }
     }
 
+    // webpack's `require` seems to have problems with interpolated strings and
+    // method calls within it. using a literal string works, however.
+    starImagePath() {
+      const starpoints = this.props.starpoints
+      if (starpoints < 0) {
+        return require('../../images/0howestars.png');
+      }
+      if (starpoints == 1 || starpoints == 2) {
+        return require('../../images/1howestar.png');
+      }
+      if (starpoints == 3 || starpoints == 4) {
+        return require('../../images/2howestars.png');
+      }
+      else {
+        return require('../../images/3howestars.png');
+      }
+    }
+
     render() {
-        axios.post('/user', {
+        axios.post('/api/participant_actions', {
             sessionID:this.props.sessionID,
             actionType: "view",
             product: this.props.name,
@@ -81,7 +99,7 @@ export default class ProductCardExpanded extends React.Component {
                   <div className='product-card-expanded-price bold'>${parseFloat(Math.round(this.props.price * 100) / 100).toFixed(2)}</div>
                   <div className='product-card-expanded-buttons'>
                       <img className='product-card-expanded-add-to-cart' onClick={this.handleAddToCart}
-                           src={`${path.join(__dirname, 'images/trolley-clipart.png')}`}/>
+                           src={require('../../images/trolley-clipart.png')}/>
                       <div className='product-card-expanded-quantity'>
                           <div className='product-card-expanded-quantity-change' onClick={this.subtractQuantity}>-</div>
                           {this.state.quantity}
@@ -94,8 +112,7 @@ export default class ProductCardExpanded extends React.Component {
                 <div className='product-card-expanded-right-section'>
                     <div className="tooltip--triangle" data-tooltip="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!">
                         <a href="https://guidingstars.com/what-is-guiding-stars/">
-                            <img className='product-card-guiding-stars'
-                                 src={`${path.join(__dirname, 'images/' + this.convertToStars(this.props.starpoints) + 'howestars.png')}`}/>
+                            <img className='product-card-guiding-stars' src={this.starImagePath()} />
                         </a>
                     </div>
                     {this.props.servingSize && <NutritionLabel nutritionFacts={{
