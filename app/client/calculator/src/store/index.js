@@ -39,6 +39,10 @@ export function getTokens($$state) {
   return $$state.get('tokens').toJS();
 }
 
+export function getTokenCount($$state) {
+  return $$state.get('tokens').size;
+}
+
 function getTokenName($$state, token) {
   if (token.type !== 'variable') return null;
   return getVariables($$state)[token.value];
@@ -61,12 +65,19 @@ export function noOpReducer($$defaultState) {
   return ($$state = $$defaultState) => $$state;
 }
 
+// cursorPosition indicates where, relative to the array of tokens, the cursor
+// should appear in the EquationEditor, using a 0-based index. E.g., a position
+// of 0 indicates the cursor should appear before any tokens while a position of
+// 3 indicates the cursor should appear after the first 3 tokens.
 function cursorPosition(state = 0, action) {
   switch (action.type) {
     case INSERT_TOKEN:
       return state + 1;
     case MOVE_CURSOR:
-      return action.payload.forwards ? state + 1 : Math.max(state - 1, 0);
+      if (action.payload.shouldMoveForwards) {
+        return Math.min(state + 1, action.payload.tokenCount);
+      }
+      return Math.max(state - 1, 0);
     case REMOVE_TOKEN:
       return Math.max(state - 1, 0);
     default:
@@ -96,6 +107,10 @@ function valid(state = null, action) {
   switch (action.type) {
     case REPORT_TEST_RESULTS:
       return action.payload.valid;
+    case INSERT_TOKEN:
+      return null;
+    case REMOVE_TOKEN:
+      return null;
     default:
       return state;
   }
@@ -105,6 +120,10 @@ function validationMessage(state = null, action) {
   switch (action.type) {
     case REPORT_TEST_RESULTS:
       return action.payload.validationMessage;
+    case INSERT_TOKEN:
+      return null;
+    case REMOVE_TOKEN:
+      return null;
     default:
       return state;
   }

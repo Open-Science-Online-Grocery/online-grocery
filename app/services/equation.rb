@@ -73,6 +73,17 @@ class Equation
       end
   end
 
+  # Dentaku is a parser and evaluator for a mathematical and logical formula
+  # language that allows run-time binding of values to variables referenced in
+  # the formulas. It is intended to safely evaluate untrusted expressions
+  # without opening security holes.
+  #
+  # Basic usage:
+  #   calculator = Dentaku::Calculator.new
+  #   calculator.evaluate('10 * 2')
+  #
+  # Usage with runtime-defined variables:
+  #   calculator.evaluate('kiwi + 5', kiwi: 2)
   private def calculator
     @calculator ||= Dentaku::Calculator.new
   end
@@ -93,6 +104,7 @@ class Equation
 
   # rubocop:disable Metrics/PerceivedComplexity
   private def returns_expected_type
+    return unless test_value
     if should_return_boolean? && !returns_boolean?
       errors.add(
         :base,
