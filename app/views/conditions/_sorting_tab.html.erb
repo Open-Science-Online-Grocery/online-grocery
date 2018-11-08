@@ -17,10 +17,10 @@
           <div class="ui segment nested-fields <%= 'disabled' unless condition.sort_type == 'field' %>">
             <div class="equal width fields">
               <div class="field">
-                <%= f.label :default_sort_field, 'Field' %>
+                <%= f.label :default_sort_field_id, 'Field' %>
                 <%=
                   f.collection_select(
-                    :default_sort_field,
+                    :default_sort_field_id,
                     ProductSortField.all,
                     :id,
                     :description,
@@ -35,7 +35,7 @@
                   f.select(
                     :default_sort_order,
                     [['Ascending', 'asc'], ['Descending', 'desc']],
-                    { include_blank: true },
+                    {},
                     class: 'ui dropdown'
                   )
                 %>

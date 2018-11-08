@@ -68,4 +68,34 @@ RSpec.describe ConditionManager do
       expect(condition.label_id).to be_nil
     end
   end
+
+  context 'when replacing a field-type sort' do
+    let(:params) do
+      {
+        default_sort_field_id: 1,
+        default_sort_order: 'desc',
+        label_type: 'calculation'
+      }
+    end
+
+    it 'removes the label_id and order' do
+      subject.update_condition
+      expect(condition.default_sort_field_id).to be_nil
+      expect(condition.default_sort_order).to be_nil
+    end
+  end
+
+  context 'when replacing a calculation sort' do
+    let(:params) do
+      {
+        sort_equation_tokens: 'some tokens',
+        label_type: 'field'
+      }
+    end
+
+    it 'removes the label_id and order' do
+      subject.update_condition
+      expect(condition.sort_equation_tokens).to be_nil
+    end
+  end
 end

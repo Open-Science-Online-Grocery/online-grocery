@@ -9,6 +9,7 @@ class Condition < ApplicationRecord
 
   belongs_to :experiment
   belongs_to :label, optional: true
+  belongs_to :default_sort_field, optional: true, class_name: 'ProductSortField'
   has_many :condition_product_sort_fields, dependent: :destroy
   has_many :product_sort_fields, through: :condition_product_sort_fields
 

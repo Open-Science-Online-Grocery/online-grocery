@@ -53,6 +53,7 @@ Metrics/BlockLength:
     - '**/spec/**/*'
 Metrics/ClassLength:
   Exclude:
+    - 'app/controllers/conditions_controller.rb'
     - '**/db/migrate/**/*'
     - '**/db/seeds/**/*'
 Metrics/CyclomaticComplexity:
@@ -134,6 +135,8 @@ RSpec/ExampleLength:
   Enabled: false
 RSpec/ExpectChange:
   EnforcedStyle: block
+RSpec/ImplicitSubject:
+  Enabled: false
 RSpec/LeadingSubject:
   Enabled: false
 RSpec/MessageChain:

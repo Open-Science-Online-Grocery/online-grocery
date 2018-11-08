@@ -38,9 +38,10 @@ ActiveRecord::Schema.define(version: 2018_11_08_190901) do
     t.string "label_position"
     t.integer "label_size"
     t.text "label_equation_tokens"
-    t.string "default_sort_field"
+    t.bigint "default_sort_field_id"
     t.string "default_sort_order"
     t.text "sort_equation_tokens"
+    t.index ["default_sort_field_id"], name: "index_conditions_on_default_sort_field_id"
     t.index ["experiment_id"], name: "index_conditions_on_experiment_id"
     t.index ["label_id"], name: "index_conditions_on_label_id"
   end
