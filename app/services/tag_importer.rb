@@ -30,8 +30,12 @@ class TagImporter
 
   private def create_data_from_import
     ActiveRecord::Base.transaction do
-      CSV.foreach(@file.path, headers: true).with_index do |row, row_number|
-        # TODO: Create and translate from displayed csv headers to code headers
+      CSV.foreach(
+        @file.path,
+        headers: true,
+        converters: :all,
+        header_converters: convert_header_lambda
+      ).with_index do |row, row_number|
         row_data = row.to_h.with_indifferent_access
         validate_row(row_data, row_number)
         create_tags(row_data, row_number)
@@ -40,11 +44,16 @@ class TagImporter
     end
   end
 
+  # lambda to convert displayed headers to symbol attribute names
+  private def convert_header_lambda
+    ->(header) { ProductDataCsvManager.product_data_csv_attributes[header] }
+  end
+
   private def validate_row(row_data, row_number)
     @required_attributes.each do |attribute|
       require_attribute(attribute, row_data[attribute], row_number)
     end
-    validate_tags
+    validate_tags(row_data, row_number)
   end
 
   # TODO: Remove this validation if subtags are optional
@@ -53,7 +62,7 @@ class TagImporter
       tag_name = row_data[category]
       subtag_name = row_data[subcategory]
 
-      require_attribute(tag, tag_name, row_number) if subtag_name.present?
+      require_attribute(category, tag_name, row_number) if subtag_name.present?
     end
   end
 
@@ -68,19 +77,21 @@ class TagImporter
   end
 
   private def create_single_tag(tag_name, subtag_name, product_name, row_number)
-    product = Product.find_by(name: product_name)
-    missing_product_error(product_name, row_number) unless product.present?
-
+    # TODO: remove subtag from this list if it is not required
+    return unless tag_name.present? && subtag_name.present? && product_name.present?
     begin
+      product = Product.find_by!(name: product_name)
       tag = Tag.find_or_create_by!(name: tag_name)
       subtag = Subtag.find_or_create_by!(name: subtag_name, tag: tag)
-      ProductTag.find_or_create_by!(
-        product: product,
-        tag: tag,
-        subtag: subtag
-        )
+      if product.present? && tag.present?
+        ProductTag.find_or_create_by!(
+          product: product,
+          tag: tag,
+          subtag: subtag
+          )
+      end
     rescue ActiveRecord::RecordNotFound => error
-      @errors << error.message
+      record_not_found_error(error.message, row_number)
     end
   end
 
@@ -89,10 +100,10 @@ class TagImporter
   end
 
   private def missing_required_attribute_error(attribute, row_number)
-    @errors << "Row #{row_number}: #{attribute.humanize.titleize} is required"
+    @errors << "Row #{row_number + 1}: #{attribute.to_s.humanize.titleize} is required"
   end
 
-  private def missing_product_error(product_name, row_number)
-    @errors << "Row #{row_number}: Product with name `#{product_name}` could not be found"
+  private def record_not_found_error(error_message, row_number)
+    @errors << "Row #{row_number + 1}: #{error_message}"
   end
 end

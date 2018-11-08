@@ -19,12 +19,12 @@ class ProductDataCsvManager
 
   def self.custom_category_attributes
     {
-      'Custom Category 1' => :custom_category1,
-      'Custom Subcategory 1' => :custom_subcategory1,
-      'Custom Category 2' => :custom_category2,
-      'Custom Subcategory 2' => :custom_subcategory2,
-      'Custom Category 3' => :custom_category3,
-      'Custom Subcategory 3' => :custom_subcategory3
+      'Custom Category 1' => :custom_category_1,
+      'Custom Subcategory 1' => :custom_subcategory_1,
+      'Custom Category 2' => :custom_category_2,
+      'Custom Subcategory 2' => :custom_subcategory_2,
+      'Custom Category 3' => :custom_category_3,
+      'Custom Subcategory 3' => :custom_subcategory_3
     }
   end
 
