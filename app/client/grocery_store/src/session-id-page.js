@@ -1,13 +1,11 @@
-import React from 'react'
-import './online-grocery.scss'
-import {
-  withRouter
-} from "react-router-dom";
+import React from 'react';
+import './online-grocery.scss';
+import { withRouter } from 'react-router-dom';
 
-class SessionIDPage extends React.Component{
+class SessionIDPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = { value: '' };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
