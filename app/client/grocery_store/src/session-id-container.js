@@ -6,8 +6,8 @@ import { userActionCreators } from './reducers/user/user-actions';
 
 const mapDispatchToProps = dispatch => (
   {
-    handleSetUser: (sessionID) => {
-      dispatch(userActionCreators.setUser(sessionID));
+    handleSetUser: (sessionID, conditionIdentifier) => {
+      dispatch(userActionCreators.setUser(sessionID, conditionIdentifier));
     }
   }
 );
