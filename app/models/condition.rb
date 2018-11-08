@@ -9,8 +9,10 @@ class Condition < ApplicationRecord
 
   belongs_to :experiment
   belongs_to :label, optional: true
+  has_many :condition_product_sort_fields, dependent: :destroy
+  has_many :product_sort_fields, through: :condition_product_sort_fields
 
-  accepts_nested_attributes_for :label
+  accepts_nested_attributes_for :label, :product_sort_fields
 
   # TODO: update if needed
   def url

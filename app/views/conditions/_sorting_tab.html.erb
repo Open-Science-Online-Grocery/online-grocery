@@ -19,9 +19,11 @@
               <div class="field">
                 <%= f.label :default_sort_field, 'Field' %>
                 <%=
-                  f.select(
+                  f.collection_select(
                     :default_sort_field,
-                    Product.sort_fields,
+                    ProductSortField.all,
+                    :id,
+                    :description,
                     { include_blank: true },
                     class: 'ui dropdown'
                   )
@@ -59,6 +61,23 @@
             data-equation-type="sort"
           ></div>
         </div>
+      </div>
+    </div>
+
+    <div class="eight wide column">
+      <div class="field">
+        <%= f.label :product_sort_field_ids, 'Allow participants to sort products by' %>
+        <%=
+          f.collection_select(
+            :product_sort_field_ids,
+            ProductSortField.all,
+            :id,
+            :description,
+            {},
+            class: 'ui dropdown',
+            multiple: true
+          )
+        %>
       </div>
     </div>
   </div>

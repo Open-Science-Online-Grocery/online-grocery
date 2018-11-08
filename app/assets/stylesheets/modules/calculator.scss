@@ -23,6 +23,7 @@
       -webkit-box-shadow: none;
     }
   }
+
   .token {
     display: inline-block;
     margin: 0.3rem;
@@ -47,6 +48,10 @@
 
   .insert-field {
     display: flex;
+
+    button {
+      margin: 0;
+    }
 
     .dropdown.selection {
       flex-grow: 1;
