@@ -1,7 +1,12 @@
 import FlashMessage from '../../utils/FlashMessage';
 import { equationValidation } from '../../utils/routes';
 import * as fromApi from '../../utils/api_call';
-import { getCursorPosition, getEquationType, getTokensJson } from './store';
+import {
+  getCursorPosition,
+  getEquationType,
+  getTokensJson,
+  getTokenCount
+} from './store';
 
 export const INSERT_TOKEN = 'INSERT_TOKEN';
 export const MOVE_CURSOR = 'MOVE_CURSOR';
@@ -22,10 +27,17 @@ export function selectToken(type, value) {
   };
 }
 
-export function moveCursor(forwards) {
+function moveCursor(shouldMoveForwards, tokenCount) {
   return {
     type: MOVE_CURSOR,
-    payload: { forwards }
+    payload: { shouldMoveForwards, tokenCount }
+  };
+}
+
+export function arrowKeyPressed(shouldMoveForwards) {
+  return (dispatch, getState) => {
+    const $$state = getState();
+    dispatch(moveCursor(shouldMoveForwards, getTokenCount($$state)));
   };
 }
 
