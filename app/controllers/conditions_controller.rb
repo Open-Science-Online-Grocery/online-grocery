@@ -88,6 +88,7 @@ class ConditionsController < ApplicationController
       :sort_type,
       :default_sort_field,
       :default_sort_order,
+      :sort_equation_tokens,
       :nutrition_styles,
       product_sort_field_ids: [],
       label_attributes: %i[id image image_cache name built_in]

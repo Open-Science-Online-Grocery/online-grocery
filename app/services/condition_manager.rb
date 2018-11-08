@@ -38,8 +38,12 @@ class ConditionManager
   end
 
   private def clear_unselected_sort_fields
-    return if @params[:sort_type] == 'field'
-    @params[:default_sort_field] = nil
-    @params[:default_sort_order] = nil
+    if @params[:sort_type] != 'field'
+      @params[:default_sort_field] = nil
+      @params[:default_sort_order] = nil
+    end
+    if @params[:sort_type] != 'calculation'
+      @params[:sort_equation_tokens] = nil
+    end
   end
 end

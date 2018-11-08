@@ -28,6 +28,7 @@ class Condition < ApplicationRecord
   def sort_type
     return @sort_type if @sort_type
     return 'field' if default_sort_field
+    return 'calculation' if sort_equation_tokens
     'none'
   end
 end
