@@ -16,10 +16,12 @@ export default class TestResults extends PureComponent {
   }
 
   render() {
+    // test results may be `null` if the calculation has not yet been tested
+    // (or has been changed since the last test)
     if (typeof this.props.valid !== 'boolean') return null;
     return (
       <div>
-        <Message icon className={this.className()}>
+        <Message size="tiny" icon className={this.className()}>
           <Icon name={this.iconName()} />
           <Message.Content>
             <Message.Header>
