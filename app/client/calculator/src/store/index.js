@@ -69,7 +69,7 @@ export function noOpReducer($$defaultState) {
 // should appear in the EquationEditor, using a 0-based index. E.g., a position
 // of 0 indicates the cursor should appear before any tokens while a position of
 // 3 indicates the cursor should appear after the first 3 tokens.
-function cursorPosition(state = 0, action) {
+export function cursorPosition(state = 0, action) {
   switch (action.type) {
     case INSERT_TOKEN:
       return state + 1;
@@ -85,7 +85,7 @@ function cursorPosition(state = 0, action) {
   }
 }
 
-function tokens($$state = Immutable.List(), action) {
+export function tokens($$state = Immutable.List(), action) {
   switch (action.type) {
     case INSERT_TOKEN:
       return $$state.insert(
@@ -103,7 +103,7 @@ function tokens($$state = Immutable.List(), action) {
   }
 }
 
-function valid(state = null, action) {
+export function valid(state = null, action) {
   switch (action.type) {
     case REPORT_TEST_RESULTS:
       return action.payload.valid;
@@ -116,7 +116,7 @@ function valid(state = null, action) {
   }
 }
 
-function validationMessage(state = null, action) {
+export function validationMessage(state = null, action) {
   switch (action.type) {
     case REPORT_TEST_RESULTS:
       return action.payload.validationMessage;
