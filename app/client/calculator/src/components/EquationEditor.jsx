@@ -1,7 +1,25 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+const RIGHT = 39;
+const LEFT = 37;
+const BACKSPACE = 8;
+
 export default class EquationEditor extends PureComponent {
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeydown.bind(this), false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeydown.bind(this), false);
+  }
+
+  handleKeydown(event) {
+    if (event.keyCode === RIGHT) this.props.arrowKeyPressed(true);
+    if (event.keyCode === LEFT) this.props.arrowKeyPressed(false);
+    if (event.keyCode === BACKSPACE) this.props.deletePreviousToken();
+  }
+
   cursor() {
     return (
       <div key="cursor" className="cursor">|</div>
@@ -40,5 +58,7 @@ EquationEditor.propTypes = {
       name: PropTypes.string
     })
   ).isRequired,
-  cursorPosition: PropTypes.number.isRequired
+  cursorPosition: PropTypes.number.isRequired,
+  arrowKeyPressed: PropTypes.func.isRequired,
+  deletePreviousToken: PropTypes.func.isRequired
 };

@@ -35,6 +35,7 @@ class ExperimentsController < ApplicationController
   end
 
   def edit
+    @resource_name = "Experiment: #{@experiment.name}"
   end
 
   def update

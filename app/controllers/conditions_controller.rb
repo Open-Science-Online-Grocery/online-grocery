@@ -40,7 +40,8 @@ class ConditionsController < ApplicationController
   def update
     manager = ConditionManager.new(@condition, condition_params)
     if manager.update_condition
-      flash.now[:success] = 'Condition successfully updated'
+      flash[:success] = 'Condition successfully updated'
+      redirect_to edit_experiment_condition_path(@experiment, @condition)
     else
       @messages = {
         error: {
@@ -48,9 +49,9 @@ class ConditionsController < ApplicationController
           messages: manager.errors
         }
       }
+      @resource_name = "Condition: #{@condition.name}"
+      render :edit
     end
-    @resource_name = "Condition: #{@condition.name}"
-    render :edit
   end
 
   def destroy
@@ -59,7 +60,6 @@ class ConditionsController < ApplicationController
     else
       set_error_messages(@condition)
     end
-
     redirect_to experiment_path(@experiment)
   end
 
@@ -84,6 +84,7 @@ class ConditionsController < ApplicationController
       :label_id,
       :label_position,
       :label_size,
+      :label_equation_tokens,
       :nutrition_styles,
       label_attributes: %i[id image image_cache name built_in]
     )

@@ -2,6 +2,7 @@
   "name": "howes_grocery_researcher_portal",
   "private": true,
   "scripts": {
+    "test": "jest",
     "eslint": "eslint --format codeframe \"**/app/client/**/*.js*\"",
     "audit": "npm i && npm audit"
   },
@@ -9,7 +10,9 @@
     "@rails/webpacker": "3.5",
     "babel-polyfill": "^6.26.0",
     "babel-preset-react": "^6.24.1",
+    "humps": "^2.0.1",
     "immutable": "^3.8.2",
+    "isomorphic-fetch": "^2.2.1",
     "jquery": "^3.3.1",
     "prop-types": "^15.6.2",
     "react": "^16.6.0",
@@ -27,13 +30,17 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
     "eslint": "^5.8.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jest": "^21.26.2",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
+    "jest": "^23.6.0",
+    "regenerator-runtime": "^0.12.1",
     "webpack-dev-server": "2.11.2"
   },
   "version": "1.0.0",

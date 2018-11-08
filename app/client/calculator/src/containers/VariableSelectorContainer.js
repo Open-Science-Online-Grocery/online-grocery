@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import VariableSelector from '../components/VariableSelector';
 import { getVariables } from '../store';
-import { selectToken } from '../actions';
+import { selectToken, deletePreviousToken } from '../actions';
 
 const mapStateToProps = $$state => (
   {
@@ -10,7 +10,10 @@ const mapStateToProps = $$state => (
 );
 
 const mapDispatchToProps = dispatch => (
-  { selectToken: value => dispatch(selectToken('variable', value)) }
+  {
+    selectToken: value => dispatch(selectToken('variable', value)),
+    deletePreviousToken: () => dispatch(deletePreviousToken())
+  }
 );
 
 export default connect(mapStateToProps, mapDispatchToProps)(VariableSelector);

@@ -1,6 +1,11 @@
 import Immutable from 'immutable';
 import { combineReducers } from 'redux-immutable';
-import { INSERT_TOKEN } from '../actions';
+import {
+  INSERT_TOKEN,
+  MOVE_CURSOR,
+  REMOVE_TOKEN,
+  REPORT_TEST_RESULTS
+} from '../actions';
 
 const uuidv1 = require('uuid/v1');
 
@@ -14,8 +19,28 @@ export function getCursorPosition($$state) {
   return $$state.get('cursorPosition');
 }
 
-function getTokens($$state) {
+export function getInputName($$state) {
+  return $$state.get('inputName');
+}
+
+export function getEquationType($$state) {
+  return $$state.get('equationType');
+}
+
+export function getValid($$state) {
+  return $$state.get('valid');
+}
+
+export function getValidationMessage($$state) {
+  return $$state.get('validationMessage');
+}
+
+export function getTokens($$state) {
   return $$state.get('tokens').toJS();
+}
+
+export function getTokenCount($$state) {
+  return $$state.get('tokens').size;
 }
 
 function getTokenName($$state, token) {
@@ -30,25 +55,40 @@ export function getTokensWithName($$state) {
   );
 }
 
+export function getTokensJson($$state) {
+  return JSON.stringify(getTokens($$state));
+}
+
 /* ******************************* reducers ********************************* */
 
 export function noOpReducer($$defaultState) {
   return ($$state = $$defaultState) => $$state;
 }
 
-function cursorPosition(state = 0, action) {
+// cursorPosition indicates where, relative to the array of tokens, the cursor
+// should appear in the EquationEditor, using a 0-based index. E.g., a position
+// of 0 indicates the cursor should appear before any tokens while a position of
+// 3 indicates the cursor should appear after the first 3 tokens.
+export function cursorPosition(state = 0, action) {
   switch (action.type) {
     case INSERT_TOKEN:
       return state + 1;
+    case MOVE_CURSOR:
+      if (action.payload.shouldMoveForwards) {
+        return Math.min(state + 1, action.payload.tokenCount);
+      }
+      return Math.max(state - 1, 0);
+    case REMOVE_TOKEN:
+      return Math.max(state - 1, 0);
     default:
       return state;
   }
 }
 
-function tokens($$state = Immutable.List(), action) {
+export function tokens($$state = Immutable.List(), action) {
   switch (action.type) {
     case INSERT_TOKEN:
-      return $$state.set(
+      return $$state.insert(
         action.payload.position,
         Immutable.Map({
           id: uuidv1(), // react needs unique keys for rendering
@@ -56,15 +96,47 @@ function tokens($$state = Immutable.List(), action) {
           value: action.payload.value
         })
       );
+    case REMOVE_TOKEN:
+      return $$state.delete(action.payload.position);
     default:
       return $$state;
+  }
+}
+
+export function valid(state = null, action) {
+  switch (action.type) {
+    case REPORT_TEST_RESULTS:
+      return action.payload.valid;
+    case INSERT_TOKEN:
+      return null;
+    case REMOVE_TOKEN:
+      return null;
+    default:
+      return state;
+  }
+}
+
+export function validationMessage(state = null, action) {
+  switch (action.type) {
+    case REPORT_TEST_RESULTS:
+      return action.payload.validationMessage;
+    case INSERT_TOKEN:
+      return null;
+    case REMOVE_TOKEN:
+      return null;
+    default:
+      return state;
   }
 }
 
 const rootReducer = combineReducers({
   cursorPosition,
   tokens,
-  variables: noOpReducer(Immutable.Map())
+  valid,
+  validationMessage,
+  variables: noOpReducer(Immutable.Map()),
+  inputName: noOpReducer(''),
+  equationType: noOpReducer('')
 });
 
 export default rootReducer;
