@@ -102,7 +102,7 @@ class Equation
     )
   end
 
-  # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
   private def returns_expected_type
     return unless test_value
     if should_return_boolean? && !returns_boolean?
@@ -117,5 +117,5 @@ class Equation
       )
     end
   end
-  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 end
