@@ -1,14 +1,14 @@
-import React from 'react'
-import './order-summary.scss'
+import React from 'react';
 import axios from 'axios';
+import './order-summary.scss';
+
 export default class OrderSummary extends React.Component{
-
-
     removeFromCart(product) {
         this.props.handleRemoveFromCart(product)
 
         axios.post('/api/participant_actions', {
           sessionID: this.props.sessionID,
+          conditionIdentifier: this.props.conditionIdentifier,
           actionType: "delete",
           product: product.name,
           quantity: product.quantity
@@ -22,6 +22,7 @@ export default class OrderSummary extends React.Component{
         this.props.cart.items.forEach((item) =>{
           axios.post('/api/participant_actions', {
             sessionID:this.props.sessionID,
+            conditionIdentifier: this.props.conditionIdentifier,
             actionType: "checkout",
             product: item.name,
             quantity: item.quantity
