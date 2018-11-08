@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 2018_11_08_205830) do
 
   create_table "participant_actions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "session_identifier"
+    t.string "condition_identifier"
     t.string "action_type"
     t.string "product_name"
     t.integer "quantity"
