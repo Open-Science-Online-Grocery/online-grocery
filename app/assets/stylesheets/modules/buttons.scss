@@ -1,6 +1,7 @@
 .ui.button {
   padding-left: 1em;
   padding-right: 1em;
+  border: 1px solid $cancel-highlight-color;
 
   &.positive {
     background-color: $dark-theme-color;
@@ -13,4 +14,18 @@
 
 .centered.button-wrapper {
   text-align: center;
+}
+
+.ui.buttons {
+  border: 1px solid $cancel-highlight-color;
+  border-radius: 4px;
+
+  .button {
+    border: none;
+    border-right: 1px solid $cancel-highlight-color;
+
+    &:last-of-type {
+      border-right: none;
+    }
+  }
 }

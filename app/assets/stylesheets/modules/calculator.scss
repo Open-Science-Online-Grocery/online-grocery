@@ -1,0 +1,104 @@
+.calculator {
+  > div {
+    margin-bottom: 1rem;
+
+    &.ui.buttons {
+      margin-bottom: 0.5rem;
+
+      &.digits {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  .equation-editor {
+    .ui.segment {
+      min-height: 3.75rem;
+      padding: 0.5rem;
+    }
+  }
+  .token {
+    display: inline-block;
+    margin: 0.3rem;
+
+    &.digit {
+      margin: 0;
+    }
+
+    &.variable {
+      background-color: #ddd;
+      padding: 0.3rem 0.5rem;
+      border-radius: 12px;
+    }
+  }
+
+  .cursor {
+    display: inline-block;
+    animation: 1s blink step-end infinite;
+    line-height: 2.5rem;
+  }
+
+  .insert-field {
+    display: flex;
+
+    .dropdown.selection {
+      flex-grow: 1;
+    }
+
+    .button {
+      margin-left: 1rem;
+      margin-right: 0;
+    }
+  }
+
+  .ui.buttons.operators {
+    .ui.button {
+      width: 12.5%;
+    }
+  }
+
+  .test-button {
+    text-align: right;
+  }
+}
+
+@keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+@-moz-keyframes blink {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+@-webkit-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+@-ms-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+@-o-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}

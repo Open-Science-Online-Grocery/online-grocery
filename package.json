@@ -19,10 +19,12 @@
     "redux-devtools": "^3.4.1",
     "redux-devtools-extension": "^2.13.5",
     "redux-immutable": "^4.0.0",
+    "redux-thunk": "^2.3.0",
     "resolve-url-loader": "^3.0.0",
     "rgb-to-hex": "^0.0.0",
     "semantic-ui-css": "^2.4.0",
-    "semantic-ui-react": "^0.83.0"
+    "semantic-ui-react": "^0.83.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
