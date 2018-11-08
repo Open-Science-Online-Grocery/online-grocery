@@ -41,7 +41,7 @@ class ConditionManager
   private def import_tags
     # users can only upload one file at a time
     uploaded_csv_file = @params[:tag_csv_files][0][:csv_file]
-    tag_importer = TagImporter.new(uploaded_csv_file)
+    tag_importer = TagImporter.new(file: uploaded_csv_file, condition: @condition)
     @errors += importer.errors unless tag_importer.import
   end
 end

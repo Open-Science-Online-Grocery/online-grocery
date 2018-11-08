@@ -11,6 +11,9 @@ class Condition < ApplicationRecord
   belongs_to :label, optional: true
 
   has_many :tag_csv_files
+  has_many :product_tags
+  has_many :tags, through: :product_tags
+  has_many :subtags, through: :product_tags
 
   accepts_nested_attributes_for :label, :tag_csv_files
 

@@ -6,8 +6,9 @@ class TagImporter
 
   attr_reader :errors
 
-  def initialize(file)
+  def initialize(file: file, condition: condition)
     @file = file
+    @condition = condition
     @errors = []
     @required_attributes = ProductDataCsvManager
       .built_in_category_attributes
@@ -87,8 +88,10 @@ class TagImporter
         ProductTag.find_or_create_by!(
           product: product,
           tag: tag,
-          subtag: subtag
-          )
+          subtag: subtag,
+          condition: @condition,
+          active: true
+        )
       end
     rescue ActiveRecord::RecordNotFound => error
       record_not_found_error(error.message, row_number)
