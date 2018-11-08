@@ -1,0 +1,59 @@
+.nutrition-facts-label {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  border: 2px solid black;
+  margin: 50px 0 10px 0;
+  padding: 3px;
+  width: 300px;
+
+  text-transform: capitalize;
+
+  .nutrition-facts-title {
+    text-align: center;
+    font-size: 22px;
+    border-bottom: 1px solid black;
+  }
+
+  .nutrition-facts-servings {
+    margin-top: 3px;
+    font-size: 12px;
+  }
+
+  .nutrition-facts-serving-size {
+    font-size: 12px;
+    width: 100%;
+    border-bottom: 7px solid black;
+  }
+
+  .nutrition-facts-amount {
+    margin-top: 3px;
+    font-size: 8px;
+  }
+
+  .nutrition-facts-calories {
+    font-size: 22px;
+    border-bottom: 3px solid black;
+  }
+  .nutrition-facts-percent {
+    font-size: 8px;
+    width: 100%;
+    text-align: right;
+    margin: 3px 0;
+  }
+
+  .nutrition-facts-line {
+    font-size: 10px;
+    padding: 2px 0;
+    border-top: 1px solid black;
+  }
+
+  .nutrition-facts-vitamins {
+    border-top: 7px solid black;
+    font-size: 10px;
+    padding: 2px 0;
+  }
+
+  .nutrition-facts-daily-value {
+    font-size: 8px;
+    border-top: 3px solid black;
+  }
+}

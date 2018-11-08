@@ -2,8 +2,8 @@
   "name": "howes_grocery_researcher_portal",
   "private": true,
   "scripts": {
+    "eslint": "eslint --format codeframe --ignore-pattern \"**/app/client/grocery_store/**/*.js*\" \"**/app/client/**/*.js*\"",
     "test": "jest",
-    "eslint": "eslint --format codeframe \"**/app/client/**/*.js*\"",
     "audit": "npm i && npm audit"
   },
   "dependencies": {

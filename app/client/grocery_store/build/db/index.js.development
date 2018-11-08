@@ -1,0 +1,10 @@
+const mysql = require('mysql');
+
+const db = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'howes_grocery_development'
+});
+
+module.exports = db;
