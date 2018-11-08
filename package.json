@@ -2,8 +2,17 @@
   "name": "howes_grocery_researcher_portal",
   "private": true,
   "scripts": {
+    "test": "jest",
     "eslint": "eslint --format codeframe \"**/app/client/**/*.js*\"",
     "audit": "npm i && npm audit"
+  },
+  "jest": {
+    "modulePaths": ["<rootDir>/app/client/"],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/vendor/",
+      "config/webpack/test.js"
+    ]
   },
   "dependencies": {
     "@rails/webpacker": "3.5",
@@ -36,6 +45,7 @@
     "eslint-plugin-jest": "^21.26.2",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
+    "jest": "^23.6.0",
     "webpack-dev-server": "2.11.2"
   },
   "version": "1.0.0",
