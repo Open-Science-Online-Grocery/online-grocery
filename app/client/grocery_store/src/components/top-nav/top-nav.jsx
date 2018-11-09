@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tab from '../tab/tab';
-import './top-nav.scss';
 import Search from '../search/search';
 import * as routes from '../../../../utils/routes';
 import * as fromApi from '../../../../utils/api_call';
+import './top-nav.scss';
 
 export default class TopNav extends React.Component {
   componentDidMount() {

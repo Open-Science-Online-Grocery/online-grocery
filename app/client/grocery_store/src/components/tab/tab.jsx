@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import './tab.scss';
+import * as routes from '../../../../utils/routes';
+import * as fromApi from '../../../../utils/api_call';
 
 export default class Tab extends React.Component {
   constructor(props) {
@@ -16,15 +17,15 @@ export default class Tab extends React.Component {
     const categoryParams = {
       conditionIdentifier: this.props.conditionIdentifier,
       category: this.props.index,
-      subcategory: subcat.display_order
+      subcategory: subcat.displayOrder
     };
-    axios.get('/api/category', { params: categoryParams })
-      .then((res) => {
-        console.log(res.data);
-        this.props.handleSetProducts(res.data);
-      })
-      .catch(err => console.log(err));
-    this.props.handleSetCategory(this.props.index, subcat.category_id);
+    fromApi.jsonApiCall(
+      routes.categoryProducts(),
+      categoryParams,
+      data => this.props.handleSetProducts(data),
+      error => console.log(error)
+    );
+    this.props.handleSetCategory(this.props.index, subcat.categoryId);
   }
 
   openDropdown() {

@@ -16,12 +16,12 @@ class ProductViewPage extends React.Component{
   }
   render(){
     const product = this.props.location.state.product
-    const sessionID = this.props.location.state.sessionID
+    const sessionId = this.props.location.state.sessionId
     return(
     <div>
-        <CartDropdownContainer sessionID={sessionID}/>
+        <CartDropdownContainer sessionId={sessionId}/>
         <img className='logo-style' src={require('./images/howesgrocerybanner.png')}/>
-        <ProductCardExpandedContainer sessionID={sessionID} {...product}/>
+        <ProductCardExpandedContainer sessionId={sessionId} {...product}/>
     </div>
     )
   }

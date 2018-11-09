@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import * as routes from '../../../../utils/routes';
+import * as fromApi from '../../../../utils/api_call';
 import './search.scss';
 
 class Search extends React.Component {
@@ -22,12 +23,15 @@ class Search extends React.Component {
       conditionIdentifier: this.props.conditionIdentifier,
       search: this.state.value
     };
-    axios.get('/api/product_search', { params: searchParams })
-      .then((res) => {
-        this.props.handleSetProducts(res.data);
+    fromApi.jsonApiCall(
+      routes.productSearch(),
+      searchParams,
+      (data) => {
+        this.props.handleSetProducts(data);
         this.props.history.push({ pathname: '/store/search' });
-      })
-      .catch(err => console.log(err));
+      },
+      error => console.log(error)
+    );
   }
 
   render() {

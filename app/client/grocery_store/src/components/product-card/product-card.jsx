@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import * as routes from '../../../../utils/routes';
+import * as fromApi from '../../../../utils/api_call';
 import './product-card.scss';
 
 export default class ProductCard extends React.Component {
@@ -15,13 +16,20 @@ export default class ProductCard extends React.Component {
 
   handleAddToCart() {
     this.props.handleAddToCart(this.props.product, this.state.quantity);
-    axios.post('/api/participant_actions', {
-      sessionID: this.props.sessionID,
+    const actionParams = {
+      sessionId: this.props.sessionId,
       conditionIdentifier: this.props.conditionIdentifier,
       actionType: 'add',
       product: this.props.product.name,
       quantity: this.state.quantity
-    }).then(response => console.log(response));
+    };
+    const route = routes.addParticipantAction();
+    fromApi.jsonApiCall(
+      routes.addParticipantAction(),
+      actionParams,
+      data => console.log(data),
+      error => console.log(error)
+    );
   }
 
   subtractQuantity() {
@@ -53,11 +61,11 @@ export default class ProductCard extends React.Component {
   }
 
   labelStyles() {
-    if (!this.props.product.label_image_url) return {};
+    if (!this.props.product.labelImageUrl) return {};
     return {
-      backgroundImage: `url(${this.props.product.label_image_url})`,
-      backgroundPosition: this.props.product.label_position,
-      backgroundSize: `${this.props.product.label_size}%`
+      backgroundImage: `url(${this.props.product.labelImageUrl})`,
+      backgroundPosition: this.props.product.labelPosition,
+      backgroundSize: `${this.props.product.labelSize}%`
     };
   }
 
@@ -103,7 +111,7 @@ export default class ProductCard extends React.Component {
 }
 
 ProductCard.propTypes = {
-  sessionID: PropTypes.string.isRequired,
+  sessionId: PropTypes.string.isRequired,
   conditionIdentifier: PropTypes.string.isRequired,
   product: PropTypes.shape({
     name: PropTypes.string,
@@ -111,9 +119,9 @@ ProductCard.propTypes = {
     size: PropTypes.string,
     price: PropTypes.string,
     starpoints: PropTypes.number,
-    label_image_url: PropTypes.string,
-    label_position: PropTypes.string,
-    label_size: PropTypes.number
+    labelImageUrl: PropTypes.string,
+    labelPosition: PropTypes.string,
+    labelSize: PropTypes.number
   }).isRequired,
   handleAddToCart: PropTypes.func.isRequired
 };

@@ -2,9 +2,9 @@ export const userActionTypes = {
   SET_USER: 'SET_USER'
 };
 
-function setUser(sessionID, conditionIdentifier) {
+function setUser(sessionId, conditionIdentifier) {
   return {
-    sessionID,
+    sessionId,
     conditionIdentifier,
     type: userActionTypes.SET_USER
   };

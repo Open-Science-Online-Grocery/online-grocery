@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export function equationValidation() {
   return {
     url: '/api/equation_validation.json',
@@ -24,5 +23,19 @@ export function subcategories() {
   return {
     url: '/api/subcategories',
     method: 'GET'
+  };
+}
+
+export function productSearch() {
+  return {
+    url: '/api/product_search',
+    method: 'GET'
+  };
+}
+
+export function addParticipantAction() {
+  return {
+    url: '/api/participant_actions',
+    method: 'POST'
   };
 }

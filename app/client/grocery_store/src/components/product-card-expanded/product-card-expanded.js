@@ -21,7 +21,7 @@ export default class ProductCardExpanded extends React.Component {
     handleAddToCart() {
         this.props.handleAddToCart(this.props, this.state.quantity)
         axios.post('/api/participant_actions', {
-          sessionID:this.props.sessionID,
+          sessionId:this.props.sessionId,
           conditionIdentifier: this.props.conditionIdentifier,
           actionType: "add",
           product: this.props.name,
@@ -83,7 +83,7 @@ export default class ProductCardExpanded extends React.Component {
 
     render() {
         axios.post('/api/participant_actions', {
-            sessionID:this.props.sessionID,
+            sessionId:this.props.sessionId,
             conditionIdentifier: this.props.conditionIdentifier,
             actionType: "view",
             product: this.props.name,

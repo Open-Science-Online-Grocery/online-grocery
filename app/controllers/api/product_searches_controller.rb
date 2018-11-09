@@ -5,7 +5,8 @@ module Api
     skip_before_action :authenticate_user!
 
     def show
-      condition = Condition.find_by(uuid: params[:conditionIdentifier])
+      uuid = params[:condition_identifier]
+      condition = Condition.find_by(uuid: uuid)
       products = Product.where(
         Product.arel_table[:name].matches("%#{params[:search]}%")
       )
