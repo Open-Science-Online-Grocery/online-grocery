@@ -8,14 +8,9 @@ module Api
     #   - param :category is a category id
     #   - param :subcategory is a subcategory's display order
     def show
-      uuid = params[:condition_identifier]
-      condition = Condition.find_by(uuid: uuid)
-      subcategory = Subcategory.find_by(
-        category_id: params[:category],
-        display_order: params[:subcategory]
-      )
+      condition = Condition.find_by(uuid: params[:condition_identifier])
       products = Product.where(
-        category: params[:category],
+        category_id: params[:category],
         subcategory: subcategory.id
       )
       products_hash = products.map do |product|
@@ -26,6 +21,13 @@ module Api
 
     def index
       render json: Category.order(:id).to_json
+    end
+
+    private def subcategory
+      @subcategory ||= Subcategory.find_by(
+        category_id: params[:category],
+        display_order: params[:subcategory]
+      )
     end
   end
 end

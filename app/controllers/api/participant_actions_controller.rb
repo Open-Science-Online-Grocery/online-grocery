@@ -7,8 +7,7 @@ module Api
 
     # rubocop:disable Metrics/AbcSize, Rails/SaveBang
     def create
-      uuid = params[:condition_identifier]
-      condition = Condition.find_by(uuid: uuid)
+      condition = Condition.find_by(uuid: params[:condition_identifier])
       action = ParticipantAction.create(
         session_identifier: params[:session_id],
         condition: condition,

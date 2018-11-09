@@ -14,4 +14,8 @@ class Product < ApplicationRecord
   alias_attribute :mono_fat, :monoFat
   alias_attribute :category_id, :category
   alias_attribute :subcategory_id, :subcategory
+
+  scope :name_matches, ->(string) {
+    where(arel_table[:name].matches("%#{string}%"))
+  }
 end

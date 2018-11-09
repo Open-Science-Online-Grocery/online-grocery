@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# responsible for collecting/formatting info about a Product for consumption by
+# grocery store react app
 class ProductSerializer
   def initialize(product, condition)
     @product = product
