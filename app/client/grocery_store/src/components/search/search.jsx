@@ -18,7 +18,11 @@ class Search extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    axios.get('/api/product_search', {params: {search: this.state.value}})
+    const searchParams = {
+      conditionIdentifier: this.props.conditionIdentifier,
+      search: this.state.value
+    };
+    axios.get('/api/product_search', { params: searchParams })
       .then((res) => {
         this.props.handleSetProducts(res.data);
         this.props.history.push({ pathname: '/store/search' });
@@ -46,6 +50,7 @@ class Search extends React.Component {
 
 Search.propTypes = {
   handleSetProducts: PropTypes.func.isRequired,
+  conditionIdentifier: PropTypes.string.isRequired,
   history: PropTypes.object.isRequired
 };
 

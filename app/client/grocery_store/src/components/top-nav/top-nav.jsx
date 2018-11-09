@@ -52,7 +52,10 @@ export default class TopNav extends React.Component {
         <div className="top-nav">
           {tabs}
         </div>
-        <Search handleSetProducts={this.props.handleSetProducts} />
+        <Search
+          handleSetProducts={this.props.handleSetProducts}
+          conditionIdentifier={this.props.conditionIdentifier}
+        />
         {
           this.props.categories[this.props.category - 1]
             && (
