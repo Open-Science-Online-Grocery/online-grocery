@@ -14,14 +14,9 @@ export default class TopNav extends React.Component {
   }
 
   getInitialProducts() {
-    const categoryParams = {
-      conditionIdentifier: this.props.conditionIdentifier,
-      category: 1,
-      subcategory: 1
-    };
     fromApi.jsonApiCall(
       routes.categoryProducts(),
-      categoryParams,
+      { conditionIdentifier: this.props.conditionIdentifier },
       data => this.props.handleSetProducts(data),
       error => console.log(error)
     );
