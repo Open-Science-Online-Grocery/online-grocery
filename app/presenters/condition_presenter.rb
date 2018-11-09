@@ -23,6 +23,6 @@ class ConditionPresenter < SimpleDelegator
   end
 
   def current_csv_file_active
-    condition.current_tag_csv_file ? true : false
+    condition.current_tag_csv_file.present?
   end
 end
