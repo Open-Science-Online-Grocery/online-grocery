@@ -53,7 +53,6 @@ ActiveRecord::Schema.define(version: 2018_11_07_141053) do
     t.bigint "tag_id", null: false
     t.bigint "subtag_id"
     t.bigint "condition_id"
-    t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["condition_id"], name: "index_product_tags_on_condition_id"

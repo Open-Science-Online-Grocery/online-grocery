@@ -7,4 +7,6 @@ class Subtag < ApplicationRecord
 
   has_many :product_tags, dependent: :destroy
   has_many :products, through: :product_tags
+
+  alias_attribute :to_s, :name
 end

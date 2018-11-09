@@ -6,6 +6,4 @@ class ProductTag < ApplicationRecord
   belongs_to :tag
   belongs_to :subtag, optional: true
   belongs_to :condition
-
-  scope :active, -> { where(active: true) }
 end

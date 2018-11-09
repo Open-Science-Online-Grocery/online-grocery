@@ -6,7 +6,7 @@ RSpec.describe TagImporter do
   describe '#import' do
     let(:uploaded_file) { File.new(file_fixture(file_with_path)) }
     let(:file_with_path) { "tag_imports/#{file_name}" }
-    let(:condition) { create :condition }
+    let(:condition) { ConditionPresenter.new(create :condition) }
 
     subject { described_class.new(file: uploaded_file, condition: condition) }
 

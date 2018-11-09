@@ -103,8 +103,8 @@ class ConditionsController < ApplicationController
       :label_position,
       :label_size,
       :nutrition_styles,
+      :csv_file,
       label_attributes: %i[id image image_cache name built_in],
-      tag_csv_files_attributes: %i[id csv_file csv_file_cache]
     )
   end
 

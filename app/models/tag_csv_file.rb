@@ -5,4 +5,12 @@ class TagCsvFile < ApplicationRecord
   mount_uploader :csv_file, ConditionTagCsvUploader
 
   belongs_to :condition
+
+  delegate :url, to: :csv_file
+  alias path url
+
+  def name
+    File.basename(url)
+  end
+  alias to_s name
 end

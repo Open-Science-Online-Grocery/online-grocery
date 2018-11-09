@@ -8,7 +8,7 @@ class TagImporter
 
   def initialize(file: file, condition: condition)
     @file = file
-    @condition = condition
+    @condition = condition.condition
     @errors = []
     @required_attributes = ProductDataCsvManager
       .built_in_category_attributes
@@ -25,12 +25,15 @@ class TagImporter
   end
 
   private def validate_file_type
-    extension = File.extname(@file)
+    extension = File.extname(@file.path)
     @errors << 'The uploaded file must be a CSV' unless extension == '.csv'
   end
 
   private def create_data_from_import
-    ActiveRecord::Base.transaction do
+    # requires_new: true is used to allow this class to be used within
+    # another transaction and still persist rollbacks.
+    # see https://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html
+    ActiveRecord::Base.transaction(requires_new: true) do
       CSV.foreach(
         @file.path,
         headers: true,
@@ -85,12 +88,10 @@ class TagImporter
       tag = Tag.find_or_create_by!(name: tag_name)
       subtag = Subtag.find_or_create_by!(name: subtag_name, tag: tag)
       if product.present? && tag.present?
-        ProductTag.find_or_create_by!(
+        @condition.product_tags.create!(
           product: product,
           tag: tag,
-          subtag: subtag,
-          condition: @condition,
-          active: true
+          subtag: subtag
         )
       end
     rescue ActiveRecord::RecordNotFound => error

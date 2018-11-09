@@ -24,25 +24,22 @@
 
   <div class="ui hidden divider"></div>
 
-  <%= f.fields_for :tag_csv_files, condition.current_tag_csv_file do |tag_csv_files_fields| %>
-    <div class="ui basic segment two fields">
-      <div class="field">
-        <label>Current file</label>
-        <% if condition.current_tag_csv_file.persisted? %>
-          <%= link_to condition.current_tag_csv_file.to_s, condition.current_tag_csv_file.url %>
-          <i class="red remove icon"></i>
-        <% else %>
-          None
-        <% end %>
-      </div>
-
-      <div class="field">
-        <%= tag_csv_files_fields.label :csv_file, 'Replace file' %>
-        <%= tag_csv_files_fields.file_field :csv_file %>
-        <%= tag_csv_files_fields.hidden_field :csv_file_cache %>
-      </div>
+  <div class="ui basic segment two fields">
+    <div class="field" data-current-csv>
+      <label>Current file</label>
+      <% if condition.current_tag_csv_file %>
+        <%= link_to condition.current_tag_csv_file.to_s, condition.current_tag_csv_file.url %>
+        <i class="red remove icon"></i>
+      <% else %>
+        None
+      <% end %>
     </div>
-  <% end %>
+
+    <div class="field">
+      <%= f.label :csv_file, 'Replace file' %>
+      <%= f.file_field :csv_file %>
+    </div>
+  </div>
 
   <div class="ui hidden divider"></div>
 
@@ -52,51 +49,65 @@
       <table class="ui celled table">
         <thead>
           <tr>
-            <th>Category</th>
-            <th>Subcategory</th>
+            <th class="eight wide">Category</th>
+            <th class="eight wide">Subcategory</th>
           </tr>
         </thead>
 
         <tbody>
-          <%# subcategories.each do |subcategory| %>
+          <% product_tags = condition.product_tags %>
+          <% if product_tags.any? %>
+            <% product_tags.each do |product_tag| %>
+              <tr>
+                <td>
+                  <%= product_tag.tag %>
+                </td>
+                <td>
+                  <%= product_tag.subtag %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
             <tr>
-              <td>
-                <%#= subcategory.category %>
-                Vegan
-              </td>
-              <td>
-                <%#= subcategory %>
-                Breakfast Foods
+              <td colspan="2" class="center aligned">
+                No data
               </td>
             </tr>
-          <%# end %>
+          <% end %>
         </tbody>
       </table>
     </div>
 
     <div class="eight wide column">
       <h4>Previously uploaded files</h4>
-      <table class="ui celled table">
+      <table class="ui celled table" data-historical-csvs>
         <thead>
           <tr>
-            <th>File</th>
-            <th>Uploaded on</th>
+            <th class="ten wide">File</th>
+            <th class="six wide">Uploaded on</th>
           </tr>
         </thead>
 
         <tbody>
-          <%# uploaded_files.each do |file| %>
+          <% csv_files = condition.historical_tag_csv_files %>
+          <% if csv_files.any? %>
+            <% csv_files.each do |file| %>
+              <tr>
+                <td>
+                  <%= link_to file.to_s, file.url %>
+                </td>
+                <td>
+                  <%= file.created_at.to_date %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
             <tr>
-              <td>
-                <%#= link_to file %>
-                <%= link_to 'an_old_file.csv', nil %>
-              </td>
-              <td>
-                <%#= file.created_at.to_date %>
-                3/15/2018
+              <td colspan="2" class="center aligned">
+                No data
               </td>
             </tr>
-          <%# end %>
+          <% end %>
         </tbody>
       </table>
     </div>

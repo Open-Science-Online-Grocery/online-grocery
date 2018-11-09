@@ -18,7 +18,6 @@ class CreateProductTagsAndSubtags < ActiveRecord::Migration[5.2]
       t.references :tag, index: true, null: false
       t.references :subtag, index: true, null: true
       t.references :condition, index: true, null: true
-      t.boolean :active, null: false, default: true
 
       t.timestamps
     end

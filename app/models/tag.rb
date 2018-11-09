@@ -8,4 +8,6 @@ class Tag < ApplicationRecord
   has_many :products, through: :product_tags
 
   accepts_nested_attributes_for :subtags
+
+  alias_attribute :to_s, :name
 end
