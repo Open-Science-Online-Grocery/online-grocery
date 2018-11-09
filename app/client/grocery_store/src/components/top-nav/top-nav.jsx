@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import Tab from '../tab/tab.js';
+import Tab from '../tab/tab';
 import './top-nav.scss';
 import Search from '../search/search';
 
@@ -41,6 +41,7 @@ export default class TopNav extends React.Component {
           index={tab.id}
           subcats={tabSubcats}
           category={this.props.category}
+          conditionIdentifier={this.props.conditionIdentifier}
           handleSetCategory={this.props.handleSetCategory}
           handleSetProducts={this.props.handleSetProducts}
         />
