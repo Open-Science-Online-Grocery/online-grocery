@@ -1,4 +1,8 @@
 .ui.form {
+  input {
+    border-color: $border-color;
+  }
+
   input[type="color"] {
     border-radius: 4px;
     height: 2.7rem;

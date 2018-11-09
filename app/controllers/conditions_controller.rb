@@ -7,7 +7,7 @@ class ConditionsController < ApplicationController
   before_action :set_tab
 
   def refresh_form
-    manager = ConditionManager.new(@condition, adjusted_condition_params)
+    manager = ConditionManager.new(@condition, condition_params)
     manager.assign_params
     render @condition.id? ? 'edit' : 'new'
   end
@@ -30,7 +30,7 @@ class ConditionsController < ApplicationController
   end
 
   def create
-    manager = ConditionManager.new(@condition, adjusted_condition_params)
+    manager = ConditionManager.new(@condition, condition_params)
     if manager.update_condition
       flash[:success] = 'Condition successfully created'
       redirect_to edit_experiment_condition_path(@experiment, @condition)
@@ -51,9 +51,10 @@ class ConditionsController < ApplicationController
   end
 
   def update
-    manager = ConditionManager.new(@condition, adjusted_condition_params)
+    manager = ConditionManager.new(@condition, condition_params)
     if manager.update_condition
-      flash.now[:success] = 'Condition successfully updated'
+      flash[:success] = 'Condition successfully updated'
+      redirect_to edit_experiment_condition_path(@experiment, @condition)
     else
       @messages = {
         error: {
@@ -61,9 +62,9 @@ class ConditionsController < ApplicationController
           messages: manager.errors
         }
       }
+      @resource_name = "Condition: #{@condition.name}"
+      render :edit
     end
-    @resource_name = "Condition: #{@condition.name}"
-    render :edit
   end
 
   def destroy
@@ -72,7 +73,6 @@ class ConditionsController < ApplicationController
     else
       set_error_messages(@condition)
     end
-
     redirect_to experiment_path(@experiment)
   end
 
@@ -89,11 +89,6 @@ class ConditionsController < ApplicationController
     @condition = ConditionPresenter.new(condition)
   end
 
-  private def adjusted_condition_params
-    adjusted_params = condition_params.dup
-    adjusted_params
-  end
-
   private def condition_params
     params.require(:condition).permit(
       :id,
@@ -102,6 +97,7 @@ class ConditionsController < ApplicationController
       :label_id,
       :label_position,
       :label_size,
+      :label_equation_tokens,
       :nutrition_styles,
       :csv_file,
       label_attributes: %i[id image image_cache name built_in],

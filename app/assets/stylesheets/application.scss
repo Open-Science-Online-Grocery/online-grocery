@@ -1,5 +1,5 @@
 $dark-theme-color: green;
-$border-color: #DDDDDD;
+$border-color: #C0C1C2;
 $disabled-text-color: #DDDDDD;
 $hover-highlight-color: rgb(224, 225, 226);
 $cancel-color: #E0E1E2;
@@ -9,6 +9,7 @@ $cancel-highlight-color: #C0C1C2;
 @import 'modules/authentication';
 @import 'modules/breadcrumbs';
 @import 'modules/buttons';
+@import 'modules/calculator';
 @import 'modules/data_display';
 @import 'modules/flash';
 @import 'modules/forms';

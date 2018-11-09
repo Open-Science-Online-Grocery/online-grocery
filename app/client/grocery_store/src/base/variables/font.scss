@@ -1,0 +1,29 @@
+body{
+  font-family: "Century Gothic", sans-serif;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.no-underline {
+  text-decoration: none;
+}
+
+.right {
+  text-align: right;
+  width: 60%;
+}
+
+.left {
+  text-align: left;
+  width: 40%;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.indented {
+  padding-left: 5px;
+}

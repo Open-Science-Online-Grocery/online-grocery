@@ -1,0 +1,26 @@
+
+.logo-style {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  padding-bottom: 4px;
+  padding-top: 4px;
+}
+
+.banner-style {
+  display: inline-block;
+  width: 100%;
+  align-content: center;
+}
+.form-style {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  height: 80vh;
+}
+.form-input{
+  margin-top: 10px;
+}

@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2018_11_07_141053) do
     t.bigint "label_id"
     t.string "label_position"
     t.integer "label_size"
+    t.text "label_equation_tokens"
     t.index ["experiment_id"], name: "index_conditions_on_experiment_id"
     t.index ["label_id"], name: "index_conditions_on_label_id"
   end

@@ -1,0 +1,9 @@
+@import "/base/base";
+
+.checkout-title {
+  text-align: center;
+  color: $cart-color;
+  font-size: 28px;
+  text-shadow: 2px 2px 2px $light-shadow;
+  padding-top: 10px;
+}
