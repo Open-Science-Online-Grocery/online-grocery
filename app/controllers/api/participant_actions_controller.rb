@@ -5,6 +5,7 @@ module Api
     skip_before_action :authenticate_user!
     skip_before_action :verify_authenticity_token
 
+    # rubocop:disable Metrics/AbcSize, Rails/SaveBang
     def create
       action = ParticipantAction.create(
         session_identifier: params[:sessionID],
@@ -19,5 +20,6 @@ module Api
       }
       render json: json
     end
+    # rubocop:enable Metrics/AbcSize, Rails/SaveBang
   end
 end
