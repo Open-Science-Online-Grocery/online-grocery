@@ -14,23 +14,27 @@ RSpec.describe 'Showing labels in grocery store', :feature do
       experiment: experiment,
       label: label,
       label_position: 'top left',
-      label_size: 100,
+      label_size: 20,
       label_equation_tokens: [
         { 'type' => 'variable', 'value' => 'calories' },
         { 'type' => 'operator', 'value' => '<' },
-        { 'type' => 'digit', 'value' => '5' },
+        { 'type' => 'digit', 'value' => '5' }
       ].to_json
     )
   end
-  let!(:product_1) do
-    create(:product,
+  let!(:labeled_product) do
+    create(
+      :product,
+      name: 'labeled product',
       category: category,
       subcategory: subcategory,
       calories: 0
     )
   end
-  let!(:product_2) do
-    create(:product,
+  let!(:unlabeled_product) do
+    create(
+      :product,
+      name: 'unlabeled product',
       category: category,
       subcategory: subcategory,
       calories: 500
@@ -45,5 +49,21 @@ RSpec.describe 'Showing labels in grocery store', :feature do
   it 'shows the labels for the appropriate products', :js do
     find('.form-input').set('hello')
     force_click('input[type="submit"]')
+
+    labeled_product_div = parent_of(
+      find('.product-card-name', text: 'labeled product', exact_text: true)
+    )
+    within(labeled_product_div) do
+      overlay = find('.product-card-overlay')
+      expect(overlay[:style]).to match(/background-size: 20%/)
+    end
+
+    unlabeled_product_div = parent_of(
+      find('.product-card-name', text: 'unlabeled product', exact_text: true)
+    )
+    within(unlabeled_product_div) do
+      overlay = find('.product-card-overlay')
+      expect(overlay[:style]).not_to match(/background-size: 20%/)
+    end
   end
 end

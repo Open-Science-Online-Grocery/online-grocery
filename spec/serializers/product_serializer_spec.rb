@@ -39,7 +39,7 @@ RSpec.describe ProductSerializer do
     let(:label_applies) { false }
 
     it 'returns only the product\'s attributes' do
-      expected_output = { foo: 'bar'}
+      expected_output = { foo: 'bar' }
       expect(subject.serialize).to eq expected_output
     end
   end
