@@ -2,7 +2,6 @@ import React from 'react'
 import './cart-dropdown.scss'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-var path = require('path')
 
 export default class CartDropdown extends React.Component {
 
@@ -33,7 +32,7 @@ export default class CartDropdown extends React.Component {
     removeFromCart(product) {
         this.props.handleRemoveFromCart(product)
 
-        axios.post('/user', {
+        axios.post('/api/participant_actions', {
           sessionID: this.props.sessionID,
           actionType: "delete",
           product: product.name,
@@ -61,7 +60,7 @@ export default class CartDropdown extends React.Component {
         })
         cartItems.unshift(
 
-            <Link to={{ pathname: '/checkout'}} className='no-underline'>
+            <Link to={{ pathname: '/store/checkout'}} className='no-underline'>
                 <div className='cart-item cart-checkout-bar'>Checkout
                     <span className='cart-detail' >Total: ${parseFloat(Math.round(this.props.cart.price * 100) / 100).toFixed(2)}</span>
                 </div>
@@ -69,7 +68,7 @@ export default class CartDropdown extends React.Component {
         )
         return (
             <div className='cart-button'>
-                <img className='cart-image' src={`${path.join(__dirname, 'images/trolley-clipart-white.png')}`} onClick={this.openCloseDropdown}/>
+                <img className='cart-image' src={require('../../images/trolley-clipart-white.png')} onClick={this.openCloseDropdown}/>
                 <div className='cart-count'>{this.props.cart.count}</div>
                 {this.state.dropdownOpen && this.props.cart.items.length > 0 &&
                     <div style={{'maxHeight': this.state.windowHeight - 75}} className='cart-dropdown'>

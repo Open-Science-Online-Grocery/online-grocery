@@ -20,7 +20,7 @@ class SessionIDPage extends React.Component{
     if (this.state.value != '') {
       this.props.handleSetUser(this.state.value)
       this.props.history.push({
-        pathname: '/home'
+        pathname: '/store/home'
       })
     }
 

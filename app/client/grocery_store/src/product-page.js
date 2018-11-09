@@ -20,7 +20,7 @@ class ProductViewPage extends React.Component{
     return(
     <div>
         <CartDropdownContainer sessionID={sessionID}/>
-        <img className='logo-style' src={`${path.join(__dirname, 'images/howesgrocerybanner.png')}`}/>
+        <img className='logo-style' src={require('./images/howesgrocerybanner.png')}/>
         <ProductCardExpandedContainer sessionID={sessionID} {...product}/>
     </div>
     )

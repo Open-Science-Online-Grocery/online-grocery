@@ -20,11 +20,11 @@ class Search extends React.Component{
   }
   handleSubmit(event){
     event.preventDefault()
-    axios.get('/search', {params: {search: this.state.value}})
+    axios.get('/api/product_search', {params: {search: this.state.value}})
     .then(res => {
         this.props.handleSetProducts(res.data)
         this.props.history.push({
-          pathname: '/search'
+          pathname: '/store/search'
         })
     })
     .catch(err => {
@@ -38,7 +38,8 @@ class Search extends React.Component{
         return (
           <div className="search-container">
             <form onSubmit= {this.handleSubmit}>
-              <button type="submit"><i className="fa fa-search"></i></button>
+              {/* html entity below is a unicode magnifying glass icon */}
+              <button type="submit">&#128270;</button>
               <input className="form-input" type='text' placeholder= "Search.." value={this.state.value} onChange={this.handleChange} />
             </form>
           </div>

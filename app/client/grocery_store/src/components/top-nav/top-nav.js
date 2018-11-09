@@ -7,7 +7,7 @@ import Search from '../search/search'
 export default class TopNav extends React.Component{
 
     getInitialData() {
-        axios.get('/category', {params: {category: 1, subcategory: 1}})
+        axios.get('/api/category', {params: {category: 1, subcategory: 1}})
             .then(res => {
                 this.props.handleSetProducts(res.data)
             })
@@ -15,7 +15,7 @@ export default class TopNav extends React.Component{
                 console.log(err)
             })
 
-        axios.get('/categories')
+        axios.get('/api/categories')
             .then(res => {
                 this.props.handleSetCategories(res.data)
             })
@@ -23,7 +23,7 @@ export default class TopNav extends React.Component{
                 console.log(err)
             })
 
-        axios.get('/subcategories')
+        axios.get('/api/subcategories')
             .then(res => {
                 this.props.handleSetSubcategories(res.data)
             })
@@ -41,7 +41,7 @@ export default class TopNav extends React.Component{
         let subcats = Object.assign([], this.props.subcategories)
         let tabs = this.props.categories.map((tab, key)=> {
             let tabSubcats = []
-            while (subcats.length > 0 && subcats[0].id == tab.id) {
+            while (subcats.length > 0 && subcats[0].category_id == tab.id) {
                 tabSubcats.push(subcats.shift())
             }
             return (
