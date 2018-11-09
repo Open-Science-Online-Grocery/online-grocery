@@ -7,7 +7,7 @@ FactoryBot.define do
     sequence(:name) { |n| "Product #{n}" }
     size { '12 oz' }
     description { 'This is a product' }
-    imageSrc { 'some/url.jpg' }
+    imageSrc { '' }
     servingSize { '1 cup' }
     servings { '4' }
     caloriesFromFat { 0 }

@@ -13,7 +13,7 @@ module Api
       condition = Condition.find_by(uuid: params[:condition_identifier])
       products = Product.where(
         category_id: category_id,
-        subcategory: subcategory.id
+        subcategory_id: subcategory.id
       )
       products_hash = products.map do |product|
         ProductSerializer.new(product, condition).serialize
