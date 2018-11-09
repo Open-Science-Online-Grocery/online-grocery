@@ -23,7 +23,6 @@ export default class ProductCard extends React.Component {
       product: this.props.product.name,
       quantity: this.state.quantity
     };
-    const route = routes.addParticipantAction();
     fromApi.jsonApiCall(
       routes.addParticipantAction(),
       actionParams,

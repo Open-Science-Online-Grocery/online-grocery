@@ -1,34 +1,24 @@
-import React from 'react'
-import OrderSummary from './order-summary'
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import OrderSummary from './order-summary';
 import { cartActionCreators } from '../../../reducers/cart/cart-actions';
-import axios from 'axios';
 
-const mapStateToProps = function(state){
-    return {
-        cart: state.cart,
-        sessionId: state.user.sessionId,
-        conditionIdentifier: state.user.conditionIdentifier
+const mapStateToProps = state => (
+  {
+    cart: state.cart,
+    sessionId: state.user.sessionId,
+    conditionIdentifier: state.user.conditionIdentifier
+  }
+);
+
+const mapDispatchToProps = dispatch => (
+  {
+    handleRemoveFromCart: (product) => {
+      dispatch(cartActionCreators.removeFromCart(product));
+    },
+    handleClearCart: () => {
+      dispatch(cartActionCreators.clearCart());
     }
-}
+  }
+);
 
-const mapDispatchToProps = function (dispatch) {
-    return {
-        handleRemoveFromCart: (product) => {
-            dispatch(cartActionCreators.removeFromCart(product))
-        },
-        handleClearCart: () => {
-            dispatch(cartActionCreators.clearCart())
-        }
-    }
-}
-
-class OrderSummaryContainer extends React.Component {
-    render() {
-        return (
-            <OrderSummary {...this.props} />
-        )
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(OrderSummaryContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(OrderSummary);
