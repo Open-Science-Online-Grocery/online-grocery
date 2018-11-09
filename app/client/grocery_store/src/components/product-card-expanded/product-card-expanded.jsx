@@ -63,6 +63,15 @@ export default class ProductCardExpanded extends React.Component {
     return require('../../images/3howestars.png');
   }
 
+  labelStyles() {
+    if (!this.props.labelImageUrl) return {};
+    return {
+      backgroundImage: `url(${this.props.labelImageUrl})`,
+      backgroundPosition: this.props.labelPosition,
+      backgroundSize: `${this.props.labelSize}%`
+    };
+  }
+
   render() {
     const actionParams = {
       sessionId: this.props.sessionId,
@@ -97,7 +106,10 @@ export default class ProductCardExpanded extends React.Component {
                 <div className="product-card-expanded-quantity-change" onClick={this.addQuantity}>+</div>
               </div>
             </div>
-            <img className="product-card-expanded-image" src={this.props.imageSrc}/>
+            <div className="product-card-expanded-image-wrapper">
+              <img className="product-card-expanded-image" src={this.props.imageSrc}/>
+              <div className="product-card-expanded-overlay" style={this.labelStyles()}></div>
+            </div>
             <div className="product-card-expanded-description">{this.props.description}</div>
           </div>
           <div className="product-card-expanded-right-section">
