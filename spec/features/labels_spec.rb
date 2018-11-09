@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Configuring condition labels', :feature do
   let(:user) { create(:user) }
   let(:experiment) { create(:experiment, user: user) }
-  let(:condition) { create(:condition, name: 'Control', experiment: experiment) }
+  let(:condition) { create(:condition, experiment: experiment) }
   let!(:label) { create(:label, name: 'Organic', built_in: true) }
 
   before do
@@ -25,10 +25,10 @@ RSpec.describe 'Configuring condition labels', :feature do
       semantic_select('Label', 'Organic')
     end
 
-    within('div.calculator') do
+    within('[data-tab="labeling"] div.calculator') do
       force_click find('.ui.selection.dropdown')
       force_click find('div.item', text: 'Calories per serving', exact_text: true)
-      force_click_on('Insert field into calculation')
+      force_click_on('Insert field')
 
       force_click_on('Test Calculation')
 
@@ -55,7 +55,7 @@ RSpec.describe 'Configuring condition labels', :feature do
     expect(find('#condition_label_type_provided')).to be_checked
     expect(page).to have_selector('.item.active', text: 'Organic')
 
-    within('.equation-editor') do
+    within('[data-tab="labeling"] .equation-editor') do
       expect(page).to have_content 'Calories per serving>500'
     end
   end

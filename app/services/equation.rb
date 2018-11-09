@@ -55,7 +55,8 @@ class Equation
 
   private def should_return_boolean?
     {
-      'label' => true
+      'label' => true,
+      'sort' => false
     }[@type]
   end
 
@@ -104,7 +105,7 @@ class Equation
 
   # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
   private def returns_expected_type
-    return unless test_value
+    return if test_value.nil?
     if should_return_boolean? && !returns_boolean?
       errors.add(
         :base,

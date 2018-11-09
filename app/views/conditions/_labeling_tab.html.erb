@@ -73,7 +73,9 @@
           </div>
         </div>
       </div>
+
       <div class="ui hidden divider"></div>
+
       <div class="two fields">
         <div class="field">
           <%= f.label :label_position %>
@@ -87,6 +89,19 @@
           </div>
         </div>
       </div>
+
+      <div class="ui tall hidden divider"></div>
+
+      <div class="field">
+        <label>Show this label on all products where the following calculation is true:</label>
+        <div
+          data-calculator
+          data-variables="<%= Equation.individual_product_variables.to_json %>"
+          data-input-name="condition[label_equation_tokens]"
+          data-tokens="<%= condition.label_equation_tokens || [] %>"
+          data-equation-type="label"
+        ></div>
+      </div>
     </div>
 
     <div class="eight wide column">
@@ -97,16 +112,6 @@
           <div class="overlay"></div>
         </div>
       </div>
-    </div>
-
-    <div class="ten wide column">
-      <div
-        data-calculator
-        data-variables="<%= Equation.individual_product_variables.to_json %>"
-        data-input-name="condition[label_equation_tokens]"
-        data-tokens="<%= condition.label_equation_tokens || [] %>"
-        data-equation-type="label"
-      ></div>
     </div>
   </div>
 </div>

@@ -17,25 +17,54 @@ RSpec.describe Equation do
   subject { described_class.new(token_string, type) }
 
   describe 'valid?' do
-    context 'when it returns a boolean as expected' do
-      it 'is valid' do
-        expect(subject).to be_valid
+    context 'when it returns the expected type' do
+      context 'when it should return a boolean and does' do
+        it 'is valid' do
+          expect(subject).to be_valid
+        end
+      end
+
+      context 'when it should return a digit and does' do
+        let(:type) { 'sort' }
+        let(:token_string) do
+          [
+            { 'type' => 'variable', 'value' => 'calories' },
+            { 'type' => 'operator', 'value' => '+' },
+            { 'type' => 'digit', 'value' => '5' },
+            { 'type' => 'digit', 'value' => '0' },
+            { 'type' => 'digit', 'value' => '0' }
+          ].to_json
+        end
+
+        it 'is valid' do
+          expect(subject).to be_valid
+        end
       end
     end
 
     context 'when it parses but returns the wrong type' do
-      let(:token_string) do
-        [
-          { 'type' => 'variable', 'value' => 'calories' },
-          { 'type' => 'operator', 'value' => '+' },
-          { 'type' => 'digit', 'value' => '5' },
-          { 'type' => 'digit', 'value' => '0' },
-          { 'type' => 'digit', 'value' => '0' }
-        ].to_json
+      context 'when it should return a boolean' do
+        let(:token_string) do
+          [
+            { 'type' => 'variable', 'value' => 'calories' },
+            { 'type' => 'operator', 'value' => '+' },
+            { 'type' => 'digit', 'value' => '5' },
+            { 'type' => 'digit', 'value' => '0' },
+            { 'type' => 'digit', 'value' => '0' }
+          ].to_json
+        end
+
+        it 'is invalid' do
+          expect(subject).to be_invalid
+        end
       end
 
-      it 'is invalid' do
-        expect(subject).to be_invalid
+      context 'when it should return a digit' do
+        let(:type) { 'sort' }
+
+        it 'is invalid' do
+          expect(subject).to be_invalid
+        end
       end
     end
 
