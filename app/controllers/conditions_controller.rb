@@ -100,6 +100,7 @@ class ConditionsController < ApplicationController
       :label_equation_tokens,
       :nutrition_styles,
       :csv_file,
+      :filter_by_custom_categories,
       label_attributes: %i[id image image_cache name built_in],
     )
   end
