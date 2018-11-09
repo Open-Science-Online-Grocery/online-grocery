@@ -90,4 +90,22 @@ RSpec.describe Equation do
       expect(subject.to_s).to eq 'calories < 500'
     end
   end
+
+  describe '#validate_with_product' do
+    context 'when it evaluates to false' do
+      let(:product) { build(:product, calories: 500) }
+
+      it 'returns false' do
+        expect(subject.evaluate_with_product(product)).to eq false
+      end
+    end
+
+    context 'when it evaluates to true' do
+      let(:product) { build(:product, calories: 499) }
+
+      it 'returns true' do
+        expect(subject.evaluate_with_product(product)).to eq true
+      end
+    end
+  end
 end
