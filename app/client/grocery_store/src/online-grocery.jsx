@@ -1,6 +1,6 @@
 import React from 'react';
 import ProductGridContainer from './components/product-grid/product-grid-container';
-import TopNav from './components/top-nav/top-nav';
+import TopNavContainer from './components/top-nav/top-nav-container';
 import CartDropdownContainer from './components/cart-dropdown/cart-dropdown-container';
 import './online-grocery.scss';
 
@@ -14,7 +14,7 @@ class HomePage extends React.Component {
           alt="Grocery store logo in banner"
           src={require('./images/howesgrocerybanner.png')}
         />
-        <TopNav {...this.props} />
+        <TopNavContainer {...this.props} />
         <ProductGridContainer />
       </div>
     );

@@ -11,7 +11,12 @@ export default class TopNav extends React.Component {
   }
 
   getInitialData() {
-    axios.get('/api/category', { params: { category: 1, subcategory: 1 } })
+    const categoryParams = {
+      conditionIdentifier: this.props.conditionIdentifier,
+      category: 1,
+      subcategory: 1
+    };
+    axios.get('/api/category', { params: categoryParams })
       .then(res => this.props.handleSetProducts(res.data))
       .catch(err => console.log(err));
     axios.get('/api/categories')
@@ -73,6 +78,7 @@ TopNav.propTypes = {
       name: PropTypes.string
     })
   ).isRequired,
+  conditionIdentifier: PropTypes.string.isRequired,
   handleSetProducts: PropTypes.func.isRequired,
   handleSetCategories: PropTypes.func.isRequired,
   handleSetSubcategories: PropTypes.func.isRequired,
