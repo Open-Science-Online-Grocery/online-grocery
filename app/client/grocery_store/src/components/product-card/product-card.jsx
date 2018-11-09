@@ -57,6 +57,7 @@ export default class ProductCard extends React.Component {
       <div className="product-card">
         <Link to={{ pathname: '/store/product', state: { product: this.props.product } }}>
           <img className="product-card-image" alt="product" src={this.props.product.imageSrc} />
+          <div className="overlay"></div>
           <div className="product-card-name">{this.props.product.name}</div>
         </Link>
         <div className="product-card-size">{this.props.product.size}</div>
@@ -93,13 +94,13 @@ export default class ProductCard extends React.Component {
 ProductCard.propTypes = {
   sessionID: PropTypes.string.isRequired,
   conditionIdentifier: PropTypes.string.isRequired,
-  product: PropTypes.shapeOf({
+  product: PropTypes.shape({
     allergens: PropTypes.string,
     calories: PropTypes.number,
     caloriesFromFat: PropTypes.number,
     carbs: PropTypes.number,
     category: PropTypes.number,
-    cholesterol: PropTypes.number,
+    cholesterol: PropTypes.string,
     created_at: PropTypes.string,
     description: PropTypes.string,
     fiber: PropTypes.number,
