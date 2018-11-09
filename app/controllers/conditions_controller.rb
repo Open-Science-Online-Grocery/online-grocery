@@ -86,6 +86,9 @@ class ConditionsController < ApplicationController
       :label_size,
       :label_equation_tokens,
       :nutrition_styles,
+      :show_food_count,
+      :show_price_total,
+      :food_count_format,
       label_attributes: %i[id image image_cache name built_in]
     )
   end

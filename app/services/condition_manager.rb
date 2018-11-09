@@ -14,6 +14,7 @@ class ConditionManager
   def assign_params
     add_uuid_to_new_record
     clear_unselected_label_fields
+    show_food_count_fields
     @condition.attributes = @params
   end
 
@@ -34,5 +35,13 @@ class ConditionManager
     end
     @params.delete(:label_id) if @params[:label_type] == 'custom'
     @params[:label_id] = nil if @params[:label_type] == 'none'
+  end
+
+  private def show_food_count_fields
+    @condition.show_food_count = @params.delete(:show_food_count) == '1'
+    unless @condition.show_food_count
+      @condition.food_count_format = nil
+      @params[:food_count_format] = nil
+    end
   end
 end

@@ -1,2 +1,38 @@
 <div class="ui bottom attached tab segment" data-tab="cart-summary">
+  <div class="ui grid">
+    <div class="eight wide column">
+      <div class="grouped fields">
+        <div class="field">
+          <div class="ui checkbox">
+            <%= f.check_box :show_price_total %>
+            <%= f.label :show_price_total %>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="ui checkbox">
+            <%# binding.pry %>
+            <%= f.check_box :show_food_count, data: { refresh_form: true } %>
+            <label>Show count of foods with health labels</label>
+          </div>
+
+          <div class="ui basic segment nested-fields <%= 'disabled' unless condition.show_food_count %>">
+            <div class="field">
+              <div class="ui radio checkbox">
+                <%= f.radio_button :food_count_format, 'ratio' %>
+                <label>Show as ratio ("8 out of 20 products")</label>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="ui radio checkbox">
+                <%= f.radio_button :food_count_format, 'percent' %>
+                <label>Show as percent ("40% of products")</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
 </div>

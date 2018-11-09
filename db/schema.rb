@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_06_180529) do
+ActiveRecord::Schema.define(version: 2018_11_09_192449) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(version: 2018_11_06_180529) do
     t.string "label_position"
     t.integer "label_size"
     t.text "label_equation_tokens"
+    t.boolean "show_price_total", default: true
+    t.string "food_count_format"
     t.index ["experiment_id"], name: "index_conditions_on_experiment_id"
     t.index ["label_id"], name: "index_conditions_on_label_id"
   end
