@@ -52,12 +52,23 @@ export default class ProductCard extends React.Component {
     return require('../../images/3howestars.png');
   }
 
+  labelStyles() {
+    if (!this.props.product.label_image_url) return {};
+    return {
+      backgroundImage: `url(${this.props.product.label_image_url})`,
+      backgroundPosition: this.props.product.label_position,
+      backgroundSize: `${this.props.product.label_size}%`
+    };
+  }
+
   render() {
     return (
       <div className="product-card">
         <Link to={{ pathname: '/store/product', state: { product: this.props.product } }}>
-          <img className="product-card-image" alt="product" src={this.props.product.imageSrc} />
-          <div className="overlay"></div>
+          <div className="product-card-image-wrapper">
+            <img className="product-card-image" alt="product" src={this.props.product.imageSrc} />
+            <div className="product-card-overlay" style={this.labelStyles()}></div>
+          </div>
           <div className="product-card-name">{this.props.product.name}</div>
         </Link>
         <div className="product-card-size">{this.props.product.size}</div>
@@ -95,36 +106,14 @@ ProductCard.propTypes = {
   sessionID: PropTypes.string.isRequired,
   conditionIdentifier: PropTypes.string.isRequired,
   product: PropTypes.shape({
-    allergens: PropTypes.string,
-    calories: PropTypes.number,
-    caloriesFromFat: PropTypes.number,
-    carbs: PropTypes.number,
-    category: PropTypes.number,
-    cholesterol: PropTypes.string,
-    created_at: PropTypes.string,
-    description: PropTypes.string,
-    fiber: PropTypes.number,
-    id: PropTypes.number,
-    imageSrc: PropTypes.string,
-    ingredients: PropTypes.string,
-    monoFat: PropTypes.number,
     name: PropTypes.string,
-    polyFat: PropTypes.number,
-    potassium: PropTypes.number,
-    price: PropTypes.string,
-    protein: PropTypes.number,
-    saturatedFat: PropTypes.number,
-    servingSize: PropTypes.string,
-    servings: PropTypes.string,
+    imageSrc: PropTypes.string,
     size: PropTypes.string,
-    sodium: PropTypes.number,
+    price: PropTypes.string,
     starpoints: PropTypes.number,
-    subcategory: PropTypes.number,
-    sugar: PropTypes.number,
-    totalFat: PropTypes.number,
-    transFat: PropTypes.number,
-    updated_at: PropTypes.string,
-    vitamins: PropTypes.string
+    label_image_url: PropTypes.string,
+    label_position: PropTypes.string,
+    label_size: PropTypes.number
   }).isRequired,
   handleAddToCart: PropTypes.func.isRequired
 };
