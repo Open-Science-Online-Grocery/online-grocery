@@ -1,5 +1,7 @@
 import React from 'react';
-import axios from 'axios';
+import PropTypes from 'prop-types';
+import * as routes from '../../../../utils/routes';
+import * as fromApi from '../../../../utils/api_call';
 import NutritionLabel from '../nutrition-label/nutrition-label';
 import './product-card-expanded.scss';
 
@@ -14,16 +16,19 @@ export default class ProductCardExpanded extends React.Component {
 
   handleAddToCart() {
     this.props.handleAddToCart(this.props, this.state.quantity);
-    axios.post('/api/participant_actions', {
-      sessionId:this.props.sessionId,
+    const actionParams = {
+      sessionId: this.props.sessionId,
       conditionIdentifier: this.props.conditionIdentifier,
-      actionType: "add",
+      actionType: 'add',
       product: this.props.name,
       quantity: this.state.quantity
-    })
-    .then(response => {
-      console.log(response)
-    })
+    };
+    fromApi.jsonApiCall(
+      routes.addParticipantAction(),
+      actionParams,
+      data => console.log(data),
+      error => console.log(error)
+    );
   }
 
   subtractQuantity() {
@@ -59,15 +64,18 @@ export default class ProductCardExpanded extends React.Component {
   }
 
   render() {
-    axios.post('/api/participant_actions', {
-      sessionId:this.props.sessionId,
+    const actionParams = {
+      sessionId: this.props.sessionId,
       conditionIdentifier: this.props.conditionIdentifier,
       actionType: 'view',
-      product: this.props.name,
-    })
-      .then(response => {
-        console.log(response)
-      });
+      product: this.props.name
+    };
+    fromApi.jsonApiCall(
+      routes.addParticipantAction(),
+      actionParams,
+      data => console.log(data),
+      error => console.log(error)
+    );
     return (
       <div>
         <div className="product-card-expanded">
@@ -127,4 +135,27 @@ export default class ProductCardExpanded extends React.Component {
       </div>
     );
   }
+}
+
+ProductCardExpanded.propTypes = {
+  sessionId: PropTypes.string.isRequired,
+  conditionIdentifier: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  starpoints: PropTypes.number,
+  size: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired,
+  imageSrc: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  ingredients: PropTypes.string.isRequired,
+  labelImageUrl: PropTypes.string,
+  labelPosition: PropTypes.string,
+  labelSize: PropTypes.number,
+  handleAddToCart: PropTypes.func.isRequired
+};
+
+ProductCardExpanded.defaultProps = {
+  starpoints: null,
+  labelImageUrl: null,
+  labelPosition: null,
+  labelSize: null
 }

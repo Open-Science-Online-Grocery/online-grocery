@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "@rails/webpacker": "3.5",
-    "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-react": "^6.24.1",
     "express": "^4.16.4",
