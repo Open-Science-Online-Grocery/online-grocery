@@ -1,38 +1,44 @@
 <div class="ui bottom attached tab segment" data-tab="cart-summary">
   <div class="ui grid">
     <div class="eight wide column">
-      <div class="grouped fields">
-        <div class="field">
-          <div class="ui checkbox">
-            <%= f.check_box :show_price_total %>
-            <%= f.label :show_price_total %>
-          </div>
+      <div class="ui basic segment">
+        <div class="ui checkbox">
+          <%= f.check_box :show_price_total %>
+          <%= f.label :show_price_total %>
+        </div>
+      </div><%# segment %>
+    </div><%# column %>
+
+    <div class="eight wide column">
+      <div class="ui basic segment">
+        <div class="ui checkbox">
+          <%= f.check_box :show_food_count, data: { refresh_form: true } %>
+          <label>Show count of foods with health labels</label>
         </div>
 
-        <div class="field">
-          <div class="ui checkbox">
-            <%# binding.pry %>
-            <%= f.check_box :show_food_count, data: { refresh_form: true } %>
-            <label>Show count of foods with health labels</label>
-          </div>
-
-          <div class="ui basic segment nested-fields <%= 'disabled' unless condition.show_food_count %>">
-            <div class="field">
-              <div class="ui radio checkbox">
-                <%= f.radio_button :food_count_format, 'ratio' %>
-                <label>Show as ratio ("8 out of 20 products")</label>
-              </div>
-            </div>
-
-            <div class="field">
-              <div class="ui radio checkbox">
-                <%= f.radio_button :food_count_format, 'percent' %>
-                <label>Show as percent ("40% of products")</label>
-              </div>
+        <div class="ui basic segment nested-fields <%= 'disabled' unless condition.show_food_count %>">
+          <div class="field">
+            <div class="ui radio checkbox">
+              <%= f.radio_button :food_count_format, 'ratio' %>
+              <label>Show as ratio ("8 out of 20 products")</label>
             </div>
           </div>
-        </div>
 
-      </div>
-    </div>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <%= f.radio_button :food_count_format, 'percent' %>
+              <label>Show as percent ("40% of products")</label>
+            </div>
+          </div><%# field %>
+        </div><%# nested_fields %>
+      </div><%# segment %>
+    </div><%# column %>
+  </div><%# grid %>
+
+  <div class="page-sub-heading">
+    <h3>Conditional images</h3>
+  </div>
+
+  <%# TODO: Use cocoon to render multiple %>
+  <%= render 'conditional_image_form', f: f, condition: condition %>
 </div>
