@@ -5,3 +5,10 @@ export function equationValidation() {
     method: 'GET'
   };
 }
+
+export function categoryProducts() {
+  return {
+    url: '/api/category',
+    method: 'GET'
+  };
+}

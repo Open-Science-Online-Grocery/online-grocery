@@ -4,6 +4,8 @@ import axios from 'axios';
 import Tab from '../tab/tab';
 import './top-nav.scss';
 import Search from '../search/search';
+import * as routes from '../../../../utils/routes';
+import * as fromApi from '../../../../utils/api_call';
 
 export default class TopNav extends React.Component {
   componentDidMount() {
@@ -16,9 +18,12 @@ export default class TopNav extends React.Component {
       category: 1,
       subcategory: 1
     };
-    axios.get('/api/category', { params: categoryParams })
-      .then(res => this.props.handleSetProducts(res.data))
-      .catch(err => console.log(err));
+    fromApi.jsonApiCall(
+      routes.categoryProducts(),
+      categoryParams,
+      data => this.props.handleSetProducts(data),
+      error => console.log(error)
+    );
     axios.get('/api/categories')
       .then(res => this.props.handleSetCategories(res.data))
       .catch(err => console.log(err));
