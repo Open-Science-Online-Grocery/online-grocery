@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import Tab from '../tab/tab';
 import './top-nav.scss';
 import Search from '../search/search';
@@ -9,10 +8,12 @@ import * as fromApi from '../../../../utils/api_call';
 
 export default class TopNav extends React.Component {
   componentDidMount() {
-    this.getInitialData();
+    this.getInitialProducts();
+    this.getCategories();
+    this.getSubcategories();
   }
 
-  getInitialData() {
+  getInitialProducts() {
     const categoryParams = {
       conditionIdentifier: this.props.conditionIdentifier,
       category: 1,
@@ -24,19 +25,31 @@ export default class TopNav extends React.Component {
       data => this.props.handleSetProducts(data),
       error => console.log(error)
     );
-    axios.get('/api/categories')
-      .then(res => this.props.handleSetCategories(res.data))
-      .catch(err => console.log(err));
-    axios.get('/api/subcategories')
-      .then(res => this.props.handleSetSubcategories(res.data))
-      .catch(err => console.log(err));
+  }
+
+  getCategories() {
+    fromApi.jsonApiCall(
+      routes.categories(),
+      {},
+      data => this.props.handleSetCategories(data),
+      error => console.log(error)
+    );
+  }
+
+  getSubcategories() {
+    fromApi.jsonApiCall(
+      routes.subcategories(),
+      {},
+      data => this.props.handleSetSubcategories(data),
+      error => console.log(error)
+    );
   }
 
   render() {
     const subcats = Object.assign([], this.props.subcategories);
     const tabs = this.props.categories.map((tab) => {
       const tabSubcats = [];
-      while (subcats.length > 0 && subcats[0].category_id === tab.id) {
+      while (subcats.length > 0 && subcats[0].categoryId === tab.id) {
         tabSubcats.push(subcats.shift());
       }
       return (

@@ -12,3 +12,17 @@ export function categoryProducts() {
     method: 'GET'
   };
 }
+
+export function categories() {
+  return {
+    url: '/api/categories',
+    method: 'GET'
+  };
+}
+
+export function subcategories() {
+  return {
+    url: '/api/subcategories',
+    method: 'GET'
+  };
+}

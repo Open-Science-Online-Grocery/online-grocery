@@ -8,7 +8,8 @@ module Api
     #   - param :category is a category id
     #   - param :subcategory is a subcategory's display order
     def show
-      condition = Condition.find_by(uuid: params[:condition_identifier])
+      uuid = params[:condition_identifier]
+      condition = Condition.find_by(uuid: uuid)
       subcategory = Subcategory.find_by(
         category_id: params[:category],
         display_order: params[:subcategory]
