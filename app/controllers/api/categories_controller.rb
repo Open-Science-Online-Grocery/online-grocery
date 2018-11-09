@@ -8,6 +8,7 @@ module Api
     #   - param :category is a category id
     #   - param :subcategory is a subcategory's display order
     def show
+      condition = Condition.find_by(uuid: params[:conditionIdentifier])
       subcategory = Subcategory.find_by(
         category_id: params[:category],
         display_order: params[:subcategory]
@@ -16,7 +17,10 @@ module Api
         category: params[:category],
         subcategory: subcategory.id
       )
-      render json: products.to_json
+      products_hash = products.map do |product|
+        ProductSerializer.new(product, condition).serialize
+      end
+      render json: products_hash.to_json
     end
 
     def index

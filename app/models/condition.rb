@@ -9,6 +9,8 @@ class Condition < ApplicationRecord
   validates :name, :uuid, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
 
+  delegate :image_url, to: :label, prefix: true
+
   belongs_to :experiment
   belongs_to :label, optional: true
   belongs_to :default_sort_field, optional: true, class_name: 'ProductSortField'
@@ -33,5 +35,9 @@ class Condition < ApplicationRecord
     return 'field' if default_sort_field
     return 'calculation' if sort_equation_tokens
     'none'
+  end
+
+  def label_equation
+    @label_equation ||= Equation.new(label_equation_tokens, 'label')
   end
 end

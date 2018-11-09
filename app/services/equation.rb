@@ -53,6 +53,10 @@ class Equation
     str
   end
 
+  def evaluate_with_product(product)
+    calculator.evaluate(to_s, product.attributes)
+  end
+
   private def should_return_boolean?
     {
       'label' => true,
