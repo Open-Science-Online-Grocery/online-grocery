@@ -14,6 +14,7 @@ RSpec.describe 'Configuring condition labels', :feature do
   end
 
   it 'allows label configuration', :js do
+    expect(page).to have_content 'Edit Condition'
     force_click(find('.item[data-tab="labeling"]'))
 
     expect(find('#condition_label_type_none')).to be_checked
