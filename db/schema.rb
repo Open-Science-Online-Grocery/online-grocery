@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(version: 2018_11_07_141053) do
   create_table "tag_csv_files", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "csv_file"
     t.bigint "condition_id"
+    t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["condition_id"], name: "index_tag_csv_files_on_condition_id"

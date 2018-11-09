@@ -29,12 +29,12 @@ class Condition < ApplicationRecord
   end
 
   def current_tag_csv_file
-    tag_csv_files.order(created_at: :desc).first
+    tag_csv_files.active.order(created_at: :desc).first
   end
 
   def historical_tag_csv_files
     tag_csv_files
-      .where.not(id: current_tag_csv_file.try(:id))
+      .where(active: false)
       .order(created_at: :desc)
   end
 end

@@ -29,7 +29,15 @@
       <label>Current file</label>
       <% if condition.current_tag_csv_file %>
         <%= link_to condition.current_tag_csv_file.to_s, condition.current_tag_csv_file.url %>
-        <i class="red remove icon"></i>
+        <div class="ui checkbox">
+          <%=
+            f.check_box(
+              :current_csv_file_active,
+              value: true,
+              data: { refresh_form: true }
+            )
+          %>
+        </div>
       <% else %>
         None
       <% end %>

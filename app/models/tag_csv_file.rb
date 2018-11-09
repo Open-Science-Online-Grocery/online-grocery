@@ -9,6 +9,8 @@ class TagCsvFile < ApplicationRecord
   delegate :url, to: :csv_file
   alias path url
 
+  scope :active, -> { where(active: true) }
+
   def name
     File.basename(url)
   end

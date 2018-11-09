@@ -21,4 +21,8 @@ class ConditionPresenter < SimpleDelegator
       'bottom right'
     ]
   end
+
+  def current_csv_file_active
+    condition.current_tag_csv_file ? true : false
+  end
 end

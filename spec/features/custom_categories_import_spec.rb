@@ -93,7 +93,7 @@ RSpec.describe 'Importing custom categories for a condition', :feature do
     expect(page).to have_content 'Custom Subcategory 2D'
 
     # remove csv
-    force_click('.red.remove.icon')
+    force_click(find('#condition_current_csv_file_active').find(:xpath, '../..'))
     force_click_on 'Save'
 
     expect(page).to have_content 'Condition successfully updated'
