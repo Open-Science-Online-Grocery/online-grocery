@@ -8,7 +8,7 @@ module Api
     def create
       action = ParticipantAction.create(
         session_identifier: params[:sessionID],
-        condition_identifier: params[:conditionIdentifier],
+        condition: Condition.find_by(uuid: params[:conditionIdentifier]),
         action_type: params[:actionType],
         product_name: params[:product],
         quantity: params[:quantity]
