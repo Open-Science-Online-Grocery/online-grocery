@@ -38,6 +38,7 @@ class Search extends React.Component {
     return (
       <div className="search-container">
         <form onSubmit={this.handleSubmit}>
+          {/* html entity below is a unicode magnifying glass icon */}
           <button type="submit">&#128270;</button>
           <input
             className="form-input"
