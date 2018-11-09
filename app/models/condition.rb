@@ -2,8 +2,7 @@
 
 # represents an experimental condition
 class Condition < ApplicationRecord
-  attr_writer :label_type
-  attr_accessor :show_food_count
+  attr_writer :label_type, :show_food_count
 
   validates :name, :uuid, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
@@ -22,5 +21,10 @@ class Condition < ApplicationRecord
     return @label_type if @label_type
     return 'none' if label.nil?
     label.built_in? ? 'provided' : 'custom'
+  end
+
+  def show_food_count
+    return food_count_format.present? if @show_food_count.nil?
+    @show_food_count
   end
 end

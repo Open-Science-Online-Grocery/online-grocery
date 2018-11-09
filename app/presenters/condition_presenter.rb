@@ -21,8 +21,4 @@ class ConditionPresenter < SimpleDelegator
       'bottom right'
     ]
   end
-
-  def show_food_count
-    condition.show_food_count || food_count_format.present?
-  end
 end
