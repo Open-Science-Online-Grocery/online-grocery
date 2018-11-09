@@ -13,7 +13,8 @@ const mapDispatchToProps = function (dispatch) {
 
 const mapStateToProps = function(state){
     return {
-        sessionID: state.user.sessionID
+        sessionID: state.user.sessionID,
+        conditionIdentifier: state.user.conditionIdentifier
     }
 }
 

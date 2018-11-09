@@ -7,7 +7,8 @@ import axios from 'axios';
 const mapStateToProps = function(state){
     return {
         cart: state.cart,
-        sessionID: state.user.sessionID
+        sessionID: state.user.sessionID,
+        conditionIdentifier: state.user.conditionIdentifier
     }
 }
 

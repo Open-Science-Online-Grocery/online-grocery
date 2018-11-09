@@ -1,16 +1,16 @@
-import React from 'react'
-import './online-grocery.scss'
-import SessionIDPage from './session-id-page'
-import { connect } from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
+import './online-grocery.scss';
+import SessionIDPage from './session-id-page';
 import { userActionCreators } from './reducers/user/user-actions';
 
-const mapDispatchToProps = function (dispatch) {
-    return {
-        handleSetUser: (sessionID) => {
-            dispatch(userActionCreators.setUser(sessionID))
-        }
+const mapDispatchToProps = dispatch => (
+  {
+    handleSetUser: (sessionID, conditionIdentifier) => {
+      dispatch(userActionCreators.setUser(sessionID, conditionIdentifier));
     }
-}
+  }
+);
 
 
 class SessionIDContainer extends React.Component{

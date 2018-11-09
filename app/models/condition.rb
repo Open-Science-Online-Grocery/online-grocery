@@ -2,6 +2,8 @@
 
 # represents an experimental condition
 class Condition < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   attr_writer :label_type, :sort_type
 
   validates :name, :uuid, presence: true
@@ -17,7 +19,7 @@ class Condition < ApplicationRecord
 
   # TODO: update if needed
   def url
-    "http://www.howesgrocery.com?condId=#{uuid}"
+    store_url(condId: uuid)
   end
 
   def label_type
