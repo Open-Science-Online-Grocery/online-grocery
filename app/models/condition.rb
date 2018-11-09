@@ -9,7 +9,7 @@ class Condition < ApplicationRecord
   validates :name, :uuid, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
 
-  delegate :image_url, to: :label, prefix: true
+  delegate :image_url, to: :label, prefix: true, allow_nil: true
 
   belongs_to :experiment
   belongs_to :label, optional: true
