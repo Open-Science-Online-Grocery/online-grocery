@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as qs from 'query-string';
-import './online-grocery.scss';
 import { withRouter } from 'react-router-dom';
+import './online-grocery.scss';
 
 class SessionIDPage extends React.Component {
   constructor(props) {
@@ -19,8 +18,7 @@ class SessionIDPage extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     if (this.state.value !== '') {
-      const conditionIdentifier = qs.parse(window.location.search).condId;
-      this.props.handleSetUser(this.state.value, conditionIdentifier);
+      this.props.handleSessionIdSubmitted(this.state.value);
       this.props.history.push({
         pathname: '/store/home'
       });
@@ -43,7 +41,7 @@ class SessionIDPage extends React.Component {
 
 SessionIDPage.propTypes = {
   history: PropTypes.object.isRequired,
-  handleSetUser: PropTypes.func.isRequired
+  handleSessionIdSubmitted: PropTypes.func.isRequired
 };
 
 export default withRouter(SessionIDPage);
