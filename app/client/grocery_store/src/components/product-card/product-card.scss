@@ -7,13 +7,28 @@
   border-bottom: 1px solid $light-shadow;
   position: relative;
 
-  .product-card-image {
-    width: auto;
+  .product-card-image-wrapper {
     max-width: 75%;
-    display: block;
     margin: auto;
-    cursor: pointer;
+    position: relative;
+
+    .product-card-image {
+      width: auto;
+      max-width: 100%;
+      display: block;
+      cursor: pointer;
+    }
+
+    .product-card-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-repeat: no-repeat;
+    }
   }
+
   .product-card-name {
     font-size: 16px;
     text-decoration: none;
@@ -38,8 +53,6 @@
   .product-card-buttons {
     display: flex;
     justify-content: flex-start;
-
-
 
     .product-card-add-to-cart {
       width: auto;
@@ -94,12 +107,12 @@ a {
   &:hover {
     cursor: pointer;
   }
-
 }
 
 //ToolTip Styling
 [class^="tooltip"] {
   position: relative;
+
   &:after {
     opacity: 0;
     visibility: hidden;
@@ -117,6 +130,7 @@ a {
     width:200px;
     transition: opacity 0.2s, transform 0.2s;
   }
+
   &:hover {
     &:after {
       display: block;
@@ -133,6 +147,7 @@ a {
     left: 100%;
     transform: translateX(12%) translateY(0);
   }
+
   &:hover {
     &:after {
       transform: translateX(10%) translateY(0);
@@ -157,6 +172,7 @@ a {
     transition: opacity 0.2s, transform 0.2s;
     z-index: 3;
   }
+
   &:hover {
     &:before {
       display: block;
@@ -166,4 +182,3 @@ a {
     }
   }
 }
-

@@ -14,6 +14,10 @@ RSpec.describe Condition, type: :model do
     end
   end
 
+  describe 'delegations' do
+    it { is_expected.to delegate_method(:image_url).to(:label).with_prefix }
+  end
+
   describe 'associations' do
     it { is_expected.to belong_to(:experiment) }
     it { is_expected.to belong_to(:label) }

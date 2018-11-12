@@ -7,10 +7,11 @@ module Api
 
     # rubocop:disable Metrics/AbcSize, Rails/SaveBang
     def create
+      condition = Condition.find_by(uuid: params[:condition_identifier])
       action = ParticipantAction.create(
-        session_identifier: params[:sessionID],
-        condition: Condition.find_by(uuid: params[:conditionIdentifier]),
-        action_type: params[:actionType],
+        session_identifier: params[:session_id],
+        condition: condition,
+        action_type: params[:action_type],
         product_name: params[:product],
         quantity: params[:quantity]
       )

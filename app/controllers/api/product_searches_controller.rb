@@ -5,10 +5,12 @@ module Api
     skip_before_action :authenticate_user!
 
     def show
-      products = Product.where(
-        Product.arel_table[:name].matches("%#{params[:search]}%")
-      )
-      render json: products.to_json
+      condition = Condition.find_by(uuid: params[:condition_identifier])
+      products = Product.name_matches(params[:search])
+      products_hash = products.map do |product|
+        ProductSerializer.new(product, condition).serialize
+      end
+      render json: products_hash.to_json
     end
   end
 end

@@ -9,6 +9,8 @@ function parameterizeData(data) {
 }
 
 function jsonPost(route, data) {
+  const tokenMeta = document.querySelector('meta[name=csrf-token]');
+  const token = tokenMeta && tokenMeta.content;
   return fetch(
     route.url,
     {
@@ -16,7 +18,7 @@ function jsonPost(route, data) {
       method: route.method,
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector('meta[name=csrf-token]').content
+        'X-CSRF-Token': token
       },
       body: JSON.stringify(data)
     }

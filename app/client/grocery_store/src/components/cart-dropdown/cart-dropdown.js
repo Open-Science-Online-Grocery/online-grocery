@@ -1,6 +1,7 @@
 import React from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import * as routes from '../../../../utils/routes';
+import * as fromApi from '../../../../utils/api_call';
 import './cart-dropdown.scss';
 
 export default class CartDropdown extends React.Component {
@@ -24,15 +25,19 @@ export default class CartDropdown extends React.Component {
 
   removeFromCart(product) {
     this.props.handleRemoveFromCart(product);
-
-    axios.post('/api/participant_actions', {
-      sessionID: this.props.sessionID,
+    const actionParams = {
+      sessionId: this.props.sessionId,
       conditionIdentifier: this.props.conditionIdentifier,
       actionType: 'delete',
       product: product.name,
       quantity: product.quantity
-    })
-      .then(response => console.log(response));
+    };
+    fromApi.jsonApiCall(
+      routes.addParticipantAction(),
+      actionParams,
+      data => console.log(data),
+      error => console.log(error)
+    );
   }
 
   render() {
