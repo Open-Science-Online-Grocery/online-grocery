@@ -39,3 +39,10 @@ export function addParticipantAction() {
     method: 'POST'
   };
 }
+
+export function condition() {
+  return {
+    url: '/api/condition',
+    method: 'GET'
+  };
+}
