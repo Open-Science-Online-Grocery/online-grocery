@@ -12,11 +12,11 @@ class ProductSorter
 
   def sorted_products
     case @condition.sort_type
-      when 'none'
+      when Condition.sort_types.none
         @product_hashes
-      when 'field'
+      when Condition.sort_types.field
         field_sorted_products
-      when 'calculation'
+      when Condition.sort_types.calculation
         calculation_sorted_products
     end
   end

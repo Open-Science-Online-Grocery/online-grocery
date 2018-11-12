@@ -9,6 +9,7 @@ class Condition < ApplicationRecord
   validates :name, :uuid, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
 
+  delegate :sort_types, to: :class
   delegate :image_url, to: :label, prefix: true, allow_nil: true
   delegate :name, to: :default_sort_field, prefix: true, allow_nil: true
 
@@ -19,6 +20,14 @@ class Condition < ApplicationRecord
   has_many :product_sort_fields, through: :condition_product_sort_fields
 
   accepts_nested_attributes_for :label, :product_sort_fields
+
+  def self.sort_types
+    OpenStruct.new(
+      none: 'none',
+      field: 'field',
+      calculation: 'calculation'
+    )
+  end
 
   # TODO: update if needed
   def url
@@ -33,9 +42,9 @@ class Condition < ApplicationRecord
 
   def sort_type
     return @sort_type if @sort_type
-    return 'field' if default_sort_field
-    return 'calculation' if sort_equation_tokens
-    'none'
+    return sort_types.field if default_sort_field
+    return sort_types.calculation if sort_equation_tokens
+    sort_types.none
   end
 
   def label_equation
