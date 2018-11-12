@@ -9,7 +9,7 @@ class Condition < ApplicationRecord
   validates :name, :uuid, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
 
-  delegate :sort_types, to: :class
+  delegate :label_types, :sort_types, to: :class
   delegate :image_url, to: :label, prefix: true, allow_nil: true
   delegate :name, to: :default_sort_field, prefix: true, allow_nil: true
 
@@ -21,23 +21,24 @@ class Condition < ApplicationRecord
 
   accepts_nested_attributes_for :label, :product_sort_fields
 
-  def self.sort_types
-    OpenStruct.new(
-      none: 'none',
-      field: 'field',
-      calculation: 'calculation'
-    )
+  def self.label_types
+    OpenStruct.new(none: 'none', provided: 'provided', custom: 'custom')
   end
 
-  # TODO: update if needed
+  def self.sort_types
+    OpenStruct.new(none: 'none', field: 'field', calculation: 'calculation')
+  end
+
+  # TODO: update if needed - depending on client's preferences on URL used to
+  # access the store
   def url
     store_url(condId: uuid)
   end
 
   def label_type
     return @label_type if @label_type
-    return 'none' if label.nil?
-    label.built_in? ? 'provided' : 'custom'
+    return label_types.none if label.nil?
+    label.built_in? ? label_types.provided : label_types.custom
   end
 
   def sort_type
