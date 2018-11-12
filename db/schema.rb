@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_12_171539) do
+ActiveRecord::Schema.define(version: 2018_11_12_183838) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -84,16 +84,16 @@ ActiveRecord::Schema.define(version: 2018_11_12_171539) do
     t.string "name"
     t.string "size"
     t.text "description"
-    t.string "imageSrc"
-    t.string "servingSize"
+    t.string "image_src"
+    t.string "serving_size"
     t.string "servings"
-    t.integer "caloriesFromFat"
+    t.integer "calories_from_fat"
     t.integer "calories"
-    t.integer "totalFat"
-    t.integer "saturatedFat"
-    t.integer "transFat"
-    t.integer "polyFat"
-    t.integer "monoFat"
+    t.integer "total_fat"
+    t.integer "saturated_fat"
+    t.integer "trans_fat"
+    t.integer "poly_fat"
+    t.integer "mono_fat"
     t.decimal "cholesterol", precision: 6, scale: 2
     t.integer "sodium"
     t.integer "potassium"
@@ -105,8 +105,8 @@ ActiveRecord::Schema.define(version: 2018_11_12_171539) do
     t.text "ingredients"
     t.text "allergens"
     t.decimal "price", precision: 64, scale: 12
-    t.integer "category"
-    t.integer "subcategory"
+    t.integer "category_id"
+    t.integer "subcategory_id"
     t.integer "starpoints"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
