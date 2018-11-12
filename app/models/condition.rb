@@ -42,6 +42,10 @@ class Condition < ApplicationRecord
     @label_equation ||= Equation.new(label_equation_tokens, 'label')
   end
 
+  def has_label_equation?
+    label_equation_tokens.present?
+  end
+
   def sort_equation
     @sort_equation ||= Equation.new(sort_equation_tokens, 'sort')
   end

@@ -9,11 +9,11 @@ class Equation
 
   def self.individual_product_variables
     {
-      caloriesFromFat: 'Calories from fat per serving',
+      calories_from_fat: 'Calories from fat per serving',
       calories: 'Calories per serving',
-      totalFat: 'Total fat per serving (g)',
-      saturatedFat: 'Saturated fat per serving (g)',
-      transFat: 'Trans fat per serving (g)',
+      total_fat: 'Total fat per serving (g)',
+      saturated_fat: 'Saturated fat per serving (g)',
+      trans_fat: 'Trans fat per serving (g)',
       cholesterol: 'Cholesterol per serving (mg)',
       sodium: 'Sodium per serving (mg)',
       carbs: 'Total carbohydrates per serving (g)',
@@ -54,6 +54,7 @@ class Equation
   end
 
   def evaluate_with_product(product_attributes)
+    return nil if @tokens.none?
     calculator.evaluate(to_s, product_attributes)
   end
 
