@@ -2,6 +2,8 @@
 
 module Api
   class CategoriesController < ApplicationController
+    include SerializesProducts
+
     skip_before_action :authenticate_user!
 
     # the params that come in do not map to model attributes precisely:
@@ -10,15 +12,11 @@ module Api
     # if this action is called without those params, return products from the
     # first subcategory of the first category.
     def show
-      condition = Condition.find_by(uuid: params[:condition_identifier])
       products = Product.where(
         category_id: category_id,
         subcategory_id: subcategory.id
       )
-      products_hash = products.map do |product|
-        ProductSerializer.new(product, condition).serialize
-      end
-      render json: products_hash.to_json
+      render json: serialized_products(products)
     end
 
     def index

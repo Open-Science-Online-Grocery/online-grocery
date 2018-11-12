@@ -18,6 +18,6 @@ class ProductSerializer
   end
 
   private def gets_label?
-    @condition.label_equation.evaluate_with_product(@product)
+    @condition.label_equation.evaluate_with_product(@product.attributes)
   end
 end

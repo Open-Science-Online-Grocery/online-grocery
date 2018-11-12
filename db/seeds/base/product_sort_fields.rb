@@ -19,7 +19,7 @@ module Seeds
           'Star points' => :starpoints,
           'Price' => :price,
           'Name' => :name,
-          'Custom label' => :customLabel
+          'Custom label' => :label_image_url
         }
         sort_fields.each do |description, name|
           ProductSortField.find_or_create_by!(

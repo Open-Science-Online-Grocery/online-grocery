@@ -10,6 +10,7 @@ class Condition < ApplicationRecord
   validates :name, uniqueness: { scope: :experiment_id }
 
   delegate :image_url, to: :label, prefix: true, allow_nil: true
+  delegate :name, to: :default_sort_field, prefix: true, allow_nil: true
 
   belongs_to :experiment
   belongs_to :label, optional: true
@@ -39,5 +40,9 @@ class Condition < ApplicationRecord
 
   def label_equation
     @label_equation ||= Equation.new(label_equation_tokens, 'label')
+  end
+
+  def sort_equation
+    @sort_equation ||= Equation.new(sort_equation_tokens, 'sort')
   end
 end

@@ -53,8 +53,8 @@ class Equation
     str
   end
 
-  def evaluate_with_product(product)
-    calculator.evaluate(to_s, product.attributes)
+  def evaluate_with_product(product_attributes)
+    calculator.evaluate(to_s, product_attributes)
   end
 
   private def should_return_boolean?
@@ -67,7 +67,7 @@ class Equation
   # here we test the equation by evaluating it against fake food attributes
   # checking that it returns the right kind of value.
   private def test_value
-    @test_value ||= calculator.evaluate(to_s, fake_product_data)
+    @test_value ||= evaluate_with_product(fake_product_data)
   end
 
   private def fake_product_data
