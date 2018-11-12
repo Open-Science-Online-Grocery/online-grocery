@@ -7,6 +7,12 @@ class Equation
 
   validate :parses_correctly, :returns_expected_type
 
+  delegate :types, to: :class
+
+  def self.types
+    OpenStruct.new(label: 'label', sort: 'sort')
+  end
+
   def self.individual_product_variables
     {
       calories_from_fat: 'Calories from fat per serving',
@@ -60,8 +66,8 @@ class Equation
 
   private def should_return_boolean?
     {
-      'label' => true,
-      'sort' => false
+      types.label => true,
+      types.sort => false
     }[@type]
   end
 

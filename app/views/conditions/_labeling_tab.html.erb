@@ -99,7 +99,7 @@
           data-variables="<%= Equation.individual_product_variables.to_json %>"
           data-input-name="condition[label_equation_tokens]"
           data-tokens="<%= condition.label_equation_tokens || [] %>"
-          data-equation-type="label"
+          data-equation-type="<%= Equation.types.label %>"
         ></div>
       </div>
     </div>

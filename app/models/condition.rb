@@ -49,7 +49,10 @@ class Condition < ApplicationRecord
   end
 
   def label_equation
-    @label_equation ||= Equation.new(label_equation_tokens, 'label')
+    @label_equation ||= Equation.new(
+      label_equation_tokens,
+      Equation.types.label
+    )
   end
 
   def has_label_equation?
@@ -57,6 +60,6 @@ class Condition < ApplicationRecord
   end
 
   def sort_equation
-    @sort_equation ||= Equation.new(sort_equation_tokens, 'sort')
+    @sort_equation ||= Equation.new(sort_equation_tokens, Equation.types.sort)
   end
 end
