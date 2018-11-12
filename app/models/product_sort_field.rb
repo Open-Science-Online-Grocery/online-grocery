@@ -6,7 +6,7 @@ class ProductSortField < ApplicationRecord
 
   # names of ProductSortFields that refer to string data
   def self.string_fields
-   %w[name label_image_url]
+    %w[name label_image_url]
   end
 
   def string_field?

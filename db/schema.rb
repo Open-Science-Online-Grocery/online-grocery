@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_08_205830) do
+ActiveRecord::Schema.define(version: 2018_11_12_171539) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(version: 2018_11_08_205830) do
     t.integer "transFat"
     t.integer "polyFat"
     t.integer "monoFat"
-    t.string "cholesterol"
+    t.decimal "cholesterol", precision: 6, scale: 2
     t.integer "sodium"
     t.integer "potassium"
     t.integer "carbs"

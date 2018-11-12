@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# contains logic common to controllers that serialize products
 module SerializesProducts
   def serialized_products(products)
     condition = Condition.find_by(uuid: params[:condition_identifier])
