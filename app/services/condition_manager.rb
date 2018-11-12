@@ -29,6 +29,7 @@ class ConditionManager
     @condition.uuid = SecureRandom.uuid
   end
 
+  # rubocop:disable Style/GuardClause
   private def clear_unselected_label_fields
     if @params[:label_type] == Condition.label_types.custom
       @params.delete(:label_id)
@@ -49,4 +50,5 @@ class ConditionManager
       @params[:sort_equation_tokens] = nil
     end
   end
+  # rubocop:enable Style/GuardClause
 end

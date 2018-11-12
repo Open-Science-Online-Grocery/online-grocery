@@ -24,11 +24,11 @@ class ProductSorter
   private def field_sorted_products
     @product_hashes.sort do |a, b|
       comparison = a[sort_field] <=> b[sort_field]
-      comparison *= -1 if comparison && default_sort_order == 'desc'
       # comparison will be nil if `a` and `b` are not comparable because one of
       # them (but not both) is nil. we're calling nils "less than" other values
       # and therefore returning -1 if `a` is nil and 1 if `b` is nil.
       comparison ||= a[sort_field].nil? ? -1 : 1
+      comparison *= -1 if default_sort_order == 'desc'
       comparison
     end
   end

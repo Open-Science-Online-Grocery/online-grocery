@@ -107,5 +107,14 @@ RSpec.describe Equation do
         expect(subject.evaluate_with_product(product.attributes)).to eq true
       end
     end
+
+    context 'when equation has no tokens' do
+      let(:token_string) { [].to_json }
+      let(:product) { build(:product, calories: 499) }
+
+      it 'returns nil' do
+        expect(subject.evaluate_with_product(product.attributes)).to be_nil
+      end
+    end
   end
 end

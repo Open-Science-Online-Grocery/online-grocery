@@ -11,9 +11,9 @@ class ProductSerializer
   def serialize
     return @product.attributes unless gets_label?
     @product.attributes.merge(
-      label_image_url: @condition.label_image_url,
-      label_position: @condition.label_position,
-      label_size: @condition.label_size
+      'label_image_url' => @condition.label_image_url,
+      'label_position' => @condition.label_position,
+      'label_size' => @condition.label_size
     )
   end
 
