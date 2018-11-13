@@ -5,7 +5,7 @@ class ProductSorter
   delegate :default_sort_field_name, :default_sort_order, :sort_equation,
            to: :@condition
 
-  def initialize(product_hashes, condition)
+  def initialize(product_hashes, condition, sort_field, sort_order)
     @product_hashes = product_hashes
     @condition = condition
   end
