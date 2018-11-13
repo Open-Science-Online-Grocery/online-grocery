@@ -1,6 +1,7 @@
 import * as qs from 'query-string';
 import * as routes from '../../../../utils/routes';
 import * as fromApi from '../../../../utils/api_call';
+import { categoryActionCreators } from '../category/category-actions';
 
 export const userActionTypes = {
   SET_USER: 'SET_USER',
@@ -36,10 +37,20 @@ function sessionIdSubmitted(sessionId) {
     const conditionIdentifier = qs.parse(window.location.search).condId;
     dispatch(setUser(sessionId, conditionIdentifier));
 
+    const onSuccess = (data) => {
+      dispatch(setConditionData(data));
+      dispatch(
+        categoryActionCreators.updateCategory(
+          data.categories[0].id,
+          data.subcategories[0].id
+        )
+      );
+    };
+
     return fromApi.jsonApiCall(
       routes.condition(),
       { conditionIdentifier },
-      data => dispatch(setConditionData(data)),
+      onSuccess,
       error => console.log(error)
     );
   };

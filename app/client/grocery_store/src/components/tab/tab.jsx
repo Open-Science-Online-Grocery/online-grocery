@@ -77,8 +77,12 @@ Tab.propTypes = {
       name: PropTypes.string
     })
   ).isRequired,
-  category: PropTypes.number.isRequired,
+  category: PropTypes.number,
   conditionIdentifier: PropTypes.string.isRequired,
   handleSetCategory: PropTypes.func.isRequired,
   handleSetProducts: PropTypes.func.isRequired
+};
+
+Tab.defaultProps = {
+  category: null
 };

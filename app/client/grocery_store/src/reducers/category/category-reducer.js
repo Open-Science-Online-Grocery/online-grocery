@@ -25,9 +25,7 @@ export default function categoryReducer(state = initialCategoryState, action) {
     case userActionTypes.SET_CONDITION_DATA:
       return Object.assign({}, state, {
         categories: action.categories,
-        category: state.category || action.categories[0].id,
-        subcategories: action.subcategories,
-        subcategory: state.subcategory || action.subcategories[0].id
+        subcategories: action.subcategories
       });
     default:
       return state;

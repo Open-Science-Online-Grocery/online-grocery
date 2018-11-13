@@ -1,3 +1,6 @@
+import * as routes from '../../../../utils/routes';
+import * as fromApi from '../../../../utils/api_call';
+
 export const categoryActionTypes = {
   SET_CATEGORY: 'SET_CATEGORY',
   SET_PRODUCTS: 'SET_PRODUCTS'
@@ -18,7 +21,20 @@ function setProducts(products) {
   };
 }
 
+function updateCategory(category, subcategory) {
+  return (dispatch, getState) => {
+    dispatch(setCategory(category, subcategory));
+
+    fromApi.jsonApiCall(
+      routes.categoryProducts(),
+      { conditionIdentifier: getState().user.conditionIdentifier },
+      data => dispatch(setProducts(data)),
+      error => console.log(error)
+    );
+  };
+}
+
 export const categoryActionCreators = {
-  setCategory,
-  setProducts
+  setProducts,
+  updateCategory
 };

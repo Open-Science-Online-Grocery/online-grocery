@@ -2,24 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Tab from '../tab/tab';
 import Search from '../search/search';
-import * as routes from '../../../../utils/routes';
-import * as fromApi from '../../../../utils/api_call';
 import './top-nav.scss';
 
 export default class TopNav extends React.Component {
-  componentDidMount() {
-    this.getInitialProducts();
-  }
-
-  getInitialProducts() {
-    fromApi.jsonApiCall(
-      routes.categoryProducts(),
-      { conditionIdentifier: this.props.conditionIdentifier },
-      data => this.props.handleSetProducts(data),
-      error => console.log(error)
-    );
-  }
-
   render() {
     const subcats = Object.assign([], this.props.subcategories);
     const tabs = this.props.categories.map((tab) => {
@@ -36,7 +21,6 @@ export default class TopNav extends React.Component {
           category={this.props.category}
           conditionIdentifier={this.props.conditionIdentifier}
           handleSetCategory={this.props.handleSetCategory}
-          handleSetProducts={this.props.handleSetProducts}
         />
       );
     });
