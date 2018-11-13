@@ -5,30 +5,9 @@ export function equationValidation() {
   };
 }
 
-export function categoryProducts() {
+export function products() {
   return {
-    url: '/api/category',
-    method: 'GET'
-  };
-}
-
-export function categories() {
-  return {
-    url: '/api/categories',
-    method: 'GET'
-  };
-}
-
-export function subcategories() {
-  return {
-    url: '/api/subcategories',
-    method: 'GET'
-  };
-}
-
-export function productSearch() {
-  return {
-    url: '/api/product_search',
+    url: '/api/products',
     method: 'GET'
   };
 }

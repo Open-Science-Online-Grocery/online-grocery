@@ -26,12 +26,14 @@ function getProducts() {
     const state = getState();
     const params = {
       conditionIdentifier: state.user.conditionIdentifier,
-      subcategory_id: state.category.subcategory,
+      subcategoryId: state.category.subcategory,
       searchTerm: state.search.term,
-      searchType: state.search.type
+      searchType: state.search.type,
+      sortField: state.sorting.selectedSortField,
+      sortDirection: state.sorting.sortDirection
     };
     fromApi.jsonApiCall(
-      routes.categoryProducts(),
+      routes.products(),
       params,
       data => dispatch(setProducts(data)),
       error => console.log(error)

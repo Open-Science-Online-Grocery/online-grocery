@@ -157,7 +157,7 @@ ProductCardExpanded.propTypes = {
   size: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
   imageSrc: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
   ingredients: PropTypes.string.isRequired,
   labelImageUrl: PropTypes.string,
   labelPosition: PropTypes.string,
@@ -169,5 +169,6 @@ ProductCardExpanded.defaultProps = {
   starpoints: null,
   labelImageUrl: null,
   labelPosition: null,
-  labelSize: null
-}
+  labelSize: null,
+  description: null
+};

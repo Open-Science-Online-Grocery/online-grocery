@@ -13,7 +13,7 @@ const mapStateToProps = state => (
 const mapDispatchToProps = dispatch => (
   {
     handleClick: (selectedSortField, sortDirection) => {
-      dispatch(sortingActionCreators.setSorting(selectedSortField, sortDirection));
+      dispatch(sortingActionCreators.updateSorting(selectedSortField, sortDirection));
     }
   }
 );
