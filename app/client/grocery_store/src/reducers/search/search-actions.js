@@ -1,23 +1,40 @@
 import { categoryActionCreators } from '../category/category-actions';
 
 export const searchActionTypes = {
-  SET_SEARCH: 'SET_SEARCH'
+  SET_SEARCH_TERM: 'SET_SEARCH_TERM',
+  SET_SEARCH_TYPE: 'SET_SEARCH_TYPE'
 };
 
-function setSearch(search) {
+function setSearchTerm(searchTerm) {
   return {
-    search,
-    type: searchActionTypes.SET_SEARCH
+    searchTerm,
+    type: searchActionTypes.SET_SEARCH_TERM
   };
 }
 
-function updateSearch(search) {
+function setSearchType(searchType) {
+  return {
+    searchType,
+    type: searchActionTypes.SET_SEARCH_TYPE
+  };
+}
+
+function updateSearchTerm(searchTerm) {
   return (dispatch) => {
-    dispatch(setSearch(search));
+    dispatch(setSearchType('term'));
+    dispatch(setSearchTerm(searchTerm));
+    dispatch(categoryActionCreators.getProducts());
+  };
+}
+
+function updateSearchType(searchType) {
+  return (dispatch) => {
+    dispatch(setSearchType(searchType));
     dispatch(categoryActionCreators.getProducts());
   };
 }
 
 export const searchActionCreators = {
-  updateSearch
+  updateSearchTerm,
+  updateSearchType
 };

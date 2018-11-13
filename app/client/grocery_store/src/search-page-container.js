@@ -1,10 +1,19 @@
 import { connect } from 'react-redux';
 import SearchPage from './search-page';
+import { searchActionCreators } from './reducers/search/search-actions';
 
 const mapStateToProps = state => (
   {
-    search: state.search
+    searchTerm: state.search.term
   }
 );
 
-export default connect(mapStateToProps)(SearchPage);
+const mapDispatchToProps = dispatch => (
+  {
+    updateSearchType: () => {
+      dispatch(searchActionCreators.updateSearchType('term'));
+    }
+  }
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

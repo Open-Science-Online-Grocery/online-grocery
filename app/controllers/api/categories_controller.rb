@@ -7,8 +7,8 @@ module Api
     skip_before_action :authenticate_user!
 
     def show
-      if params[:search] != 'null'
-        products = Product.name_matches(params[:search])
+      if params[:search_type] == 'term'
+        products = Product.name_matches(params[:search_term])
       else
         products = Product.where(subcategory_id: params[:subcategory_id])
       end

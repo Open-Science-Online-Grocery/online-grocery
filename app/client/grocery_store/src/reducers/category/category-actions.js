@@ -27,7 +27,8 @@ function getProducts() {
     const params = {
       conditionIdentifier: state.user.conditionIdentifier,
       subcategory_id: state.category.subcategory,
-      search: state.search
+      searchTerm: state.search.term,
+      searchType: state.search.type
     };
     fromApi.jsonApiCall(
       routes.categoryProducts(),

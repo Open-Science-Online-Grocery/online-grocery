@@ -7,7 +7,7 @@ import './online-grocery.scss';
 
 class HomePage extends React.Component {
   componentWillMount() {
-    this.props.resetSearch();
+    this.props.updateSearchType();
   }
 
   render() {
@@ -28,5 +28,5 @@ class HomePage extends React.Component {
 export default HomePage;
 
 HomePage.propTypes = {
-  resetSearch: PropTypes.func.isRequired
+  updateSearchType: PropTypes.func.isRequired
 };

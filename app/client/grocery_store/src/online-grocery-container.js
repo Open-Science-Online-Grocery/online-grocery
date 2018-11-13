@@ -4,8 +4,8 @@ import { searchActionCreators } from './reducers/search/search-actions';
 
 const mapDispatchToProps = dispatch => (
   {
-    resetSearch: () => {
-      dispatch(searchActionCreators.updateSearch(null));
+    updateSearchType: () => {
+      dispatch(searchActionCreators.updateSearchType('category'));
     }
   }
 );
