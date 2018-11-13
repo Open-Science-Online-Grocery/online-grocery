@@ -11,7 +11,7 @@ const mapStateToProps = state => (
 const mapDispatchToProps = dispatch => (
   {
     handleSubmit: (search) => {
-      dispatch(searchActionCreators.setSearch(search));
+      dispatch(searchActionCreators.updateSearch(search));
     }
   }
 );

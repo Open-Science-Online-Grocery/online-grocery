@@ -21,13 +21,13 @@ function setProducts(products) {
   };
 }
 
-function updateCategory(category, subcategory) {
+function getProducts() {
   return (dispatch, getState) => {
-    dispatch(setCategory(category, subcategory));
-
+    const state = getState();
     const params = {
-      conditionIdentifier: getState().user.conditionIdentifier,
-      subcategory_id: getState().category.subcategory
+      conditionIdentifier: state.user.conditionIdentifier,
+      subcategory_id: state.category.subcategory,
+      search: state.search
     };
     fromApi.jsonApiCall(
       routes.categoryProducts(),
@@ -38,7 +38,14 @@ function updateCategory(category, subcategory) {
   };
 }
 
+function updateCategory(category, subcategory) {
+  return (dispatch) => {
+    dispatch(setCategory(category, subcategory));
+    dispatch(getProducts());
+  };
+}
+
 export const categoryActionCreators = {
-  setProducts,
-  updateCategory
+  updateCategory,
+  getProducts
 };

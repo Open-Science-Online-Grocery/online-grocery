@@ -14,9 +14,6 @@ const mapDispatchToProps = dispatch => (
   {
     handleSetCategory: (category, subcategory) => {
       dispatch(categoryActionCreators.updateCategory(category, subcategory));
-    },
-    handleSetProducts: (products) => {
-      dispatch(categoryActionCreators.setProducts(products));
     }
   }
 );
