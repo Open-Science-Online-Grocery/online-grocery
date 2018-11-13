@@ -8,6 +8,10 @@ class ConditionSerializer
   end
 
   def serialize
-    { sort_fields: @condition.product_sort_fields.map(&:description) }
+    {
+      sort_fields: @condition.product_sort_fields.map(&:description),
+      categories: Category.order(:id),
+      subcategories: Subcategory.order(:category_id, :display_order)
+    }
   end
 end

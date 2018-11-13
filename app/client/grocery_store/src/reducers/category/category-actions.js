@@ -1,43 +1,24 @@
 export const categoryActionTypes = {
-    SET_CATEGORY: `SET_CATEGORY`,
-    SET_PRODUCTS: `SET_PRODUCTS`,
-    SET_CATEGORIES: `SET_CATEGORIES`,
-    SET_SUBCATEGORIES: `SET_SUBCATEGORIES`,
-
-}
+  SET_CATEGORY: 'SET_CATEGORY',
+  SET_PRODUCTS: 'SET_PRODUCTS'
+};
 
 function setCategory(category, subcategory) {
-    return {
-        type: categoryActionTypes.SET_CATEGORY,
-        category: category,
-        subcategory: subcategory
-    }
+  return {
+    category,
+    subcategory,
+    type: categoryActionTypes.SET_CATEGORY
+  };
 }
 
 function setProducts(products) {
-    return {
-        type: categoryActionTypes.SET_PRODUCTS,
-        products: products
-    }
-}
-
-function setCategories(categories) {
-    return {
-        type: categoryActionTypes.SET_CATEGORIES,
-        categories: categories
-    }
-}
-
-function setSubcategories(subcategories) {
-    return {
-        type: categoryActionTypes.SET_SUBCATEGORIES,
-        subcategories: subcategories
-    }
+  return {
+    products,
+    type: categoryActionTypes.SET_PRODUCTS
+  };
 }
 
 export const categoryActionCreators = {
-    setCategory,
-    setProducts,
-    setCategories,
-    setSubcategories
-}
+  setCategory,
+  setProducts
+};

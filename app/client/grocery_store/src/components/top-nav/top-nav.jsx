@@ -9,8 +9,6 @@ import './top-nav.scss';
 export default class TopNav extends React.Component {
   componentDidMount() {
     this.getInitialProducts();
-    this.getCategories();
-    this.getSubcategories();
   }
 
   getInitialProducts() {
@@ -18,24 +16,6 @@ export default class TopNav extends React.Component {
       routes.categoryProducts(),
       { conditionIdentifier: this.props.conditionIdentifier },
       data => this.props.handleSetProducts(data),
-      error => console.log(error)
-    );
-  }
-
-  getCategories() {
-    fromApi.jsonApiCall(
-      routes.categories(),
-      {},
-      data => this.props.handleSetCategories(data),
-      error => console.log(error)
-    );
-  }
-
-  getSubcategories() {
-    fromApi.jsonApiCall(
-      routes.subcategories(),
-      {},
-      data => this.props.handleSetSubcategories(data),
       error => console.log(error)
     );
   }
@@ -83,7 +63,7 @@ export default class TopNav extends React.Component {
 }
 
 TopNav.propTypes = {
-  category: PropTypes.number.isRequired,
+  category: PropTypes.number,
   categories: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
@@ -97,7 +77,9 @@ TopNav.propTypes = {
   ).isRequired,
   conditionIdentifier: PropTypes.string.isRequired,
   handleSetProducts: PropTypes.func.isRequired,
-  handleSetCategories: PropTypes.func.isRequired,
-  handleSetSubcategories: PropTypes.func.isRequired,
   handleSetCategory: PropTypes.func.isRequired
+};
+
+TopNav.defaultProps = {
+  category: null
 };

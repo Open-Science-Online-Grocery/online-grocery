@@ -1,33 +1,35 @@
-import { categoryActionTypes } from './category-actions'
+import { categoryActionTypes } from './category-actions';
+import { userActionTypes } from '../user/user-actions';
 
-const initialCategoryState = { category: 1, subcategory: 1, products: [], categories: [], subcategories: []}
+const initialCategoryState = {
+  category: null,
+  subcategory: null,
+  products: [],
+  categories: [],
+  subcategories: []
+};
 
 export default function categoryReducer(state = initialCategoryState, action) {
-    switch (action.type) {
+  switch (action.type) {
+    case categoryActionTypes.SET_CATEGORY:
+      return Object.assign({}, state, {
+        category: action.category,
+        subcategory: action.subcategory
+      });
 
-        case(categoryActionTypes.SET_CATEGORY):
-            return Object.assign({}, state, {
-                category: action.category,
-                subcategory: action.subcategory
-            })
+    case categoryActionTypes.SET_PRODUCTS:
+      return Object.assign({}, state, {
+        products: action.products
+      });
 
-        case(categoryActionTypes.SET_PRODUCTS):
-            return Object.assign({}, state, {
-                products: action.products
-            })
-
-        case(categoryActionTypes.SET_CATEGORIES):
-            return Object.assign({}, state, {
-                categories: action.categories
-            })
-
-        case(categoryActionTypes.SET_SUBCATEGORIES):
-            return Object.assign({}, state, {
-                subcategories: action.subcategories
-            })
-
-
-        default:
-            return state
-    }
+    case userActionTypes.SET_CONDITION_DATA:
+      return Object.assign({}, state, {
+        categories: action.categories,
+        category: state.category || action.categories[0].id,
+        subcategories: action.subcategories,
+        subcategory: state.subcategory || action.subcategories[0].id
+      });
+    default:
+      return state;
+  }
 }
