@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import SortLinksContainer from '../sort-links/sort-links-container';
-import * as routes from '../../../../utils/routes';
-import * as fromApi from '../../../../utils/api_call';
 import './search.scss';
 
 class Search extends React.Component {
@@ -20,19 +18,8 @@ class Search extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const searchParams = {
-      conditionIdentifier: this.props.conditionIdentifier,
-      search: this.state.value
-    };
-    fromApi.jsonApiCall(
-      routes.productSearch(),
-      searchParams,
-      (data) => {
-        this.props.handleSetProducts(data);
-        this.props.history.push({ pathname: '/store/search' });
-      },
-      error => console.log(error)
-    );
+    this.props.handleSubmit(this.state.value);
+    this.props.history.push({ pathname: '/store/search' });
   }
 
   render() {
@@ -56,8 +43,7 @@ class Search extends React.Component {
 }
 
 Search.propTypes = {
-  handleSetProducts: PropTypes.func.isRequired,
-  conditionIdentifier: PropTypes.string.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired
 };
 

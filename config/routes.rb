@@ -3,12 +3,11 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     resource :category, only: [:show]
-    resources :categories, only: [:index]
     resource :condition, only: [:show]
     resource :equation_validation, only: [:show]
     resources :participant_actions, only: [:create]
-    resources :subcategories, only: [:index]
     resource :product_search, only: [:show]
+    resources :products, only: [:index]
   end
 
   resources :experiments do

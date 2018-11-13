@@ -1,25 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tab from '../tab/tab';
-import Search from '../search/search';
+import SearchContainer from '../search/search-container';
 import './top-nav.scss';
 
 export default class TopNav extends React.Component {
   render() {
     const subcats = Object.assign([], this.props.subcategories);
-    const tabs = this.props.categories.map((tab) => {
+    const tabs = this.props.categories.map((category) => {
       const tabSubcats = [];
-      while (subcats.length > 0 && subcats[0].categoryId === tab.id) {
+      while (subcats.length > 0 && subcats[0].categoryId === category.id) {
         tabSubcats.push(subcats.shift());
       }
       return (
         <Tab
-          tabName={tab.name}
-          key={tab.id}
-          index={tab.id}
+          tabName={category.name}
+          key={category.id}
+          id={category.id}
           subcats={tabSubcats}
           category={this.props.category}
-          conditionIdentifier={this.props.conditionIdentifier}
           handleSetCategory={this.props.handleSetCategory}
         />
       );
@@ -29,10 +28,7 @@ export default class TopNav extends React.Component {
         <div className="top-nav">
           {tabs}
         </div>
-        <Search
-          handleSetProducts={this.props.handleSetProducts}
-          conditionIdentifier={this.props.conditionIdentifier}
-        />
+        <SearchContainer />
         {
           this.props.categories[this.props.category - 1]
             && (
@@ -59,8 +55,6 @@ TopNav.propTypes = {
       name: PropTypes.string
     })
   ).isRequired,
-  conditionIdentifier: PropTypes.string.isRequired,
-  handleSetProducts: PropTypes.func.isRequired,
   handleSetCategory: PropTypes.func.isRequired
 };
 

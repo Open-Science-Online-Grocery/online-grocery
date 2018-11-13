@@ -25,9 +25,13 @@ function updateCategory(category, subcategory) {
   return (dispatch, getState) => {
     dispatch(setCategory(category, subcategory));
 
+    const params = {
+      conditionIdentifier: getState().user.conditionIdentifier,
+      subcategory_id: getState().category.subcategory
+    };
     fromApi.jsonApiCall(
       routes.categoryProducts(),
-      { conditionIdentifier: getState().user.conditionIdentifier },
+      params,
       data => dispatch(setProducts(data)),
       error => console.log(error)
     );
