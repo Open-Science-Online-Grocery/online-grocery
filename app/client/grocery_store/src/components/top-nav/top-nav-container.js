@@ -1,9 +1,21 @@
 import { connect } from 'react-redux';
 import TopNav from './top-nav';
+import { categoryActionCreators } from '../../reducers/category/category-actions';
 
 const mapStateToProps = state => (
-  // TODO: get props from state rather than parent component (HomePage)
-  {}
+  {
+    category: state.category.category,
+    categories: state.category.categories,
+    subcategories: state.category.subcategories
+  }
 );
 
-export default connect(mapStateToProps)(TopNav);
+const mapDispatchToProps = dispatch => (
+  {
+    handleSetCategory: (category, subcategory) => {
+      dispatch(categoryActionCreators.updateCategory(category, subcategory));
+    }
+  }
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(TopNav);
