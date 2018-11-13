@@ -1,31 +1,22 @@
 @import "../../base/base";
 .search-container {
-  display: flow-root;
+  display: flex;
   flex-direction: row;
-  align-content:flex-end;
+  justify-content: space-between;
 
+  form {
+    button {
+      padding: 6px 10px;
+      margin-top: 8px;
+      background: #ddd;
+      font-size: 17px;
+      border: none;
+      cursor: pointer;
+
+      &:hover {
+        background: #ccc;
+      }
+    }
+  }
 }
 
-input[type=text] {
-  padding: 6px;
-  margin-top: 8px;
-  font-size: 17px;
-  border: none;
-  float:right;
-  line-height: 25px;
-}
-
-.search-container button {
-  float: right;
-  padding: 6px 10px;
-  margin-top: 8px;
-  margin-right: 16px;
-  background: #ddd;
-  font-size: 17px;
-  border: none;
-  cursor: pointer;
-}
-
-.search-container button:hover {
-  background: #ccc;
-}

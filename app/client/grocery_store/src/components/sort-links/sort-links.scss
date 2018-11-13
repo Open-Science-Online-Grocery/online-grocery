@@ -1,0 +1,26 @@
+.sort-links {
+  display: inline-block;
+  padding-top: 1rem;
+
+  .sort-label {
+    margin-right: 0.5rem;
+  }
+
+  .sort-link {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: green;
+    font-weight: bold;
+
+    .sort-field:hover {
+      text-decoration: underline;
+    }
+
+    &:not(.active) {
+      .sort-arrow {
+        color: transparent;
+      }
+    }
+  }
+}

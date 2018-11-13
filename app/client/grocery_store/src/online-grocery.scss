@@ -21,6 +21,17 @@
   align-content: center;
   height: 80vh;
 }
+
 .form-input{
   margin-top: 10px;
+}
+
+form {
+  input[type=text] {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border: none;
+    line-height: 25px;
+  }
 }

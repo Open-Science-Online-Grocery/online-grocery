@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import SortLinksContainer from '../sort-links/sort-links-container';
 import * as routes from '../../../../utils/routes';
 import * as fromApi from '../../../../utils/api_call';
 import './search.scss';
@@ -37,9 +38,8 @@ class Search extends React.Component {
   render() {
     return (
       <div className="search-container">
+        <SortLinksContainer />
         <form onSubmit={this.handleSubmit}>
-          {/* html entity below is a unicode magnifying glass icon */}
-          <button type="submit">&#128270;</button>
           <input
             className="form-input"
             type="text"
@@ -47,6 +47,8 @@ class Search extends React.Component {
             value={this.state.value}
             onChange={this.handleChange}
           />
+          {/* html entity below is a unicode magnifying glass icon */}
+          <button type="submit">&#128270;</button>
         </form>
       </div>
     );
