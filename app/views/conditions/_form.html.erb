@@ -1,7 +1,7 @@
 <div data-condition-form>
   <%=
     form_for(
-      [experiment, condition],
+      [experiment, condition.condition],
       html: { class: 'ui form', multipart: true },
       data: {
         form_validation: true,

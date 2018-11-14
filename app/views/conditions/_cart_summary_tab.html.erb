@@ -38,7 +38,28 @@
   <div class="page-sub-heading">
     <h3>Conditional images</h3>
   </div>
+  <br>
 
-  <%# TODO: Use cocoon to render multiple %>
-  <%= render 'conditional_image_form', f: f, condition: condition %>
+  <div data-cart-summary-labels>
+  </div>
+
+  <%= f.fields_for :condition_cart_summary_labels do |condition_cart_summary_label| %>
+    <%= render 'condition_cart_summary_label_fields', f: condition_cart_summary_label %>
+  <% end %>
+
+  <%=
+    link_to_add_association(
+      f,
+      :condition_cart_summary_labels,
+      {
+        class: 'ui tiny button',
+        partial: 'condition_cart_summary_label_fields',
+        'data-association-insertion-node' => '[data-cart-summary-labels]',
+        'data-association-insertion-method' => 'append'
+      }
+    ) do
+  %>
+    <i class="add icon"></i>
+    Add another cart summary label
+  <% end %>
 </div>

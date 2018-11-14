@@ -10,7 +10,11 @@ class Condition < ApplicationRecord
   belongs_to :experiment
   belongs_to :label, optional: true
 
+  has_many :condition_cart_summary_labels, dependent: :destroy
+  has_many :cart_summary_labels, through: :condition_cart_summary_labels
+
   accepts_nested_attributes_for :label
+  accepts_nested_attributes_for :condition_cart_summary_labels, :cart_summary_labels, allow_destroy: true
 
   # TODO: update if needed
   def url

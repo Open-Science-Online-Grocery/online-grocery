@@ -76,6 +76,7 @@ class ConditionsController < ApplicationController
     @condition = ConditionPresenter.new(condition)
   end
 
+  # rubocop:disable Metrics/MethodLength
   private def condition_params
     params.require(:condition).permit(
       :id,
@@ -89,9 +90,24 @@ class ConditionsController < ApplicationController
       :show_food_count,
       :show_price_total,
       :food_count_format,
-      label_attributes: %i[id image image_cache name built_in]
+      label_attributes: %i[id image image_cache name built_in],
+      condition_cart_summary_labels_attributes: [
+        :id,
+        :_destroy,
+        :cart_summary_label_id,
+        :label_type,
+        :label_equation_tokens,
+        cart_summary_label_attributes: %i[
+          id
+          image
+          image_cache
+          name
+          built_in
+        ]
+      ]
     )
   end
+  # rubocop:enable Metrics/MethodLength
 
   private def set_breadcrumbs
     @breadcrumbs = [
