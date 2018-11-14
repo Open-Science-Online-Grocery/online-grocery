@@ -21,11 +21,13 @@ class ConditionManager
   end
 
   def update_condition
-    assign_params
-    deactivate_current_csv
-    import_tags
-    return false if @errors.any?
-    @errors += @condition.errors.full_messages unless @condition.save
+    ActiveRecord::Base.transaction do
+      assign_params
+      deactivate_current_csv
+      import_tags
+      @errors += @condition.errors.full_messages unless @condition.save
+      raise ActiveRecord::Rollback if @errors.any?
+    end
     @errors.none?
   end
 
@@ -79,11 +81,9 @@ class ConditionManager
     return unless @csv_file.present?
 
     tag_importer = TagImporter.new(file: @csv_file, condition: @condition)
-    ActiveRecord::Base.transaction do
-      @condition.product_tags.destroy_all
-      raise ActiveRecord::Rollback unless tag_importer.import
-      @errors += tag_importer.errors
-    end
+    @condition.product_tags.destroy_all
+    raise ActiveRecord::Rollback unless tag_importer.import
+    @errors += tag_importer.errors
   end
   # rubocop:enable Style/GuardClause
 end

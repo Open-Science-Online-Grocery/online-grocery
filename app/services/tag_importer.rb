@@ -92,8 +92,8 @@ class TagImporter
         tag_name: tag_name,
         subtag_name: subtag_name
       )
-    rescue ActiveRecord::RecordNotFound => error
-      record_not_found_error(error.message, row_number)
+    rescue ActiveRecord::RecordNotFound, ActiveRecord::RecordInvalid => error
+      standard_error(error.message, row_number)
     end
   end
 
@@ -118,7 +118,7 @@ class TagImporter
       "#{attr.to_s.humanize.titleize} is required"
   end
 
-  private def record_not_found_error(error_message, row_number)
+  private def standard_error(error_message, row_number)
     @errors << "Row #{row_number + 1}: #{error_message}"
   end
 end
