@@ -15,7 +15,6 @@ class ConditionManager
   def assign_params
     add_uuid_to_new_record
     clear_unselected_label_fields
-    deactivate_current_csv
     save_csv_file
     clear_unselected_sort_fields
     @condition.attributes = @params
@@ -23,6 +22,7 @@ class ConditionManager
 
   def update_condition
     assign_params
+    deactivate_current_csv
     import_tags
     return false if @errors.any?
     @errors += @condition.errors.full_messages unless @condition.save
@@ -69,7 +69,7 @@ class ConditionManager
   private def save_csv_file
     @csv_file = @params[:csv_file]
     return unless @csv_file
-    @condition.tag_csv_files.find_each { |file| file.update!(active: false) }
+    @condition.tag_csv_files.find_each { |file| file.active = false }
     @condition.tag_csv_files.build(csv_file: @csv_file)
     @params.delete(:csv_file)
   end
