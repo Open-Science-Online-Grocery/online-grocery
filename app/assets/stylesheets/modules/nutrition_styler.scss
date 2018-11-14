@@ -2,56 +2,59 @@
   height: 0;
 }
 
-.styler-form {
-  width: 50%;
-  display: inline-block;
-  float: left;
+.nutrition-styler {
+  .styler-form {
+    width: 50%;
+    display: inline-block;
+    float: left;
 
-  p {
-    margin: 0;
+    p {
+      margin: 0;
 
-    &.disabled {
-      color: $disabled-text-color;
+      &.disabled {
+        color: $disabled-text-color;
+      }
+    }
+
+    button.ui.button:focus {
+      background-color: $cancel-color;
+
+      &.active {
+        background-color: $cancel-highlight-color;
+      }
+    }
+
+    .actions {
+      span {
+        padding-right: 1rem;
+      }
+
+      button {
+        margin-right: 1rem;
+      }
     }
   }
 
-  button.ui.button:focus {
-    background-color: $cancel-color;
-
-    &.active {
-      background-color: $cancel-highlight-color;
-    }
+  .nutrition-label-wrapper {
+    width: 50%;
+    margin-right: 0;
+    margin-left: auto;
+    text-align: center;
   }
 
-  .actions {
-    span {
-      padding-right: 1rem;
-    }
+  .nutrition-label {
+    .nutrition-facts-label {
+      text-align: left;
+      display: inline-block;
 
-    button {
-      margin-right: 1rem;
-    }
-  }
-}
+      div.hovered {
+        background-color: $hover-highlight-color;
+        cursor: pointer;
+      }
 
-.nutrition-label-wrapper {
-  width: 50%;
-  margin-right: 0;
-  margin-left: auto;
-  text-align: center;
-}
-
-.nutrition-label {
-  .nutrition-facts-label {
-    text-align: left;
-
-    div.hovered {
-      background-color: $hover-highlight-color;
-      cursor: pointer;
-    }
-
-    div.selected {
-      border: 1px solid $dark-theme-color;
+      div.selected {
+        border: 1px solid $dark-theme-color;
+      }
     }
   }
 }
@@ -61,3 +64,4 @@
   clear: left;
   width: 50%;
 }
+

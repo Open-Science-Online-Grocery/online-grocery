@@ -1,4 +1,4 @@
-import { hoverClassName } from '../components/NutritionLabel';
+import { hoverClassName } from '../components/NutritionLabelPreview';
 
 const rgbToHex = require('rgb-to-hex');
 const transparent = 'rgba(0, 0, 0, 0)';
