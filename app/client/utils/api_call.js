@@ -3,7 +3,10 @@ import fetch from 'isomorphic-fetch';
 import UnauthorizedRequestHandler from './UnauthorizedRequestHandler';
 
 function parameterizeData(data) {
-  return Object.keys(data).map(key => (
+  const keysWithValue = Object.keys(data).filter(
+    key => data[key] !== null && data[key] !== undefined
+  );
+  return keysWithValue.map(key => (
     `${key}=${encodeURIComponent(data[key])}`
   )).join('&');
 }
