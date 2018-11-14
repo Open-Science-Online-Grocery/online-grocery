@@ -9,15 +9,31 @@ class ProductSerializer
   end
 
   def serialize
-    return @product.attributes unless gets_label?
-    @product.attributes.merge(
+    @product.attributes
+      .merge(label_information)
+      .merge(nutrition_information)
+  end
+
+  private def label_information
+    return {} unless gets_label?
+    {
       'label_image_url' => @condition.label_image_url,
       'label_position' => @condition.label_position,
       'label_size' => @condition.label_size
-    )
+    }
+  end
+
+  private def nutrition_information
+    return {} unless gets_custom_nutrition_styling?
+    { 'nutrition_style_rules' => JSON.parse(@condition.nutrition_styles) }
   end
 
   private def gets_label?
     @condition.label_equation.evaluate_with_product(@product.attributes)
+  end
+
+  private def gets_custom_nutrition_styling?
+    return true if @condition.style_use_type == @condition.style_use_types.always
+    @condition.nutrition_equation.evaluate_with_product(@product.attributes)
   end
 end
