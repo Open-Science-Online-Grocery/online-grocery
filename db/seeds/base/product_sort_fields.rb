@@ -5,11 +5,11 @@ module Seeds
     module ProductSortFields
       def self.seed_product_sort_fields
         sort_fields = {
-          'Calories from fat' => :caloriesFromFat,
+          'Calories from fat' => :calories_from_fat,
           'Calories' => :calories,
-          'Total fat' => :totalFat,
-          'Saturated fat' => :saturatedFat,
-          'Trans fat' => :transFat,
+          'Total fat' => :total_fat,
+          'Saturated fat' => :saturated_fat,
+          'Trans fat' => :trans_fat,
           'Cholesterol' => :cholesterol,
           'Sodium' => :sodium,
           'Total carbohydrates' => :carbs,
@@ -19,7 +19,7 @@ module Seeds
           'Star points' => :starpoints,
           'Price' => :price,
           'Name' => :name,
-          'Custom label' => :customLabel
+          'Custom label' => :label_image_url
         }
         sort_fields.each do |description, name|
           ProductSortField.find_or_create_by!(

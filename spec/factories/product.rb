@@ -7,16 +7,16 @@ FactoryBot.define do
     sequence(:name) { |n| "Product #{n}" }
     size { '12 oz' }
     description { 'This is a product' }
-    imageSrc { '' }
-    servingSize { '1 cup' }
+    image_src { '' }
+    serving_size { '1 cup' }
     servings { '4' }
-    caloriesFromFat { 0 }
+    calories_from_fat { 0 }
     calories { 100 }
-    totalFat { 0 }
-    saturatedFat { 0 }
-    transFat { 0 }
-    polyFat { 0 }
-    monoFat { 0 }
+    total_fat { 0 }
+    saturated_fat { 0 }
+    trans_fat { 0 }
+    poly_fat { 0 }
+    mono_fat { 0 }
     cholesterol { nil }
     sodium { 0 }
     potassium { 0 }

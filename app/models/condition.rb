@@ -9,7 +9,9 @@ class Condition < ApplicationRecord
   validates :name, :uuid, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
 
+  delegate :label_types, :sort_types, to: :class
   delegate :image_url, to: :label, prefix: true, allow_nil: true
+  delegate :name, to: :default_sort_field, prefix: true, allow_nil: true
 
   belongs_to :experiment
   belongs_to :label, optional: true
@@ -19,25 +21,45 @@ class Condition < ApplicationRecord
 
   accepts_nested_attributes_for :label, :product_sort_fields
 
-  # TODO: update if needed
+  def self.label_types
+    OpenStruct.new(none: 'none', provided: 'provided', custom: 'custom')
+  end
+
+  def self.sort_types
+    OpenStruct.new(none: 'none', field: 'field', calculation: 'calculation')
+  end
+
+  # TODO: update if needed - depending on client's preferences on URL used to
+  # access the store
   def url
     store_url(condId: uuid)
   end
 
   def label_type
     return @label_type if @label_type
-    return 'none' if label.nil?
-    label.built_in? ? 'provided' : 'custom'
+    return label_types.none if label.nil?
+    label.built_in? ? label_types.provided : label_types.custom
   end
 
   def sort_type
     return @sort_type if @sort_type
-    return 'field' if default_sort_field
-    return 'calculation' if sort_equation_tokens
-    'none'
+    return sort_types.field if default_sort_field
+    return sort_types.calculation if sort_equation_tokens
+    sort_types.none
   end
 
   def label_equation
-    @label_equation ||= Equation.new(label_equation_tokens, 'label')
+    @label_equation ||= Equation.new(
+      label_equation_tokens,
+      Equation.types.label
+    )
+  end
+
+  def has_label_equation?
+    label_equation_tokens.present?
+  end
+
+  def sort_equation
+    @sort_equation ||= Equation.new(sort_equation_tokens, Equation.types.sort)
   end
 end

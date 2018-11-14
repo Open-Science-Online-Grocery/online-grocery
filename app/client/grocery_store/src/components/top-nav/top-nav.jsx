@@ -1,62 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tab from '../tab/tab';
-import Search from '../search/search';
-import * as routes from '../../../../utils/routes';
-import * as fromApi from '../../../../utils/api_call';
+import SearchContainer from '../search/search-container';
 import './top-nav.scss';
 
 export default class TopNav extends React.Component {
-  componentDidMount() {
-    this.getInitialProducts();
-    this.getCategories();
-    this.getSubcategories();
-  }
-
-  getInitialProducts() {
-    fromApi.jsonApiCall(
-      routes.categoryProducts(),
-      { conditionIdentifier: this.props.conditionIdentifier },
-      data => this.props.handleSetProducts(data),
-      error => console.log(error)
-    );
-  }
-
-  getCategories() {
-    fromApi.jsonApiCall(
-      routes.categories(),
-      {},
-      data => this.props.handleSetCategories(data),
-      error => console.log(error)
-    );
-  }
-
-  getSubcategories() {
-    fromApi.jsonApiCall(
-      routes.subcategories(),
-      {},
-      data => this.props.handleSetSubcategories(data),
-      error => console.log(error)
-    );
-  }
-
   render() {
     const subcats = Object.assign([], this.props.subcategories);
-    const tabs = this.props.categories.map((tab) => {
+    const tabs = this.props.categories.map((category) => {
       const tabSubcats = [];
-      while (subcats.length > 0 && subcats[0].categoryId === tab.id) {
+      while (subcats.length > 0 && subcats[0].categoryId === category.id) {
         tabSubcats.push(subcats.shift());
       }
       return (
         <Tab
-          tabName={tab.name}
-          key={tab.id}
-          index={tab.id}
+          tabName={category.name}
+          key={category.id}
+          id={category.id}
           subcats={tabSubcats}
           category={this.props.category}
-          conditionIdentifier={this.props.conditionIdentifier}
           handleSetCategory={this.props.handleSetCategory}
-          handleSetProducts={this.props.handleSetProducts}
         />
       );
     });
@@ -65,10 +28,7 @@ export default class TopNav extends React.Component {
         <div className="top-nav">
           {tabs}
         </div>
-        <Search
-          handleSetProducts={this.props.handleSetProducts}
-          conditionIdentifier={this.props.conditionIdentifier}
-        />
+        <SearchContainer />
         {
           this.props.categories[this.props.category - 1]
             && (
@@ -83,7 +43,7 @@ export default class TopNav extends React.Component {
 }
 
 TopNav.propTypes = {
-  category: PropTypes.number.isRequired,
+  category: PropTypes.number,
   categories: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
@@ -95,9 +55,9 @@ TopNav.propTypes = {
       name: PropTypes.string
     })
   ).isRequired,
-  conditionIdentifier: PropTypes.string.isRequired,
-  handleSetProducts: PropTypes.func.isRequired,
-  handleSetCategories: PropTypes.func.isRequired,
-  handleSetSubcategories: PropTypes.func.isRequired,
   handleSetCategory: PropTypes.func.isRequired
+};
+
+TopNav.defaultProps = {
+  category: null
 };

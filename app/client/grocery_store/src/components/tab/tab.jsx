@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './tab.scss';
-import * as routes from '../../../../utils/routes';
-import * as fromApi from '../../../../utils/api_call';
 
 export default class Tab extends React.Component {
   constructor(props) {
@@ -10,22 +8,6 @@ export default class Tab extends React.Component {
     this.state = { open: false };
     this.openDropdown = this.openDropdown.bind(this);
     this.closeDropdown = this.closeDropdown.bind(this);
-    this.handleTabClick = this.getProducts.bind(this);
-  }
-
-  getProducts(subcat) {
-    const categoryParams = {
-      conditionIdentifier: this.props.conditionIdentifier,
-      category: this.props.index,
-      subcategory: subcat.displayOrder
-    };
-    fromApi.jsonApiCall(
-      routes.categoryProducts(),
-      categoryParams,
-      data => this.props.handleSetProducts(data),
-      error => console.log(error)
-    );
-    this.props.handleSetCategory(this.props.index, subcat.categoryId);
   }
 
   openDropdown() {
@@ -37,9 +19,13 @@ export default class Tab extends React.Component {
   }
 
   buildSubcategories() {
-    return this.props.subcats.map((subcat, key) => (
-      <div className="tab-subcat-bar" key={key} onClick={() => this.handleTabClick(subcat)}>
-        <div className="tab-subcat-title" key={key}>
+    return this.props.subcats.map(subcat => (
+      <div
+        className="tab-subcat-bar"
+        key={subcat.id}
+        onClick={() => this.props.handleSetCategory(this.props.id, subcat.id)}
+      >
+        <div className="tab-subcat-title">
           {subcat.name}
         </div>
       </div>
@@ -49,7 +35,7 @@ export default class Tab extends React.Component {
   render() {
     return (
       <div
-        className={this.props.index === this.props.category ? 'tab-container selected' : 'tab-container'}
+        className={this.props.id === this.props.category ? 'tab-container selected' : 'tab-container'}
         onMouseEnter={() => this.openDropdown()}
         onMouseLeave={() => this.closeDropdown()}
       >
@@ -71,14 +57,16 @@ export default class Tab extends React.Component {
 
 Tab.propTypes = {
   tabName: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
   subcats: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string
     })
   ).isRequired,
-  category: PropTypes.number.isRequired,
-  conditionIdentifier: PropTypes.string.isRequired,
-  handleSetCategory: PropTypes.func.isRequired,
-  handleSetProducts: PropTypes.func.isRequired
+  category: PropTypes.number,
+  handleSetCategory: PropTypes.func.isRequired
+};
+
+Tab.defaultProps = {
+  category: null
 };

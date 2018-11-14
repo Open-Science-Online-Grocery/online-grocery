@@ -76,6 +76,8 @@ Metrics/PerceivedComplexity:
 
 Naming/AccessorMethodName:
   Enabled: false
+Naming/PredicateName:
+  Enabled: false
 Naming/UncommunicativeBlockParamName:
   AllowedNames:
     - id
