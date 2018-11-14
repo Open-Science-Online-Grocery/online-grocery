@@ -1,0 +1,9 @@
+{
+  "rules": {
+    // this rule is triggered if you set a prop type of just "object", but that
+    // is the appropriate prop type for react router's `history`
+    "react/forbid-prop-types": "off",
+    // we seem to need to use `require` for image source paths for webpacker
+    "global-require": "off"
+  }
+}

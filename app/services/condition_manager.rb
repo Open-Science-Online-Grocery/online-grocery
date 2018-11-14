@@ -16,6 +16,7 @@ class ConditionManager
     clear_unselected_label_fields
     show_food_count_fields
     clear_cart_summary_label_fields
+    clear_unselected_sort_fields
     @condition.attributes = @params
   end
 
@@ -30,12 +31,26 @@ class ConditionManager
     @condition.uuid = SecureRandom.uuid
   end
 
+  # rubocop:disable Style/GuardClause
   private def clear_unselected_label_fields
-    if @params[:label_type].in?(%w[none provided])
+    if @params[:label_type] == Condition.label_types.custom
+      @params.delete(:label_id)
+    else
       @params.delete(:label_attributes)
     end
-    @params.delete(:label_id) if @params[:label_type] == 'custom'
-    @params[:label_id] = nil if @params[:label_type] == 'none'
+    if @params[:label_type] == Condition.label_types.none
+      @params[:label_id] = nil
+    end
+  end
+
+  private def clear_unselected_sort_fields
+    if @params[:sort_type] != Condition.sort_types.field
+      @params[:default_sort_field_id] = nil
+      @params[:default_sort_order] = nil
+    end
+    if @params[:sort_type] != Condition.sort_types.calculation
+      @params[:sort_equation_tokens] = nil
+    end
   end
 
   private def clear_cart_summary_label_fields
@@ -57,4 +72,5 @@ class ConditionManager
       @params[:food_count_format] = nil
     end
   end
+  # rubocop:enable Style/GuardClause
 end

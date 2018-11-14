@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_11_220655) do
+ActiveRecord::Schema.define(version: 2018_11_12_183838) do
 
   create_table "cart_summary_labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -36,6 +36,15 @@ ActiveRecord::Schema.define(version: 2018_11_11_220655) do
     t.index ["condition_id"], name: "index_condition_cart_summary_labels_on_condition_id"
   end
 
+  create_table "condition_product_sort_fields", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "condition_id"
+    t.bigint "product_sort_field_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["condition_id"], name: "index_condition_product_sort_fields_on_condition_id"
+    t.index ["product_sort_field_id"], name: "index_condition_product_sort_fields_on_product_sort_field_id"
+  end
+
   create_table "conditions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "experiment_id", null: false
@@ -49,6 +58,10 @@ ActiveRecord::Schema.define(version: 2018_11_11_220655) do
     t.text "label_equation_tokens"
     t.boolean "show_price_total", default: true
     t.string "food_count_format"
+    t.bigint "default_sort_field_id"
+    t.string "default_sort_order"
+    t.text "sort_equation_tokens"
+    t.index ["default_sort_field_id"], name: "index_conditions_on_default_sort_field_id"
     t.index ["experiment_id"], name: "index_conditions_on_experiment_id"
     t.index ["label_id"], name: "index_conditions_on_label_id"
   end
@@ -69,21 +82,39 @@ ActiveRecord::Schema.define(version: 2018_11_11_220655) do
     t.string "image"
   end
 
+  create_table "participant_actions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "session_identifier"
+    t.bigint "condition_id"
+    t.string "action_type"
+    t.string "product_name"
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["condition_id"], name: "index_participant_actions_on_condition_id"
+  end
+
+  create_table "product_sort_fields", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "size"
     t.text "description"
-    t.string "imageSrc"
-    t.string "servingSize"
+    t.string "image_src"
+    t.string "serving_size"
     t.string "servings"
-    t.integer "caloriesFromFat"
+    t.integer "calories_from_fat"
     t.integer "calories"
-    t.integer "totalFat"
-    t.integer "saturatedFat"
-    t.integer "transFat"
-    t.integer "polyFat"
-    t.integer "monoFat"
-    t.string "cholesterol"
+    t.integer "total_fat"
+    t.integer "saturated_fat"
+    t.integer "trans_fat"
+    t.integer "poly_fat"
+    t.integer "mono_fat"
+    t.decimal "cholesterol", precision: 6, scale: 2
     t.integer "sodium"
     t.integer "potassium"
     t.integer "carbs"
@@ -94,8 +125,8 @@ ActiveRecord::Schema.define(version: 2018_11_11_220655) do
     t.text "ingredients"
     t.text "allergens"
     t.decimal "price", precision: 64, scale: 12
-    t.integer "category"
-    t.integer "subcategory"
+    t.integer "category_id"
+    t.integer "subcategory_id"
     t.integer "starpoints"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

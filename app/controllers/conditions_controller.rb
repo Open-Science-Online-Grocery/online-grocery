@@ -20,14 +20,13 @@ class ConditionsController < ApplicationController
     manager = ConditionManager.new(@condition, condition_params)
     if manager.update_condition
       flash[:success] = 'Condition successfully created'
-      redirect_to edit_experiment_condition_path(@experiment, @condition)
+      redirect_to edit_experiment_condition_path(
+        @experiment,
+        @condition,
+        tab: @tab
+      )
     else
-      @messages = {
-        error: {
-          header: 'Unable to save condition',
-          messages: manager.errors
-        }
-      }
+      set_condition_errors(manager)
       @resource_name = 'Add Condition'
       render :new
     end
@@ -41,14 +40,13 @@ class ConditionsController < ApplicationController
     manager = ConditionManager.new(@condition, condition_params)
     if manager.update_condition
       flash[:success] = 'Condition successfully updated'
-      redirect_to edit_experiment_condition_path(@experiment, @condition)
+      redirect_to edit_experiment_condition_path(
+        @experiment,
+        @condition,
+        tab: @tab
+      )
     else
-      @messages = {
-        error: {
-          header: 'Unable to save condition',
-          messages: manager.errors
-        }
-      }
+      set_condition_errors(manager)
       @resource_name = "Condition: #{@condition.name}"
       render :edit
     end
@@ -86,10 +84,15 @@ class ConditionsController < ApplicationController
       :label_position,
       :label_size,
       :label_equation_tokens,
+      :sort_type,
+      :default_sort_field_id,
+      :default_sort_order,
+      :sort_equation_tokens,
       :nutrition_styles,
       :show_food_count,
       :show_price_total,
       :food_count_format,
+      product_sort_field_ids: [],
       label_attributes: %i[id image image_cache name built_in],
       condition_cart_summary_labels_attributes: [
         :id,
@@ -122,5 +125,14 @@ class ConditionsController < ApplicationController
 
   private def set_experiment
     @experiment = Experiment.find(params[:experiment_id])
+  end
+
+  private def set_condition_errors(manager)
+    @messages = {
+      error: {
+        header: 'Unable to save condition',
+        messages: manager.errors
+      }
+    }
   end
 end

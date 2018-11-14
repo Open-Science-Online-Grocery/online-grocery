@@ -27,15 +27,16 @@ The pre-existing database tables are:
 * `products`
 * `users`
 
-
 ## Initial setup
 
+* Ensure MySQL is installed locally and running.
 * Copy `config/database.yml.example` to `config/database.yml` and fill in the
   needed mysql password (if the `root` database user needs a password).
-* Set the local ruby version to the one defined in `.ruby-version`
-* `bundle install`
-* `yarn install`
-
+* Set the local ruby version to the one defined in `.ruby-version` using a ruby version manager like `rbenv`
+* From the root directory of the application, run the following commands:
+  * `bundle install`
+  * `yarn install`
+  * `rake db:setup`
 
 ## Starting your local development server
 
@@ -66,6 +67,13 @@ fine, however.
 You can control the rails server's port and other details in the `Procfile`.
 
 
-## Logging in
+## Visiting the Researcher Portal
 
+To log in to the Researcher Portal, visit `http://localhost:3000`
 You can log in with email: `admin@admin.com`, password: `adminadmin!1`
+
+
+## Visiting the Grocery Store
+
+To navigate to the Grocery Store, visit `http://localhost:3000/store`. You may
+enter any text as your session ID to continue.  No other login is needed.

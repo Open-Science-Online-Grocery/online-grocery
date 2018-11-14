@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 const mapStateToProps = function(state){
     return {
-        sessionID: state.user.sessionID,
+        sessionId: state.user.sessionId,
         products: state.category.products
     }
 }

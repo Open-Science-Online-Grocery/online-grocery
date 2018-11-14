@@ -17,9 +17,6 @@ export default class Calculator extends PureComponent {
     return (
       <div className="calculator">
         <TestResultsContainer />
-        <div>
-          <strong>Show this label on all products where:</strong>
-        </div>
         <EquationEditorContainer />
         <VariableSelectorContainer />
         <OperatorButtonRowContainer values={operators1} className="operators" />

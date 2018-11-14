@@ -7,13 +7,19 @@ class Equation
 
   validate :parses_correctly, :returns_expected_type
 
+  delegate :types, to: :class
+
+  def self.types
+    OpenStruct.new(label: 'label', sort: 'sort')
+  end
+
   def self.individual_product_variables
     {
-      caloriesFromFat: 'Calories from fat per serving',
+      calories_from_fat: 'Calories from fat per serving',
       calories: 'Calories per serving',
-      totalFat: 'Total fat per serving (g)',
-      saturatedFat: 'Saturated fat per serving (g)',
-      transFat: 'Trans fat per serving (g)',
+      total_fat: 'Total fat per serving (g)',
+      saturated_fat: 'Saturated fat per serving (g)',
+      trans_fat: 'Trans fat per serving (g)',
       cholesterol: 'Cholesterol per serving (mg)',
       sodium: 'Sodium per serving (mg)',
       carbs: 'Total carbohydrates per serving (g)',
@@ -53,16 +59,22 @@ class Equation
     str
   end
 
+  def evaluate_with_product(product_attributes)
+    return nil if @tokens.none?
+    calculator.evaluate(to_s, product_attributes)
+  end
+
   private def should_return_boolean?
     {
-      'label' => true
+      types.label => true,
+      types.sort => false
     }[@type]
   end
 
   # here we test the equation by evaluating it against fake food attributes
   # checking that it returns the right kind of value.
   private def test_value
-    @test_value ||= calculator.evaluate(to_s, fake_product_data)
+    @test_value ||= evaluate_with_product(fake_product_data)
   end
 
   private def fake_product_data
@@ -104,7 +116,7 @@ class Equation
 
   # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
   private def returns_expected_type
-    return unless test_value
+    return if test_value.nil?
     if should_return_boolean? && !returns_boolean?
       errors.add(
         :base,

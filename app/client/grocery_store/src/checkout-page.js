@@ -8,11 +8,11 @@ export default class CheckoutPage extends React.Component {
     render() {
         return(
             <div>
-                <img className='logo-style' src={`${path.join(__dirname, 'images/howesgrocerybanner.png')}`}/>
+                <img className='logo-style' src={require('./images/howesgrocerybanner.png')}/>
                 <div className='checkout-title'>Checkout</div>
                 <Route render={({history}) => (
                     <form onSubmit={() => {
-                        history.push('/thank-you')
+                        history.push('/store/thank-you')
                     }}
                           className='checkout-sections'>
                         <OrderSummaryContainer/>
