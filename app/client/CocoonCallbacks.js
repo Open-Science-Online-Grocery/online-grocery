@@ -5,7 +5,7 @@ export default class CocoonCallbacks {
   }
 
   addEquationAttributeEventListener(targetIdentifier, addEvent) {
-    $(targetIdentifier).on(addEvent, this.addCartSummaryLabelEquationAttribute);
+    $(targetIdentifier).on(addEvent, this.addCartSummaryLabelEquationAttribute.bind(this));
   }
 
   // this method adds an input name attribute needed by React to render the Equation widget.

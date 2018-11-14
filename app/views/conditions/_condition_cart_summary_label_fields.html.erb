@@ -85,16 +85,15 @@
                 <label>Show this image only for carts where:</label>
               </div>
 
-                <div class="ten wide column">
-                  <div class="ui basic segment <%= 'disabled' unless f.object.equation? %>">
-                    <div
-                      data-calculator
-                      data-variables="<%= Equation.individual_product_variables.to_json %>"
-                      data-input-name="<%# added by CocoonCallbacks.js %>"
-                      data-tokens="<%= f.object.label_equation_tokens || [] %>"
-                      data-equation-type="label"
-                    ></div>
-                  </div>
+              <div class="ten wide column">
+                <div class="ui basic segment <%= 'disabled' unless f.object.equation? %>">
+                  <div
+                    data-calculator
+                    data-variables="<%= Equation.individual_product_variables.to_json %>"
+                    data-input-name="<%# added by CocoonCallbacks.js %>"
+                    data-tokens="<%= f.object.label_equation_tokens || [] %>"
+                    data-equation-type="label"
+                  ></div>
                 </div>
               </div>
             </div>

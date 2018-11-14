@@ -6,11 +6,9 @@
           <%= f.check_box :show_price_total %>
           <%= f.label :show_price_total %>
         </div>
-      </div><%# segment %>
-    </div><%# column %>
 
-    <div class="eight wide column">
-      <div class="ui basic segment">
+        <div class="ui hidden divider"></div>
+
         <div class="ui checkbox">
           <%= f.check_box :show_food_count, data: { refresh_form: true } %>
           <label>Show count of foods with health labels</label>
@@ -29,23 +27,32 @@
               <%= f.radio_button :food_count_format, 'percent' %>
               <label>Show as percent ("40% of products")</label>
             </div>
-          </div><%# field %>
-        </div><%# nested_fields %>
-      </div><%# segment %>
-    </div><%# column %>
-  </div><%# grid %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="eight wide column">
+      <div class="field cart-summary-label-preview">
+        <label>Preview</label>
+        <div class="ui segment">
+          TODO
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="page-sub-heading">
     <h3>Conditional images</h3>
   </div>
-  <br>
 
-  <div data-cart-summary-labels>
-  </div>
+  <br>
 
   <%= f.fields_for :condition_cart_summary_labels do |condition_cart_summary_label| %>
     <%= render 'condition_cart_summary_label_fields', f: condition_cart_summary_label %>
   <% end %>
+
+  <div data-cart-summary-labels></div>
 
   <%=
     link_to_add_association(

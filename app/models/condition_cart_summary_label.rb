@@ -10,7 +10,8 @@ class ConditionCartSummaryLabel < ApplicationRecord
   belongs_to :condition
   belongs_to :cart_summary_label
 
-  accepts_nested_attributes_for :cart_summary_label # , reject_if: :all_blank
+  # TODO: Add validations for rejecting nested attributes
+  accepts_nested_attributes_for :cart_summary_label
 
   def label_type
     return @label_type if @label_type
