@@ -76,15 +76,25 @@
                 </div>
               </div>
 
-              <div class="row">
+              <div class="ui radio checkbox">
+                <%= f.radio_button :equation, false, data: { refresh_form: true } %>
+                <label>Always show this image</label>
+              </div>
+              <div class="ui radio checkbox">
+                <%= f.radio_button :equation, true, data: { refresh_form: true } %>
+                <label>Show this image only for carts where:</label>
+              </div>
+
                 <div class="ten wide column">
-                  <div
-                    data-calculator
-                    data-variables="<%= Equation.individual_product_variables.to_json %>"
-                    data-input-name="<%# added by CocoonCallbacks.js %>"
-                    data-tokens="<%= f.object.label_equation_tokens || [] %>"
-                    data-equation-type="label"
-                  ></div>
+                  <div class="ui basic segment <%= 'disabled' unless f.object.equation? %>">
+                    <div
+                      data-calculator
+                      data-variables="<%= Equation.individual_product_variables.to_json %>"
+                      data-input-name="<%# added by CocoonCallbacks.js %>"
+                      data-tokens="<%= f.object.label_equation_tokens || [] %>"
+                      data-equation-type="label"
+                    ></div>
+                  </div>
                 </div>
               </div>
             </div>

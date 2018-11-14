@@ -97,6 +97,7 @@ class ConditionsController < ApplicationController
         :cart_summary_label_id,
         :label_type,
         :label_equation_tokens,
+        :equation,
         cart_summary_label_attributes: %i[
           id
           image
