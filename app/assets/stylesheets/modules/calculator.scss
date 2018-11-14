@@ -1,3 +1,7 @@
+.ui.segment.nested-calculator {
+  margin-left: 2rem;
+}
+
 .calculator {
   > div {
     margin-bottom: 1rem;
@@ -19,6 +23,7 @@
       -webkit-box-shadow: none;
     }
   }
+
   .token {
     display: inline-block;
     margin: 0.3rem;
@@ -28,7 +33,7 @@
     }
 
     &.variable {
-      background-color: #ddd;
+      background-color: $disabled-text-color;
       padding: 0.3rem 0.5rem;
       border-radius: 12px;
     }
@@ -43,6 +48,10 @@
 
   .insert-field {
     display: flex;
+
+    button {
+      margin: 0;
+    }
 
     .dropdown.selection {
       flex-grow: 1;

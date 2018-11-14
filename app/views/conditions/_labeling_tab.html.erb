@@ -14,21 +14,21 @@
       <div class="grouped fields">
         <div class="field">
           <div class="ui radio checkbox">
-            <%= f.radio_button :label_type, 'none', data: { refresh_form: true } %>
+            <%= f.radio_button :label_type, Condition.label_types.none, data: { refresh_form: true } %>
             <label>No label</label>
           </div>
         </div>
         <div class="field">
           <div class="ui radio checkbox">
-            <%= f.radio_button :label_type, 'custom', data: { refresh_form: true } %>
+            <%= f.radio_button :label_type, Condition.label_types.custom, data: { refresh_form: true } %>
             <label>Use custom label</label>
           </div>
-          <div class="ui segment nested-fields <%= 'disabled' unless condition.label_type == 'custom' %>">
+          <div class="ui segment nested-fields <%= 'disabled' unless condition.label_type == Condition.label_types.custom %>">
             <%= f.fields_for :label, condition.custom_label do |custom_label_fields| %>
               <%= custom_label_fields.hidden_field :built_in %>
               <div class="field">
                 <%= custom_label_fields.label :name %>
-                <%= custom_label_fields.text_field :name, disabled: condition.label_type != 'custom' %>
+                <%= custom_label_fields.text_field :name, disabled: condition.label_type != Condition.label_types.custom %>
               </div>
               <% if custom_label_fields.object.image? %>
                 <div class="field">
@@ -37,13 +37,13 @@
                 </div>
                 <div class="field">
                   <%= custom_label_fields.label :image, 'Replace image' %>
-                  <%= custom_label_fields.file_field :image, data: { refresh_form: true }, disabled: condition.label_type != 'custom' %>
+                  <%= custom_label_fields.file_field :image, data: { refresh_form: true }, disabled: condition.label_type != Condition.label_types.custom %>
                   <%= custom_label_fields.hidden_field :image_cache %>
                 </div>
               <% else %>
                 <div class="required field">
                   <%= custom_label_fields.label :image, 'Upload image' %>
-                  <%= custom_label_fields.file_field :image, data: { refresh_form: true }, disabled: condition.label_type != 'custom' %>
+                  <%= custom_label_fields.file_field :image, data: { refresh_form: true }, disabled: condition.label_type != Condition.label_types.custom %>
                 </div>
               <% end %>
             <% end %>
@@ -51,10 +51,10 @@
         </div>
         <div class="field">
           <div class="ui radio checkbox">
-            <%= f.radio_button :label_type, 'provided', data: { refresh_form: true } %>
+            <%= f.radio_button :label_type, Condition.label_types.provided, data: { refresh_form: true } %>
             <label>Use provided label</label>
           </div>
-          <div class="ui segment nested-fields <%= 'disabled' unless condition.label_type == 'provided' %>">
+          <div class="ui segment nested-fields <%= 'disabled' unless condition.label_type == Condition.label_types.provided %>">
             <div class="field">
               <%= f.label :label_id %>
               <%=
@@ -66,14 +66,16 @@
                   { include_blank: true },
                   class: 'ui dropdown',
                   data: { refresh_form: true },
-                  disabled: condition.label_type != 'provided'
+                  disabled: condition.label_type != Condition.label_types.provided
                 )
               %>
             </div>
           </div>
         </div>
       </div>
+
       <div class="ui hidden divider"></div>
+
       <div class="two fields">
         <div class="field">
           <%= f.label :label_position %>
@@ -87,6 +89,19 @@
           </div>
         </div>
       </div>
+
+      <div class="ui tall hidden divider"></div>
+
+      <div class="field">
+        <label>Show this label on all products where the following calculation is true:</label>
+        <div
+          data-calculator
+          data-variables="<%= Equation.individual_product_variables.to_json %>"
+          data-input-name="condition[label_equation_tokens]"
+          data-tokens="<%= condition.label_equation_tokens || [] %>"
+          data-equation-type="<%= Equation.types.label %>"
+        ></div>
+      </div>
     </div>
 
     <div class="eight wide column">
@@ -97,16 +112,6 @@
           <div class="overlay"></div>
         </div>
       </div>
-    </div>
-
-    <div class="ten wide column">
-      <div
-        data-calculator
-        data-variables="<%= Equation.individual_product_variables.to_json %>"
-        data-input-name="condition[label_equation_tokens]"
-        data-tokens="<%= condition.label_equation_tokens || [] %>"
-        data-equation-type="label"
-      ></div>
     </div>
   </div>
 </div>

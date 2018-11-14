@@ -6,7 +6,8 @@ import { cartActionCreators } from '../../reducers/cart/cart-actions';
 const mapStateToProps = function(state){
     return {
         cart: state.cart,
-        sessionID: state.user.sessionID
+        sessionId: state.user.sessionId,
+        conditionIdentifier: state.user.conditionIdentifier
     }
 }
 

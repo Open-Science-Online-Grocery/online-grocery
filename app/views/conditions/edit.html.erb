@@ -1,7 +1,7 @@
 <%= render 'layouts/breadcrumbs' %>
 
 <div class="page-heading">
-  <h2>Edit Condition: <%= @condition.name %></h2>
+  <h2>Edit Condition: <span class="deemphasized"><%= @condition.name %></span></h2>
   <div class="heading-buttons">
 
     <%= link_to experiment_condition_path(@experiment, @condition), method: :delete, data: { modal_confirm: 'Are you sure you want to delete this condition and all its data?' }, class: 'ui button' do %>

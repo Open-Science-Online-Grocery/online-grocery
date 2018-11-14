@@ -1,34 +1,19 @@
-import React from 'react'
-import SearchPage from './search-page'
-import { connect } from 'react-redux'
-import { categoryActionCreators } from './reducers/category/category-actions';
+import { connect } from 'react-redux';
+import SearchPage from './search-page';
+import { searchActionCreators } from './reducers/search/search-actions';
 
-const mapStateToProps = function(state){
-    return {
-        category: state.category.category,
-        categories: state.category.categories,
-        subcategories: state.category.subcategories
+const mapStateToProps = state => (
+  {
+    searchTerm: state.search.term
+  }
+);
+
+const mapDispatchToProps = dispatch => (
+  {
+    updateSearchType: () => {
+      dispatch(searchActionCreators.updateSearchType('term'));
     }
-}
+  }
+);
 
-const mapDispatchToProps = function (dispatch) {
-    return {
-        handleSetCategory: (category, subcategory) => {
-            dispatch(categoryActionCreators.setCategory(category, subcategory))
-        },
-        handleSetProducts: (products) => {
-            dispatch(categoryActionCreators.setProducts(products))
-        }
-    }
-}
-
-
-class SearchPageContainer extends React.Component {
-    render() {
-        return (
-            <SearchPage {...this.props} />
-        )
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchPageContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

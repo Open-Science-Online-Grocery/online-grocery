@@ -3,12 +3,17 @@ import fetch from 'isomorphic-fetch';
 import UnauthorizedRequestHandler from './UnauthorizedRequestHandler';
 
 function parameterizeData(data) {
-  return Object.keys(data).map(key => (
+  const keysWithValue = Object.keys(data).filter(
+    key => data[key] !== null && data[key] !== undefined
+  );
+  return keysWithValue.map(key => (
     `${key}=${encodeURIComponent(data[key])}`
   )).join('&');
 }
 
 function jsonPost(route, data) {
+  const tokenMeta = document.querySelector('meta[name=csrf-token]');
+  const token = tokenMeta && tokenMeta.content;
   return fetch(
     route.url,
     {
@@ -16,7 +21,7 @@ function jsonPost(route, data) {
       method: route.method,
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector('meta[name=csrf-token]').content
+        'X-CSRF-Token': token
       },
       body: JSON.stringify(data)
     }

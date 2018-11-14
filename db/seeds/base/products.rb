@@ -28,7 +28,9 @@ module Seeds
             'subcategory_name',
             'newcategory',
             'newsubid',
-            'newsubsubid'
+            'newsubsubid',
+            'category',
+            'subcategory'
           )
           Product.create!(
             product_attrs.merge(

@@ -36,7 +36,7 @@ export default class VariableSelector extends PureComponent {
         />
         <Button className="insert" type="button" onClick={this.onButtonClick}>
           <Icon name="plus" />
-          Insert field into calculation
+          Insert field
         </Button>
         <Button icon type="button" onClick={this.props.deletePreviousToken}>
           <Icon name="arrow left" />

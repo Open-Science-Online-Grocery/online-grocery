@@ -17,6 +17,7 @@ class ConditionManager
     clear_unselected_label_fields
     deactivate_current_csv
     save_csv_file
+    clear_unselected_sort_fields
     @condition.attributes = @params
   end
 
@@ -33,12 +34,26 @@ class ConditionManager
     @condition.uuid = SecureRandom.uuid
   end
 
+  # rubocop:disable Style/GuardClause
   private def clear_unselected_label_fields
-    if @params[:label_type].in?(%w[none provided])
+    if @params[:label_type] == Condition.label_types.custom
+      @params.delete(:label_id)
+    else
       @params.delete(:label_attributes)
     end
-    @params.delete(:label_id) if @params[:label_type] == 'custom'
-    @params[:label_id] = nil if @params[:label_type] == 'none'
+    if @params[:label_type] == Condition.label_types.none
+      @params[:label_id] = nil
+    end
+  end
+
+  private def clear_unselected_sort_fields
+    if @params[:sort_type] != Condition.sort_types.field
+      @params[:default_sort_field_id] = nil
+      @params[:default_sort_order] = nil
+    end
+    if @params[:sort_type] != Condition.sort_types.calculation
+      @params[:sort_equation_tokens] = nil
+    end
   end
 
   private def deactivate_current_csv
@@ -46,7 +61,7 @@ class ConditionManager
     active = !!@params.delete(:current_csv_file_active)
     current_csv_file = @condition.current_tag_csv_file
     if current_csv_file
-      current_csv_file.update(active: active)
+      current_csv_file.update!(active: active)
       @condition.product_tags.destroy_all unless active
     end
   end
@@ -54,7 +69,7 @@ class ConditionManager
   private def save_csv_file
     @csv_file = @params[:csv_file]
     return unless @csv_file
-    @condition.tag_csv_files.update_all(active: false)
+    @condition.tag_csv_files.find_each { |file| file.update!(active: false) }
     @condition.tag_csv_files.build(csv_file: @csv_file)
     @params.delete(:csv_file)
   end
@@ -70,4 +85,5 @@ class ConditionManager
       @errors += tag_importer.errors
     end
   end
+  # rubocop:enable Style/GuardClause
 end
