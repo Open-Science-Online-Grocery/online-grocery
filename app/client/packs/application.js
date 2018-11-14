@@ -24,6 +24,7 @@ $(document).ready(() => {
 $(document).on('initialize', (_event, insertedItem) => {
   const $insertedItem = $(insertedItem);
   new Initializer($insertedItem).initialize();
+  new CocoonCallbacks().initialize();
 });
 
 $(document).on('cocoon:after-insert', (_event, insertedItem) => {

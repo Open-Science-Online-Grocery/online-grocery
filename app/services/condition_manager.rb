@@ -39,6 +39,7 @@ class ConditionManager
   end
 
   private def clear_cart_summary_label_fields
+    return unless @params[:condition_cart_summary_labels_attributes]
     @params[:condition_cart_summary_labels_attributes].each do |_, val|
       label_type = val[:label_type]
       if label_type == 'custom'

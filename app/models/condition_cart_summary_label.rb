@@ -20,12 +20,7 @@ class ConditionCartSummaryLabel < ApplicationRecord
 
   def equation
     return @equation if @equation
-    # return false when there are no tokens
-    label_equation_tokens == '[]' ? 'true' : 'false'
-  end
-
-  def equation?
-    return true if @equation == 'true'
-    false # false or default
+    any_tokens = label_equation_tokens == '[]' || label_equation_tokens.nil?
+    any_tokens ? 'false' : 'true'
   end
 end
