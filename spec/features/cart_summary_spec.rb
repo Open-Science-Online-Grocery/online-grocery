@@ -16,7 +16,7 @@ RSpec.describe 'Configuring the cart summary', :feature do
   it 'allows cart summary label configuration', :js do
     force_click(find('.item[data-tab="cart-summary"]'))
 
-    expect(find('#condition_show_price_total')).to be_checked
+    expect(find('#condition_show_price_total')).not_to be_checked
     expect(find('#condition_show_food_count')).not_to be_checked
 
     expect_form_refresh do
@@ -57,7 +57,7 @@ RSpec.describe 'Configuring the cart summary', :feature do
       within('div.calculator') do
         force_click find('.ui.selection.dropdown')
         force_click find('div.item', text: 'Calories per serving', exact_text: true)
-        force_click_on('Insert field into calculation')
+        force_click_on('Insert field')
 
         force_click_on('Test Calculation')
 

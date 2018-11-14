@@ -56,11 +56,11 @@ ActiveRecord::Schema.define(version: 2018_11_12_183838) do
     t.string "label_position"
     t.integer "label_size"
     t.text "label_equation_tokens"
-    t.boolean "show_price_total", default: true
-    t.string "food_count_format"
     t.bigint "default_sort_field_id"
     t.string "default_sort_order"
     t.text "sort_equation_tokens"
+    t.boolean "show_price_total", default: false, null: false
+    t.string "food_count_format"
     t.index ["default_sort_field_id"], name: "index_conditions_on_default_sort_field_id"
     t.index ["experiment_id"], name: "index_conditions_on_experiment_id"
     t.index ["label_id"], name: "index_conditions_on_label_id"
