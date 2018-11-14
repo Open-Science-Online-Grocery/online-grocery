@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
-# responsible for all data manipulation required for importing custom categories (tags)
+# responsible for all data manipulation required for
+# importing custom categories (tags)
 class TagImporter
   require 'csv'
 
   attr_reader :errors
 
-  def initialize(file: file, condition: condition)
+  def initialize(file:, condition:)
     @file = file
     @condition = condition.condition
     @errors = []
@@ -82,29 +83,39 @@ class TagImporter
 
   private def create_single_tag(tag_name, subtag_name, product_name, row_number)
     # TODO: remove subtag from this list if it is not required
-    return unless tag_name.present? && subtag_name.present? && product_name.present?
+    return unless tag_name.present? &&
+      subtag_name.present? &&
+      product_name.present?
     begin
-      product = Product.find_by!(name: product_name)
-      tag = Tag.find_or_create_by!(name: tag_name)
-      subtag = Subtag.find_or_create_by!(name: subtag_name, tag: tag)
-      if product.present? && tag.present?
-        @condition.product_tags.create!(
-          product: product,
-          tag: tag,
-          subtag: subtag
-        )
-      end
+      create_product_tag(
+        product_name: product_name,
+        tag_name: tag_name,
+        subtag_name: subtag_name
+      )
     rescue ActiveRecord::RecordNotFound => error
       record_not_found_error(error.message, row_number)
     end
   end
 
-  private def require_attribute(attribute, value, row_number)
-    missing_required_attribute_error(attribute, row_number) unless value.present?
+  private def create_product_tag(product_name:, tag_name:, subtag_name:)
+    product = Product.find_by!(name: product_name)
+    tag = Tag.find_or_create_by!(name: tag_name)
+    subtag = Subtag.find_or_create_by!(name: subtag_name, tag: tag)
+    return unless product.present? && tag.present?
+    @condition.product_tags.create!(
+      product: product,
+      tag: tag,
+      subtag: subtag
+    )
   end
 
-  private def missing_required_attribute_error(attribute, row_number)
-    @errors << "Row #{row_number + 1}: #{attribute.to_s.humanize.titleize} is required"
+  private def require_attribute(attr, value, row_number)
+    missing_required_attribute_error(attr, row_number) unless value.present?
+  end
+
+  private def missing_required_attribute_error(attr, row_number)
+    @errors << "Row #{row_number + 1}:
+      #{attr.to_s.humanize.titleize} is required"
   end
 
   private def record_not_found_error(error_message, row_number)

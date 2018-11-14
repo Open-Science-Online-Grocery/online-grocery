@@ -34,18 +34,23 @@ class ProductDataCsvManager
       csv << product_data_csv_attributes.keys
 
       product_scope.find_each do |product|
-        row = []
-        category = Category.find(product.category_id)
-        subcategory = Subcategory.find(product.subcategory_id)
-
-        row << product.name
-        row << category.name
-        row << subcategory.name
-        # empty entries for user to input custom categories
-        row += Array.new(custom_category_attributes.keys.count)
-
-        csv << row
+        csv << generate_csv_row(product)
       end
     end
   end
+
+  def self.generate_csv_row(product)
+    row = []
+    category = Category.find(product.category_id)
+    subcategory = Subcategory.find(product.subcategory_id)
+
+    row << product.name
+    row << category.name
+    row << subcategory.name
+    # empty entries for user to input custom categories
+    row += Array.new(custom_category_attributes.keys.count)
+
+    row
+  end
+  private_class_method :generate_csv_row
 end

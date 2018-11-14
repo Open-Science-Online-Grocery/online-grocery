@@ -58,7 +58,7 @@ class ConditionManager
 
   private def deactivate_current_csv
     # coerce to boolean, false is converted to null by ajax form refresh
-    active = !!@params.delete(:current_csv_file_active)
+    active = !@params.delete(:current_csv_file_active).nil?
     current_csv_file = @condition.current_tag_csv_file
     if current_csv_file
       current_csv_file.update!(active: active)

@@ -12,6 +12,7 @@ RSpec.describe 'Importing custom categories for a condition', :feature do
   let(:condition) { create :condition }
   let(:user) { create(:user) }
 
+  # rubocop:disable RSpec/BeforeAfterAll
   before :all do
     DatabaseCleaner.strategy = [:truncation, pre_count: true]
     DatabaseCleaner.clean
@@ -39,6 +40,7 @@ RSpec.describe 'Importing custom categories for a condition', :feature do
     DatabaseCleaner.clean
     DatabaseCleaner.strategy = :transaction
   end
+  # rubocop:enable RSpec/BeforeAfterAll
 
   before do
     sign_in user

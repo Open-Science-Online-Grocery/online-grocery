@@ -6,17 +6,15 @@ RSpec.describe ProductDataCsvManager do
   describe '.product_data_csv_attributes' do
     it 'returns a combined list of the built-in and custom category attributes' do
       expect(described_class.product_data_csv_attributes).to eql(
-        {
-          'Product Name' => :product_name,
-          'Category' => :category,
-          'Subcategory' => :subcategory,
-          'Custom Category 1' => :custom_category_1,
-          'Custom Subcategory 1' => :custom_subcategory_1,
-          'Custom Category 2' => :custom_category_2,
-          'Custom Subcategory 2' => :custom_subcategory_2,
-          'Custom Category 3' => :custom_category_3,
-          'Custom Subcategory 3' => :custom_subcategory_3
-        }
+        'Product Name' => :product_name,
+        'Category' => :category,
+        'Subcategory' => :subcategory,
+        'Custom Category 1' => :custom_category_1,
+        'Custom Subcategory 1' => :custom_subcategory_1,
+        'Custom Category 2' => :custom_category_2,
+        'Custom Subcategory 2' => :custom_subcategory_2,
+        'Custom Category 3' => :custom_category_3,
+        'Custom Subcategory 3' => :custom_subcategory_3
       )
     end
   end
@@ -24,11 +22,9 @@ RSpec.describe ProductDataCsvManager do
   describe '.built_in_category_attributes' do
     it 'returns the built-in category attributes' do
       expect(described_class.built_in_category_attributes).to eql(
-        {
-          'Product Name' => :product_name,
-          'Category' => :category,
-          'Subcategory' => :subcategory
-        }
+        'Product Name' => :product_name,
+        'Category' => :category,
+        'Subcategory' => :subcategory
       )
     end
   end
@@ -36,14 +32,12 @@ RSpec.describe ProductDataCsvManager do
   describe '.custom_category_attributes' do
     it 'returns the custom category attributes' do
       expect(described_class.custom_category_attributes).to eql(
-        {
-          'Custom Category 1' => :custom_category_1,
-          'Custom Subcategory 1' => :custom_subcategory_1,
-          'Custom Category 2' => :custom_category_2,
-          'Custom Subcategory 2' => :custom_subcategory_2,
-          'Custom Category 3' => :custom_category_3,
-          'Custom Subcategory 3' => :custom_subcategory_3
-        }
+        'Custom Category 1' => :custom_category_1,
+        'Custom Subcategory 1' => :custom_subcategory_1,
+        'Custom Category 2' => :custom_category_2,
+        'Custom Subcategory 2' => :custom_subcategory_2,
+        'Custom Category 3' => :custom_category_3,
+        'Custom Subcategory 3' => :custom_subcategory_3
       )
     end
   end
@@ -55,15 +49,15 @@ RSpec.describe ProductDataCsvManager do
     let(:subcategory_2) { create :subcategory, name: 'Subcategory 2' }
     let(:product_1) do
       create :product,
-        name: 'Product 1',
-        category_id: category_1.id,
-        subcategory_id: subcategory_1.id
+             name: 'Product 1',
+             category_id: category_1.id,
+             subcategory_id: subcategory_1.id
     end
     let(:product_2) do
       create :product,
-        name: 'Product 2',
-        category_id: category_2.id,
-        subcategory_id: subcategory_2.id
+             name: 'Product 2',
+             category_id: category_2.id,
+             subcategory_id: subcategory_2.id
     end
 
     context 'when provided with a product scope' do

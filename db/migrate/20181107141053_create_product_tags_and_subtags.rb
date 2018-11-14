@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateProductTagsAndSubtags < ActiveRecord::Migration[5.2]
   def change
     create_table :tags do |t|
@@ -25,7 +27,7 @@ class CreateProductTagsAndSubtags < ActiveRecord::Migration[5.2]
     create_table :tag_csv_files do |t|
       t.string :csv_file
       t.references :condition, index: true, null: true
-      t.boolean :active, null: false, default: :true
+      t.boolean :active, null: false, default: true
 
       t.timestamps
     end

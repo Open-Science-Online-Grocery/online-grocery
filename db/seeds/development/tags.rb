@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Seeds
   module Development
     module Tags
@@ -5,7 +7,7 @@ module Seeds
         names = [
           'Custom Category 1',
           'Custom Category 2',
-          'Custom Category 3',
+          'Custom Category 3'
         ]
 
         names.each do |name|

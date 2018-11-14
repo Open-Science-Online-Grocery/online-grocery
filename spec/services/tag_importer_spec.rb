@@ -6,11 +6,12 @@ RSpec.describe TagImporter do
   describe '#import' do
     let(:uploaded_file) { File.new(file_fixture(file_with_path)) }
     let(:file_with_path) { "tag_imports/#{file_name}" }
-    let(:condition) { ConditionPresenter.new(create :condition) }
+    let(:condition) { ConditionPresenter.new(create(:condition)) }
 
     subject { described_class.new(file: uploaded_file, condition: condition) }
 
     context 'when the file is a csv' do
+      # rubocop:disable RSpec/BeforeAfterAll
       before :all do
         DatabaseCleaner.strategy = [:truncation, pre_count: true]
         DatabaseCleaner.clean
@@ -38,6 +39,7 @@ RSpec.describe TagImporter do
         DatabaseCleaner.clean
         DatabaseCleaner.strategy = :transaction
       end
+      # rubocop:enable RSpec/BeforeAfterAll
 
       context 'when template data has been deleted' do
         let(:file_name) { 'custom_categories_missing_template_data.csv' }
@@ -48,7 +50,7 @@ RSpec.describe TagImporter do
         end
 
         it 'does not create any data' do
-          expect{ subject.import }.to change { Tag.count }.by(0)
+          expect { subject.import }.to change { Tag.count }.by(0)
             .and change { Subtag.count }.by(0)
             .and change { ProductTag.count }.by(0)
         end
@@ -63,7 +65,7 @@ RSpec.describe TagImporter do
         end
 
         it 'does not create any data' do
-          expect{ subject.import }.to change { Tag.count }.by(0)
+          expect { subject.import }.to change { Tag.count }.by(0)
             .and change { Subtag.count }.by(0)
             .and change { ProductTag.count }.by(0)
         end
@@ -78,7 +80,7 @@ RSpec.describe TagImporter do
         end
 
         it 'does not create any data' do
-          expect{ subject.import }.to change { Tag.count }.by(0)
+          expect { subject.import }.to change { Tag.count }.by(0)
             .and change { Subtag.count }.by(0)
             .and change { ProductTag.count }.by(0)
         end
@@ -93,7 +95,7 @@ RSpec.describe TagImporter do
         end
 
         it 'does creates the data from the import' do
-          expect{ subject.import }.to change { Tag.count }.by(4)
+          expect { subject.import }.to change { Tag.count }.by(4)
             .and change { Subtag.count }.by(4)
             .and change { ProductTag.count }.by(4)
         end
@@ -109,7 +111,7 @@ RSpec.describe TagImporter do
       end
 
       it 'does not create any data' do
-        expect{ subject.import }.to change { Tag.count }.by(0)
+        expect { subject.import }.to change { Tag.count }.by(0)
           .and change { Subtag.count }.by(0)
           .and change { ProductTag.count }.by(0)
       end

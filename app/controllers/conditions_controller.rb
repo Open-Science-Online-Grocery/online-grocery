@@ -16,8 +16,8 @@ class ConditionsController < ApplicationController
     respond_to do |format|
       format.csv do
         send_data(
-          # TODO: consider adding Product scope argument, there are a lot of products.
-          # manager is already set up to take optional scope argument
+          # TODO: consider adding Product scope argument, there are a lot of
+          # products. Manager is already set up to take optional scope argument
           ProductDataCsvManager.generate_csv,
           filename: 'product_categories_data.csv'
         )
