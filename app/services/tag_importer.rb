@@ -61,7 +61,6 @@ class TagImporter
     validate_tags(row_data, row_number)
   end
 
-  # TODO: Remove this validation if subtags are optional
   private def validate_tags(row_data, row_number)
     @custom_category_attributes.each_slice(2) do |category, subcategory|
       tag_name = row_data[category]
@@ -82,10 +81,7 @@ class TagImporter
   end
 
   private def create_single_tag(tag_name, subtag_name, product_name, row_number)
-    # TODO: remove subtag from this list if it is not required
-    return unless tag_name.present? &&
-      subtag_name.present? &&
-      product_name.present?
+    return unless tag_name.present? && product_name.present?
     begin
       create_product_tag(
         product_name: product_name,

@@ -71,6 +71,21 @@ RSpec.describe TagImporter do
         end
       end
 
+      context 'when a custom category is provided without a subcategory' do
+        let(:file_name) { 'custom_categories_missing_custom_subcategory.csv' }
+
+        it 'returns true and does not add any errors' do
+          expect(subject.import).to be_truthy
+          expect(subject.errors).to be_empty
+        end
+
+        it 'does creates the data from the import' do
+          expect { subject.import }.to change { Tag.count }.by(4)
+            .and change { Subtag.count }.by(4)
+            .and change { ProductTag.count }.by(4)
+        end
+      end
+
       context 'when an invalid product name is provided' do
         let(:file_name) { 'custom_categories_invalid_product_name.csv' }
 
