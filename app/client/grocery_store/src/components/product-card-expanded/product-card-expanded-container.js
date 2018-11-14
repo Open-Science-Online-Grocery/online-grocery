@@ -11,12 +11,16 @@ const mapDispatchToProps = dispatch => (
   }
 );
 
-const mapStateToProps = (state, ownProps) => (
-  {
+const mapStateToProps = (state, ownProps) => {
+  let css = null;
+  if (ownProps.nutritionStyleRules) {
+    css = new CssWriter(JSON.parse(ownProps.nutritionStyleRules)).cssString();
+  }
+  return {
     sessionId: state.user.sessionId,
     conditionIdentifier: state.user.conditionIdentifier,
-    nutritionLabelCss: new CssWriter(JSON.parse(ownProps.nutritionStyleRules)).cssString()
-  }
-);
+    nutritionLabelCss: css
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductCardExpanded);

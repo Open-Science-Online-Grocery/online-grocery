@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import NutritionLabelPreviewContainer from '../containers/NutritionLabelPreviewContainer';
 import StylerFormContainer from '../containers/StylerFormContainer';
 
@@ -11,9 +10,6 @@ export default class NutritionStyler extends PureComponent {
           <StylerFormContainer />
         </div>
         <div className="nutrition-label">
-          <style>
-            {this.props.cssRules}
-          </style>
           <div className="nutrition-label-wrapper">
             <NutritionLabelPreviewContainer />
           </div>
@@ -22,7 +18,3 @@ export default class NutritionStyler extends PureComponent {
     );
   }
 }
-
-NutritionStyler.propTypes = {
-  cssRules: PropTypes.string.isRequired
-};

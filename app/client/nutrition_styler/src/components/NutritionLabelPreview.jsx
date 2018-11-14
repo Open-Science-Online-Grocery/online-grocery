@@ -80,12 +80,13 @@ export default class NutritionLabelPreview extends PureComponent {
         onMouseOut={this.handleMouseOut}
         onBlur={this.handleMouseOut}
       >
-        <NutritionLabel nutritionFacts={this.fakeProductData()} />
+        <NutritionLabel nutritionFacts={this.fakeProductData()} css={this.props.cssRules} />
       </div>
     );
   }
 }
 
 NutritionLabelPreview.propTypes = {
-  setActiveSelector: PropTypes.func.isRequired
+  setActiveSelector: PropTypes.func.isRequired,
+  cssRules: PropTypes.string.isRequired
 };
