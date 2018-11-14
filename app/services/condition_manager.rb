@@ -15,6 +15,7 @@ class ConditionManager
     add_uuid_to_new_record
     clear_unselected_label_fields
     clear_unselected_sort_fields
+    clear_unselected_nutrition_fields
     @condition.attributes = @params
   end
 
@@ -48,6 +49,12 @@ class ConditionManager
     end
     if @params[:sort_type] != Condition.sort_types.calculation
       @params[:sort_equation_tokens] = nil
+    end
+  end
+
+  private def clear_unselected_nutrition_fields
+    if @params[:style_use_type] == Condition.style_use_types.always
+      @params[:nutrition_equation_tokens] = nil
     end
   end
   # rubocop:enable Style/GuardClause

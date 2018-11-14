@@ -90,6 +90,8 @@ class ConditionsController < ApplicationController
       :sort_equation_tokens,
       :only_add_from_detail_page,
       :nutrition_styles,
+      :style_use_type,
+      :nutrition_equation_tokens,
       product_sort_field_ids: [],
       label_attributes: %i[id image image_cache name built_in]
     )

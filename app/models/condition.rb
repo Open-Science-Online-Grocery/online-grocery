@@ -4,12 +4,12 @@
 class Condition < ApplicationRecord
   include Rails.application.routes.url_helpers
 
-  attr_writer :label_type, :sort_type
+  attr_writer :label_type, :sort_type, :style_use_type
 
   validates :name, :uuid, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
 
-  delegate :label_types, :sort_types, to: :class
+  delegate :label_types, :sort_types, :style_use_types, to: :class
   delegate :image_url, to: :label, prefix: true, allow_nil: true
   delegate :name, to: :default_sort_field, prefix: true, allow_nil: true
 
@@ -29,6 +29,10 @@ class Condition < ApplicationRecord
     OpenStruct.new(none: 'none', field: 'field', calculation: 'calculation')
   end
 
+  def self.style_use_types
+    OpenStruct.new(always: 'always', calculation: 'calculation')
+  end
+
   # TODO: update if needed - depending on client's preferences on URL used to
   # access the store
   def url
@@ -46,6 +50,12 @@ class Condition < ApplicationRecord
     return sort_types.field if default_sort_field
     return sort_types.calculation if sort_equation_tokens
     sort_types.none
+  end
+
+  def style_use_type
+    return @style_use_type if @style_use_type
+    return style_use_types.calculation if nutrition_equation_tokens
+    style_use_types.always
   end
 
   def label_equation
