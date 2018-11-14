@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import './online-grocery.scss';
+import './session-id-page.scss';
 
 class SessionIDPage extends React.Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class SessionIDPage extends React.Component {
   render() {
     const staticText = 'Please enter your session ID given to you by Qualtrics:';
     return (
-      <div className="form-container">
+      <div className="form-container session-id-page">
         <form className="form-style" onSubmit={this.handleSubmit}>
           <div className="form-prompt">{staticText}</div>
           <input className="form-input" type="text" value={this.state.value} onChange={this.handleChange} />
