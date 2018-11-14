@@ -6,7 +6,7 @@ RSpec.describe 'Sorting products in grocery store', :feature do
   let!(:category) { create(:category) }
   let!(:subcategory) { create(:subcategory, category: category, display_order: 1) }
   let(:sort_field_1) { create(:product_sort_field, name: 'calories') }
-  let(:sort_field_2) { create(:product_sort_field, name: 'carbs') }
+  let(:sort_field_2) { create(:product_sort_field, name: 'carbs', description: 'Carbs') }
   let(:user) { create(:user) }
   let(:experiment) { create(:experiment, user: user) }
   let(:condition) do
@@ -57,17 +57,26 @@ RSpec.describe 'Sorting products in grocery store', :feature do
   it 'shows products in the order specified by the condition', :js do
     find('.form-input').set('hello')
     force_click('input[type="submit"]')
-    # binding.pry
 
-    # # search for products
-    # find('.form-input').set('pop')
-    # force_click('button[type="submit"]')
+    # search for products
+    find('.form-input').set('pop')
+    force_click('button[type="submit"]')
 
-    # expect(page).to have_content 'Search Results'
+    expect(page).to have_content 'Search Results'
+
+    # check for default sorting per condition
     expect(product_2.name).to appear_before(product_1.name)
-    expect(product_2.name).to appear_before(product_3.name)
     expect(product_1.name).to appear_before(product_3.name)
 
+    # test manual sorting by participant
+    force_click_on('Carbs')
+    expect(page).to have_content('▲')
+    expect(product_3.name).to appear_before(product_2.name)
+    expect(product_2.name).to appear_before(product_1.name)
 
+    force_click_on('Carbs')
+    expect(page).to have_content('▼')
+    expect(product_1.name).to appear_before(product_2.name)
+    expect(product_2.name).to appear_before(product_3.name)
   end
 end
