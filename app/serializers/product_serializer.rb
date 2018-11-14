@@ -25,7 +25,7 @@ class ProductSerializer
 
   private def nutrition_information
     return {} unless gets_custom_nutrition_styling?
-    { 'nutrition_style_rules' => JSON.parse(@condition.nutrition_styles) }
+    { 'nutrition_style_rules' => @condition.nutrition_styles }
   end
 
   private def gets_label?
