@@ -33,7 +33,9 @@ class ProductSerializer
   end
 
   private def gets_custom_nutrition_styling?
-    return true if @condition.style_use_type == @condition.style_use_types.always
+    if @condition.style_use_type == @condition.style_use_types.always
+      return true
+    end
     @condition.nutrition_equation.evaluate_with_product(@product.attributes)
   end
 end
