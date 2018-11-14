@@ -1,3 +1,15 @@
 <div class="ui bottom attached tab segment" data-tab="nutrition-facts">
+  <div class="field">
+    <div class="ui checkbox">
+      <%= f.check_box :only_add_from_detail_page %>
+      <label>
+        Only allow items to be added to cart from from the product's detail page
+        (not from the page of search/category results)
+      </label>
+    </div>
+  </div>
+
+  <div class="ui tall divider"></div>
+
   <div data-nutrition-styler data-styles="<%= condition.nutrition_styles.presence || {} %>" ></div>
 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_12_183838) do
+ActiveRecord::Schema.define(version: 2018_11_14_142831) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2018_11_12_183838) do
     t.bigint "default_sort_field_id"
     t.string "default_sort_order"
     t.text "sort_equation_tokens"
+    t.boolean "only_add_from_detail_page", default: false
     t.index ["default_sort_field_id"], name: "index_conditions_on_default_sort_field_id"
     t.index ["experiment_id"], name: "index_conditions_on_experiment_id"
     t.index ["label_id"], name: "index_conditions_on_label_id"
