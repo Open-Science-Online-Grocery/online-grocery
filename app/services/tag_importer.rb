@@ -114,8 +114,8 @@ class TagImporter
   end
 
   private def missing_required_attribute_error(attr, row_number)
-    @errors << "Row #{row_number + 1}:
-      #{attr.to_s.humanize.titleize} is required"
+    @errors << "Row #{row_number + 1}: "\
+      "#{attr.to_s.humanize.titleize} is required"
   end
 
   private def record_not_found_error(error_message, row_number)
