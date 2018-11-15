@@ -2,6 +2,7 @@
 
 module Api
   class ParticipantActionsController < ApplicationController
+    skip_power_check
     skip_before_action :authenticate_user!
     skip_before_action :verify_authenticity_token
 
