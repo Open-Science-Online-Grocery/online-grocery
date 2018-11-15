@@ -2,6 +2,7 @@
 
 require 'csv'
 
+# creates a CSV of participant actions for an Experiment
 class ExperimentResultsExporter
   def initialize(experiment)
     @experiment = experiment
@@ -11,7 +12,7 @@ class ExperimentResultsExporter
     CSV.generate(headers: true) do |csv|
       csv << experiment_result_attributes.keys
 
-     result_presenters.each do |result|
+      result_presenters.each do |result|
         csv << generate_csv_row(result)
       end
     end

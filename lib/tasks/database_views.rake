@@ -1,6 +1,6 @@
- # frozen_string_literal: true
+# frozen_string_literal: true
 
- namespace :db do
+namespace :db do
   task create_views: :environment do
     sql_filepaths = Dir.glob('db/views/*.sql')
     sql_filepaths.each do |sql_filepath|

@@ -17,7 +17,7 @@ module Seeds
           subcategory_ids_by_name[subcategory.name] = subcategory.id
         end
 
-        sampled_ids = (2..14534).to_a.sample(100)
+        sampled_ids = (2..14_534).to_a.sample(100)
         csv = Rails.root.join('db', 'seeds', 'base', 'products.csv')
         CSV.foreach(csv, headers: true) do |row|
           next if ENV['SHORT_SEED'] == '1' && !row['id'].to_i.in?(sampled_ids)
