@@ -43,3 +43,5 @@ package-lock.json
 
 public/uploads/**/*
 uploads/
+
+db/schema.rb

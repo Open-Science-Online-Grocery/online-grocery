@@ -25,5 +25,7 @@ module HowesGroceryResearcherPortal
     }
 
     config.action_view.embed_authenticity_token_in_remote_forms = true
+
+    config.active_record.schema_format = :sql
   end
 end
