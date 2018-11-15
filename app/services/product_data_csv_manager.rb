@@ -11,6 +11,7 @@ class ProductDataCsvManager
 
   def self.built_in_category_attributes
     {
+      'Product Id' => :product_id,
       'Product Name' => :product_name,
       'Category' => :category,
       'Subcategory' => :subcategory
@@ -41,12 +42,11 @@ class ProductDataCsvManager
 
   def self.generate_csv_row(product)
     row = []
-    category = Category.find(product.category_id)
-    subcategory = Subcategory.find(product.subcategory_id)
 
+    row << product.id
     row << product.name
-    row << category.name
-    row << subcategory.name
+    row << product.category.name
+    row << product.subcategory.name
     # empty entries for user to input custom categories
     row += Array.new(custom_category_attributes.keys.count)
 

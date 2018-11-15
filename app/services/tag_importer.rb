@@ -63,6 +63,7 @@ class TagImporter
 
   private def validate_tags(row_data, row_number)
     @custom_category_attributes.each_slice(2) do |category, subcategory|
+      break if @errors.any?
       tag_name = row_data[category]
       subtag_name = row_data[subcategory]
 
@@ -72,19 +73,20 @@ class TagImporter
 
   private def create_tags(row_data, row_number)
     @custom_category_attributes.each_slice(2) do |category, subcategory|
+      break if @errors.any?
       tag_name = row_data[category]
       subtag_name = row_data[subcategory]
-      product_name = row_data[:product_name]
+      product_id = row_data[:product_id]
 
-      create_single_tag(tag_name, subtag_name, product_name, row_number)
+      create_single_tag(tag_name, subtag_name, product_id, row_number)
     end
   end
 
-  private def create_single_tag(tag_name, subtag_name, product_name, row_number)
-    return unless tag_name.present? && product_name.present?
+  private def create_single_tag(tag_name, subtag_name, product_id, row_number)
+    return unless tag_name.present? && product_id.present?
     begin
       create_product_tag(
-        product_name: product_name,
+        product_id: product_id,
         tag_name: tag_name,
         subtag_name: subtag_name
       )
@@ -93,8 +95,8 @@ class TagImporter
     end
   end
 
-  private def create_product_tag(product_name:, tag_name:, subtag_name:)
-    product = Product.find_by!(name: product_name)
+  private def create_product_tag(product_id:, tag_name:, subtag_name:)
+    product = Product.find(product_id)
     tag = Tag.find_or_create_by!(name: tag_name)
     subtag = Subtag.find_or_create_by!(name: subtag_name, tag: tag)
     return unless product.present? && tag.present?

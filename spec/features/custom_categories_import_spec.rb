@@ -21,6 +21,7 @@ RSpec.describe 'Importing custom categories for a condition', :feature do
     category_1 = Category.create!(name: 'Category 1')
     subcategory_1 = Subcategory.create!(name: 'Subcategory 1', category: category_1)
     Product.create!(
+      id: 98,
       name: 'Product 1',
       category_id: category_1.id,
       subcategory_id: subcategory_1.id
@@ -29,6 +30,7 @@ RSpec.describe 'Importing custom categories for a condition', :feature do
     category_2 = Category.create!(name: 'Category 2')
     subcategory_2 = Subcategory.create!(name: 'Subcategory 2', category: category_2)
     Product.create!(
+      id: 99,
       name: 'Product 2',
       category_id: category_2.id,
       subcategory_id: subcategory_2.id

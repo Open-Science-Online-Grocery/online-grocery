@@ -20,6 +20,7 @@ RSpec.describe TagImporter do
         category_1 = Category.create!(name: 'Category 1')
         subcategory_1 = Subcategory.create!(name: 'Subcategory 1', category: category_1)
         Product.create!(
+          id: 98,
           name: 'Product 1',
           category_id: category_1.id,
           subcategory_id: subcategory_1.id
@@ -28,6 +29,7 @@ RSpec.describe TagImporter do
         category_2 = Category.create!(name: 'Category 2')
         subcategory_2 = Subcategory.create!(name: 'Subcategory 2', category: category_2)
         Product.create!(
+          id: 99,
           name: 'Product 2',
           category_id: category_2.id,
           subcategory_id: subcategory_2.id
@@ -86,12 +88,12 @@ RSpec.describe TagImporter do
         end
       end
 
-      context 'when an invalid product name is provided' do
-        let(:file_name) { 'custom_categories_invalid_product_name.csv' }
+      context 'when an invalid product id is provided' do
+        let(:file_name) { 'custom_categories_invalid_product_id.csv' }
 
         it 'returns false and adds an error' do
           expect(subject.import).to be_falsey
-          expect(subject.errors).to include('Row 1: Couldn\'t find Product')
+          expect(subject.errors).to include('Row 1: Couldn\'t find Product with \'id\'=99999')
         end
 
         it 'does not create any data' do

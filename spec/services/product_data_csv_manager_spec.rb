@@ -6,6 +6,7 @@ RSpec.describe ProductDataCsvManager do
   describe '.product_data_csv_attributes' do
     it 'returns a combined list of the built-in and custom category attributes' do
       expect(described_class.product_data_csv_attributes).to eql(
+        'Product Id' => :product_id,
         'Product Name' => :product_name,
         'Category' => :category,
         'Subcategory' => :subcategory,
@@ -22,6 +23,7 @@ RSpec.describe ProductDataCsvManager do
   describe '.built_in_category_attributes' do
     it 'returns the built-in category attributes' do
       expect(described_class.built_in_category_attributes).to eql(
+        'Product Id' => :product_id,
         'Product Name' => :product_name,
         'Category' => :category,
         'Subcategory' => :subcategory
@@ -49,12 +51,14 @@ RSpec.describe ProductDataCsvManager do
     let(:subcategory_2) { create :subcategory, name: 'Subcategory 2' }
     let(:product_1) do
       create :product,
+             id: 98,
              name: 'Product 1',
              category_id: category_1.id,
              subcategory_id: subcategory_1.id
     end
     let(:product_2) do
       create :product,
+             id: 99,
              name: 'Product 2',
              category_id: category_2.id,
              subcategory_id: subcategory_2.id
