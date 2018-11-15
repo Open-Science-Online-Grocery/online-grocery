@@ -7,6 +7,7 @@ module Seeds
       Seeds.seed_from(Seeds::Base::Subcategories)
       Seeds.seed_from(Seeds::Base::Products)
       Seeds.seed_from(Seeds::Base::Labels)
+      Seeds.seed_from(Seeds::Base::CartSummaryLabels)
       Seeds.seed_from(Seeds::Base::ProductSortFields)
     end
   end

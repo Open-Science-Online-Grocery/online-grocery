@@ -1,0 +1,114 @@
+<% custom_cart_summary_label = f.object.cart_summary_label.try(:custom?) || CartSummaryLabel.new(built_in: false) %>
+
+<div class="nested-fields" data-cart-summary-label>
+  <div class="sixteen wide field">
+    <div class="ui fluid card">
+      <div class="content">
+        <span class="right floated">
+          <%= link_to_remove_association f do %>
+            <i class="red remove icon"></i>
+          <% end %>
+        </span>
+        <div class="sixteen wide field">
+          <%= f.fields_for :cart_summary_label, custom_cart_summary_label do |cart_summary_label_form| %>
+            <% cart_summary_label = cart_summary_label_form.object %>
+            <% label_type = f.object.label_type %>
+
+            <div class="ui grid">
+              <div class="row">
+                <div class="eight wide column">
+                  <div class="field">
+                    <div class="ui radio checkbox">
+                      <%= f.radio_button :label_type, 'custom', data: { refresh_form: true } %>
+                      <label>Use custom image</label>
+                    </div>
+                    <div class="ui segment nested-fields <%= 'disabled' unless label_type == 'custom' %>">
+                      <%= cart_summary_label_form.hidden_field :built_in %>
+                      <div class="field">
+                        <%= cart_summary_label_form.label :name %>
+                        <%= cart_summary_label_form.text_field :name, disabled: label_type != 'custom' %>
+                      </div>
+                      <% if cart_summary_label_form.object.image? %>
+                        <div class="field">
+                          <label>Current image</label>
+                          <%= link_to(cart_summary_label_form.object.name.presence || 'Unnamed', cart_summary_label_form.object.image_url) %>
+                        </div>
+                        <div class="field">
+                          <%= cart_summary_label_form.label :image, 'Replace image' %>
+                          <%= cart_summary_label_form.file_field :image, data: { refresh_form: true }, disabled: label_type != 'custom' %>
+                          <%= cart_summary_label_form.hidden_field :image_cache %>
+                        </div>
+                      <% else %>
+                        <div class="required field">
+                          <%= cart_summary_label_form.label :image, 'Upload image' %>
+                          <%= cart_summary_label_form.file_field :image, data: { refresh_form: true }, disabled: label_type != 'custom' %>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="eight wide column">
+                  <div class="field">
+                    <div class="ui radio checkbox">
+                      <%= f.radio_button :label_type, 'provided', data: { refresh_form: true } %>
+                      <label>Use provided image</label>
+                    </div>
+
+                    <div class="ui segment nested-fields <%= 'disabled' unless label_type == 'provided' %>">
+                      <div class="field">
+                        <%= f.label :cart_summary_label_id, 'Cart summary label' %>
+                        <%=
+                          f.collection_select(
+                            :cart_summary_label_id,
+                            CartSummaryLabel.built_in,
+                            :id,
+                            :name,
+                            { include_blank: true },
+                            class: 'ui dropdown',
+                            data: { refresh_form: true },
+                            disabled: label_type != 'provided'
+                          )
+                        %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="four wide column">
+                  <div class="ui radio checkbox">
+                    <%= f.radio_button :equation, false, data: { refresh_form: true } %>
+                    <label>Always show this image</label>
+                  </div>
+                </div>
+                <div class="six wide column">
+                  <div class="ui radio checkbox">
+                    <%= f.radio_button :equation, true, data: { refresh_form: true } %>
+                    <label>Show this image only for carts where:</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="twelve wide column">
+                  <div class="ui basic segment <%= 'disabled' unless f.object.equation == 'true' %>">
+                    <div
+                      data-calculator
+                      data-variables="<%= Equation.individual_product_variables.to_json %>"
+                      data-input-name="<%# added by CocoonCallbacks.js %>"
+                      data-tokens="<%= f.object.label_equation_tokens || [] %>"
+                      data-equation-type="label"
+                      data-delay-initialize
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

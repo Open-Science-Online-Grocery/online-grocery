@@ -11,15 +11,23 @@ import 'babel-polyfill';
 import 'semantic-ui-css';
 import jQuery from 'jquery';
 import Initializer from '../Initializer';
+import CocoonCallbacks from '../CocoonCallbacks';
 
 window.jQuery = jQuery;
 window.$ = jQuery;
 
 $(document).ready(() => {
   new Initializer($('body')).initialize();
+  new CocoonCallbacks().initialize();
 });
 
 $(document).on('initialize', (_event, insertedItem) => {
+  const $insertedItem = $(insertedItem);
+  new Initializer($insertedItem).initialize();
+  new CocoonCallbacks().initialize();
+});
+
+$(document).on('cocoon:after-insert', (_event, insertedItem) => {
   const $insertedItem = $(insertedItem);
   new Initializer($insertedItem).initialize();
 });
