@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   include Consul::Controller
   include Concerns::AjaxHelper
 
-  require_power_check
+  require_power_check if: -> { !authentication_controller? }
 
   protect_from_forgery with: :exception
   before_action :authenticate_user!
@@ -65,5 +65,18 @@ class ApplicationController < ActionController::Base
       'update' => 'update',
       'destroy' => 'delete'
     }[params[:action]] || 'process'
+  end
+
+  private def authentication_controller?
+    authentication_controllers = [
+      Devise::SessionsController,
+      Devise::RegistrationsController,
+      Devise::PasswordsController,
+      Devise::ConfirmationsController,
+      Devise::UnlocksController
+    ]
+    authentication_controllers.any? do |authentication_controller|
+      is_a?(authentication_controller)
+    end
   end
 end
