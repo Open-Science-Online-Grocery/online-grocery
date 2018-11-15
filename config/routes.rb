@@ -29,6 +29,9 @@ Rails.application.routes.draw do
       get :checkout
     end
   end
+
+  resources :resource_downloads, only: [:show]
+
   get '/store/thank-you', to: 'stores#thank_you'
 
   root 'experiments#index'

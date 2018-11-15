@@ -36,7 +36,7 @@
     <div class="field" data-current-csv>
       <label>Current file</label>
       <% if condition.current_tag_csv_file %>
-        <%= link_to condition.current_tag_csv_file.to_s, condition.current_tag_csv_file.url %>
+        <%= condition.current_tag_csv_file_presenter.download_link %>
         <div class="ui checkbox">
           <%=
             f.check_box(
@@ -110,12 +110,11 @@
         </thead>
 
         <tbody>
-          <% csv_files = condition.historical_tag_csv_files %>
-          <% if csv_files.any? %>
-            <% csv_files.each do |file| %>
+          <% if condition.historical_tag_csv_files.any? %>
+            <% condition.historical_tag_csv_files_presenters.each do |file| %>
               <tr>
                 <td>
-                  <%= link_to file.to_s, file.url %>
+                  <%= file.download_link %>
                 </td>
                 <td>
                   <%= file.created_at.to_date %>
