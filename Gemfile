@@ -5,6 +5,7 @@ ruby '2.4.2'
 
 gem 'bootsnap', require: false
 gem 'carrierwave'
+gem 'cocoon'
 gem 'dentaku'
 gem 'devise'
 gem 'jbuilder'

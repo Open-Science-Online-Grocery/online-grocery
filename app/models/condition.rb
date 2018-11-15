@@ -4,7 +4,7 @@
 class Condition < ApplicationRecord
   include Rails.application.routes.url_helpers
 
-  attr_writer :label_type, :sort_type
+  attr_writer :label_type, :show_food_count, :sort_type
 
   validates :name, :uuid, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
@@ -22,8 +22,13 @@ class Condition < ApplicationRecord
   has_many :product_tags, dependent: :destroy
   has_many :tags, through: :product_tags
   has_many :subtags, through: :product_tags
+  has_many :condition_cart_summary_labels, dependent: :destroy
+  has_many :cart_summary_labels, through: :condition_cart_summary_labels
 
-  accepts_nested_attributes_for :label, :product_sort_fields, :tag_csv_files
+  accepts_nested_attributes_for :label, :product_sort_fields
+  accepts_nested_attributes_for :condition_cart_summary_labels,
+                                :tag_csv_files,
+                                allow_destroy: true
 
   def self.label_types
     OpenStruct.new(none: 'none', provided: 'provided', custom: 'custom')
@@ -78,5 +83,10 @@ class Condition < ApplicationRecord
     tag_csv_files
       .order(created_at: :desc)
       .reject(&:active)
+  end
+
+  def show_food_count
+    return food_count_format.present? if @show_food_count.nil?
+    @show_food_count
   end
 end

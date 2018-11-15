@@ -83,6 +83,7 @@ GEM
     chromedriver-helper (2.0.1)
       archive-zip (~> 0.10)
       nokogiri (~> 1.8)
+    cocoon (1.2.11)
     coderay (1.1.2)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
@@ -297,6 +298,7 @@ DEPENDENCIES
   capybara-screenshot
   carrierwave
   chromedriver-helper
+  cocoon
   database_cleaner
   dentaku
   devise

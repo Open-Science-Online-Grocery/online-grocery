@@ -5,20 +5,49 @@ require 'rails_helper'
 RSpec.describe 'Sorting products in grocery store', :feature do
   let!(:category) { create(:category) }
   let!(:subcategory) { create(:subcategory, category: category, display_order: 1) }
-  let(:sort_field) { create(:product_sort_field, name: 'calories') }
+  let(:sort_field_1) { create(:product_sort_field, name: 'calories') }
+  let(:sort_field_2) { create(:product_sort_field, name: 'carbs', description: 'Carbs') }
   let(:user) { create(:user) }
   let(:experiment) { create(:experiment, user: user) }
   let(:condition) do
     create(
       :condition,
       experiment: experiment,
-      default_sort_field: sort_field,
-      default_sort_order: 'desc'
+      default_sort_field: sort_field_1,
+      default_sort_order: 'desc',
+      product_sort_field_ids: [sort_field_2.id]
     )
   end
-  let!(:product_1) { create(:product, calories: 200, name: 'Popcorn') }
-  let!(:product_2) { create(:product, calories: 300, name: 'Pop Tarts') }
-  let!(:product_3) { create(:product, calories: 100, name: 'Soda Pop') }
+  let!(:product_1) do
+    create(
+      :product,
+      calories: 200,
+      name: 'Popcorn',
+      carbs: 60,
+      category: category,
+      subcategory: subcategory
+    )
+  end
+  let!(:product_2) do
+    create(
+      :product,
+      calories: 300,
+      name: 'Pop Tarts',
+      carbs: 50,
+      category: category,
+      subcategory: subcategory
+    )
+  end
+  let!(:product_3) do
+    create(
+      :product,
+      calories: 100,
+      name: 'Soda Pop',
+      carbs: 40,
+      category: category,
+      subcategory: subcategory
+    )
+  end
 
   before do
     sign_in user
@@ -34,8 +63,20 @@ RSpec.describe 'Sorting products in grocery store', :feature do
     force_click('button[type="submit"]')
 
     expect(page).to have_content 'Search Results'
+
+    # check for default sorting per condition
     expect(product_2.name).to appear_before(product_1.name)
-    expect(product_2.name).to appear_before(product_3.name)
     expect(product_1.name).to appear_before(product_3.name)
+
+    # test manual sorting by participant
+    force_click_on('Carbs')
+    expect(page).to have_content('▲')
+    expect(product_3.name).to appear_before(product_2.name)
+    expect(product_2.name).to appear_before(product_1.name)
+
+    force_click_on('Carbs')
+    expect(page).to have_content('▼')
+    expect(product_1.name).to appear_before(product_2.name)
+    expect(product_2.name).to appear_before(product_3.name)
   end
 end

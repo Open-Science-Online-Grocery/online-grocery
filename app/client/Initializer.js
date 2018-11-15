@@ -80,7 +80,7 @@ export default class Initializer {
   }
 
   initializeCalculators() {
-    this.$scope.find('[data-calculator]').each((index, element) => (
+    this.$scope.find('[data-calculator]:not([data-delay-initialize])').each((index, element) => (
       calculator(element)
     ));
   }

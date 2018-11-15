@@ -104,8 +104,26 @@ class ConditionsController < ApplicationController
       :nutrition_styles,
       :csv_file,
       :filter_by_custom_categories,
+      :show_food_count,
+      :show_price_total,
+      :food_count_format,
       product_sort_field_ids: [],
-      label_attributes: %i[id image image_cache name built_in]
+      label_attributes: %i[id image image_cache name built_in],
+      condition_cart_summary_labels_attributes: [
+        :id,
+        :_destroy,
+        :cart_summary_label_id,
+        :label_type,
+        :label_equation_tokens,
+        :equation,
+        cart_summary_label_attributes: %i[
+          id
+          image
+          image_cache
+          name
+          built_in
+        ]
+      ]
     )
   end
   # rubocop:enable Metrics/MethodLength
