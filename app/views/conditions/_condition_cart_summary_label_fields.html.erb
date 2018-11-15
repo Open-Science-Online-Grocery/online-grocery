@@ -20,7 +20,7 @@
                   <div class="field">
                     <div class="ui radio checkbox">
                       <%= f.radio_button :label_type, 'custom', data: { refresh_form: true } %>
-                      <label>Use custom label</label>
+                      <label>Use custom image</label>
                     </div>
                     <div class="ui segment nested-fields <%= 'disabled' unless label_type == 'custom' %>">
                       <%= cart_summary_label_form.hidden_field :built_in %>
@@ -52,7 +52,7 @@
                   <div class="field">
                     <div class="ui radio checkbox">
                       <%= f.radio_button :label_type, 'provided', data: { refresh_form: true } %>
-                      <label>Use provided label</label>
+                      <label>Use provided image</label>
                     </div>
 
                     <div class="ui segment nested-fields <%= 'disabled' unless label_type == 'provided' %>">

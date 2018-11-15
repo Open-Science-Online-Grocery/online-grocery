@@ -3,7 +3,11 @@ import calculator from './calculator/src/index';
 export default class CocoonCallbacks {
   initialize() {
     this.addEquationAttributeEventListener('[data-cart-summary-labels]', 'cocoon:after-insert');
-    this.addCartSummaryLabelEquationAttribute(null, $('[data-cart-summary-label]'));
+    $('[data-cart-summary-label]').each(
+      (_index, renderedLabel) => {
+        this.addCartSummaryLabelEquationAttribute(null, renderedLabel);
+      }
+    );
   }
 
   addEquationAttributeEventListener(targetIdentifier, addEvent) {
@@ -17,6 +21,7 @@ export default class CocoonCallbacks {
   // calculator to ensure the added attribute gets into React props
   addCartSummaryLabelEquationAttribute(_event, insertedItem) {
     const $insertedItem = $(insertedItem);
+    if ($insertedItem.length === 0) return;
     const cocoonId = this.extractCocoonId($insertedItem.find('input').first());
     const inputName = `condition[condition_cart_summary_labels_attributes][${cocoonId}][label_equation_tokens]`;
     $insertedItem.find('[data-calculator]').attr('data-input-name', inputName);

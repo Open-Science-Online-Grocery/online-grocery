@@ -23,7 +23,7 @@ class Condition < ApplicationRecord
 
   accepts_nested_attributes_for :label, :product_sort_fields
   accepts_nested_attributes_for :condition_cart_summary_labels,
-                                :cart_summary_labels, allow_destroy: true
+                                allow_destroy: true
 
   def self.label_types
     OpenStruct.new(none: 'none', provided: 'provided', custom: 'custom')

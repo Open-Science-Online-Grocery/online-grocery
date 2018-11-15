@@ -25,22 +25,26 @@ RSpec.describe 'Configuring the cart summary', :feature do
     force_click(first('label', text: 'Show as percent ("40% of products")'))
 
     within('.tab.segment[data-tab="cart-summary"]') do
-      expect(page).to have_no_content 'Use custom label'
+      expect(page).to have_no_content 'Use custom image'
     end
-    force_click_on('Add another cart summary label')
+    force_click_on('Add another cart summary image')
+
+    # Invalid save
+    force_click_on 'Save'
+    expect(page).to have_content 'A cart summary image must be uploaded or selected for all conditional images'
 
     within(first('[data-cart-summary-label]')) do
-      expect(first('label', text: 'Use custom label').sibling('input', visible: false)).to be_checked
-      expect(first('label', text: 'Use provided label').sibling('input', visible: false)).not_to be_checked
+      expect(first('label', text: 'Use custom image').sibling('input', visible: false)).to be_checked
+      expect(first('label', text: 'Use provided image').sibling('input', visible: false)).not_to be_checked
     end
     expect_form_refresh do
       within(first('[data-cart-summary-label]')) do
-        force_click(first('label', text: 'Use provided label'))
+        force_click(first('label', text: 'Use provided image'))
       end
     end
     within(first('[data-cart-summary-label]')) do
-      expect(first('label', text: 'Use custom label').sibling('input', visible: false)).not_to be_checked
-      expect(first('label', text: 'Use provided label').sibling('input', visible: false)).to be_checked
+      expect(first('label', text: 'Use custom image').sibling('input', visible: false)).not_to be_checked
+      expect(first('label', text: 'Use provided image').sibling('input', visible: false)).to be_checked
     end
 
     # TODO: Add `expect_form_refresh` here when preview is working
@@ -52,8 +56,10 @@ RSpec.describe 'Configuring the cart summary', :feature do
       end
     end
 
+    within('.tab.segment[data-tab="cart-summary"]') do
+      expect(page).to have_selector('.ui.segment:not(.disabled) [data-calculator]')
+    end
     within(first('[data-cart-summary-label]')) do
-      expect(page).to have_content 'Test Calculation'
       within('div.calculator') do
         force_click find('.ui.selection.dropdown')
         force_click find('div.item', text: 'Calories per serving', exact_text: true)
@@ -79,7 +85,7 @@ RSpec.describe 'Configuring the cart summary', :feature do
 
     force_click(find('.item[data-tab="cart-summary"]'))
     within(first('[data-cart-summary-label]')) do
-      expect(first('label', text: 'Use provided label').sibling('input', visible: false)).to be_checked
+      expect(first('label', text: 'Use provided image').sibling('input', visible: false)).to be_checked
       expect(page).to have_selector('.item.active', text: 'Organic')
 
       within('.equation-editor') do

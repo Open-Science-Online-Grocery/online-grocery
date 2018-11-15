@@ -10,8 +10,11 @@ class ConditionCartSummaryLabel < ApplicationRecord
   belongs_to :condition
   belongs_to :cart_summary_label
 
-  # TODO: Add validations for rejecting nested attributes
-  accepts_nested_attributes_for :cart_summary_label
+  accepts_nested_attributes_for :cart_summary_label, allow_destroy: true
+
+  def self.label_types
+    OpenStruct.new(provided: 'provided', custom: 'custom')
+  end
 
   def label_type
     return @label_type if @label_type
@@ -20,7 +23,7 @@ class ConditionCartSummaryLabel < ApplicationRecord
 
   def equation
     return @equation if @equation
-    any_tokens = label_equation_tokens == '[]' || label_equation_tokens.nil?
-    any_tokens ? 'false' : 'true'
+    no_tokens = label_equation_tokens == '[]' || label_equation_tokens.nil?
+    no_tokens ? 'false' : 'true'
   end
 end
