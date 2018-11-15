@@ -66,17 +66,4 @@ class ApplicationController < ActionController::Base
       'destroy' => 'delete'
     }[params[:action]] || 'process'
   end
-
-  private def authentication_controller?
-    authentication_controllers = [
-      Devise::SessionsController,
-      Devise::RegistrationsController,
-      Devise::PasswordsController,
-      Devise::ConfirmationsController,
-      Devise::UnlocksController
-    ]
-    authentication_controllers.any? do |authentication_controller|
-      is_a?(authentication_controller)
-    end
-  end
 end
