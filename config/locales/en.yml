@@ -34,3 +34,6 @@ en:
     attributes:
       condition:
         name: 'Condition name'
+  time:
+    formats:
+      default: '%-m/%-d/%Y %-l:%M %p %Z'

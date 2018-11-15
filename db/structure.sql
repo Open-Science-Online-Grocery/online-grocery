@@ -76,6 +76,7 @@ DROP TABLE IF EXISTS `experiment_results`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `experiment_results` AS SELECT 
+ 1 AS `experiment_id`,
  1 AS `experiment_name`,
  1 AS `condition_name`,
  1 AS `session_identifier`,
@@ -237,7 +238,7 @@ CREATE TABLE `users` (
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `experiment_results` AS select `experiments`.`name` AS `experiment_name`,`conditions`.`name` AS `condition_name`,`participant_actions`.`session_identifier` AS `session_identifier`,`participant_actions`.`action_type` AS `action_type`,`participant_actions`.`product_name` AS `product_name`,`participant_actions`.`quantity` AS `quantity`,`participant_actions`.`created_at` AS `created_at` from ((`experiments` join `conditions` on((`conditions`.`experiment_id` = `experiments`.`id`))) join `participant_actions` on((`participant_actions`.`condition_id` = `conditions`.`id`))) */;
+/*!50001 VIEW `experiment_results` AS select `experiments`.`id` AS `experiment_id`,`experiments`.`name` AS `experiment_name`,`conditions`.`name` AS `condition_name`,`participant_actions`.`session_identifier` AS `session_identifier`,`participant_actions`.`action_type` AS `action_type`,`participant_actions`.`product_name` AS `product_name`,`participant_actions`.`quantity` AS `quantity`,`participant_actions`.`created_at` AS `created_at` from ((`experiments` join `conditions` on((`conditions`.`experiment_id` = `experiments`.`id`))) join `participant_actions` on((`participant_actions`.`condition_id` = `conditions`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;

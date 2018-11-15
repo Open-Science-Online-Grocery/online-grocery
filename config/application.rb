@@ -27,5 +27,8 @@ module HowesGroceryResearcherPortal
     config.action_view.embed_authenticity_token_in_remote_forms = true
 
     config.active_record.schema_format = :sql
+
+    config.time_zone = 'Eastern Time (US & Canada)'
+    config.active_record.default_timezone = :local
   end
 end

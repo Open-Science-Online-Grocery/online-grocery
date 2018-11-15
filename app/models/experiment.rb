@@ -7,6 +7,7 @@ class Experiment < ApplicationRecord
   validates :user, presence: true
 
   belongs_to :user
+  has_many :experiment_results
 
   has_many :conditions, dependent: :destroy
 

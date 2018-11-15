@@ -1,5 +1,6 @@
 CREATE OR REPLACE VIEW experiment_results AS
-SELECT experiments.name AS experiment_name,
+SELECT experiments.id AS experiment_id,
+  experiments.name AS experiment_name,
   conditions.name AS condition_name,
   participant_actions.session_identifier AS session_identifier,
   participant_actions.action_type AS action_type,
