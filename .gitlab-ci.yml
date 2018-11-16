@@ -32,6 +32,7 @@ ci:
   script:
     - grep -q '2\.4\.2' .ruby-version # If the Ruby version used by the project changes then a new Docker image needs to be created and used with the correct version.
     - bundle install -j $(nproc) --path vendor/ruby --without development
+    - NODE_ENV=development yarn
     - bundle exec rake db:create
     - bundle exec rake db:migrate
     - bundle exec rake ci
