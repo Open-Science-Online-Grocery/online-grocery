@@ -41,6 +41,16 @@
           - mysql
           - mysql-devel
       become: true
+    - block:
+      - name: Ansible create file with content example
+        copy:
+          dest: "/var/www/apps/howes_grocery/shared/config/master.key"
+          content: "{{ vault_master_key }}"
+    - block:
+      - name: add s3 bucket to env
+        lineinfile:
+          path: /home/deployer/.bash_profile
+          line: 'export AWS_S3_BUCKET="com-howes-grocery-staging"'
 
 
   roles:
