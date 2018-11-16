@@ -1,0 +1,14 @@
+---
+- block:
+  - name: Install certbot-apache
+    package:
+      name: certbot-apache
+      state: present
+  - name: LetsEncrypt renewal
+    cron:
+      cron_file: letsencrypt-renewal
+      user: root
+      minute: 7
+      hour: 22
+      job: 'certbot renew --deploy-hook "systemctl reload httpd"'
+  become: True
