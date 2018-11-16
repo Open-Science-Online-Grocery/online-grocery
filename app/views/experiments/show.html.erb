@@ -2,7 +2,7 @@
 
 <div class="page-heading">
   <h2><%= @experiment.name %></h2>
-  <div class="buttons">
+  <div class="heading-buttons">
     <%= link_to edit_experiment_path(@experiment), class: 'ui button' do %>
       <i class="pencil icon"></i> Edit Experiment
     <% end %>
@@ -18,7 +18,7 @@
 <div class="page-sub-heading">
   <h3>Conditions</h3>
 
-  <div class="buttons">
+  <div class="heading-buttons">
     <%= link_to new_experiment_condition_path(@experiment), class: 'ui primary button' do %>
       <i class="add icon"></i> Add Condition
     <% end %>

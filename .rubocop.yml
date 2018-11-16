@@ -54,6 +54,7 @@ Metrics/BlockLength:
 Metrics/ClassLength:
   Exclude:
     - 'app/controllers/conditions_controller.rb'
+    - 'app/services/condition_manager.rb'
     - '**/db/migrate/**/*'
     - '**/db/seeds/**/*'
 Metrics/CyclomaticComplexity:

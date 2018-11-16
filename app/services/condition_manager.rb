@@ -8,12 +8,15 @@ class ConditionManager
   def initialize(condition, params)
     @condition = condition
     @params = params
+    @csv_file = nil
     @errors = []
   end
 
   def assign_params
     add_uuid_to_new_record
     clear_unselected_label_fields
+    deactivate_current_csv
+    save_csv_file
     show_food_count_fields
     clear_cart_summary_label_fields
     clear_unselected_sort_fields
@@ -21,9 +24,14 @@ class ConditionManager
   end
 
   def update_condition
-    assign_params
-    validate_cart_summary_label_params
-    @errors += @condition.errors.full_messages unless @condition.save
+    ActiveRecord::Base.transaction do
+      assign_params
+      destroy_deactivated_tags
+      import_tags
+      validate_cart_summary_label_params
+      @errors += @condition.errors.full_messages unless @condition.save
+      raise ActiveRecord::Rollback if @errors.any?
+    end
     @errors.none?
   end
 
@@ -52,6 +60,39 @@ class ConditionManager
     if @params[:sort_type] != Condition.sort_types.calculation
       @params[:sort_equation_tokens] = nil
     end
+  end
+
+  private def deactivate_current_csv
+    # coerce to boolean, false is converted to null by ajax form refresh
+    active = !@params.delete(:active_tag_csv).nil?
+    @condition.active_tag_csv = active
+  end
+
+  private def destroy_deactivated_tags
+    # coerce to boolean, false is converted to null by ajax form refresh
+    active = !@params.delete(:active_tag_csv).nil?
+    current_csv_file = @condition.current_tag_csv_file
+    if current_csv_file
+      current_csv_file.update!(active: active)
+      @condition.product_tags.destroy_all unless active
+    end
+  end
+
+  private def save_csv_file
+    @csv_file = @params[:csv_file]
+    return unless @csv_file
+    @condition.tag_csv_files.find_each { |file| file.active = false }
+    @condition.tag_csv_files.build(csv_file: @csv_file)
+    @params.delete(:csv_file)
+  end
+
+  private def import_tags
+    # users can only upload one file at a time
+    return unless @csv_file.present?
+
+    tag_importer = TagImporter.new(file: @csv_file, condition: @condition)
+    @condition.product_tags.destroy_all
+    @errors += tag_importer.errors unless tag_importer.import
   end
 
   private def clear_cart_summary_label_fields

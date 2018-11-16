@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 2018_11_12_183838) do
     t.text "sort_equation_tokens"
     t.boolean "show_price_total", default: false, null: false
     t.string "food_count_format"
+    t.boolean "filter_by_custom_categories", default: false, null: false
     t.index ["default_sort_field_id"], name: "index_conditions_on_default_sort_field_id"
     t.index ["experiment_id"], name: "index_conditions_on_experiment_id"
     t.index ["label_id"], name: "index_conditions_on_label_id"
@@ -100,6 +101,19 @@ ActiveRecord::Schema.define(version: 2018_11_12_183838) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "product_tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "tag_id", null: false
+    t.bigint "subtag_id"
+    t.bigint "condition_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["condition_id"], name: "index_product_tags_on_condition_id"
+    t.index ["product_id"], name: "index_product_tags_on_product_id"
+    t.index ["subtag_id"], name: "index_product_tags_on_subtag_id"
+    t.index ["tag_id"], name: "index_product_tags_on_tag_id"
+  end
+
   create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "size"
@@ -135,6 +149,29 @@ ActiveRecord::Schema.define(version: 2018_11_12_183838) do
   create_table "subcategories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "category_id"
     t.integer "display_order"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "subtags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "tag_id", null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_subtags_on_tag_id"
+  end
+
+  create_table "tag_csv_files", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "csv_file"
+    t.bigint "condition_id"
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["condition_id"], name: "index_tag_csv_files_on_condition_id"
+  end
+
+  create_table "tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
