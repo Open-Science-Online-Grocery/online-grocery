@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
 # frozen_string_literal: true
 
->>>>>>> master
 class CreateExperiments < ActiveRecord::Migration[5.2]
   def change
     create_table :experiments do |t|
