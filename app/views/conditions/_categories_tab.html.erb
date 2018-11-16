@@ -35,12 +35,12 @@
   <div class="ui basic segment two fields">
     <div class="field" data-current-csv>
       <label>Current file</label>
-      <% if condition.current_tag_csv_file %>
+      <% if condition.active_tag_csv %>
         <%= condition.current_tag_csv_file_presenter.download_link %>
         <div class="ui checkbox">
           <%=
             f.check_box(
-              :current_csv_file_active,
+              :active_tag_csv,
               value: true,
               data: { refresh_form: true }
             )
@@ -76,15 +76,15 @@
         </thead>
 
         <tbody>
-          <% product_tags = condition.product_tags %>
-          <% if product_tags.any? %>
-            <% product_tags.each do |product_tag| %>
+          <% unique_tag_combinations = condition.unique_tag_combinations %>
+          <% if unique_tag_combinations.any? %>
+            <% unique_tag_combinations.each do |tag_combination| %>
               <tr>
                 <td>
-                  <%= product_tag.tag %>
+                  <%= tag_combination[0] %><%# tag %>
                 </td>
                 <td>
-                  <%= product_tag.subtag %>
+                  <%= tag_combination[1] %><%# subtag %>
                 </td>
               </tr>
             <% end %>

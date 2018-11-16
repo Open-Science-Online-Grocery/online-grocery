@@ -22,10 +22,6 @@ class ConditionPresenter < SimpleDelegator
     ]
   end
 
-  def current_csv_file_active
-    condition.current_tag_csv_file.present?
-  end
-
   def current_tag_csv_file_presenter
     ResourcePresenter.new(current_tag_csv_file)
   end
@@ -34,5 +30,14 @@ class ConditionPresenter < SimpleDelegator
     historical_tag_csv_files.map do |tag_csv_file|
       ResourcePresenter.new(tag_csv_file)
     end
+  end
+
+  # Returns an array of all the unique Tag/Subtag combinations
+  # present on a condition
+  def unique_tag_combinations
+    tag_combinations = product_tags.map do |product_tag|
+      [product_tag.tag, product_tag.subtag]
+    end
+    tag_combinations.uniq
   end
 end

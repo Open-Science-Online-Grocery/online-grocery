@@ -4,7 +4,7 @@
 class Condition < ApplicationRecord
   include Rails.application.routes.url_helpers
 
-  attr_writer :label_type, :show_food_count, :sort_type
+  attr_writer :label_type, :show_food_count, :sort_type, :active_tag_csv
 
   validates :name, :uuid, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
@@ -88,5 +88,10 @@ class Condition < ApplicationRecord
   def show_food_count
     return food_count_format.present? if @show_food_count.nil?
     @show_food_count
+  end
+
+  def active_tag_csv
+    return @active_tag_csv unless @active_tag_csv.nil?
+    current_tag_csv_file.present?
   end
 end

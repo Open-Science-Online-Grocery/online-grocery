@@ -15,6 +15,7 @@ class ConditionManager
   def assign_params
     add_uuid_to_new_record
     clear_unselected_label_fields
+    deactivate_current_csv
     save_csv_file
     show_food_count_fields
     clear_cart_summary_label_fields
@@ -25,7 +26,7 @@ class ConditionManager
   def update_condition
     ActiveRecord::Base.transaction do
       assign_params
-      deactivate_current_csv
+      destroy_deactivated_tags
       import_tags
       validate_cart_summary_label_params
       @errors += @condition.errors.full_messages unless @condition.save
@@ -63,7 +64,13 @@ class ConditionManager
 
   private def deactivate_current_csv
     # coerce to boolean, false is converted to null by ajax form refresh
-    active = !@params.delete(:current_csv_file_active).nil?
+    active = !@params.delete(:active_tag_csv).nil?
+    @condition.active_tag_csv = active
+  end
+
+  private def destroy_deactivated_tags
+    # coerce to boolean, false is converted to null by ajax form refresh
+    active = !@params.delete(:active_tag_csv).nil?
     current_csv_file = @condition.current_tag_csv_file
     if current_csv_file
       current_csv_file.update!(active: active)
@@ -85,8 +92,7 @@ class ConditionManager
 
     tag_importer = TagImporter.new(file: @csv_file, condition: @condition)
     @condition.product_tags.destroy_all
-    raise ActiveRecord::Rollback unless tag_importer.import
-    @errors += tag_importer.errors
+    @errors += tag_importer.errors unless tag_importer.import
   end
 
   private def clear_cart_summary_label_fields

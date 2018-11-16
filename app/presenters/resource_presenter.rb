@@ -11,8 +11,7 @@ class ResourcePresenter < SimpleDelegator
 
   def download_link(size = 'large')
     link_to(download_path) do
-      content_tag(:i, '', class: "#{size} download icon") +
-        "Download #{name}"
+      content_tag(:i, '', class: "#{size} download icon") + name
     end
   end
 

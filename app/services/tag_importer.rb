@@ -22,6 +22,7 @@ class TagImporter
   def import
     validate_file_type
     create_data_from_import if @errors.blank?
+    @errors.uniq!
     @errors.blank?
   end
 
@@ -63,7 +64,6 @@ class TagImporter
 
   private def validate_tags(row_data, row_number)
     @custom_category_attributes.each_slice(2) do |category, subcategory|
-      break if @errors.any?
       tag_name = row_data[category]
       subtag_name = row_data[subcategory]
 
@@ -73,7 +73,6 @@ class TagImporter
 
   private def create_tags(row_data, row_number)
     @custom_category_attributes.each_slice(2) do |category, subcategory|
-      break if @errors.any?
       tag_name = row_data[category]
       subtag_name = row_data[subcategory]
       product_id = row_data[:product_id]
@@ -102,8 +101,8 @@ class TagImporter
     return unless product.present? && tag.present?
     @condition.product_tags.create!(
       product: product,
-      tag: tag,
-      subtag: subtag
+      tag_id: tag.id,
+      subtag_id: subtag.id
     )
   end
 

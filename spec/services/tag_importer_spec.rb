@@ -103,6 +103,22 @@ RSpec.describe TagImporter do
         end
       end
 
+      context 'when there is a validation error on multiple rows' do
+        let(:file_name) { 'custom_categories_multi_row_invalid_product_id.csv' }
+
+        it 'returns false and adds an error for each incorrect row' do
+          expect(subject.import).to be_falsey
+          expect(subject.errors).to include('Row 1: Couldn\'t find Product with \'id\'=99999')
+          expect(subject.errors).to include('Row 2: Couldn\'t find Product with \'id\'=88888')
+        end
+
+        it 'does not create any data' do
+          expect { subject.import }.to change { Tag.count }.by(0)
+            .and change { Subtag.count }.by(0)
+            .and change { ProductTag.count }.by(0)
+        end
+      end
+
       context 'when the data is valid' do
         let(:file_name) { 'custom_categories_valid.csv' }
 
