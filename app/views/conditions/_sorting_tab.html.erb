@@ -1,4 +1,84 @@
 <div class="ui bottom attached tab segment" data-tab="sorting">
-  <%= form_for @condition, html: { class: "ui form" } do |form| %>
-  <% end %>
+  <div class="ui grid">
+    <div class="eight wide column">
+      <div class="grouped fields">
+        <label>By default, sort products by:</label>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <%= f.radio_button :sort_type, Condition.sort_types.none, data: { refresh_form: true } %>
+            <label>System default (product ID number)</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <%= f.radio_button :sort_type, 'field', data: { refresh_form: true } %>
+            <label>A specified field</label>
+          </div>
+          <div class="ui segment nested-fields <%= 'disabled' unless condition.sort_type == Condition.sort_types.field %>">
+            <div class="equal width fields">
+              <div class="field">
+                <%= f.label :default_sort_field_id, 'Field' %>
+                <%=
+                  f.collection_select(
+                    :default_sort_field_id,
+                    ProductSortField.all,
+                    :id,
+                    :description,
+                    { include_blank: true },
+                    class: 'ui dropdown'
+                  )
+                %>
+              </div>
+              <div class="field">
+                <%= f.label :default_sort_order, 'Order' %>
+                <%=
+                  f.select(
+                    :default_sort_order,
+                    [['Ascending', 'asc'], ['Descending', 'desc']],
+                    {},
+                    class: 'ui dropdown'
+                  )
+                %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="ui radio checkbox">
+            <%= f.radio_button :sort_type, 'calculation', data: { refresh_form: true } %>
+            <label>The following calculation</label>
+          </div>
+        </div>
+      </div>
+      <div class="ui segment nested-calculator <%= 'disabled' unless condition.sort_type == Condition.sort_types.calculation %>">
+        <div class="ten wide column">
+          <div
+            data-calculator
+            data-variables="<%= Equation.individual_product_variables.to_json %>"
+            data-input-name="condition[sort_equation_tokens]"
+            data-tokens="<%= condition.sort_equation_tokens || [] %>"
+            data-equation-type="<%= Equation.types.sort %>"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="eight wide column">
+      <div class="field">
+        <%= f.label :product_sort_field_ids, 'Allow participants to sort products by:' %>
+        <%=
+          f.collection_select(
+            :product_sort_field_ids,
+            ProductSortField.all,
+            :id,
+            :description,
+            {},
+            class: 'ui dropdown',
+            multiple: true
+          )
+        %>
+      </div>
+    </div>
+  </div>
 </div>

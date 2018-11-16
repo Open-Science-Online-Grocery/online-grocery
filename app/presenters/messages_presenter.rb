@@ -71,6 +71,6 @@ class MessagesPresenter
   # checking this before displaying because the Devise gem passes
   # unexpected flash keys that should not be displayed
   private def expected_keys
-    %w(success alert notice info warning error)
+    %w[success alert notice info warning error]
   end
 end

@@ -1,5 +1,6 @@
 const { environment } = require('@rails/webpacker');
 const webpack = require('webpack');
+const customConfig = require('./custom');
 
 // resolve-url-loader must be used before sass-loader
 environment.loaders.get('sass').use.splice(-1, 0, {
@@ -18,6 +19,8 @@ environment.plugins.prepend(
     jquery: 'jquery'
   })
 );
+
+environment.config.merge(customConfig);
 
 const config = environment.toWebpackConfig();
 

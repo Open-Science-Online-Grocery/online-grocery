@@ -1,0 +1,13 @@
+<%= form_for experiment, html: { class: "ui form" }, data: { form_validation: true } do |f| %>
+  <div class="required field">
+    <%= f.label :name %>
+    <%= f.text_field :name, data: { validation: 'empty|maxLength[255]' } %>
+  </div>
+
+  <div class="button-wrapper right">
+    <button type="submit" class="ui positive button">
+      <i class="check icon"></i>
+      Save
+    </button>
+  </div>
+<% end %>

@@ -1,0 +1,27 @@
+.ui.menu.navigation {
+  background-color: $dark-theme-color;
+  border-radius: 0;
+  border: 0;
+  font-family: 'Open Sans', sans-serif;
+  box-shadow: none;
+  padding: 0.5rem;
+
+  .item:hover {
+    background-color: $dark-theme-color;
+  }
+
+  .logo, .logo:hover {
+    background-image: image-url("logo_white.png");
+    background-repeat: no-repeat;
+    background-size: auto 107%;
+    padding: 0 1rem 0 15rem;
+  }
+
+  .item, .item:hover {
+    color: white;
+  }
+
+  .navigation-separator {
+    margin-left: auto;
+  }
+}

@@ -1,0 +1,15 @@
+.right.aligned {
+  text-align: right;
+}
+
+.ui.divider {
+  &.tall {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  &.short {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+}

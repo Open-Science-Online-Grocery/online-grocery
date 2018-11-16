@@ -1,0 +1,13 @@
+.ui.breadcrumbs {
+  font-size: 0.9rem;
+  margin-top: -0.3rem;
+  margin-bottom: 1.5rem;
+
+  a {
+    cursor: pointer;
+  }
+}
+
+.flash:not(:empty) + .ui.breadcrumbs {
+  margin-top: 0;
+}

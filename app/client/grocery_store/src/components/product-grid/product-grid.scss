@@ -1,0 +1,11 @@
+@import "../../base/base";
+.product-grid-item {
+  display: inline-block;
+  width: 25%;
+  @include small-only {
+    width: 100%;
+  }
+  @include medium-only {
+    width: 33.3%;
+  }
+}

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user!
@@ -34,9 +36,9 @@ class ApplicationController < ActionController::Base
 
   private def humanized_action
     {
-      create: 'add',
-      update: 'update',
-      destroy: 'delete'
-    }[params[:action].to_sym] || 'process'
+      'create' => 'add',
+      'update' => 'update',
+      'destroy' => 'delete'
+    }[params[:action]] || 'process'
   end
 end

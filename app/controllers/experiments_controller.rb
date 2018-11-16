@@ -1,19 +1,16 @@
 # frozen_string_literal: true
 
 class ExperimentsController < ApplicationController
-  before_action :set_experiment, only: %i(
-    new_condition
-    create_condition
+  before_action :set_experiment, only: %i[
     show
+    edit
     update
     destroy
     download_data
-  )
-
-  before_action :set_breadcrumbs, only: %i(new_condition create_condition)
+  ]
 
   def index
-    @experiments = Experiment.for_user(current_user).order('created_at desc')
+    @experiments = Experiment.for_user(current_user).order(created_at: :desc)
   end
 
   def new
@@ -37,7 +34,18 @@ class ExperimentsController < ApplicationController
     @conditions = @experiment.conditions
   end
 
+  def edit
+    @resource_name = "Experiment: #{@experiment.name}"
+  end
+
   def update
+    if @experiment.update(experiment_params)
+      flash[:success] = 'Experiment successfully updated'
+      redirect_to @experiment
+    else
+      set_error_messages(@experiment)
+      render :edit
+    end
   end
 
   def destroy
@@ -50,33 +58,8 @@ class ExperimentsController < ApplicationController
   end
 
   def download_data
+    # TODO: implement
     redirect_to @experiment
-  end
-
-  def new_condition
-    @condition = Condition.new
-    @resource_name = 'Add Condition'
-  end
-
-  def create_condition
-    @condition = @experiment.conditions.build(condition_params)
-    if @condition.save
-      flash[:success] = 'Condition successfully created'
-      redirect_to @condition
-    else
-      set_error_messages(@condition)
-      @resource_name = 'Add Condition'
-      render :new_condition
-    end
-  end
-
-  private def set_breadcrumbs
-    @breadcrumbs = [
-      OpenStruct.new(
-        name: @experiment.name,
-        path: experiment_url(@experiment)
-      )
-    ]
   end
 
   private def set_experiment

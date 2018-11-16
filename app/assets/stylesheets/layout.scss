@@ -8,21 +8,20 @@
 }
 
 .page-heading {
-  height: 3rem;
   display: flex;
 
   h2 {
-    self-align: center
+    align-self: center;
+    margin-bottom: 0;
   }
 
-  .buttons {
+  .heading-buttons {
     margin-left: auto;
   }
 }
 
 .page-sub-heading {
   margin-top: 1rem;
-  height: 2rem;
   display: flex;
 
   h3 {
@@ -31,7 +30,7 @@
     font-size: 1.5rem;
   }
 
-  .buttons {
+  .heading-buttons {
     margin-left: auto;
   }
 }

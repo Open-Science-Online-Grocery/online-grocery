@@ -1,0 +1,22 @@
+@import "../../base/base";
+.search-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  form {
+    button {
+      padding: 6px 10px;
+      margin-top: 8px;
+      background: #ddd;
+      font-size: 17px;
+      border: none;
+      cursor: pointer;
+
+      &:hover {
+        background: #ccc;
+      }
+    }
+  }
+}
+

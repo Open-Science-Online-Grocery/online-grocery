@@ -10,18 +10,24 @@
 import 'babel-polyfill';
 import 'semantic-ui-css';
 import jQuery from 'jquery';
-import TableRowLinker from '../TableRowLinker';
-import ModalConfirm from '../ModalConfirm';
-import ConditionTabs from '../ConditionTabs';
+import Initializer from '../Initializer';
+import CocoonCallbacks from '../CocoonCallbacks';
 
 window.jQuery = jQuery;
 window.$ = jQuery;
 
 $(document).ready(() => {
-  new TableRowLinker($('body')).init();
-  new ConditionTabs().init();
+  new Initializer($('body')).initialize();
+  new CocoonCallbacks().initialize();
+});
 
-  const $modalTriggers = $('body').find('[data-modal-confirm]');
-  $modalTriggers.each((index, element) =>
-    new ModalConfirm($(element)).init());
+$(document).on('initialize', (_event, insertedItem) => {
+  const $insertedItem = $(insertedItem);
+  new Initializer($insertedItem).initialize();
+  new CocoonCallbacks().initialize();
+});
+
+$(document).on('cocoon:after-insert', (_event, insertedItem) => {
+  const $insertedItem = $(insertedItem);
+  new Initializer($insertedItem).initialize();
 });

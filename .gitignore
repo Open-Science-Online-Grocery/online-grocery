@@ -34,3 +34,12 @@
 /node_modules
 yarn-debug.log*
 .yarn-integrity
+
+config/database.yml
+
+package-lock.json
+
+**/coverage/**/*
+
+public/uploads/**/*
+uploads/

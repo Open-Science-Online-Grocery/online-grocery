@@ -1,0 +1,32 @@
+@import 'base/base';
+
+.thank-you-page {
+  text-align: center;
+
+  .thank-you-header {
+    color: $price-green;
+    font-size: 30px;
+    margin: 175px 10px 10px 10px;
+  }
+
+  .thank-you-subheader {
+    font-size: 16px;
+    margin: 10px;
+  }
+
+  .back-to-shopping-button {
+    text-align: center;
+    width: 300px;
+    background-color: $cart-color;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 10px 10px 10px 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px $dark-shadow;
+    cursor: pointer;
+    &:hover {
+      background-color: #eb1bfe;
+    }
+  }
+}
