@@ -25,7 +25,7 @@ if Rails.env.test? || Rails.env.development?
     sh 'bundle audit'
   end
 
-  task default: [:spec, :rubocop, :eslint, :bundler_audit, :npm_audit]
+  task default: [:spec, :rubocop, :eslint, :bundler_audit]
   task ci:      [:default]
 end
 
