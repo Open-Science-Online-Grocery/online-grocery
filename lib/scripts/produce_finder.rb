@@ -17,6 +17,7 @@ class ProduceFinder
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
   private def write_product_rows(product, csv)
     any_rows = false
     row_base = [product.id, product.name]
@@ -35,19 +36,20 @@ class ProduceFinder
         csv << row_base + [item['name'], item['manu'], item['ndbno']]
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     csv << row_base + Array.new(3, 'NO MATCHES') unless any_rows
   end
 
   private def search_url(product, food_group_id)
     formatted_name = product.name.gsub('Howes', '')
-    encoded_name = URI::encode_www_form_component(formatted_name)
+    encoded_name = URI.encode_www_form_component(formatted_name)
     "https://api.nal.usda.gov/ndb/search/?format=xml&q=#{encoded_name}"\
       "&max=500&offset=0&fg=#{food_group_id}&api_key=#{api_key}"
   end
 
   private def headers
-    ["Howe's ID", "Howe's Name", "USDA Name", "USDA Manufacturer", "USDA ID"]
+    ["Howe's ID", "Howe's Name", 'USDA Name', 'USDA Manufacturer', 'USDA ID']
   end
 
   private def api_key
@@ -60,11 +62,11 @@ class ProduceFinder
 
   private def food_groups
     [
-      { id: "0900", name: "Fruits and Fruit Juices" },
-      { id: "1600", name: "Legumes and Legume Products" },
-      { id: "1200", name: "Nut and Seed Products" },
-      { id: "0200", name: "Spices and Herbs" },
-      { id: "1100", name: "Vegetables and Vegetable Products" },
+      { id: '0900', name: 'Fruits and Fruit Juices' },
+      { id: '1600', name: 'Legumes and Legume Products' },
+      { id: '1200', name: 'Nut and Seed Products' },
+      { id: '0200', name: 'Spices and Herbs' },
+      { id: '1100', name: 'Vegetables and Vegetable Products' }
     ]
   end
 end
