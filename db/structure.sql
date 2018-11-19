@@ -20,6 +20,19 @@ CREATE TABLE `ar_internal_metadata` (
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `cart_summary_labels`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cart_summary_labels` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `built_in` tinyint(1) DEFAULT '0',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -29,6 +42,21 @@ CREATE TABLE `categories` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `condition_cart_summary_labels`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `condition_cart_summary_labels` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `condition_id` bigint(20) DEFAULT NULL,
+  `cart_summary_label_id` bigint(20) DEFAULT NULL,
+  `label_equation_tokens` text,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_condition_cart_summary_labels_on_condition_id` (`condition_id`),
+  KEY `index_condition_cart_summary_labels_on_cart_summary_label_id` (`cart_summary_label_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `condition_product_sort_fields`;
@@ -63,6 +91,9 @@ CREATE TABLE `conditions` (
   `default_sort_field_id` bigint(20) DEFAULT NULL,
   `default_sort_order` varchar(255) DEFAULT NULL,
   `sort_equation_tokens` text,
+  `filter_by_custom_categories` tinyint(1) NOT NULL DEFAULT '0',
+  `show_price_total` tinyint(1) NOT NULL DEFAULT '0',
+  `food_count_format` varchar(255) DEFAULT NULL,
   `only_add_from_detail_page` tinyint(1) DEFAULT '0',
   `nutrition_equation_tokens` text,
   PRIMARY KEY (`id`),
@@ -139,6 +170,24 @@ CREATE TABLE `product_sort_fields` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `product_tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product_tags` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `product_id` bigint(20) NOT NULL,
+  `tag_id` bigint(20) NOT NULL,
+  `subtag_id` bigint(20) DEFAULT NULL,
+  `condition_id` bigint(20) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_product_tags_on_product_id` (`product_id`),
+  KEY `index_product_tags_on_tag_id` (`tag_id`),
+  KEY `index_product_tags_on_subtag_id` (`subtag_id`),
+  KEY `index_product_tags_on_condition_id` (`condition_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -191,6 +240,44 @@ CREATE TABLE `subcategories` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `category_id` int(11) DEFAULT NULL,
   `display_order` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `subtags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `subtags` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `tag_id` bigint(20) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_subtags_on_tag_id` (`tag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `tag_csv_files`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tag_csv_files` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `csv_file` varchar(255) DEFAULT NULL,
+  `condition_id` bigint(20) DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_tag_csv_files_on_condition_id` (`condition_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tags` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -267,10 +354,14 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20181102153742'),
 ('20181105145354'),
 ('20181106180529'),
+('20181107141053'),
 ('20181107212757'),
 ('20181108190400'),
 ('20181108190901'),
 ('20181108205830'),
+('20181109184849'),
+('20181109192449'),
+('20181111220655'),
 ('20181112171539'),
 ('20181112183838'),
 ('20181114142831'),
