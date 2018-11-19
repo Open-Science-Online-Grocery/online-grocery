@@ -32,11 +32,32 @@ The pre-existing database tables are:
 * Ensure MySQL is installed locally and running.
 * Copy `config/database.yml.example` to `config/database.yml` and fill in the
   needed mysql password (if the `root` database user needs a password).
+* Get the `config/master.key` file from another developer on the project.
+  (see "Rails credentials" for more information)
 * Set the local ruby version to the one defined in `.ruby-version` using a ruby version manager like `rbenv`
 * From the root directory of the application, run the following commands:
   * `bundle install`
   * `yarn install`
   * `rake db:setup`
+
+### Rails credentials
+
+This application is using Rails Credentials which was first introduced in
+Rails 5.2. There is an encrypted file kept in source control called
+`config/credentials.yml.enc`. The way this file is decrypted is by running
+the command `bin/rails credentials:edit` in your terminal. Note, you must have
+the file `config/master.key` for this to work. Sensitive information can be
+stored in this file in YAML format.
+
+The following credentials
+
+```yml
+foo: bar
+```
+can be accessed with `Rails.application.credentials.foo`, which will return `bar`.
+
+See `config/storage.yml` for more examples.
+
 
 ## Starting your local development server
 
