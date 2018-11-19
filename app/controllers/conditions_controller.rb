@@ -2,7 +2,8 @@
 
 class ConditionsController < ApplicationController
   power :conditions, context: :set_experiment, map: {
-    %i[refresh_form new create edit update destroy] => :own_experiment
+    %i[refresh_form download_product_data new create edit update destroy] =>
+      :own_experiment
   }
 
   before_action :set_condition

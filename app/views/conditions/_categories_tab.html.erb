@@ -32,7 +32,7 @@
 
   <div class="ui hidden divider"></div>
 
-  <div class="ui basic segment two fields">
+  <div class="two fields">
     <div class="field" data-current-csv>
       <label>Current file</label>
       <% if condition.active_tag_csv %>
@@ -55,11 +55,6 @@
       <%= f.label :csv_file, 'Replace file' %>
       <%= f.file_field :csv_file %>
     </div>
-  </div>
-
-  <div class="ui checkbox">
-    <%= f.check_box :filter_by_custom_categories %>
-    <%= f.label :filter_by_custom_categories, 'Allow users to filter by custom categories'%>
   </div>
 
   <div class="ui hidden divider"></div>
@@ -117,7 +112,7 @@
                   <%= file.download_link %>
                 </td>
                 <td>
-                  <%= file.created_at.to_date %>
+                  <%= l(file.created_at.to_date) %>
                 </td>
               </tr>
             <% end %>
@@ -133,51 +128,12 @@
     </div>
   </div>
 
-  <div class="ui divider"></div>
+  <div class="ui hidden divider"></div>
 
-  <div class="ui basic segment">
-    <h3>Additional Categories</h3>
-    <h4>Allow users to browse these additional categories:</h4>
-
-    <div class="ui three fields">
-      <div class="field">
-        <div class="ui radio checkbox">
-          <input type="checkbox">
-          <label>WIC approved</label>
-        </div>
-      </div>
-      <div class="field">
-        <div class="ui radio checkbox">
-          <input type="checkbox">
-          <label>Eating disorder recovery</label>
-        </div>
-      </div>
-      <div class="field">
-        <div class="ui radio checkbox">
-          <input type="checkbox">
-          <label>Locally sourced</label>
-        </div>
-      </div>
-    </div>
-    <div class="ui three fields">
-      <div class="field">
-        <div class="ui radio checkbox">
-          <input type="checkbox">
-          <label>SNAP approved</label>
-        </div>
-      </div>
-      <div class="field">
-        <div class="ui radio checkbox">
-          <input type="checkbox">
-          <label>Ketogenic diet</label>
-        </div>
-      </div>
-      <div class="field">
-        <div class="ui radio checkbox">
-          <input type="checkbox">
-          <label>Organic</label>
-        </div>
-      </div>
+  <div class="field">
+    <div class="ui checkbox">
+      <%= f.check_box :filter_by_custom_categories %>
+      <%= f.label :filter_by_custom_categories, 'Allow users to filter store-wide by custom categories'%>
     </div>
   </div>
 </div>
