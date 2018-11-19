@@ -27,7 +27,11 @@ class ProduceFinder
       )
       next if search_results['errors']
       any_rows = true
-      search_results['list']['item'].each do |item|
+      items = search_results['list']['item']
+      # API seems to return array only if there are multiple results
+      items = [items] unless items.is_a?(Array)
+
+      items.each do |item|
         csv << row_base + [item['name'], item['manu'], item['ndbno']]
       end
     end
@@ -36,7 +40,8 @@ class ProduceFinder
   end
 
   private def search_url(product, food_group_id)
-    encoded_name = URI::encode_www_form_component(product.name)
+    formatted_name = product.name.gsub('Howes', '')
+    encoded_name = URI::encode_www_form_component(formatted_name)
     "https://api.nal.usda.gov/ndb/search/?format=xml&q=#{encoded_name}"\
       "&max=500&offset=0&fg=#{food_group_id}&api_key=#{api_key}"
   end
