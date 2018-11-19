@@ -17,14 +17,7 @@ export function getOriginalRulesForSelector($$state, selector) {
 }
 
 export function getCssRules($$state) {
-  let cssString = '';
-  $$state.keySeq().forEach(
-    (selector) => {
-      const rules = getRulesForSelector($$state, selector).toJS();
-      cssString += new CssWriter(selector, rules).cssString();
-    }
-  );
-  return cssString;
+  return new CssWriter($$state.toJS()).cssString();
 }
 
 export function getInputValue($$state) {

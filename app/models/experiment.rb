@@ -7,7 +7,7 @@ class Experiment < ApplicationRecord
   validates :user, presence: true
 
   belongs_to :user
-
+  has_many :experiment_results, dependent: false
   has_many :conditions, dependent: :destroy
 
   scope :for_user, ->(user) { where(user: user) }

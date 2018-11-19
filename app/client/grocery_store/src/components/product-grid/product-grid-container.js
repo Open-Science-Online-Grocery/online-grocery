@@ -1,21 +1,11 @@
-import React from 'react'
-import ProductGrid from './product-grid'
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import ProductGrid from './product-grid';
 
-const mapStateToProps = function(state){
-    return {
-        sessionId: state.user.sessionId,
-        products: state.category.products
-    }
-}
+const mapStateToProps = state => (
+  {
+    sessionId: state.user.sessionId,
+    products: state.category.products
+  }
+);
 
-class ProductGridContainer extends React.Component {
-    render() {
-        console.log(this.props)
-        return (
-            <ProductGrid {...this.props} />
-        )
-    }
-}
-
-export default connect(mapStateToProps, null)(ProductGridContainer)
+export default connect(mapStateToProps, null)(ProductGrid);
