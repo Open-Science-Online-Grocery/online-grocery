@@ -38,6 +38,9 @@ The pre-existing database tables are:
   * `yarn install`
   * `rake db:setup`
 
+Note: To run an abbreviated (and thus faster) set of seeds (only 1000 products), run seeds like so:
+`SHORT_SEED=1 rake db:seed`
+
 ## Starting your local development server
 
 ### Start the webpack dev server

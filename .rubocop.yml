@@ -51,6 +51,7 @@ Metrics/BlockLength:
     - '**/db/migrate/**/*'
     - '**/db/seeds/**/*'
     - '**/spec/**/*'
+    - '**/*.rake'
 Metrics/ClassLength:
   Exclude:
     - 'app/controllers/conditions_controller.rb'

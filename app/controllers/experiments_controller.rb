@@ -15,8 +15,14 @@ class ExperimentsController < ApplicationController
   ]
 
   def download_data
-    # TODO: implement
-    redirect_to @experiment
+    respond_to do |format|
+      format.csv do
+        send_data(
+          ExperimentResultsExporter.new(@experiment).generate_csv,
+          filename: 'experiment_results.csv'
+        )
+      end
+    end
   end
 
   def index
