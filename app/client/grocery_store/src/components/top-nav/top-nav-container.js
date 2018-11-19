@@ -4,28 +4,26 @@ import { categoryActionCreators } from '../../reducers/category/category-actions
 
 const mapStateToProps = (state) => {
   const {
-    category, categories, subcategories, /* tag, */ subtags
+    selectedCategoryId, selectedCategoryType, categories, subcategories, subtags
   } = state.category;
   const tags = state.category.tags;
   const tag = tags.length > 0 ? Object.values(tags)[0] : null; // TODO: Supply correct prop
   return ({
-    category,
-    tag,
+    selectedCategoryId,
+    selectedCategoryType,
+    displayedTag: tag,
     categories,
     subcategories,
+    tags,
     subtags
   });
 };
 
 const mapDispatchToProps = dispatch => (
   {
-    handleSetCategory: (category, subcategory) => {
-      dispatch(categoryActionCreators.updateCategory(category, subcategory));
+    handleSetCategory: (category, subcategory, categoryType) => {
+      dispatch(categoryActionCreators.updateCategory(category, subcategory, categoryType));
     }
-    // TODO:
-    // handleSetTag: (category, subcategory) => {
-    //   dispatch(categoryActionCreators.updateCategory(category, subcategory));
-    // }
   }
 );
 

@@ -6,10 +6,11 @@ export const categoryActionTypes = {
   SET_PRODUCTS: 'SET_PRODUCTS'
 };
 
-function setCategory(category, subcategory) {
+function setCategory(selectedCategoryId, selectedSubcategoryId, selectedCategoryType) {
   return {
-    category,
-    subcategory,
+    selectedCategoryId,
+    selectedSubcategoryId,
+    selectedCategoryType,
     type: categoryActionTypes.SET_CATEGORY
   };
 }
@@ -26,7 +27,9 @@ function getProducts() {
     const state = getState();
     const params = {
       conditionIdentifier: state.user.conditionIdentifier,
-      subcategoryId: state.category.subcategory,
+      selectedCategoryId: state.category.selectedCategoryId,
+      selectedSubcategoryId: state.category.selectedSubcategoryId,
+      selectedCategoryType: state.category.selectedCategoryType,
       searchTerm: state.search.term,
       searchType: state.search.type,
       sortField: state.sorting.selectedSortField,
@@ -41,9 +44,9 @@ function getProducts() {
   };
 }
 
-function updateCategory(category, subcategory) {
+function updateCategory(selectedCategoryId, selectedSubcategoryId, selectedCategoryType) {
   return (dispatch) => {
-    dispatch(setCategory(category, subcategory));
+    dispatch(setCategory(selectedCategoryId, selectedSubcategoryId, selectedCategoryType));
     dispatch(getProducts());
   };
 }

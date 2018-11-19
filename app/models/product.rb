@@ -4,8 +4,19 @@
 class Product < ApplicationRecord
   belongs_to :category
   belongs_to :subcategory
+  has_many :product_tags
+  # has_many :tags, through: :product_tags
+  # has_many :subtags, through: :product_tags
 
   scope :name_matches, ->(string) {
     where(arel_table[:name].matches("%#{string}%"))
+  }
+
+  scope :with_tag, ->(tag_id) {
+    joins(:product_tags).where(product_tags: { tag_id: tag_id })
+  }
+
+  scope :with_subtag, ->(subtag_id) {
+    joins(:product_tags).where(product_tags: { subtag_id: subtag_id })
   }
 end

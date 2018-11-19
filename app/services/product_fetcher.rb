@@ -40,7 +40,22 @@ class ProductFetcher
     if @params[:search_type] == term_search_type
       return Product.name_matches(@params[:search_term])
     end
-    Product.where(subcategory_id: @params[:subcategory_id])
+
+    category_id = @params[:selected_category_id]
+    subcategory_id = @params[:selected_subcategory_id]
+    case @params[:selected_category_type]
+    when 'category'
+      Product.where(subcategory_id: subcategory_id)
+    when 'tag'
+      Product.joins(:product_tags).where(
+        product_tags: {
+          tag_id: category_id,
+          subtag_id: subcategory_id
+        }
+      )
+    else
+      Product.none
+    end
   end
 
   private def condition

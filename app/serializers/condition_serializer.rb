@@ -12,8 +12,8 @@ class ConditionSerializer
       sort_fields: @condition.product_sort_fields.map(&:description),
       categories: Category.order(:id),
       subcategories: Subcategory.order(:category_id, :display_order),
-      tags: @condition.tags.order(:id),
-      subtags: @condition.subtags.order(:tag_id),
+      tags: @condition.tags.order(:id).uniq,
+      subtags: @condition.subtags.order(:tag_id).uniq,
       filter_by_tags: @condition.filter_by_custom_categories
     }
   end

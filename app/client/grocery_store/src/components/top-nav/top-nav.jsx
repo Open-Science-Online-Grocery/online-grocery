@@ -8,10 +8,12 @@ import './top-nav.scss';
 export default class TopNav extends React.Component {
   render() {
     const {
-      category,
-      tag,
+      selectedCategoryId,
+      selectedCategoryType,
+      displayedTag,
       categories,
       subcategories,
+      tags,
       subtags,
       handleSetCategory
     } = this.props;
@@ -24,30 +26,41 @@ export default class TopNav extends React.Component {
       return (
         <Tab
           tabName={tabCategory.name}
-          key={tabCategory.id}
-          id={tabCategory.id}
+          key={`category-${tabCategory.id}`}
+          categoryId={tabCategory.id}
+          categoryType="category"
           subcats={tabSubcats}
-          category={category}
+          selectedCategoryId={selectedCategoryId}
+          selectedCategoryType={selectedCategoryType}
           handleSetCategory={handleSetCategory}
         />
       );
     });
 
     const tagTab = () => {
-      if (tag) {
-        const subtagsForTab = subtags.filter(subtag => subtag.tagId === tag.id);
+      if (displayedTag) {
+        const subtagsForTab = subtags.filter(subtag => subtag.tagId === displayedTag.id);
         return (
           <Tab
-            tabName={tag.name}
-            key={tag.id}
-            id={tag.id}
+            tabName={displayedTag.name}
+            key={`tag-${displayedTag.id}`}
+            categoryId={displayedTag.id}
+            categoryType="tag"
             subcats={subtagsForTab}
-            category={tag.id} // TODO: Allow Tab to accept Tags as Categories
-            handleSetCategory={handleSetCategory} // TODO: Make one for tag
+            selectedCategoryId={selectedCategoryId}
+            selectedCategoryType={selectedCategoryType}
+            handleSetCategory={handleSetCategory}
           />
         );
       }
       return null;
+    };
+
+    const categoryTitle = () => {
+      if (selectedCategoryType === 'tag') {
+        return tags[selectedCategoryId - 1].name;
+      }
+      return categories[selectedCategoryId - 1].name;
     };
 
     return (
@@ -58,10 +71,10 @@ export default class TopNav extends React.Component {
         </div>
         <SearchContainer />
         {
-          categories[category - 1]
+          categories[selectedCategoryId - 1]
             && (
               <div className="title">
-                {categories[category - 1].name}
+                {categoryTitle()}
               </div>
             )
         }
@@ -71,8 +84,9 @@ export default class TopNav extends React.Component {
 }
 
 TopNav.propTypes = {
-  category: PropTypes.number,
-  tag: PropTypes.shape({
+  selectedCategoryId: PropTypes.number,
+  selectedCategoryType: PropTypes.string,
+  displayedTag: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string
   }),
@@ -96,6 +110,7 @@ TopNav.propTypes = {
 };
 
 TopNav.defaultProps = {
-  category: null,
-  tag: null
+  selectedCategoryId: null,
+  selectedCategoryType: null,
+  displayedTag: null
 };
