@@ -7,6 +7,7 @@ gem 'aws-sdk-s3'
 gem 'bootsnap', require: false
 gem 'carrierwave'
 gem 'cocoon'
+gem 'consul'
 gem 'dentaku'
 gem 'devise'
 gem 'jbuilder'

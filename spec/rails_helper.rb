@@ -55,11 +55,13 @@ RSpec.configure do |config|
   Capybara.default_max_wait_time = 30 if ENV['TEST_ENVIRONMENT'] == 'CI'
   Capybara::Screenshot.prune_strategy = { keep: 20 }
 
-  # database views are defined in spec/support/database_cleaner_helper
-  config.before(:suite) { DatabaseCleaner.clean_with(:deletion) }
+  # `clean_with_deletion` is defined in spec/support/database_cleaner_helper
+  config.before(:suite) { clean_with_deletion }
+
   config.before do |example|
     if example.metadata[:js]
-      DatabaseCleaner.strategy = :deletion
+      # `database_views` is defined in spec/support/database_cleaner_helper
+      DatabaseCleaner.strategy = :deletion, { except: database_views }
     else
       DatabaseCleaner.strategy = :transaction
     end

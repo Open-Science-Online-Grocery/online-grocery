@@ -29,6 +29,7 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
 /public/packs
 /public/packs-test
 /node_modules
@@ -50,5 +51,4 @@ uploads/
 # Ignore imported ansible roles
 /ansible/roles/scimed.*
 
-# Ignore master key for decrypting credentials and more.
-/config/master.key
+db/schema.rb

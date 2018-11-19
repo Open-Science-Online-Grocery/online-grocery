@@ -28,9 +28,11 @@ export default class FormValidator {
         // enter, which breaks rails remote forms.
         keyboardShortcuts: false,
         onFailure: () => {
-          this.$form.find('.error.field')[0].scrollIntoView(
-            { behavior: 'smooth' }
-          );
+          const firstErrorField = this.$form.find('.error.field');
+          const tab = firstErrorField.closest('[data-tab]').data('tab');
+          // switch to tab containing error if it's in a tab view
+          if (tab) $('.tabular.menu .item').tab('change tab', tab);
+          firstErrorField[0].scrollIntoView({ behavior: 'smooth' });
           return false;
         }
       }

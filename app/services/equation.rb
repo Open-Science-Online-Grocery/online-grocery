@@ -10,7 +10,7 @@ class Equation
   delegate :types, to: :class
 
   def self.types
-    OpenStruct.new(label: 'label', sort: 'sort')
+    OpenStruct.new(label: 'label', sort: 'sort', nutrition: 'nutrition')
   end
 
   def self.individual_product_variables
@@ -67,7 +67,8 @@ class Equation
   private def should_return_boolean?
     {
       types.label => true,
-      types.sort => false
+      types.sort => false,
+      types.nutrition => true
     }[@type]
   end
 

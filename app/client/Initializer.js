@@ -4,6 +4,7 @@ import ModalConfirm from './ModalConfirm';
 import FormRefresher from './FormRefresher';
 import calculator from './calculator/src/index';
 import nutritionStyler from './nutrition_styler/src/index';
+import LoadingSpinnerButton from './LoadingSpinnerButton';
 
 export default class Initializer {
   constructor($scope) {
@@ -20,6 +21,7 @@ export default class Initializer {
     this.initializeFormRefreshing();
     this.initializeCalculators();
     this.initializeNutritionStylers();
+    this.initializeLoadingSpinnerButtons();
   }
 
   initializeTableRowLinks() {
@@ -89,5 +91,14 @@ export default class Initializer {
     this.$scope.find('[data-nutrition-styler]').each((index, element) => (
       nutritionStyler(element)
     ));
+  }
+
+  initializeLoadingSpinnerButtons() {
+    const $buttons = this.$scope.find(
+      '.button[type="submit"], .button[data-loading-spinner]'
+    );
+    $buttons.each(
+      (index, element) => new LoadingSpinnerButton($(element)).init()
+    );
   }
 }

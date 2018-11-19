@@ -40,6 +40,9 @@ The pre-existing database tables are:
   * `yarn install`
   * `rake db:setup`
 
+Note: To run an abbreviated (and thus faster) set of seeds (only 1000 products), run seeds like so:
+`SHORT_SEED=1 rake db:seed`
+
 ### Rails credentials
 
 This application is using Rails Credentials which was first introduced in
@@ -57,7 +60,6 @@ foo: bar
 can be accessed with `Rails.application.credentials.foo`, which will return `bar`.
 
 See `config/storage.yml` for more examples.
-
 
 ## Starting your local development server
 

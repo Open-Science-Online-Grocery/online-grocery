@@ -93,9 +93,23 @@ RSpec.describe ConditionManager do
       }
     end
 
-    it 'removes the label_id and order' do
+    it 'removes the equation tokens' do
       subject.update_condition
       expect(condition.sort_equation_tokens).to be_nil
+    end
+  end
+
+  context 'when replacing a calculation for styling' do
+    let(:params) do
+      {
+        nutrition_equation_tokens: 'some tokens',
+        style_use_type: 'always'
+      }
+    end
+
+    it 'removes the equation tokens' do
+      subject.update_condition
+      expect(condition.nutrition_equation_tokens).to be_nil
     end
   end
 end

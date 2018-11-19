@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class ConditionsController < ApplicationController
-  before_action :set_experiment
+  power :conditions, context: :set_experiment, map: {
+    %i[refresh_form new create edit update destroy] => :own_experiment
+  }
+
   before_action :set_condition
   before_action :set_breadcrumbs
   before_action :set_tab
@@ -74,10 +77,6 @@ class ConditionsController < ApplicationController
     redirect_to experiment_path(@experiment)
   end
 
-  def download_data
-    redirect_to @experiment
-  end
-
   private def set_condition
     if params[:id].present?
       condition = Condition.find(params[:id])
@@ -101,12 +100,15 @@ class ConditionsController < ApplicationController
       :default_sort_field_id,
       :default_sort_order,
       :sort_equation_tokens,
+      :only_add_from_detail_page,
       :nutrition_styles,
       :csv_file,
       :filter_by_custom_categories,
       :show_food_count,
       :show_price_total,
       :food_count_format,
+      :style_use_type,
+      :nutrition_equation_tokens,
       product_sort_field_ids: [],
       label_attributes: %i[id image image_cache name built_in],
       condition_cart_summary_labels_attributes: [

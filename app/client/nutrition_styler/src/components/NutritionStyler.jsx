@@ -1,26 +1,18 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import NutritionLabelContainer from '../containers/NutritionLabelContainer';
+import React from 'react';
+import NutritionLabelPreviewContainer from '../containers/NutritionLabelPreviewContainer';
 import StylerFormContainer from '../containers/StylerFormContainer';
 
-export default class NutritionStyler extends PureComponent {
-  render() {
-    return (
-      <div className="nutrition-styler">
-        <div className="styler-form">
-          <StylerFormContainer />
-        </div>
-        <div className="nutrition-label">
-          <style>
-            {this.props.cssRules}
-          </style>
-          <NutritionLabelContainer />
-        </div>
+const NutritionStyler = () => (
+  <div className="nutrition-styler">
+    <div className="styler-form">
+      <StylerFormContainer />
+    </div>
+    <div className="nutrition-label">
+      <div className="nutrition-label-wrapper">
+        <NutritionLabelPreviewContainer />
       </div>
-    );
-  }
-}
+    </div>
+  </div>
+);
 
-NutritionStyler.propTypes = {
-  cssRules: PropTypes.string.isRequired
-};
+export default NutritionStyler;
