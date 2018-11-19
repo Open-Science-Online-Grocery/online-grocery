@@ -109,6 +109,9 @@ class ConditionsController < ApplicationController
       :food_count_format,
       :style_use_type,
       :nutrition_equation_tokens,
+      :may_add_to_cart_by_dollar_amount,
+      :minimum_spend,
+      :maximum_spend,
       product_sort_field_ids: [],
       label_attributes: %i[id image image_cache name built_in],
       condition_cart_summary_labels_attributes: [

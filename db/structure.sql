@@ -96,6 +96,9 @@ CREATE TABLE `conditions` (
   `food_count_format` varchar(255) DEFAULT NULL,
   `only_add_from_detail_page` tinyint(1) DEFAULT '0',
   `nutrition_equation_tokens` text,
+  `minimum_spend` decimal(10,2) DEFAULT NULL,
+  `maximum_spend` decimal(10,2) DEFAULT NULL,
+  `may_add_to_cart_by_dollar_amount` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `index_conditions_on_experiment_id` (`experiment_id`),
   KEY `index_conditions_on_label_id` (`label_id`),
@@ -365,6 +368,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20181112171539'),
 ('20181112183838'),
 ('20181114142831'),
-('20181114144446');
+('20181114144446'),
+('20181119164647');
 
 

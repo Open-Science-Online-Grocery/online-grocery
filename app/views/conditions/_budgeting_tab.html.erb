@@ -1,2 +1,27 @@
 <div class="ui bottom attached tab segment" data-tab="budgeting">
+  <div class="field">
+    <div class="ui checkbox">
+      <%= f.check_box :may_add_to_cart_by_dollar_amount %>
+      <label>
+        Allow participants to add items to cart by dollar amount
+      </label>
+    </div>
+  </div>
+  <div class="ui short hidden divider"></div>
+  <div class="two fields">
+    <div class="field">
+      <%= f.label :minimum_spend, 'Participants must spend at least' %>
+      <div class="ui labeled input">
+        <div class="ui label">$</div>
+        <%= f.number_field :minimum_spend, value: condition.formatted_minimum_spend, step: 0.01, min: 0 %>
+      </div>
+    </div>
+    <div class="field">
+      <%= f.label :maximum_spend, 'Participants must not spend more than' %>
+      <div class="ui labeled input">
+        <div class="ui label">$</div>
+        <%= f.number_field :maximum_spend, value: condition.formatted_maximum_spend, step: 0.01, min: 0 %>
+      </div>
+    </div>
+  </div>
 </div>
