@@ -1,13 +1,29 @@
 # frozen_string_literal: true
 
 class ExperimentsController < ApplicationController
+  power :experiments, as: :experiment_scope, map: {
+    %i[download_data index new create show edit update destroy] =>
+      :own_experiments
+  }
+
   before_action :set_experiment, only: %i[
+    download_data
     show
     edit
     update
     destroy
-    download_data
   ]
+
+  def download_data
+    respond_to do |format|
+      format.csv do
+        send_data(
+          ExperimentResultsExporter.new(@experiment).generate_csv,
+          filename: 'experiment_results.csv'
+        )
+      end
+    end
+  end
 
   def index
     @experiments = Experiment.for_user(current_user).order(created_at: :desc)
@@ -57,13 +73,9 @@ class ExperimentsController < ApplicationController
     redirect_to experiments_path
   end
 
-  def download_data
-    # TODO: implement
-    redirect_to @experiment
-  end
-
   private def set_experiment
     @experiment = Experiment.find(params[:id])
+    raise Consul::Powerless unless experiment_scope.include?(@experiment)
   end
 
   private def experiment_params

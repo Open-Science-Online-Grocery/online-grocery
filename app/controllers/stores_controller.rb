@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class StoresController < ApplicationController
+  skip_power_check
   skip_before_action :authenticate_user!
 
   layout 'basic'

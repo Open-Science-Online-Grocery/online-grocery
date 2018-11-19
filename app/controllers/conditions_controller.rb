@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class ConditionsController < ApplicationController
-  before_action :set_experiment
+  power :conditions, context: :set_experiment, map: {
+    %i[refresh_form new create edit update destroy] => :own_experiment
+  }
+
   before_action :set_condition
   before_action :set_breadcrumbs
   before_action :set_tab
@@ -59,10 +62,6 @@ class ConditionsController < ApplicationController
       set_error_messages(@condition)
     end
     redirect_to experiment_path(@experiment)
-  end
-
-  def download_data
-    redirect_to @experiment
   end
 
   private def set_condition

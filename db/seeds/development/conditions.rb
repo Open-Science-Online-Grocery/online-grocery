@@ -11,7 +11,9 @@ module Seeds
             Condition.create!(
               experiment: experiment,
               name: Faker::Lorem.sentence,
-              uuid: SecureRandom.uuid
+              uuid: SecureRandom.uuid,
+              nutrition_styles: '{}',
+              label_equation_tokens: '[]'
             )
           end
         end
