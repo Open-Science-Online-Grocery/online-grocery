@@ -20,6 +20,7 @@ class ConditionManager
     show_food_count_fields
     clear_cart_summary_label_fields
     clear_unselected_sort_fields
+    clear_unselected_nutrition_fields
     @condition.attributes = @params
   end
 
@@ -104,6 +105,12 @@ class ConditionManager
       else
         val.delete(:cart_summary_label_attributes)
       end
+    end
+  end
+
+  private def clear_unselected_nutrition_fields
+    if @params[:style_use_type] == Condition.style_use_types.always
+      @params[:nutrition_equation_tokens] = nil
     end
   end
   # rubocop:enable Style/GuardClause

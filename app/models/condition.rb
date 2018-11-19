@@ -4,12 +4,13 @@
 class Condition < ApplicationRecord
   include Rails.application.routes.url_helpers
 
-  attr_writer :label_type, :show_food_count, :sort_type, :active_tag_csv
+  attr_writer :label_type, :show_food_count, :sort_type, :active_tag_csv,
+              :style_use_type
 
   validates :name, :uuid, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
 
-  delegate :label_types, :sort_types, to: :class
+  delegate :label_types, :sort_types, :style_use_types, to: :class
   delegate :image_url, to: :label, prefix: true, allow_nil: true
   delegate :name, to: :default_sort_field, prefix: true, allow_nil: true
 
@@ -38,6 +39,10 @@ class Condition < ApplicationRecord
     OpenStruct.new(none: 'none', field: 'field', calculation: 'calculation')
   end
 
+  def self.style_use_types
+    OpenStruct.new(always: 'always', calculation: 'calculation')
+  end
+
   # TODO: update if needed - depending on client's preferences on URL used to
   # access the store
   def url
@@ -57,15 +62,17 @@ class Condition < ApplicationRecord
     sort_types.none
   end
 
+  def style_use_type
+    return @style_use_type if @style_use_type
+    return style_use_types.calculation if nutrition_equation_tokens
+    style_use_types.always
+  end
+
   def label_equation
     @label_equation ||= Equation.new(
       label_equation_tokens,
       Equation.types.label
     )
-  end
-
-  def has_label_equation?
-    label_equation_tokens.present?
   end
 
   def sort_equation
@@ -93,5 +100,12 @@ class Condition < ApplicationRecord
   def active_tag_csv
     return @active_tag_csv unless @active_tag_csv.nil?
     current_tag_csv_file.present?
+  end
+
+  def nutrition_equation
+    @nutrition_equation ||= Equation.new(
+      nutrition_equation_tokens,
+      Equation.types.nutrition
+    )
   end
 end

@@ -34,7 +34,7 @@ export function getInputValue($$state) {
 }
 
 /* ******************************* reducers ********************************* */
-function activeSelector(state = null, action) {
+export function activeSelector(state = null, action) {
   switch (action.type) {
     case SET_ACTIVE_SELECTOR:
       return action.payload.activeSelector;

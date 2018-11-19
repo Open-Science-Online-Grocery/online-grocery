@@ -9,8 +9,9 @@ RSpec.describe 'Importing custom categories for a condition', :feature do
   let(:full_file_path_2) { Rails.root.join(file_fixture(file_with_path_2)) }
   let(:file_with_path_2) { "tag_imports/#{file_name_2}" }
   let(:file_name_2) { 'custom_categories_valid_2.csv' }
-  let(:condition) { create :condition }
   let(:user) { create(:user) }
+  let(:experiment) { create(:experiment, user: user) }
+  let(:condition) { create(:condition, experiment: experiment) }
 
   # rubocop:disable RSpec/BeforeAfterAll
   before :all do

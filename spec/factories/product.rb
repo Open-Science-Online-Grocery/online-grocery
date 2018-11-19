@@ -17,16 +17,16 @@ FactoryBot.define do
     trans_fat { 0 }
     poly_fat { 0 }
     mono_fat { 0 }
-    cholesterol { nil }
+    cholesterol { 0 }
     sodium { 0 }
     potassium { 0 }
     carbs { 0 }
     fiber { 0 }
     sugar { 0 }
     protein { 0 }
-    vitamins { nil }
+    vitamins { '' }
     ingredients { 'foo, bar' }
-    allergens { nil }
+    allergens { '' }
     price { 3.05 }
     starpoints { 10 }
   end

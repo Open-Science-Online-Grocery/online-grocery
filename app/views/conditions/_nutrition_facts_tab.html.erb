@@ -1,3 +1,41 @@
 <div class="ui bottom attached tab segment" data-tab="nutrition-facts">
+  <div class="eight wide field">
+    <div class="ui checkbox">
+      <%= f.check_box :only_add_from_detail_page %>
+      <label>
+        Only allow items to be added to cart from from the product's detail page
+        (not from the page of search/category results)
+      </label>
+    </div>
+  </div>
+
+  <div class="ui hidden divider"></div>
+
   <div data-nutrition-styler data-styles="<%= condition.nutrition_styles.presence || {} %>" ></div>
+
+  <div class="style-use-fields">
+    <div class="grouped fields">
+      <div class="field">
+        <div class="ui radio checkbox">
+          <%= f.radio_button :style_use_type, Condition.style_use_types.always, data: { refresh_form: true } %>
+          <label>Use this styling for all products</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui radio checkbox">
+          <%= f.radio_button :style_use_type, Condition.style_use_types.calculation, data: { refresh_form: true } %>
+          <label>Use this styling only for products that match the following calculation:</label>
+        </div>
+      </div>
+    </div>
+    <div class="ui segment nested-calculator <%= 'disabled' unless condition.style_use_type == Condition.style_use_types.calculation %>">
+      <div
+        data-calculator
+        data-variables="<%= Equation.individual_product_variables.to_json %>"
+        data-input-name="condition[nutrition_equation_tokens]"
+        data-tokens="<%= condition.nutrition_equation_tokens || [] %>"
+        data-equation-type="<%= Equation.types.nutrition %>"
+      ></div>
+    </div>
+  </div>
 </div>

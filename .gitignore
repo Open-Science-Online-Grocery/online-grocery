@@ -29,6 +29,7 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
 /public/packs
 /public/packs-test
 /node_modules
@@ -43,3 +44,11 @@ package-lock.json
 
 public/uploads/**/*
 uploads/
+
+/.terraform/*
+*.tfvars
+
+# Ignore imported ansible roles
+/ansible/roles/scimed.*
+
+db/schema.rb

@@ -1,16 +1,28 @@
 .nutrition-facts-label {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   border: 2px solid black;
-  margin: 50px 0 10px 0;
   padding: 3px;
   width: 300px;
+  box-sizing: content-box;
+  line-height: normal;
+  margin-top: 50px;
+  margin-bottom: 10px;
 
-  text-transform: capitalize;
+  div {
+    border: 1px solid transparent;
+  }
+
+  .divider {
+    background-color: black;
+  }
 
   .nutrition-facts-title {
-    text-align: center;
     font-size: 22px;
-    border-bottom: 1px solid black;
+    font-weight: 600;
+    text-align: center;
+  }
+  .nutrition-facts-title-divider {
+    height: 1px;
   }
 
   .nutrition-facts-servings {
@@ -21,39 +33,111 @@
   .nutrition-facts-serving-size {
     font-size: 12px;
     width: 100%;
-    border-bottom: 7px solid black;
+    font-weight: bold;
+
+    .serving-size-label {
+      display: inline-block;
+    }
+
+    .serving-size-value {
+      display: inline-block;
+      float: right;
+    }
+  }
+
+  .nutrition-serving-size-divider {
+    height: 7px;
   }
 
   .nutrition-facts-amount {
     margin-top: 3px;
     font-size: 8px;
+    font-weight: bold;
   }
 
   .nutrition-facts-calories {
     font-size: 22px;
-    border-bottom: 3px solid black;
+    font-weight: bold;
+
+    .calories-label {
+      display: inline-block;
+    }
+
+    .calories-value {
+      display: inline-block;
+      float: right;
+    }
   }
+
+  .nutrition-calories-divider {
+    height: 3px;
+  }
+
   .nutrition-facts-percent {
     font-size: 8px;
     width: 100%;
     text-align: right;
     margin: 3px 0;
+    font-weight: bold;
   }
 
   .nutrition-facts-line {
     font-size: 10px;
     padding: 2px 0;
     border-top: 1px solid black;
+
+    div {
+      display: inline-block;
+
+      &.fact-percent {
+        font-weight: bold;
+        float: right;
+      }
+    }
+  }
+
+  .nutrition-facts-vitamins-top-divider {
+    height: 7px;
   }
 
   .nutrition-facts-vitamins {
-    border-top: 7px solid black;
     font-size: 10px;
     padding: 2px 0;
   }
 
+  .vitamin-facts-line {
+    border-top: 1px solid black;
+
+    &:first-child {
+      border-top: none;
+    }
+
+    div {
+      display: inline-block;
+
+      &.fact-percent {
+        float: right;
+      }
+    }
+  }
+
+  .nutrition-facts-vitamins-bottom-divider {
+    height: 3px;
+  }
+
   .nutrition-facts-daily-value {
     font-size: 8px;
-    border-top: 3px solid black;
+  }
+
+  .fat, .cholesterol, .sodium, .carbs, .protein {
+    &.fact-label {
+      font-weight: bold;
+    }
+  }
+
+  .saturated-fat, .trans-fat, .fiber, .sugars {
+    &.fact-label {
+      margin-left: 1rem;
+    }
   }
 }
