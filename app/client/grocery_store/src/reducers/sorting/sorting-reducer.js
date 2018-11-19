@@ -29,10 +29,20 @@ function sortDirection(state = null, action) {
   }
 }
 
+function filterByTags(state = null, action) {
+  switch (action.type) {
+    case userActionTypes.SET_CONDITION_DATA:
+      return action.filterByTags;
+    default:
+      return state;
+  }
+}
+
 const sorting = combineReducers({
   sortFields,
   selectedSortField,
-  sortDirection
+  sortDirection,
+  filterByTags
 });
 
 export default sorting;

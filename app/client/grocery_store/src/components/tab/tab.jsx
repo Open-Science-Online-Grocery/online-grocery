@@ -36,8 +36,8 @@ export default class Tab extends React.Component {
     return (
       <div
         className={this.props.id === this.props.category ? 'tab-container selected' : 'tab-container'}
-        onMouseEnter={() => this.openDropdown()}
-        onMouseLeave={() => this.closeDropdown()}
+        onMouseEnter={this.openDropdown}
+        onMouseLeave={this.closeDropdown}
       >
         <div className="tab">
           {this.props.tabName}

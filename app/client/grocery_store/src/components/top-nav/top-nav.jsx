@@ -4,36 +4,64 @@ import Tab from '../tab/tab';
 import SearchContainer from '../search/search-container';
 import './top-nav.scss';
 
+// eslint-disable-next-line react/prefer-stateless-function
 export default class TopNav extends React.Component {
   render() {
-    const subcats = Object.assign([], this.props.subcategories);
-    const tabs = this.props.categories.map((category) => {
+    const {
+      category,
+      tag,
+      categories,
+      subcategories,
+      subtags,
+      handleSetCategory
+    } = this.props;
+    const duplicatedSubcats = Object.assign([], subcategories);
+    const categoryTabs = categories.map((tabCategory) => {
       const tabSubcats = [];
-      while (subcats.length > 0 && subcats[0].categoryId === category.id) {
-        tabSubcats.push(subcats.shift());
+      while (duplicatedSubcats.length > 0 && duplicatedSubcats[0].categoryId === tabCategory.id) {
+        tabSubcats.push(duplicatedSubcats.shift());
       }
       return (
         <Tab
-          tabName={category.name}
-          key={category.id}
-          id={category.id}
+          tabName={tabCategory.name}
+          key={tabCategory.id}
+          id={tabCategory.id}
           subcats={tabSubcats}
-          category={this.props.category}
-          handleSetCategory={this.props.handleSetCategory}
+          category={category}
+          handleSetCategory={handleSetCategory}
         />
       );
     });
+
+    const tagTab = () => {
+      if (tag) {
+        const subtagsForTab = subtags.filter(subtag => subtag.tagId === tag.id);
+        return (
+          <Tab
+            tabName={tag.name}
+            key={tag.id}
+            id={tag.id}
+            subcats={subtagsForTab}
+            category={tag.id} // TODO: Allow Tab to accept Tags as Categories
+            handleSetCategory={handleSetCategory} // TODO: Make one for tag
+          />
+        );
+      }
+      return null;
+    };
+
     return (
       <div>
         <div className="top-nav">
-          {tabs}
+          {categoryTabs}
+          {tagTab()}
         </div>
         <SearchContainer />
         {
-          this.props.categories[this.props.category - 1]
+          categories[category - 1]
             && (
               <div className="title">
-                {this.props.categories[this.props.category - 1].name}
+                {categories[category - 1].name}
               </div>
             )
         }
@@ -44,6 +72,10 @@ export default class TopNav extends React.Component {
 
 TopNav.propTypes = {
   category: PropTypes.number,
+  tag: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string
+  }),
   categories: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
@@ -55,9 +87,15 @@ TopNav.propTypes = {
       name: PropTypes.string
     })
   ).isRequired,
+  subtags: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string
+    })
+  ).isRequired,
   handleSetCategory: PropTypes.func.isRequired
 };
 
 TopNav.defaultProps = {
-  category: null
+  category: null,
+  tag: null
 };
