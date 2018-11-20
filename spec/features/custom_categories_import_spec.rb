@@ -74,6 +74,24 @@ RSpec.describe 'Importing custom categories for a condition', :feature do
     expect(page).to have_content 'Custom Category 2B'
     expect(page).to have_content 'Custom Subcategory 2B'
 
+    # save an existing uploaded csv without making changes
+    force_click_on 'Save'
+
+    expect(page).to have_content 'Condition successfully updated'
+
+    within('[data-current-csv]') do
+      expect(page).to have_content file_name
+    end
+
+    expect(page).to have_content 'Custom Category 1A'
+    expect(page).to have_content 'Custom Subcategory 1A'
+    expect(page).to have_content 'Custom Category 2A'
+    expect(page).to have_content 'Custom Subcategory 2A'
+    expect(page).to have_content 'Custom Category 1B'
+    expect(page).to have_content 'Custom Subcategory 1B'
+    expect(page).to have_content 'Custom Category 2B'
+    expect(page).to have_content 'Custom Subcategory 2B'
+
     # reupload a new csv
     attach_file 'condition_csv_file', full_file_path_2
     force_click_on 'Save'
@@ -98,7 +116,7 @@ RSpec.describe 'Importing custom categories for a condition', :feature do
     expect(page).to have_content 'Custom Subcategory 2D'
 
     # remove csv
-    force_click(find('#condition_active_tag_csv').find(:xpath, '../..'))
+    force_click(find('#condition_active_tag_csv'))
     force_click_on 'Save'
 
     expect(page).to have_content 'Condition successfully updated'

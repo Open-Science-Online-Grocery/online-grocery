@@ -64,14 +64,13 @@ class ConditionManager
   end
 
   private def deactivate_current_csv
-    # coerce to boolean, false is converted to null by ajax form refresh
-    active = !@params.delete(:active_tag_csv).nil?
+    active = @params.delete(:active_tag_csv) == '1'
     @condition.active_tag_csv = active
   end
 
   private def destroy_deactivated_tags
     # coerce to boolean, false is converted to null by ajax form refresh
-    active = !@params.delete(:active_tag_csv).nil?
+    active = @condition.active_tag_csv
     current_csv_file = @condition.current_tag_csv_file
     if current_csv_file
       current_csv_file.update!(active: active)
@@ -82,7 +81,7 @@ class ConditionManager
   private def save_csv_file
     @csv_file = @params[:csv_file]
     return unless @csv_file
-    @condition.tag_csv_files.find_each { |file| file.active = false }
+    @condition.tag_csv_files.each { |file| file.active = false }
     @condition.tag_csv_files.build(csv_file: @csv_file)
     @params.delete(:csv_file)
   end
