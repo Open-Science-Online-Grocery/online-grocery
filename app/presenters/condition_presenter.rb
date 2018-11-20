@@ -2,6 +2,8 @@
 
 #:nodoc:
 class ConditionPresenter < SimpleDelegator
+  include ActionView::Helpers::NumberHelper
+
   alias condition __getobj__
 
   def custom_label
@@ -39,5 +41,17 @@ class ConditionPresenter < SimpleDelegator
       [product_tag.tag, product_tag.subtag]
     end
     tag_combinations.uniq
+  end
+
+  def formatted_minimum_spend
+    format_spend(minimum_spend)
+  end
+
+  def formatted_maximum_spend
+    format_spend(maximum_spend)
+  end
+
+  private def format_spend(amount)
+    number_with_precision(amount, precision: 2)
   end
 end
