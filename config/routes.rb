@@ -16,10 +16,11 @@ Rails.application.routes.draw do
     resources :conditions do
       collection do
         put :refresh_form
-        get :download_product_data
       end
     end
   end
+
+  resource :product_download, only: [:new, :show]
 
   resource :store, only: [:show] do
     collection do

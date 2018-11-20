@@ -5,13 +5,10 @@
     <div class="heading-buttons">
       <%=
         link_to(
-          download_product_data_experiment_conditions_path(
-            experiment.id,
-            condition.id,
-            format: :csv
-          ),
-          class: 'ui right floated button'
-          ) do
+          new_product_download_path,
+          class: 'ui right floated button',
+          data: { loading_spinner: true, remote: true }
+        ) do
       %>
         <i class="download icon"></i> Download Product Data
       <% end %>

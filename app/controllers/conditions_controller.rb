@@ -2,8 +2,7 @@
 
 class ConditionsController < ApplicationController
   power :conditions, context: :set_experiment, map: {
-    %i[refresh_form download_product_data new create edit update destroy] =>
-      :own_experiment
+    %i[refresh_form new create edit update destroy] => :own_experiment
   }
 
   before_action :set_condition
@@ -14,19 +13,6 @@ class ConditionsController < ApplicationController
     manager = ConditionManager.new(@condition, condition_params)
     manager.assign_params
     render @condition.id? ? 'edit' : 'new'
-  end
-
-  def download_product_data
-    respond_to do |format|
-      format.csv do
-        send_data(
-          # TODO: consider adding Product scope argument, there are a lot of
-          # products. Manager is already set up to take optional scope argument
-          ProductDataCsvManager.generate_csv,
-          filename: 'product_categories_data.csv'
-        )
-      end
-    end
   end
 
   def new

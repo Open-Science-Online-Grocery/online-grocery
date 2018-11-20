@@ -10,6 +10,10 @@ export default class LoadingSpinnerButton {
         this.$button.addClass('loading disabled');
       }
     });
+    $(window).one(
+      'ajax:success',
+      () => this.$button.removeClass('loading disabled')
+    );
   }
 
   formIsInvalid() {

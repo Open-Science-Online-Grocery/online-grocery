@@ -12,4 +12,8 @@ class Power
   power :own_experiments do
     Experiment.where(user_id: @user.id)
   end
+
+  power :downloadable_products do
+    Product.all if @user
+  end
 end
