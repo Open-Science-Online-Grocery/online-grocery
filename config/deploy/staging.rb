@@ -6,7 +6,7 @@ set :rails_env, 'staging'
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
 
-server '35.170.59.139', user: 'deployer', roles: %w[app db web]
+server 'howes-grocery.scimed-test.com', user: 'deployer', roles: %w[app db web]
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 

@@ -1,2 +1,5 @@
 [staging]
 35.170.59.139 ansible_user=deployer
+
+[production]
+18.204.34.178 ansible_user=deployer

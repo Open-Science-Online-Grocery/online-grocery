@@ -1,0 +1,98 @@
+---
+production_rails_secret_key_base: "{{ vault_production_secret_key_base }}"
+
+production_ssl_cert: "{{ vault_production_ssl_cert }}"
+production_ssl_key: "{{ vault_production_ssl_key }}"
+
+production_mysql_root_user_name: "{{ vault_production_mysql_root_user_name }}"
+production_mysql_root_password: "{{ vault_production_mysql_root_password }}"
+
+app_name: howes_grocery
+
+# Common
+deploy_user: deployer
+deploy_group: deployer
+update_ssh_keys: True
+install_common_packages: True
+common_timezone: America/New_York
+
+# rbenv
+run_rbenv_checks: True
+run_rbenv_installation: True
+rbenv_user: deployer
+rbenv_group: deployer
+rbenv_ruby_versions:
+  - 2.4.2
+rbenv_global_version: 2.4.2
+
+# Capistrano folders
+run_capistrano_checks: True
+capistrano_app_directories:
+  - "/var/www/apps/{{ app_name }}"
+
+# Apache/Passenger
+run_apache_configuration: True
+run_apache_installation: True
+apache_document_root: /var/www/apps
+ssl_cert_directory: /etc/letsencrypt/live/howesgrocery.com
+ssl_key_directory: /etc/letsencrypt/live/howesgrocery.com
+apache_vhosts:
+  - app_web_address: howesgrocery.com
+    app_web_address_aliases:
+      - 18.204.34.178
+    app_name: "{{ app_name }}"
+    app_admin: info@scimedsolutions.com
+    app_environment: production
+    passenger_app_apache_module_enabled: True
+    passenger_app_ruby_bin: /home/deployer/.rbenv/versions/2.4.2/bin/ruby
+    passenger_app_additional_settings: |2
+          # No additional Passenger settings
+    document_root: "/var/www/apps/{{ app_name }}"
+    loglevel: warn # debug, info, notice, warn, error, crit, alert, emerg.
+    ssl:
+      enabled: True
+      protocols: "+TLSv1.2"
+      cipher_suite: "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256"
+      cert: "{{ production_ssl_cert }}" # insert vaulted ssl cert
+      cert_filename: cert.pem
+      key: "{{ production_ssl_key }}" # insert vaulted ssl key
+      key_filename: privkey.pem
+      chain: "" # insert vaulted ssl cert chain
+      chain_filename: howes_grocery_production_chain_cert.cer
+      ca_cert: "" # insert vaulted ssl ca cert
+      ca_cert_filename: howes_grocery_production_ca_cert.cer
+apache_additional_vhost_settings: |2
+      # Create an alias to the maintenance page used as error document.
+      Alias "/error" "/var/www/apps/howes_grocery/shared/public/system/"
+      ErrorDocument 503 /error/maintenance.html
+
+      # Return 503 error if the maintenance page exists.
+      RewriteEngine On
+      RewriteCond /var/www/apps/howes_grocery/shared/public/system/maintenance.html -f
+      RewriteRule !^/error/maintenance.html - [L,R=503]
+
+# Rails
+run_rails_checks: True
+rails_apps:
+  - rails_project_name: "{{ app_name }}"
+    rails_environment: production
+    rails_databases:
+      - environment: production
+        adapter: mysql2
+        name: "{{ app_name }}_production"
+        username: "{{ production_mysql_root_user_name }}"
+        password: "{{ production_mysql_root_password }}"
+        encoding: utf8
+        host: grocerydatabase.cfv9glgncba7.us-east-1.rds.amazonaws.com
+        port: 3306
+        # keep indentation below for output YAML to be valid
+        additional_configurations: |2
+            pool: 5
+            collation: utf8_general_ci
+    secret_key_base: "{{ production_rails_secret_key_base }}"
+    shared_directory: "/var/www/apps/{{ app_name }}/shared"
+    linked_directories: []
+    web_root: "/var/www/apps/{{ app_name }}"
+rails_apps_debian_native_dependencies: []
+rails_apps_redhat_native_dependencies: []
+bundler_global_config_content: ""
