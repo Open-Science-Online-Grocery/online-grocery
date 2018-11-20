@@ -7,11 +7,12 @@ const mapStateToProps = (state) => {
     selectedCategoryId, selectedCategoryType, categories, subcategories, subtags
   } = state.category;
   const tags = state.category.tags;
-  const tag = tags.length > 0 ? Object.values(tags)[0] : null; // TODO: Supply correct prop
+  // TODO: Change this if they want to choose which tag gets displayed as a tab
+  const firstTag = tags.length > 0 ? Object.values(tags)[0] : null;
   return ({
     selectedCategoryId,
     selectedCategoryType,
-    displayedTag: tag,
+    displayedTag: firstTag,
     categories,
     subcategories,
     tags,

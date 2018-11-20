@@ -4,9 +4,7 @@
 class Product < ApplicationRecord
   belongs_to :category
   belongs_to :subcategory
-  has_many :product_tags
-  # has_many :tags, through: :product_tags
-  # has_many :subtags, through: :product_tags
+  has_many :product_tags, dependent: :destroy
 
   scope :name_matches, ->(string) {
     where(arel_table[:name].matches("%#{string}%"))

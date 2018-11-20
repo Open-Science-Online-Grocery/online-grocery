@@ -8,11 +8,16 @@ RSpec.describe ProductFetcher do
   let(:product_3) { build(:product) }
   let(:product_4) { build(:product) }
   let(:condition) { build(:condition) }
+  let(:category_type) { nil }
+  let(:filter_id) { nil }
   let(:params) do
     {
       search_type: search_type,
       search_term: 'zip',
-      subcategory_id: 5,
+      selected_category_id: 4,
+      selected_subcategory_id: 5,
+      selected_category_type: category_type,
+      selected_filter_id: filter_id,
       condition_identifier: condition.uuid,
       sort_field: 'foo',
       sort_direction: 'asc'
@@ -28,6 +33,7 @@ RSpec.describe ProductFetcher do
   before do
     allow(Product).to receive(:name_matches) { [product_1, product_2] }
     allow(Product).to receive(:where) { [product_3, product_4] }
+    allow(Product).to receive_message_chain(:joins, :where) { [product_3, product_4] }
     allow(ProductSerializer).to receive(:new) { product_serializer }
     allow(product_serializer).to receive(:serialize).and_return(
       'first serialized product',
@@ -55,21 +61,48 @@ RSpec.describe ProductFetcher do
     end
   end
 
-  context 'when subcategory should be used to fetch products' do
+  context 'when category data should be used to fetch products' do
     let(:search_type) { 'category' }
 
-    it 'calls classes with the expected args' do
-      expect(Product).to receive(:where).with(subcategory_id: 5)
-      expect(Condition).to receive(:find_by).with(uuid: condition.uuid)
-      expect(ProductSerializer).to receive(:new).with(product_3, condition)
-      expect(ProductSerializer).to receive(:new).with(product_4, condition)
-      expect(ProductSorter).to receive(:new).with(
-        ['first serialized product', 'second serialized product'],
-        condition,
-        'foo',
-        'asc'
-      )
-      expect(subject.fetch_products).to eq 'the sorted products!'
+    context 'when the category type is `category`' do
+      let(:category_type) { 'category' }
+
+      it 'calls classes with the expected args' do
+        expect(Product).to receive(:where).with(subcategory_id: 5)
+        expect(Condition).to receive(:find_by).with(uuid: condition.uuid)
+        expect(ProductSerializer).to receive(:new).with(product_3, condition)
+        expect(ProductSerializer).to receive(:new).with(product_4, condition)
+        expect(ProductSorter).to receive(:new).with(
+          ['first serialized product', 'second serialized product'],
+          condition,
+          'foo',
+          'asc'
+        )
+        expect(subject.fetch_products).to eq 'the sorted products!'
+      end
+    end
+
+    context 'when the category type is `tag`' do
+      let(:category_type) { 'tag' }
+
+      it 'calls classes with the expected args' do
+        expect(Product.joins(:product_tags)).to receive(:where).with(
+          product_tags: {
+            tag_id: 4,
+            subtag_id: 5
+          }
+        )
+        expect(Condition).to receive(:find_by).with(uuid: condition.uuid)
+        expect(ProductSerializer).to receive(:new).with(product_3, condition)
+        expect(ProductSerializer).to receive(:new).with(product_4, condition)
+        expect(ProductSorter).to receive(:new).with(
+          ['first serialized product', 'second serialized product'],
+          condition,
+          'foo',
+          'asc'
+        )
+        expect(subject.fetch_products).to eq 'the sorted products!'
+      end
     end
   end
 end
