@@ -33,7 +33,8 @@ function getProducts() {
       searchTerm: state.search.term,
       searchType: state.search.type,
       sortField: state.sorting.selectedSortField,
-      sortDirection: state.sorting.sortDirection
+      sortDirection: state.sorting.sortDirection,
+      selectedFilterId: state.sorting.selectedFilterId
     };
     fromApi.jsonApiCall(
       routes.products(),
