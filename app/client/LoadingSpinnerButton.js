@@ -13,6 +13,7 @@ export default class LoadingSpinnerButton {
   }
 
   formIsInvalid() {
+    if (!this.$form[0].checkValidity()) return true;
     if (!this.$form.data('form-validation')) return false;
     return !this.$form.form('validate form');
   }
