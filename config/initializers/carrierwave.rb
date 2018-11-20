@@ -1,5 +1,5 @@
 credentials_key = :aws_staging if Rails.env.staging?
-credentials_key = :aws_procution if Rails.env.production?
+credentials_key = :aws_production if Rails.env.production?
 
 CarrierWave.configure do |config|
   if Rails.env.staging? || Rails.env.production?
