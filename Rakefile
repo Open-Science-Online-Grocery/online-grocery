@@ -2,6 +2,7 @@
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
 require_relative 'config/application'
+require_relative 'lib/tasks/structure_fixer.rb'
 
 Rails.application.load_tasks
 
@@ -24,5 +25,22 @@ if Rails.env.test? || Rails.env.development?
     sh 'bundle audit'
   end
 
-  task default: [:spec, :rubocop, :eslint, :bundler_audit, :npm_audit]
+  task default: [:spec, :rubocop, :eslint, :bundler_audit]
+  task ci:      [:default]
+end
+
+task('db:migrate' => ['db:drop_views']).enhance do
+  Rake::Task['db:create_views'].invoke
+  if Rails.application.config.active_record.schema_format == :sql && Rails.env.development?
+    Rake::Task["db:structure:dump"].invoke
+    StructureFixer.run
+  end
+end
+
+task('db:rollback' => ['db:drop_views']).enhance do
+  Rake::Task['db:create_views'].invoke
+  if Rails.application.config.active_record.schema_format == :sql && Rails.env.development?
+    Rake::Task["db:structure:dump"].invoke
+    StructureFixer.run
+  end
 end

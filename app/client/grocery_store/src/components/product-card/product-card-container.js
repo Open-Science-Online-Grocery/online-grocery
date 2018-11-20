@@ -1,29 +1,20 @@
-import React from 'react'
-import ProductCard from './product-card'
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import ProductCard from './product-card';
 import { cartActionCreators } from '../../reducers/cart/cart-actions';
 
-const mapDispatchToProps = function (dispatch) {
-    return {
-        handleAddToCart: (product, quantity) => {
-            dispatch(cartActionCreators.addToCart(product, quantity))
-        }
-    }
-}
+const mapStateToProps = state => (
+  {
+    sessionId: state.user.sessionId,
+    conditionIdentifier: state.user.conditionIdentifier
+  }
+);
 
-const mapStateToProps = function(state){
-    return {
-        sessionId: state.user.sessionId,
-        conditionIdentifier: state.user.conditionIdentifier
+const mapDispatchToProps = dispatch => (
+  {
+    handleAddToCart: (product, quantity) => {
+      dispatch(cartActionCreators.addToCart(product, quantity));
     }
-}
+  }
+);
 
-class ProductCardContainer extends React.Component {
-    render() {
-        return (
-            <ProductCard {...this.props} />
-        )
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductCardContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(ProductCard);

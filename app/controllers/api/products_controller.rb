@@ -2,6 +2,7 @@
 
 module Api
   class ProductsController < ApplicationController
+    skip_power_check
     skip_before_action :authenticate_user!
 
     def index

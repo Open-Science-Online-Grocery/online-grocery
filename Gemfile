@@ -5,9 +5,12 @@ ruby '2.4.2'
 
 gem 'bootsnap', require: false
 gem 'carrierwave'
+gem 'cocoon'
+gem 'consul'
 gem 'dentaku'
 gem 'devise'
 gem 'fog-aws'
+gem 'faraday'
 gem 'jbuilder'
 gem 'mysql2'
 gem 'puma'

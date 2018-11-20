@@ -14,6 +14,7 @@ AllCops:
     - '**/Rakefile'
     - '**/Vagrantfile'
     - '**/db/schema.rb'
+    - 'vendor/**/*'
   TargetRubyVersion: 2.4
   TargetRailsVersion: 5.2
 
@@ -51,9 +52,11 @@ Metrics/BlockLength:
     - '**/db/migrate/**/*'
     - '**/db/seeds/**/*'
     - '**/spec/**/*'
+    - '**/*.rake'
 Metrics/ClassLength:
   Exclude:
     - 'app/controllers/conditions_controller.rb'
+    - 'app/services/condition_manager.rb'
     - '**/db/migrate/**/*'
     - '**/db/seeds/**/*'
 Metrics/CyclomaticComplexity:

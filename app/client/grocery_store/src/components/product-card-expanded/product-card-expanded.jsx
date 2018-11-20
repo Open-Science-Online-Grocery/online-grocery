@@ -120,25 +120,26 @@ export default class ProductCardExpanded extends React.Component {
             </div>
             {
               this.props.servingSize
-                && <NutritionLabel nutritionFacts={{
-                    servingSize: this.props.servingSize,
-                    servings: this.props.servings,
-                    caloriesFromFat: this.props.caloriesFromFat,
-                    calories: this.props.calories,
-                    totalFat: this.props.totalFat,
-                    saturatedFat: this.props.saturatedFat,
-                    transFat: this.props.transFat,
-                    polyFat: this.props.polyFat,
-                    cholesterol: this.props.cholesterol,
-                    sodium: this.props.sodium,
-                    potassium: this.props.potassium,
-                    carbs: this.props.carbs,
-                    fiber: this.props.fiber,
-                    sugar: this.props.sugar,
-                    protein: this.props.protein,
-                    vitamins: this.props.vitamins,
-                  }}
-                />
+                && (
+                  <NutritionLabel
+                    nutritionFacts={{
+                      servingSize: this.props.servingSize,
+                      servings: this.props.servings,
+                      calories: this.props.calories,
+                      totalFat: this.props.totalFat,
+                      saturatedFat: this.props.saturatedFat,
+                      transFat: this.props.transFat,
+                      cholesterol: this.props.cholesterol,
+                      sodium: this.props.sodium,
+                      carbs: this.props.carbs,
+                      fiber: this.props.fiber,
+                      sugar: this.props.sugar,
+                      protein: this.props.protein,
+                      vitamins: this.props.vitamins
+                    }}
+                    css={this.props.nutritionLabelCss}
+                  />
+                )
             }
             <span className="product-card-expanded-ingredients bold">INGREDIENTS: </span>
             <span className="product-card-expanded-ingredients">{this.props.ingredients}</span>
@@ -162,7 +163,21 @@ ProductCardExpanded.propTypes = {
   labelImageUrl: PropTypes.string,
   labelPosition: PropTypes.string,
   labelSize: PropTypes.number,
-  handleAddToCart: PropTypes.func.isRequired
+  handleAddToCart: PropTypes.func.isRequired,
+  servings: PropTypes.string,
+  servingSize: PropTypes.string,
+  calories: PropTypes.number,
+  totalFat: PropTypes.number,
+  saturatedFat: PropTypes.number,
+  transFat: PropTypes.number,
+  cholesterol: PropTypes.string,
+  sodium: PropTypes.number,
+  carbs: PropTypes.number,
+  fiber: PropTypes.number,
+  sugar: PropTypes.number,
+  protein: PropTypes.number,
+  vitamins: PropTypes.string,
+  nutritionLabelCss: PropTypes.string
 };
 
 ProductCardExpanded.defaultProps = {
@@ -170,5 +185,19 @@ ProductCardExpanded.defaultProps = {
   labelImageUrl: null,
   labelPosition: null,
   labelSize: null,
-  description: null
+  description: null,
+  servings: null,
+  servingSize: null,
+  calories: null,
+  totalFat: null,
+  saturatedFat: null,
+  transFat: null,
+  cholesterol: null,
+  sodium: null,
+  carbs: null,
+  fiber: null,
+  sugar: null,
+  protein: null,
+  vitamins: null,
+  nutritionLabelCss: null
 };

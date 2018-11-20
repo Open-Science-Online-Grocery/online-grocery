@@ -11,7 +11,7 @@
         </div>
         <div class="field">
           <div class="ui radio checkbox">
-            <%= f.radio_button :sort_type, 'field', data: { refresh_form: true } %>
+            <%= f.radio_button :sort_type, Condition.sort_types.field, data: { refresh_form: true } %>
             <label>A specified field</label>
           </div>
           <div class="ui segment nested-fields <%= 'disabled' unless condition.sort_type == Condition.sort_types.field %>">
@@ -46,21 +46,19 @@
 
         <div class="field">
           <div class="ui radio checkbox">
-            <%= f.radio_button :sort_type, 'calculation', data: { refresh_form: true } %>
+            <%= f.radio_button :sort_type,  Condition.sort_types.calculation, data: { refresh_form: true } %>
             <label>The following calculation</label>
           </div>
         </div>
       </div>
       <div class="ui segment nested-calculator <%= 'disabled' unless condition.sort_type == Condition.sort_types.calculation %>">
-        <div class="ten wide column">
-          <div
-            data-calculator
-            data-variables="<%= Equation.individual_product_variables.to_json %>"
-            data-input-name="condition[sort_equation_tokens]"
-            data-tokens="<%= condition.sort_equation_tokens || [] %>"
-            data-equation-type="<%= Equation.types.sort %>"
-          ></div>
-        </div>
+        <div
+          data-calculator
+          data-variables="<%= Equation.individual_product_variables.to_json %>"
+          data-input-name="condition[sort_equation_tokens]"
+          data-tokens="<%= condition.sort_equation_tokens || [] %>"
+          data-equation-type="<%= Equation.types.sort %>"
+        ></div>
       </div>
     </div>
 

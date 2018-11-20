@@ -16,5 +16,7 @@ RSpec.describe Experiment, type: :model do
 
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
+    it { is_expected.to have_many(:experiment_results) }
+    it { is_expected.to have_many(:conditions) }
   end
 end

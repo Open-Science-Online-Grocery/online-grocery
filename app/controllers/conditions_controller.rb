@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class ConditionsController < ApplicationController
-  before_action :set_experiment
+  power :conditions, context: :set_experiment, map: {
+    %i[refresh_form new create edit update destroy] => :own_experiment
+  }
+
   before_action :set_condition
   before_action :set_breadcrumbs
   before_action :set_tab
@@ -10,6 +13,19 @@ class ConditionsController < ApplicationController
     manager = ConditionManager.new(@condition, condition_params)
     manager.assign_params
     render @condition.id? ? 'edit' : 'new'
+  end
+
+  def download_product_data
+    respond_to do |format|
+      format.csv do
+        send_data(
+          # TODO: consider adding Product scope argument, there are a lot of
+          # products. Manager is already set up to take optional scope argument
+          ProductDataCsvManager.generate_csv,
+          filename: 'product_categories_data.csv'
+        )
+      end
+    end
   end
 
   def new
@@ -61,10 +77,6 @@ class ConditionsController < ApplicationController
     redirect_to experiment_path(@experiment)
   end
 
-  def download_data
-    redirect_to @experiment
-  end
-
   private def set_condition
     if params[:id].present?
       condition = Condition.find(params[:id])
@@ -88,9 +100,35 @@ class ConditionsController < ApplicationController
       :default_sort_field_id,
       :default_sort_order,
       :sort_equation_tokens,
+      :only_add_from_detail_page,
       :nutrition_styles,
+      :csv_file,
+      :filter_by_custom_categories,
+      :show_food_count,
+      :show_price_total,
+      :food_count_format,
+      :style_use_type,
+      :nutrition_equation_tokens,
+      :may_add_to_cart_by_dollar_amount,
+      :minimum_spend,
+      :maximum_spend,
       product_sort_field_ids: [],
-      label_attributes: %i[id image image_cache name built_in]
+      label_attributes: %i[id image image_cache name built_in],
+      condition_cart_summary_labels_attributes: [
+        :id,
+        :_destroy,
+        :cart_summary_label_id,
+        :label_type,
+        :label_equation_tokens,
+        :equation,
+        cart_summary_label_attributes: %i[
+          id
+          image
+          image_cache
+          name
+          built_in
+        ]
+      ]
     )
   end
   # rubocop:enable Metrics/MethodLength

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resources :conditions do
       collection do
         put :refresh_form
+        get :download_product_data
       end
     end
   end
@@ -28,6 +29,9 @@ Rails.application.routes.draw do
       get :checkout
     end
   end
+
+  resources :resource_downloads, only: [:show]
+
   get '/store/thank-you', to: 'stores#thank_you'
 
   root 'experiments#index'

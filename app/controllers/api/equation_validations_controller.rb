@@ -2,6 +2,8 @@
 
 module Api
   class EquationValidationsController < ApplicationController
+    skip_power_check
+
     def show
       equation = Equation.new(params[:tokens], params[:type])
       json = {
