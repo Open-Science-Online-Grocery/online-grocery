@@ -26,6 +26,7 @@ if Rails.env.test? || Rails.env.development?
   end
 
   task default: [:spec, :rubocop, :eslint, :bundler_audit]
+  task ci:      [:default]
 end
 
 task('db:migrate' => ['db:drop_views']).enhance do
