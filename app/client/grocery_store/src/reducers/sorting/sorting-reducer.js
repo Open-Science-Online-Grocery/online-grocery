@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { userActionTypes } from '../user/user-actions';
 import { sortingActionTypes } from './sorting-actions';
+import { filteringActionTypes } from '../filtering/filtering-actions';
 
 function sortFields(state = [], action) {
   switch (action.type) {
@@ -15,6 +16,15 @@ function selectedSortField(state = null, action) {
   switch (action.type) {
     case sortingActionTypes.SET_SORTING:
       return action.selectedSortField;
+    default:
+      return state;
+  }
+}
+
+function selectedFilterId(state = null, action) {
+  switch (action.type) {
+    case filteringActionTypes.SET_FILTER:
+      return action.selectedFilterId;
     default:
       return state;
   }
@@ -42,7 +52,8 @@ const sorting = combineReducers({
   sortFields,
   selectedSortField,
   sortDirection,
-  filterByTags
+  filterByTags,
+  selectedFilterId
 });
 
 export default sorting;
