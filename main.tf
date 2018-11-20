@@ -7,8 +7,15 @@ provider "aws" {
 
 variable "aws_access_key" {}
 variable "aws_secret_key" {}
-variable "database_user" {}
-variable "database_password" {}
+
+variable "database_user" {
+  default = ""
+}
+
+variable "database_password" {
+  default = ""
+}
+
 variable "vpc_cidr" {}
 
 variable "vpc_public_subnets" {

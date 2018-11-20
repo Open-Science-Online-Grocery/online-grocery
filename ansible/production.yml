@@ -1,0 +1,63 @@
+---
+## USAGE INSTRUCTIONS ##
+# Make sure you have this file: ~/.ansible/vault/scimed.txt
+# Get it from a devops person if you don't have them.
+# Install the roles in the local roles directory for this project:
+# $> ansible-galaxy install -r requirements.yml --roles-path ./roles
+#
+# Run the playbook:
+# $> ansible-playbook production.yml
+#
+# If you can't login to the server, please make sure the server
+# is correctly set up and authorized with your SSH public key.
+- name: Howes Grocery
+  hosts: production
+  vars_files:
+    - group_vars/production/vars.yml
+    - group_vars/production/vault.yml
+
+  tasks:
+    - block:
+      - name: mkswap
+        command: mkswap /dev/xvdb
+        when: ansible_swaptotal_mb < 1
+      - name: swapon
+        command: swapon /dev/xvdb
+        when: ansible_swaptotal_mb < 1
+      - name: write to fstab
+        mount:
+          path: none
+          src: /dev/xvdb
+          fstype: swap
+          opts: sw
+          state: present
+      become: True
+    - block:
+      - name: Install MySQL client
+        yum:
+          name: "{{ item }}"
+          state: present
+        with_items:
+          - mysql
+          - mysql-devel
+      become: true
+    - block:
+      - name: Ansible create file with content example
+        copy:
+          dest: "/var/www/apps/howes_grocery/shared/config/master.key"
+          content: "{{ vault_master_key }}"
+    - block:
+      - name: add s3 bucket to env
+        lineinfile:
+          path: /home/deployer/.bash_profile
+          line: 'export AWS_S3_BUCKET="com-howes-grocery-production"'
+
+  roles:
+    - scimed.common
+    - scimed.rbenv
+    - scimed.capistrano
+    - scimed.passenger
+    - scimed.apache
+    - scimed.rails
+    - yarn
+    - letsencrypt
