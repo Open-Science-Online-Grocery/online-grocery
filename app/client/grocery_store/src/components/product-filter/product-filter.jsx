@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import './product-filter.scss';
+import './product-filter.scss';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export default class ProductFilter extends React.Component {
@@ -15,7 +15,7 @@ export default class ProductFilter extends React.Component {
   }
 
   selectOptions() {
-    const blankOption = (<option value="" key="0" />);
+    const blankOption = (<option value="" key="0">None</option>);
     const subtagOptions = this.props.subtags.map(
       subtag => (
         <option
