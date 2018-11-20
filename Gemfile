@@ -3,11 +3,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.4.2'
 
-gem 'aws-sdk-s3'
 gem 'bootsnap', require: false
 gem 'carrierwave'
 gem 'dentaku'
 gem 'devise'
+gem 'fog-aws'
 gem 'jbuilder'
 gem 'mysql2'
 gem 'puma'
