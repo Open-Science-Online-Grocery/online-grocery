@@ -78,18 +78,18 @@ export default class TopNav extends React.Component {
       tags
     } = this.props;
 
-    if (selectedCategoryType === 'tag') {
-      return tags[selectedCategoryId - 1].name;
+    if (selectedCategoryType === 'tag' && tags[selectedCategoryId - 1]) {
+      return (tags[selectedCategoryId - 1].name);
     }
-    return categories[selectedCategoryId - 1].name;
+
+    if (selectedCategoryType === 'category' && categories[selectedCategoryId - 1]) {
+      return (categories[selectedCategoryId - 1].name);
+    }
+
+    return null;
   }
 
   render() {
-    const {
-      selectedCategoryId,
-      categories
-    } = this.props;
-
     return (
       <div>
         <div className="top-nav">
@@ -97,14 +97,9 @@ export default class TopNav extends React.Component {
           {this.tagTab()}
         </div>
         <SearchContainer />
-        {
-          categories[selectedCategoryId - 1]
-            && (
-              <div className="title">
-                {this.categoryTitle()}
-              </div>
-            )
-        }
+        <div className="title">
+          {this.categoryTitle()}
+        </div>
       </div>
     );
   }
