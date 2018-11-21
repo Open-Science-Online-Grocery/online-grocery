@@ -34,11 +34,14 @@
     // semantic-ui styling.
     "jsx-a11y/label-has-for": [2, { "required": { "every": ["id"] } }],
     "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/alt-text": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
     "no-param-reassign": ["error", { "props": false }],
     "no-plusplus": "off",
     "no-underscore-dangle": "off",
     "prefer-destructuring": "off",
     "react/destructuring-assignment": "off",
-    "react/jsx-one-expression-per-line": "off"
+    "react/jsx-one-expression-per-line": "off",
+    "react/prefer-stateless-function": "off"
   }
 }

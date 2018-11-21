@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as routes from '../../../../../utils/routes';
 import * as fromApi from '../../../../../utils/api_call';
 import './order-summary.scss';
@@ -41,24 +42,22 @@ export default class OrderSummary extends React.Component {
   }
 
   listCartItems() {
-    const listedItems = this.props.cart.items.map((item) => {
-      return (
-        <div className="order-item">
-          <img src={item.imageSrc} className="order-item-image"/>
-          <div className="order-item-name">{item.name} </div>
-          <span className="order-item-detail">
-            {
-              item.quantity > 1
-                && <span className="order-item-quantity">{item.quantity} x </span>
-            }
-            <span className="order-item-price">
-              ${parseFloat(Math.round(item.price * 100) / 100).toFixed(2)}
-            </span>
+    const listedItems = this.props.cart.items.map(item => (
+      <div className="order-item">
+        <img src={item.imageSrc} className="order-item-image" />
+        <div className="order-item-name">{item.name} </div>
+        <span className="order-item-detail">
+          {
+            item.quantity > 1
+              && <span className="order-item-quantity">{item.quantity} x </span>
+          }
+          <span className="order-item-price">
+            ${parseFloat(Math.round(item.price * 100) / 100).toFixed(2)}
           </span>
-          <span onClick={() => this.removeFromCart(item)} className="order-delete-item">X</span>
-        </div>
-      );
-    });
+        </span>
+        <span onClick={() => this.removeFromCart(item)} className="order-delete-item">X</span>
+      </div>
+    ));
     listedItems.push(
       <div className="order-item bold">Subtotal
         <span className="order-item-detail normal-height">
@@ -101,3 +100,21 @@ export default class OrderSummary extends React.Component {
     );
   }
 }
+
+OrderSummary.propTypes = {
+  cart: PropTypes.shape({
+    count: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    items: PropTypes.arrayOf(
+      PropTypes.shape({
+        quantity: PropTypes.number.isRequired,
+        price: PropTypes.string.isRequired, // TODO: Change this to number
+        name: PropTypes.string.isRequired
+      })
+    )
+  }).isRequired,
+  handleClearCart: PropTypes.func.isRequired,
+  handleRemoveFromCart: PropTypes.func.isRequired,
+  sessionId: PropTypes.string.isRequired,
+  conditionIdentifier: PropTypes.string.isRequired
+};
