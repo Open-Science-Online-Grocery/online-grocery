@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './product-filter.scss';
 
-// eslint-disable-next-line react/prefer-stateless-function
 export default class ProductFilter extends React.Component {
   constructor(props) {
     super(props);

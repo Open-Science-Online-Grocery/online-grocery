@@ -6,19 +6,24 @@ import './top-nav.scss';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export default class TopNav extends React.Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.categoryTabs = this.categoryTabs.bind(this);
+    this.tagTab = this.tagTab.bind(this);
+    this.categoryTitle = this.categoryTitle.bind(this);
+  }
+
+  categoryTabs() {
     const {
       selectedCategoryId,
       selectedCategoryType,
-      displayedTag,
       categories,
       subcategories,
-      tags,
-      subtags,
       handleSetCategory
     } = this.props;
     const duplicatedSubcats = Object.assign([], subcategories);
-    const categoryTabs = categories.map((tabCategory) => {
+
+    return categories.map((tabCategory) => {
       const tabSubcats = [];
       while (duplicatedSubcats.length > 0 && duplicatedSubcats[0].categoryId === tabCategory.id) {
         tabSubcats.push(duplicatedSubcats.shift());
@@ -36,45 +41,67 @@ export default class TopNav extends React.Component {
         />
       );
     });
+  }
 
-    const tagTab = () => {
-      if (displayedTag) {
-        const subtagsForTab = subtags.filter(subtag => subtag.tagId === displayedTag.id);
-        return (
-          <Tab
-            tabName={displayedTag.name}
-            key={`tag-${displayedTag.id}`}
-            categoryId={displayedTag.id}
-            categoryType="tag"
-            subcats={subtagsForTab}
-            selectedCategoryId={selectedCategoryId}
-            selectedCategoryType={selectedCategoryType}
-            handleSetCategory={handleSetCategory}
-          />
-        );
-      }
-      return null;
-    };
+  tagTab() {
+    const {
+      selectedCategoryId,
+      selectedCategoryType,
+      displayedTag,
+      subtags,
+      handleSetCategory
+    } = this.props;
 
-    const categoryTitle = () => {
-      if (selectedCategoryType === 'tag') {
-        return tags[selectedCategoryId - 1].name;
-      }
-      return categories[selectedCategoryId - 1].name;
-    };
+    if (displayedTag) {
+      const subtagsForTab = subtags.filter(subtag => subtag.tagId === displayedTag.id);
+      return (
+        <Tab
+          tabName={displayedTag.name}
+          key={`tag-${displayedTag.id}`}
+          categoryId={displayedTag.id}
+          categoryType="tag"
+          subcats={subtagsForTab}
+          selectedCategoryId={selectedCategoryId}
+          selectedCategoryType={selectedCategoryType}
+          handleSetCategory={handleSetCategory}
+        />
+      );
+    }
+    return null;
+  }
+
+  categoryTitle() {
+    const {
+      selectedCategoryId,
+      selectedCategoryType,
+      categories,
+      tags
+    } = this.props;
+
+    if (selectedCategoryType === 'tag') {
+      return tags[selectedCategoryId - 1].name;
+    }
+    return categories[selectedCategoryId - 1].name;
+  }
+
+  render() {
+    const {
+      selectedCategoryId,
+      categories
+    } = this.props;
 
     return (
       <div>
         <div className="top-nav">
-          {categoryTabs}
-          {tagTab()}
+          {this.categoryTabs()}
+          {this.tagTab()}
         </div>
         <SearchContainer />
         {
           categories[selectedCategoryId - 1]
             && (
               <div className="title">
-                {categoryTitle()}
+                {this.categoryTitle()}
               </div>
             )
         }
@@ -97,6 +124,11 @@ TopNav.propTypes = {
     })
   ).isRequired,
   subcategories: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string
+    })
+  ).isRequired,
+  tags: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string
     })

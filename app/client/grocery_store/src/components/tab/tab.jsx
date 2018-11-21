@@ -20,8 +20,6 @@ export default class Tab extends React.Component {
 
   buildSubcategories() {
     return this.props.subcats.map(subcat => (
-      /* eslint-disable jsx-a11y/no-static-element-interactions */
-      /* eslint-disable jsx-a11y/click-events-have-key-events */
       <div
         className="tab-subcat-bar"
         key={subcat.id}
@@ -39,8 +37,6 @@ export default class Tab extends React.Component {
           {subcat.name}
         </div>
       </div>
-      /* eslint-enable jsx-a11y/no-static-element-interactions */
-      /* eslint-enable jsx-a11y/click-events-have-key-events */
     ));
   }
 
@@ -81,7 +77,7 @@ Tab.propTypes = {
     })
   ).isRequired,
   selectedCategoryId: PropTypes.number,
-  selectedCategoryType: PropTypes.string, // should be 'category' or 'tab'
+  selectedCategoryType: PropTypes.string, // should be 'category' or 'tag'
   handleSetCategory: PropTypes.func.isRequired
 };
 

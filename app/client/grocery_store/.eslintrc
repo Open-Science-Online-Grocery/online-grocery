@@ -4,6 +4,8 @@
     // is the appropriate prop type for react router's `history`
     "react/forbid-prop-types": "off",
     // we seem to need to use `require` for image source paths for webpacker
-    "global-require": "off"
+    "global-require": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/click-events-have-key-events": "off"
   }
 }
