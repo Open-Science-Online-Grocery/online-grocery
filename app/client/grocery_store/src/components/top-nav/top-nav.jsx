@@ -4,46 +4,114 @@ import Tab from '../tab/tab';
 import SearchContainer from '../search/search-container';
 import './top-nav.scss';
 
+// eslint-disable-next-line react/prefer-stateless-function
 export default class TopNav extends React.Component {
-  render() {
-    const subcats = Object.assign([], this.props.subcategories);
-    const tabs = this.props.categories.map((category) => {
+  constructor(props) {
+    super(props);
+    this.categoryTabs = this.categoryTabs.bind(this);
+    this.tagTab = this.tagTab.bind(this);
+    this.categoryTitle = this.categoryTitle.bind(this);
+  }
+
+  categoryTabs() {
+    const {
+      selectedCategoryId,
+      selectedCategoryType,
+      categories,
+      subcategories,
+      handleSetCategory
+    } = this.props;
+    const duplicatedSubcats = Object.assign([], subcategories);
+
+    return categories.map((tabCategory) => {
       const tabSubcats = [];
-      while (subcats.length > 0 && subcats[0].categoryId === category.id) {
-        tabSubcats.push(subcats.shift());
+      while (duplicatedSubcats.length > 0 && duplicatedSubcats[0].categoryId === tabCategory.id) {
+        tabSubcats.push(duplicatedSubcats.shift());
       }
       return (
         <Tab
-          tabName={category.name}
-          key={category.id}
-          id={category.id}
+          tabName={tabCategory.name}
+          key={`category-${tabCategory.id}`}
+          categoryId={tabCategory.id}
+          categoryType="category"
           subcats={tabSubcats}
-          category={this.props.category}
-          handleSetCategory={this.props.handleSetCategory}
+          selectedCategoryId={selectedCategoryId}
+          selectedCategoryType={selectedCategoryType}
+          handleSetCategory={handleSetCategory}
         />
       );
     });
+  }
+
+  tagTab() {
+    const {
+      selectedCategoryId,
+      selectedCategoryType,
+      displayedTag,
+      subtags,
+      handleSetCategory
+    } = this.props;
+
+    if (displayedTag) {
+      const subtagsForTab = subtags.filter(subtag => subtag.tagId === displayedTag.id);
+      return (
+        <Tab
+          tabName={displayedTag.name}
+          key={`tag-${displayedTag.id}`}
+          categoryId={displayedTag.id}
+          categoryType="tag"
+          subcats={subtagsForTab}
+          selectedCategoryId={selectedCategoryId}
+          selectedCategoryType={selectedCategoryType}
+          handleSetCategory={handleSetCategory}
+        />
+      );
+    }
+    return null;
+  }
+
+  categoryTitle() {
+    const {
+      selectedCategoryId,
+      selectedCategoryType,
+      categories,
+      tags
+    } = this.props;
+
+    if (selectedCategoryType === 'tag' && tags[selectedCategoryId - 1]) {
+      return (tags[selectedCategoryId - 1].name);
+    }
+
+    if (selectedCategoryType === 'category' && categories[selectedCategoryId - 1]) {
+      return (categories[selectedCategoryId - 1].name);
+    }
+
+    return null;
+  }
+
+  render() {
     return (
       <div>
         <div className="top-nav">
-          {tabs}
+          {this.categoryTabs()}
+          {this.tagTab()}
         </div>
         <SearchContainer />
-        {
-          this.props.categories[this.props.category - 1]
-            && (
-              <div className="title">
-                {this.props.categories[this.props.category - 1].name}
-              </div>
-            )
-        }
+        <div className="title">
+          {this.categoryTitle()}
+        </div>
       </div>
     );
   }
 }
 
 TopNav.propTypes = {
-  category: PropTypes.number,
+  selectedCategoryId: PropTypes.number,
+  selectedCategoryType: PropTypes.string,
+  displayedTag: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string
+  }),
   categories: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
@@ -55,9 +123,21 @@ TopNav.propTypes = {
       name: PropTypes.string
     })
   ).isRequired,
+  tags: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string
+    })
+  ).isRequired,
+  subtags: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string
+    })
+  ).isRequired,
   handleSetCategory: PropTypes.func.isRequired
 };
 
 TopNav.defaultProps = {
-  category: null
+  selectedCategoryId: null,
+  selectedCategoryType: null,
+  displayedTag: null
 };

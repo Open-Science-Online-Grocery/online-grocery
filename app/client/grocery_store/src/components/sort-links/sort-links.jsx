@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import './sort-links.scss';
 
 export default class SortLinks extends React.Component {
-  nextSortDirecton(selected) {
+  nextSortDirection(selected) {
     if (!selected) return 'asc';
     return this.props.sortDirection === 'desc' ? 'asc' : 'desc';
   }
 
   sortButton(fieldName) {
     const selected = fieldName === this.props.selectedSortField;
-    const nextSortDirecton = this.nextSortDirecton(selected);
-    const onClick = () => this.props.handleClick(fieldName, nextSortDirecton);
+    const nextSortDirection = this.nextSortDirection(selected);
+    const onClick = () => this.props.handleClick(fieldName, nextSortDirection);
     return (
       <button
         key={fieldName}

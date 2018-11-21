@@ -1,5 +1,18 @@
 @import "../../base/base";
 
+// These styles are to dynamically allow different numbers of tabs.
+// A new entry in the style below must be added for each possible number
+// of tabs. See https://stackoverflow.com/questions/8720931/can-css-detect-the-number-of-children-an-element-has
+.tab-container:first-child:nth-last-child(8),
+.tab-container:first-child:nth-last-child(8) ~ .tab-container {
+  width: 12.5%
+}
+
+.tab-container:first-child:nth-last-child(7),
+.tab-container:first-child:nth-last-child(7) ~ .tab-container {
+  width: 14.285%;
+}
+
 .tab-container {
   width: 14.285%;
   height: 40px;

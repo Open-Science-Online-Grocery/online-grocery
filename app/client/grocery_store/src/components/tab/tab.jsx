@@ -23,7 +23,15 @@ export default class Tab extends React.Component {
       <div
         className="tab-subcat-bar"
         key={subcat.id}
-        onClick={() => this.props.handleSetCategory(this.props.id, subcat.id)}
+        onClick={
+          () => (
+            this.props.handleSetCategory(
+              this.props.categoryId,
+              subcat.id,
+              this.props.categoryType
+            )
+          )
+        }
       >
         <div className="tab-subcat-title">
           {subcat.name}
@@ -35,9 +43,13 @@ export default class Tab extends React.Component {
   render() {
     return (
       <div
-        className={this.props.id === this.props.category ? 'tab-container selected' : 'tab-container'}
-        onMouseEnter={() => this.openDropdown()}
-        onMouseLeave={() => this.closeDropdown()}
+        className={
+          this.props.categoryId === this.props.selectedCategoryId
+          && this.props.categoryType === this.props.selectedCategoryType
+            ? 'tab-container selected' : 'tab-container'
+        }
+        onMouseEnter={this.openDropdown}
+        onMouseLeave={this.closeDropdown}
       >
         <div className="tab">
           {this.props.tabName}
@@ -57,16 +69,19 @@ export default class Tab extends React.Component {
 
 Tab.propTypes = {
   tabName: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  categoryId: PropTypes.number.isRequired,
+  categoryType: PropTypes.string.isRequired,
   subcats: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string
     })
   ).isRequired,
-  category: PropTypes.number,
+  selectedCategoryId: PropTypes.number,
+  selectedCategoryType: PropTypes.string, // should be 'category' or 'tag'
   handleSetCategory: PropTypes.func.isRequired
 };
 
 Tab.defaultProps = {
-  category: null
+  selectedCategoryId: null,
+  selectedCategoryType: null
 };

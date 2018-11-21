@@ -23,6 +23,10 @@ function setUser(sessionId, conditionIdentifier) {
 //     subcategories: [
 //       { id: 3, categoryId: 1, displayOrder: 1, name: 'Water' },
 //       { id: 4, categoryId: 1, displayOrder: 2, name: 'Juice' },
+//     tags: [{ id: 1, name: 'Vegetarian' }, { id: 2, name: 'Vegan' }],
+//     subtags: [
+//       { id: 3, tagId: 1, name: 'Dairy-free' },
+//       { id: 4, tagId: 1, name: 'Tofu' },
 //     ]
 //   }
 function setConditionData(conditionData) {
@@ -42,7 +46,8 @@ function sessionIdSubmitted(sessionId) {
       dispatch(
         categoryActionCreators.updateCategory(
           data.categories[0].id,
-          data.subcategories[0].id
+          data.subcategories[0].id,
+          'category'
         )
       );
     };

@@ -103,6 +103,7 @@ class ConditionsController < ApplicationController
       :only_add_from_detail_page,
       :nutrition_styles,
       :csv_file,
+      :active_tag_csv,
       :filter_by_custom_categories,
       :show_food_count,
       :show_price_total,
