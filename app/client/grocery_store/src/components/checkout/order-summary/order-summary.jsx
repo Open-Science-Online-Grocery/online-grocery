@@ -58,32 +58,69 @@ export default class OrderSummary extends React.Component {
         <span onClick={() => this.removeFromCart(item)} className="order-delete-item">X</span>
       </div>
     ));
-    listedItems.push(
-      <div className="order-item bold">Subtotal
-        <span className="order-item-detail normal-height">
-          <span className="order-item-price bold">
-            ${parseFloat(Math.round(this.props.cart.price * 100) / 100).toFixed(2)}
-          </span>
-        </span>
-      </div>
-    );
-    listedItems.push(
-      <div className="order-item bold">Sales tax (7.5%)
-        <span className="order-item-detail normal-height">
-          <span className="order-item-price">
-            ${parseFloat(Math.round(this.props.cart.price * 100) * 0.075 / 100).toFixed(2)}
-          </span>
-        </span>
-      </div>
-    );
-    listedItems.push(
-      <div className="order-item bold order-final-total">Total
-        <span className="order-item-detail">
-          ${parseFloat(Math.round(this.props.cart.price * 100) * 1.075 / 100).toFixed(2)}
-        </span>
-      </div>
-    );
     return listedItems;
+  }
+
+  cartTotalSection() {
+    if (!this.props.showPriceTotal) return null;
+    return (
+      <div className="cart-total-section">
+        <div className="order-item bold">Subtotal
+          <span className="order-item-detail normal-height">
+            <span className="order-item-price bold">
+              ${parseFloat(Math.round(this.props.cart.price * 100) / 100).toFixed(2)}
+            </span>
+          </span>
+        </div>
+
+        <div className="order-item bold">Sales tax (7.5%)
+          <span className="order-item-detail normal-height">
+            <span className="order-item-price">
+              ${parseFloat(Math.round(this.props.cart.price * 100) * 0.075 / 100).toFixed(2)}
+            </span>
+          </span>
+        </div>
+
+        <div className="order-item bold order-final-total">Total
+          <span className="order-item-detail">
+            ${parseFloat(Math.round(this.props.cart.price * 100) * 1.075 / 100).toFixed(2)}
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  healthLabelsSection() {
+    if (!this.props.showFoodCount) return null;
+    return (
+      <div className="order-item bold">
+        Healthy Choices
+        <span className="order-item-detail normal-height">
+          <span className="order-item-price">{this.healthyChoicesValue()}</span>
+        </span>
+      </div>
+    );
+  }
+
+  healthyChoicesValue() {
+    if (this.props.foodCountFormat === 'ratio') {
+      return (`${this.numberOfHealthyChoices()} out of ${this.props.cart.count} products`);
+    }
+    return (
+      `${this.percentageOfHealthyChoices()}%`
+    );
+  }
+
+  numberOfHealthyChoices() {
+    return 3; // TODO: How do we get this number?
+  }
+
+  percentageOfHealthyChoices() {
+    return (
+      Math.round(
+        this.numberOfHealthyChoices() / this.props.cart.count * 100
+      )
+    );
   }
 
   render() {
@@ -93,6 +130,8 @@ export default class OrderSummary extends React.Component {
           Review Order
         </div>
         {this.listCartItems()}
+        {this.healthLabelsSection()}
+        {this.cartTotalSection()}
         <button type="submit" onClick={() => this.clearCart()} className="checkout-button bold">
           Complete Order
         </button>
@@ -116,5 +155,12 @@ OrderSummary.propTypes = {
   handleClearCart: PropTypes.func.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
   sessionId: PropTypes.string.isRequired,
-  conditionIdentifier: PropTypes.string.isRequired
+  conditionIdentifier: PropTypes.string.isRequired,
+  foodCountFormat: PropTypes.string, // should be 'percent' or 'ratio'
+  showFoodCount: PropTypes.bool.isRequired,
+  showPriceTotal: PropTypes.bool.isRequired
+};
+
+OrderSummary.defaultProps = {
+  foodCountFormat: 'percent'
 };
