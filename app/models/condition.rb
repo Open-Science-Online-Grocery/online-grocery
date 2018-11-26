@@ -108,4 +108,11 @@ class Condition < ApplicationRecord
       Equation.types.nutrition
     )
   end
+
+  def cart_summary_labels_equations
+    @cart_summary_labels_equations ||=
+      condition_cart_summary_labels.map do |condition_cart_summary_label|
+        condition_cart_summary_label
+      end
+  end
 end

@@ -2,10 +2,12 @@
 
 # join model between Condition and CartSummaryLabel
 class ConditionCartSummaryLabel < ApplicationRecord
-  attr_writer :label_type, :equation
+  attr_writer :label_type
 
   delegate :built_in, :name, :image, :image?,
            to: :cart_summary_label
+  delegate :image_url, to: :cart_summary_label, prefix: true, allow_nil: true
+  delegate :label_types, to: :class
 
   belongs_to :condition
   belongs_to :cart_summary_label
@@ -18,12 +20,14 @@ class ConditionCartSummaryLabel < ApplicationRecord
 
   def label_type
     return @label_type if @label_type
-    cart_summary_label.try(:built_in) ? 'provided' : 'custom'
+    return label_types.provided if cart_summary_label.try(:built_in)
+    label_types.custom
   end
 
-  def equation
-    return @equation if @equation
-    no_tokens = label_equation_tokens == '[]' || label_equation_tokens.nil?
-    no_tokens ? 'false' : 'true'
+  def label_equation
+    @label_equation ||= Equation.new(
+      label_equation_tokens,
+      Equation.types.label
+    )
   end
 end

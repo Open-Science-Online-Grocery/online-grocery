@@ -6,12 +6,7 @@ const mapStateToProps = state => (
   {
     cart: state.cart,
     sessionId: state.user.sessionId,
-    conditionIdentifier: state.user.conditionIdentifier,
-    // TODO: Get real props
-    foodCountFormat: 'ratio',
-    showFoodCount: true,
-    showPriceTotal: true
-    // custom label attributes
+    conditionIdentifier: state.user.conditionIdentifier
   }
 );
 

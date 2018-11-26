@@ -62,7 +62,7 @@ export default class OrderSummary extends React.Component {
   }
 
   cartTotalSection() {
-    if (!this.props.showPriceTotal) return null;
+    if (!this.props.cart.showPriceTotal) return null;
     return (
       <div className="cart-total-section">
         <div className="order-item bold">Subtotal
@@ -91,7 +91,7 @@ export default class OrderSummary extends React.Component {
   }
 
   healthLabelsSection() {
-    if (!this.props.showFoodCount) return null;
+    if (!this.props.cart.showFoodCount) return null;
     return (
       <div className="order-item bold">
         Healthy Choices
@@ -103,7 +103,7 @@ export default class OrderSummary extends React.Component {
   }
 
   healthyChoicesValue() {
-    if (this.props.foodCountFormat === 'ratio') {
+    if (this.props.cart.foodCountFormat === 'ratio') {
       return (`${this.numberOfHealthyChoices()} out of ${this.props.cart.count} products`);
     }
     return (
@@ -144,6 +144,9 @@ OrderSummary.propTypes = {
   cart: PropTypes.shape({
     count: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
+    showPriceTotal: PropTypes.bool.isRequired,
+    showFoodCount: PropTypes.bool.isRequired,
+    foodCountFormat: PropTypes.string.isRequired, // should be 'percent' or 'ratio'
     items: PropTypes.arrayOf(
       PropTypes.shape({
         quantity: PropTypes.number.isRequired,
@@ -155,12 +158,5 @@ OrderSummary.propTypes = {
   handleClearCart: PropTypes.func.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
   sessionId: PropTypes.string.isRequired,
-  conditionIdentifier: PropTypes.string.isRequired,
-  foodCountFormat: PropTypes.string, // should be 'percent' or 'ratio'
-  showFoodCount: PropTypes.bool.isRequired,
-  showPriceTotal: PropTypes.bool.isRequired
-};
-
-OrderSummary.defaultProps = {
-  foodCountFormat: 'percent'
+  conditionIdentifier: PropTypes.string.isRequired
 };
