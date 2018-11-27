@@ -20,12 +20,12 @@ RSpec.describe ProductSerializer do
     )
   end
   let(:label_equation) do
-    instance_double('Equation', evaluate: label_applies)
+    instance_double('Equations::Label', evaluate: label_applies)
   end
   let(:label_applies) { false }
   let(:style_use_type) { 'calculation' }
   let(:nutrition_equation) do
-    instance_double('Equation', evaluate: nutrition_equation_applies)
+    instance_double('Equations::Nutrition', evaluate: nutrition_equation_applies)
   end
   let(:nutrition_equation_applies) { false }
 

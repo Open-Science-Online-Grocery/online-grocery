@@ -16,7 +16,7 @@ RSpec.describe 'Configuring the cart summary', :feature do
   it 'allows cart summary label configuration', :js do
     force_click(find('.item[data-tab="cart-summary"]'))
 
-    expect(find('#condition_show_price_total')).not_to be_checked
+    expect(find('#condition_show_price_total')).to be_checked
     expect(find('#condition_show_food_count')).not_to be_checked
 
     expect_form_refresh do
@@ -27,7 +27,7 @@ RSpec.describe 'Configuring the cart summary', :feature do
     within('.tab.segment[data-tab="cart-summary"]') do
       expect(page).to have_no_content 'Use custom image'
     end
-    force_click_on('Add another cart summary image')
+    force_click_on('Add a cart summary image')
 
     # Invalid save
     force_click_on 'Save'
@@ -47,8 +47,11 @@ RSpec.describe 'Configuring the cart summary', :feature do
       expect(first('label', text: 'Use provided image').sibling('input', visible: false)).to be_checked
     end
 
-    # TODO: Add `expect_form_refresh` here when preview is working
-    semantic_select('Cart summary label', 'Organic')
+    expect_form_refresh do
+      within(first('[data-cart-summary-label]')) do
+        semantic_select('Cart summary label', 'Organic')
+      end
+    end
 
     expect_form_refresh do
       within(first('[data-cart-summary-label]')) do
@@ -62,7 +65,7 @@ RSpec.describe 'Configuring the cart summary', :feature do
     within(first('[data-cart-summary-label]')) do
       within('div.calculator') do
         force_click find('.ui.selection.dropdown')
-        force_click find('div.item', text: 'Calories per serving', exact_text: true)
+        force_click find('div.item', text: 'Average calories per serving', exact_text: true)
         force_click_on('Insert field')
 
         force_click_on('Test Calculation')
@@ -84,12 +87,13 @@ RSpec.describe 'Configuring the cart summary', :feature do
     expect(page).to have_content 'Condition successfully updated'
 
     force_click(find('.item[data-tab="cart-summary"]'))
+
     within(first('[data-cart-summary-label]')) do
       expect(first('label', text: 'Use provided image').sibling('input', visible: false)).to be_checked
       expect(page).to have_selector('.item.active', text: 'Organic')
 
       within('.equation-editor') do
-        expect(page).to have_content 'Calories per serving>500'
+        expect(page).to have_content 'Average calories per serving>500'
       end
     end
   end

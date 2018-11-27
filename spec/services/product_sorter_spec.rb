@@ -112,7 +112,7 @@ RSpec.describe ProductSorter do
 
       context 'when sorting by a calculation' do
         let(:sort_type) { Condition.sort_types.calculation }
-        let(:equation) { instance_double('Equation') }
+        let(:equation) { instance_double('Equations::Sort') }
 
         before do
           allow(equation).to receive(:evaluate).and_return(3, 2, 1)
