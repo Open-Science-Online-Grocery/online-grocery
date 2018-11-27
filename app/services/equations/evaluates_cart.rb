@@ -3,9 +3,9 @@
 module Equations
   # contains functionality for Equations that evaluate a whole cart at once
   module EvaluatesCart
-    def evaluate(cart_attributes)
+    def evaluate(cart_data)
       return nil if @tokens.none?
-      calculator.evaluate(to_s, cart_attributes)
+      calculator.evaluate(to_s, cart_data)
     end
 
     def prepare_cart_data(cart)

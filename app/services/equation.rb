@@ -66,7 +66,7 @@ class Equation
       types.nutrition => Equations::Nutrition,
       types.cart => Equations::Cart
     }[type]
-    klass.new(token_string, type)
+    klass.new(token_string)
   end
 
   # @param [string] token_string - a JSON-ified string representing an array of
@@ -78,9 +78,8 @@ class Equation
   #       { id: <some uuid>, type: 'digit', value: '2' }
   #     ]
   #   note: `id` is not strictly needed here and is only used by the React code
-  def initialize(token_string, type)
+  def initialize(token_string)
     @tokens = JSON.parse(token_string).map(&:with_indifferent_access)
-    @type = type
   end
 
   def to_s
