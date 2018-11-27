@@ -13,9 +13,24 @@
     box-shadow: 2px 2px 5px $dark-shadow;
     position: relative;
 
-    .order-item-image {
-      height: 100px;
-      width: auto;
+    .order-item-image-wrapper {
+      position: relative;
+      width: 100px;
+      display: inline-block;
+
+      .order-item-image {
+        width: auto;
+        max-width: 100%;
+      }
+
+      .order-item-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-repeat: no-repeat;
+      }
     }
 
     .order-item-name {

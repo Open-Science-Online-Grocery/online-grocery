@@ -41,10 +41,22 @@ export default class OrderSummary extends React.Component {
     });
   }
 
+  labelStyles(item) {
+    if (!item.labelImageUrl) return {};
+    return {
+      backgroundImage: `url(${item.labelImageUrl})`,
+      backgroundPosition: item.labelPosition,
+      backgroundSize: `${item.labelSize}%`
+    };
+  }
+
   listCartItems() {
     const listedItems = this.props.cart.items.map(item => (
       <div className="order-item">
-        <img src={item.imageSrc} className="order-item-image" />
+        <div className="order-item-image-wrapper">
+          <img className="order-item-image" src={item.imageSrc}/>
+          <div className="order-item-overlay" style={this.labelStyles(item)}></div>
+        </div>
         <div className="order-item-name">{item.name} </div>
         <span className="order-item-detail">
           {
@@ -151,7 +163,11 @@ OrderSummary.propTypes = {
       PropTypes.shape({
         quantity: PropTypes.number.isRequired,
         price: PropTypes.string.isRequired, // TODO: Change this to number
-        name: PropTypes.string.isRequired
+        name: PropTypes.string.isRequired,
+        imgSrc: PropTypes.string.isRequired,
+        labelImageUrl: PropTypes.string,
+        labelPosition: PropTypes.string,
+        labelSize: PropTypes.number
       })
     )
   }).isRequired,
