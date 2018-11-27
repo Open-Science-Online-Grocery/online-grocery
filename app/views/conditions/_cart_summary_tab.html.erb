@@ -1,32 +1,32 @@
 <div class="ui bottom attached tab segment" data-tab="cart-summary">
   <div class="ui grid">
     <div class="eight wide column">
-      <div class="ui basic segment">
+      <div class="field">
         <div class="ui checkbox">
           <%= f.check_box :show_price_total %>
           <%= f.label :show_price_total %>
         </div>
+      </div>
 
-        <div class="ui hidden divider"></div>
-
+      <div class="field">
         <div class="ui checkbox">
           <%= f.check_box :show_food_count, data: { refresh_form: true } %>
           <label>Show count of foods with health labels</label>
         </div>
+      </div>
 
-        <div class="ui basic segment nested-fields <%= 'disabled' unless condition.show_food_count %>">
-          <div class="field">
-            <div class="ui radio checkbox">
-              <%= f.radio_button :food_count_format, Condition.food_count_formats.ratio %>
-              <label>Show as ratio ("8 out of 20 products")</label>
-            </div>
+      <div class="ui segment nested-fields <%= 'disabled' unless condition.show_food_count %>">
+        <div class="field">
+          <div class="ui radio checkbox">
+            <%= f.radio_button :food_count_format, Condition.food_count_formats.ratio, disabled: !condition.show_food_count %>
+            <label>Show as ratio ("8 out of 20 products")</label>
           </div>
+        </div>
 
-          <div class="field">
-            <div class="ui radio checkbox">
-              <%= f.radio_button :food_count_format, Condition.food_count_formats.percent %>
-              <label>Show as percent ("40% of products")</label>
-            </div>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <%= f.radio_button :food_count_format, Condition.food_count_formats.percent, disabled: !condition.show_food_count %>
+            <label>Show as percent ("40% of products")</label>
           </div>
         </div>
       </div>
@@ -46,27 +46,30 @@
     <h3>Conditional images</h3>
   </div>
 
-  <br>
-
   <%= f.fields_for :condition_cart_summary_labels do |condition_cart_summary_label| %>
     <%= render 'condition_cart_summary_label_fields', f: condition_cart_summary_label %>
   <% end %>
 
-  <div data-cart-summary-labels></div>
+  <div data-cart-summary-labels>
+  </div>
 
-  <%=
-    link_to_add_association(
-      f,
-      :condition_cart_summary_labels,
-      {
-        class: 'ui tiny button',
-        partial: 'condition_cart_summary_label_fields',
-        'data-association-insertion-node' => '[data-cart-summary-labels]',
-        'data-association-insertion-method' => 'append'
-      }
-    ) do
-  %>
-    <i class="add icon"></i>
-    Add another cart summary image
-  <% end %>
+  <div class="field">
+    <div class="ui short hidden divider"></div>
+    <%=
+      link_to_add_association(
+        f,
+        :condition_cart_summary_labels,
+        {
+          class: 'ui tiny button',
+          partial: 'condition_cart_summary_label_fields',
+          'data-association-insertion-node' => '[data-cart-summary-labels]',
+          'data-association-insertion-method' => 'append'
+        }
+      ) do
+    %>
+      <i class="add icon"></i>
+      Add a cart summary image
+    <% end %>
+
+  </div>
 </div>

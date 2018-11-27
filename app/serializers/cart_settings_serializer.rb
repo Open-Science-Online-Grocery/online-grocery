@@ -32,7 +32,7 @@ class CartSettingsSerializer
   end
 
   private def percent_label_prefix
-    percent = (labeled_product_count / total_products.to_f).round
+    percent = ((labeled_product_count / total_products.to_f) * 100).round
     "#{percent}% of products have "
   end
 
