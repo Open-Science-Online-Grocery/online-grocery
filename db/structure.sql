@@ -51,7 +51,7 @@ CREATE TABLE `condition_cart_summary_labels` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `condition_id` bigint(20) DEFAULT NULL,
   `cart_summary_label_id` bigint(20) DEFAULT NULL,
-  `label_equation_tokens` text,
+  `equation_tokens` text,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `always_show` tinyint(1) DEFAULT '1',
@@ -372,6 +372,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20181114144446'),
 ('20181119164647'),
 ('20181126022808'),
-('20181127155504');
+('20181127155504'),
+('20181127212210');
 
 

@@ -96,7 +96,7 @@ RSpec.describe Equation do
       let(:product) { build(:product, calories: 500) }
 
       it 'returns false' do
-        expect(subject.evaluate_with_product(product.attributes)).to eq false
+        expect(subject.evaluate(product.attributes)).to eq false
       end
     end
 
@@ -104,7 +104,7 @@ RSpec.describe Equation do
       let(:product) { build(:product, calories: 499) }
 
       it 'returns true' do
-        expect(subject.evaluate_with_product(product.attributes)).to eq true
+        expect(subject.evaluate(product.attributes)).to eq true
       end
     end
 
@@ -113,7 +113,7 @@ RSpec.describe Equation do
       let(:product) { build(:product, calories: 499) }
 
       it 'returns nil' do
-        expect(subject.evaluate_with_product(product.attributes)).to be_nil
+        expect(subject.evaluate(product.attributes)).to be_nil
       end
     end
   end

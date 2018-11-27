@@ -115,7 +115,7 @@ RSpec.describe ProductSorter do
         let(:equation) { instance_double('Equation') }
 
         before do
-          allow(equation).to receive(:evaluate_with_product).and_return(3, 2, 1)
+          allow(equation).to receive(:evaluate).and_return(3, 2, 1)
           allow(condition).to receive(:sort_equation) { equation }
         end
 

@@ -23,7 +23,7 @@ export default class CocoonCallbacks {
     const $insertedItem = $(insertedItem);
     if ($insertedItem.length === 0) return;
     const cocoonId = this.extractCocoonId($insertedItem.find('input').first());
-    const inputName = `condition[condition_cart_summary_labels_attributes][${cocoonId}][label_equation_tokens]`;
+    const inputName = `condition[condition_cart_summary_labels_attributes][${cocoonId}][equation_tokens]`;
     $insertedItem.find('[data-calculator]').attr('data-input-name', inputName);
     calculator($insertedItem.find('[data-calculator]')[0]);
   }

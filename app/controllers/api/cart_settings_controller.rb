@@ -8,6 +8,7 @@ module Api
     def show
       condition = Condition.find_by(uuid: params[:condition_identifier])
       cart_product_data = params[:cart_products].values
+        .map(&:with_indifferent_access)
       render json: (
         CartSettingsSerializer.new(
           condition,

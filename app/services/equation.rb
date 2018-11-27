@@ -95,6 +95,10 @@ class Equation
     str
   end
 
+  def variables
+    @tokens.map { |token| token[:value] if token[:type] == 'variable' }.compact
+  end
+
   # here we test the equation by evaluating it against fake attributes to check
   # that it returns the right kind of value.
   private def test_value

@@ -130,7 +130,7 @@ class ConditionManager
       no_provided_image = label_attrs[:cart_summary_label_id].blank?
       no_custom_image = label_attrs.dig(
         :cart_summary_label_attributes,
-        :image
+        :image_cache
       ).blank?
       cart_summary_label_missing_error if no_provided_image && no_custom_image
     end

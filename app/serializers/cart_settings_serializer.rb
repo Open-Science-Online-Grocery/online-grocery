@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class CartSettingsSerializer
+  delegate :total_products, :number_of_products_with_label,
+           :percent_of_products_with_label, to: :cart
+
   def initialize(condition, cart_product_data)
     @condition = condition
     @cart_product_data = cart_product_data
@@ -9,9 +12,9 @@ class CartSettingsSerializer
   def serialize
     {
       health_label_summary: health_label_summary,
-      label_image_urls: [Label.first.image_url, Label.last.image_url],
       show_price_total: @condition.show_price_total,
-      show_food_count: @condition.show_food_count
+      show_food_count: @condition.show_food_count,
+      label_image_urls: label_image_urls
     }
   end
 
@@ -26,26 +29,13 @@ class CartSettingsSerializer
   end
 
   private def ratio_label_prefix
-    prefix = "#{labeled_product_count} out of #{total_products} "
-    return prefix + 'products has' if labeled_product_count == 1
+    prefix = "#{number_of_products_with_label} out of #{total_products} "
+    return prefix + 'products has' if number_of_products_with_label == 1
     prefix + 'products have'
   end
 
   private def percent_label_prefix
-    percent = ((labeled_product_count / total_products.to_f) * 100).round
-    "#{percent}% of products have "
-  end
-
-  private def total_products
-    @total_products ||= @cart_product_data.reduce(0) do |total, item|
-      total += item['quantity'].to_i
-    end
-  end
-
-  private def labeled_product_count
-    @labeled_product_count ||= @cart_product_data.reduce(0) do |total, item|
-      item['has_label'] == 'true' ? total += item['quantity'].to_i : total
-    end
+    "#{percent_of_products_with_label.round}% of products have "
   end
 
   private def label_name
@@ -55,5 +45,15 @@ class CartSettingsSerializer
       end
       'a health label'
     end
+  end
+
+  private def cart
+    @cart ||= Cart.new(@cart_product_data)
+  end
+
+  private def label_image_urls
+    @condition.condition_cart_summary_labels.select do |condition_cart_label|
+      condition_cart_label.applies_to_cart?(cart)
+    end.map(&:cart_summary_label_image_url)
   end
 end
