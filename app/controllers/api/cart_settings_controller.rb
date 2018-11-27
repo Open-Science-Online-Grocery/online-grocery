@@ -7,7 +7,7 @@ module Api
 
     def show
       condition = Condition.find_by(uuid: params[:condition_identifier])
-      cart_product_data = params[:cart_products]
+      cart_product_data = params[:cart_products].values
       render json: (
         CartSettingsSerializer.new(
           condition,

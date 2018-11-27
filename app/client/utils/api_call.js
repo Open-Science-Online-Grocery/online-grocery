@@ -2,15 +2,6 @@ import humps from 'humps';
 import fetch from 'isomorphic-fetch';
 import UnauthorizedRequestHandler from './UnauthorizedRequestHandler';
 
-function parameterizeData(data) {
-  const keysWithValue = Object.keys(data).filter(
-    key => data[key] !== null && data[key] !== undefined
-  );
-  return keysWithValue.map(key => (
-    `${key}=${encodeURIComponent(data[key])}`
-  )).join('&');
-}
-
 function jsonPost(route, data) {
   const tokenMeta = document.querySelector('meta[name=csrf-token]');
   const token = tokenMeta && tokenMeta.content;
@@ -29,7 +20,7 @@ function jsonPost(route, data) {
 }
 
 function jsonGet(route, data) {
-  const url = `${route.url}?${parameterizeData(data)}`;
+  const url = `${route.url}?${$.param(data)}`;
   return fetch(url, { credentials: 'include' });
 }
 

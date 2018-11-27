@@ -17,14 +17,14 @@
         <div class="ui basic segment nested-fields <%= 'disabled' unless condition.show_food_count %>">
           <div class="field">
             <div class="ui radio checkbox">
-              <%= f.radio_button :food_count_format, 'ratio' %>
+              <%= f.radio_button :food_count_format, Condition.food_count_formats.ratio %>
               <label>Show as ratio ("8 out of 20 products")</label>
             </div>
           </div>
 
           <div class="field">
             <div class="ui radio checkbox">
-              <%= f.radio_button :food_count_format, 'percent' %>
+              <%= f.radio_button :food_count_format, Condition.food_count_formats.percent %>
               <label>Show as percent ("40% of products")</label>
             </div>
           </div>

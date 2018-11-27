@@ -10,8 +10,9 @@ class Condition < ApplicationRecord
   validates :name, :uuid, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
 
-  delegate :label_types, :sort_types, :style_use_types, to: :class
-  delegate :image_url, to: :label, prefix: true, allow_nil: true
+  delegate :label_types, :sort_types, :style_use_types, :food_count_formats,
+           to: :class
+  delegate :image_url, :name, to: :label, prefix: true, allow_nil: true
   delegate :name, to: :default_sort_field, prefix: true, allow_nil: true
 
   belongs_to :experiment
@@ -41,6 +42,10 @@ class Condition < ApplicationRecord
 
   def self.style_use_types
     OpenStruct.new(always: 'always', calculation: 'calculation')
+  end
+
+  def self.food_count_formats
+    OpenStruct.new(ratio: 'ratio', percent: 'percent')
   end
 
   # TODO: update if needed - depending on client's preferences on URL used to
@@ -107,5 +112,9 @@ class Condition < ApplicationRecord
       nutrition_equation_tokens,
       Equation.types.nutrition
     )
+  end
+
+  def ratio_count?
+    food_count_format == food_count_formats.ratio
   end
 end
