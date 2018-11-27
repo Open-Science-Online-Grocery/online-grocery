@@ -79,13 +79,13 @@
               <div class="row">
                 <div class="four wide column">
                   <div class="ui radio checkbox">
-                    <%= f.radio_button :equation, false, data: { refresh_form: true } %>
+                    <%= f.radio_button :always_show, true, data: { refresh_form: true } %>
                     <label>Always show this image</label>
                   </div>
                 </div>
                 <div class="six wide column">
                   <div class="ui radio checkbox">
-                    <%= f.radio_button :equation, true, data: { refresh_form: true } %>
+                    <%= f.radio_button :always_show, false, data: { refresh_form: true } %>
                     <label>Show this image only for carts where:</label>
                   </div>
                 </div>
@@ -93,7 +93,7 @@
 
               <div class="row">
                 <div class="twelve wide column">
-                  <div class="ui basic segment <%= 'disabled' unless f.object.equation == 'true' %>">
+                  <div class="ui basic segment <%= 'disabled' if f.object.always_show %>">
                     <div
                       data-calculator
                       data-variables="<%= Equation.individual_product_variables.to_json %>"

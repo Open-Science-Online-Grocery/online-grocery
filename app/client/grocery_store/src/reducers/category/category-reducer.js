@@ -25,12 +25,10 @@ export default function categoryReducer(state = initialCategoryState, action) {
         selectedSubcategoryId,
         selectedCategoryType
       });
-
     case categoryActionTypes.SET_PRODUCTS:
       return Object.assign({}, state, {
         products
       });
-
     case userActionTypes.SET_CONDITION_DATA:
       return Object.assign({}, state, {
         categories,

@@ -14,7 +14,10 @@ class ConditionSerializer
       subcategories: Subcategory.order(:category_id, :display_order),
       tags: @condition.tags.order(:id).uniq,
       subtags: @condition.subtags.order(:tag_id).uniq,
-      filter_by_tags: @condition.filter_by_custom_categories
+      filter_by_tags: @condition.filter_by_custom_categories,
+      show_price_total: @condition.show_price_total,
+      show_food_count: @condition.show_food_count,
+      food_count_format: @condition.food_count_format
     }
   end
 end

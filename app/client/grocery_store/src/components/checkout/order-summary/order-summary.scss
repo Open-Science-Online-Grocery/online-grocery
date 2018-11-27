@@ -39,6 +39,7 @@
 
       .order-item-price {
         color: $price-green;
+        text-transform: lowercase;
       }
 
       &.normal-height {

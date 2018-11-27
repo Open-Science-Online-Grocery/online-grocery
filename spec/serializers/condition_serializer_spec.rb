@@ -28,6 +28,9 @@ RSpec.describe ConditionSerializer do
       [subtag_1, subtag_2]
     end
     allow(condition).to receive(:filter_by_custom_categories) { true }
+    allow(condition).to receive(:show_price_total) { true }
+    allow(condition).to receive(:show_food_count) { true }
+    allow(condition).to receive(:food_count_format) { 'ratio' }
     allow(Category).to receive(:order) { [category_1, category_2] }
     allow(Subcategory).to receive(:order) { [subcategory_1, subcategory_2] }
   end
@@ -40,7 +43,10 @@ RSpec.describe ConditionSerializer do
         subcategories: [subcategory_1, subcategory_2],
         tags: [tag_1, tag_2],
         subtags: [subtag_1, subtag_2],
-        filter_by_tags: true
+        filter_by_tags: true,
+        show_price_total: true,
+        show_food_count: true,
+        food_count_format: 'ratio'
       }
       expect(subject.serialize).to eq expected_data
     end
