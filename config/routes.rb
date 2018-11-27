@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'registrations' }
 
   namespace :api, defaults: { format: :json } do
+    resource :cart_settings, only: [:show]
     resource :condition, only: [:show]
     resource :equation_validation, only: [:show]
     resources :participant_actions, only: [:create]

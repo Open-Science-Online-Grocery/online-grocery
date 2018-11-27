@@ -5,6 +5,14 @@ import * as fromApi from '../../../../../utils/api_call';
 import './order-summary.scss';
 
 export default class OrderSummary extends React.Component {
+  componentDidMount() {
+    this.props.getCartSettings();
+  }
+
+  componentWillUpdate() {
+    this.props.getCartSettings();
+  }
+
   removeFromCart(product) {
     this.props.handleRemoveFromCart(product);
     const actionParams = {
@@ -108,30 +116,9 @@ export default class OrderSummary extends React.Component {
       <div className="order-item bold">
         Healthy Choices
         <span className="order-item-detail normal-height">
-          <span className="order-item-price">{this.healthyChoicesValue()}</span>
+          <span className="order-item-price">TODO</span>
         </span>
       </div>
-    );
-  }
-
-  healthyChoicesValue() {
-    if (this.props.cart.foodCountFormat === 'ratio') {
-      return (`${this.numberOfHealthyChoices()} out of ${this.props.cart.count} products`);
-    }
-    return (
-      `${this.percentageOfHealthyChoices()}%`
-    );
-  }
-
-  numberOfHealthyChoices() {
-    return 3; // TODO: How do we get this number?
-  }
-
-  percentageOfHealthyChoices() {
-    return (
-      Math.round(
-        this.numberOfHealthyChoices() / this.props.cart.count * 100
-      )
     );
   }
 
@@ -174,5 +161,6 @@ OrderSummary.propTypes = {
   handleClearCart: PropTypes.func.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
   sessionId: PropTypes.string.isRequired,
-  conditionIdentifier: PropTypes.string.isRequired
+  conditionIdentifier: PropTypes.string.isRequired,
+  getCartSettings: PropTypes.func.isRequired
 };
