@@ -36,6 +36,7 @@ class Equation
     }
   end
 
+  # rubocop:disable Metrics/MethodLength
   def self.cart_variables
     {
       number_of_products_with_label: 'Number of products with health label',
@@ -56,6 +57,7 @@ class Equation
     }
     # TODO: add "total" version of most facts as well
   end
+  # rubocop:enable Metrics/MethodLength
 
   def self.for_type(token_string, type)
     klass = {

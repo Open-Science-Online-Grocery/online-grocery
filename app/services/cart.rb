@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# represents a collection of products in a participant's cart in the
+# grocery store react app.
 class Cart
   # @param [Array of Hashes] - an array of hashes representing some abbreviated
   #   data about products in a cart. it looks like this:
@@ -12,13 +16,13 @@ class Cart
 
   def total_products
     @total_products ||= @product_data.reduce(0) do |total, item|
-      total += item[:quantity].to_i
+      total + item[:quantity].to_i
     end
   end
 
   def number_of_products_with_label
     @number_of_products_with_label ||= @product_data.reduce(0) do |total, item|
-      item[:has_label] == 'true' ? total += item[:quantity].to_i : total
+      item[:has_label] == 'true' ? total + item[:quantity].to_i : total
     end
   end
 

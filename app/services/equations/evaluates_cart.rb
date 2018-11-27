@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module Equations
+  # contains functionality for Equations that evaluate a whole cart at once
   module EvaluatesCart
     def evaluate(cart_attributes)
       return nil if @tokens.none?

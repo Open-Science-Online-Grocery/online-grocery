@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module Equations
+  # contains functionality for Equations that evaluate a single product
   module EvaluatesProduct
     def evaluate(product_attributes)
       return nil if @tokens.none?

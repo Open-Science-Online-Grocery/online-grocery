@@ -81,7 +81,10 @@ class Condition < ApplicationRecord
   end
 
   def sort_equation
-    @sort_equation ||= Equation.for_type(sort_equation_tokens, Equation.types.sort)
+    @sort_equation ||= Equation.for_type(
+      sort_equation_tokens,
+      Equation.types.sort
+    )
   end
 
   def current_tag_csv_file

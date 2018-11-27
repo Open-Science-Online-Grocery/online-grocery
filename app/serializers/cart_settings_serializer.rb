@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# responsible for collecting/formatting info about a cart based on a condition,
+# for consumption by the grocery store react app
 class CartSettingsSerializer
   delegate :total_products, :number_of_products_with_label,
            :percent_of_products_with_label, to: :cart
