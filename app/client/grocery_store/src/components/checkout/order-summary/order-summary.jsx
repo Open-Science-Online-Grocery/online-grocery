@@ -9,8 +9,10 @@ export default class OrderSummary extends React.Component {
     this.props.getCartSettings();
   }
 
-  componentWillUpdate() {
-    this.props.getCartSettings();
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.cart.items !== this.props.cart.items) {
+      this.props.getCartSettings();
+    }
   }
 
   removeFromCart(product) {

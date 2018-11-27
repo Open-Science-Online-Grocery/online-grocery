@@ -50,11 +50,10 @@ function getCartSettings() {
 }
 
 function setCartSettings(cartSettings) {
-  console.log(cartSettings)
-  // return {
-  //   type: cartActionTypes.SET_CART_SETTINGS,
-  //   cartSettings
-  // };
+  return {
+    type: cartActionTypes.SET_CART_SETTINGS,
+    ...cartSettings
+  };
 }
 
 export const cartActionCreators = {
