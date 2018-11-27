@@ -64,8 +64,8 @@ export default class OrderSummary extends React.Component {
     const listedItems = this.props.cart.items.map(item => (
       <div key={item.id} className="order-item">
         <div className="order-item-image-wrapper">
-          <img className="order-item-image" src={item.imageSrc}/>
-          <div className="order-item-overlay" style={this.labelStyles(item)}></div>
+          <img className="order-item-image" src={item.imageSrc} />
+          <div className="order-item-overlay" style={this.labelStyles(item)} />
         </div>
         <div className="order-item-name">{item.name} </div>
         <span className="order-item-detail">
@@ -115,13 +115,25 @@ export default class OrderSummary extends React.Component {
   healthLabelsSection() {
     if (!this.props.cart.showFoodCount) return null;
     return (
-      <div className="order-item bold">
-        Healthy Choices
-        <span className="order-item-detail normal-height">
-          <span className="order-item-price">TODO</span>
-        </span>
+      <div className="label-summary">
+        {this.props.cart.healthLabelSummary}
       </div>
     );
+  }
+
+  customImagesSection() {
+    if (this.props.cart.labelImageUrls.length > 0) {
+      return (
+        <div className="custom-images">
+          {
+            this.props.cart.labelImageUrls.map(imageUrl => (
+              <img key={imageUrl} src={imageUrl} />
+            ))
+          }
+        </div>
+      );
+    }
+    return null;
   }
 
   render() {
@@ -132,6 +144,7 @@ export default class OrderSummary extends React.Component {
         </div>
         {this.listCartItems()}
         {this.healthLabelsSection()}
+        {this.customImagesSection()}
         {this.cartTotalSection()}
         <button type="submit" onClick={() => this.clearCart()} className="checkout-button bold">
           Complete Order
@@ -147,7 +160,8 @@ OrderSummary.propTypes = {
     price: PropTypes.number.isRequired,
     showPriceTotal: PropTypes.bool.isRequired,
     showFoodCount: PropTypes.bool.isRequired,
-    foodCountFormat: PropTypes.string, // should be 'percent' or 'ratio'
+    healthLabelSummary: PropTypes.string,
+    labelImageUrls: PropTypes.arrayOf(PropTypes.string),
     items: PropTypes.arrayOf(
       PropTypes.shape({
         quantity: PropTypes.number.isRequired,
