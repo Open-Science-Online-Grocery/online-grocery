@@ -15,19 +15,6 @@ class ConditionsController < ApplicationController
     render @condition.id? ? 'edit' : 'new'
   end
 
-  def download_product_data
-    respond_to do |format|
-      format.csv do
-        send_data(
-          # TODO: consider adding Product scope argument, there are a lot of
-          # products. Manager is already set up to take optional scope argument
-          ProductDataCsvManager.generate_csv,
-          filename: 'product_categories_data.csv'
-        )
-      end
-    end
-  end
-
   def new
     @resource_name = 'Add Condition'
   end
