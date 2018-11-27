@@ -74,14 +74,14 @@ class Condition < ApplicationRecord
   end
 
   def label_equation
-    @label_equation ||= Equation.new(
+    @label_equation ||= Equation.for_type(
       label_equation_tokens,
       Equation.types.label
     )
   end
 
   def sort_equation
-    @sort_equation ||= Equation.new(sort_equation_tokens, Equation.types.sort)
+    @sort_equation ||= Equation.for_type(sort_equation_tokens, Equation.types.sort)
   end
 
   def current_tag_csv_file
@@ -108,7 +108,7 @@ class Condition < ApplicationRecord
   end
 
   def nutrition_equation
-    @nutrition_equation ||= Equation.new(
+    @nutrition_equation ||= Equation.for_type(
       nutrition_equation_tokens,
       Equation.types.nutrition
     )

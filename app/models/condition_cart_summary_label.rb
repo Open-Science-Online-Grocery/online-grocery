@@ -25,7 +25,7 @@ class ConditionCartSummaryLabel < ApplicationRecord
   end
 
   def label_equation
-    @label_equation ||= Equation.new(
+    @label_equation ||= Equation.for_type(
       label_equation_tokens,
       Equation.types.label
     )

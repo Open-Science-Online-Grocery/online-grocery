@@ -89,10 +89,10 @@
           <div class="ui segment nested-calculator <%= 'disabled' if f.object.always_show %>">
             <div
               data-calculator
-              data-variables="<%= Equation.individual_product_variables.to_json %>"
+              data-variables="<%= Equation.cart_variables.to_json %>"
               data-input-name="<%# added by CocoonCallbacks.js %>"
               data-tokens="<%= f.object.label_equation_tokens || [] %>"
-              data-equation-type="label"
+              data-equation-type="<%= Equation.types.cart %>"
               data-delay-initialize
             ></div>
           </div>
