@@ -98,7 +98,7 @@ enter any text as your session ID to continue.  No other login is needed.
 
 ## Servers and Credentials
 
-At present, we only have a staging server (no production server).  For any server, if you are unable to ssh in without a password, ask another developer with ssh access to add your public key to the authorized keys file.
+At present, we have a staging server and a production server.  For any server, if you are unable to ssh in without a password, ask another developer with ssh access to add your public key to the authorized keys file.
 
 ### Staging
 
@@ -107,6 +107,12 @@ At present, we only have a staging server (no production server).  For any serve
 * SSH: `ssh deployer@howes-grocery.scimed-test.com`
 * Rails environment: `staging`
 
+### Production
+
+* [Application](https://18.204.34.178/)
+* [Credentials](https://credentials.scimed.local/servers/230)
+* SSH: `ssh deployer@18.204.34.178`
+* Rails environment: `production`
 
 ## Deploying
 
