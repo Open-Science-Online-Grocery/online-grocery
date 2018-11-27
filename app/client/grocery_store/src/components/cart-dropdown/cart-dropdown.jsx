@@ -43,7 +43,7 @@ export default class CartDropdown extends React.Component {
 
   render() {
     const cartItems = this.props.cart.items.map(item => (
-      <div className="cart-item">
+      <div key={item.id} className="cart-item">
         <span>{item.name} </span>
         <span className="cart-detail">
           {
@@ -57,7 +57,7 @@ export default class CartDropdown extends React.Component {
     ));
 
     cartItems.unshift(
-      <Link to={{ pathname: '/store/checkout' }} className="no-underline">
+      <Link key={0} to={{ pathname: '/store/checkout' }} className="no-underline">
         <div className="cart-item cart-checkout-bar">Checkout
           <span className="cart-detail">Total: ${parseFloat(Math.round(this.props.cart.price * 100) / 100).toFixed(2)}</span>
         </div>

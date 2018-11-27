@@ -52,7 +52,7 @@ export default class OrderSummary extends React.Component {
 
   listCartItems() {
     const listedItems = this.props.cart.items.map(item => (
-      <div className="order-item">
+      <div key={item.id} className="order-item">
         <div className="order-item-image-wrapper">
           <img className="order-item-image" src={item.imageSrc}/>
           <div className="order-item-overlay" style={this.labelStyles(item)}></div>
@@ -158,13 +158,13 @@ OrderSummary.propTypes = {
     price: PropTypes.number.isRequired,
     showPriceTotal: PropTypes.bool.isRequired,
     showFoodCount: PropTypes.bool.isRequired,
-    foodCountFormat: PropTypes.string.isRequired, // should be 'percent' or 'ratio'
+    foodCountFormat: PropTypes.string, // should be 'percent' or 'ratio'
     items: PropTypes.arrayOf(
       PropTypes.shape({
         quantity: PropTypes.number.isRequired,
         price: PropTypes.string.isRequired, // TODO: Change this to number
         name: PropTypes.string.isRequired,
-        imgSrc: PropTypes.string.isRequired,
+        imageSrc: PropTypes.string.isRequired,
         labelImageUrl: PropTypes.string,
         labelPosition: PropTypes.string,
         labelSize: PropTypes.number
