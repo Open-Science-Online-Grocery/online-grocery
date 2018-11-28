@@ -102,5 +102,9 @@ CartDropdown.propTypes = {
   }).isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
   sessionId: PropTypes.string.isRequired,
-  conditionIdentifier: PropTypes.string.isRequired
+  conditionIdentifier: PropTypes.string
+};
+
+CartDropdown.defaultProps = {
+  conditionIdentifier: null
 };

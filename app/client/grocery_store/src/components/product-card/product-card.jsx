@@ -120,7 +120,7 @@ export default class ProductCard extends React.Component {
 
 ProductCard.propTypes = {
   sessionId: PropTypes.string.isRequired,
-  conditionIdentifier: PropTypes.string.isRequired,
+  conditionIdentifier: PropTypes.string,
   product: PropTypes.shape({
     name: PropTypes.string,
     imageSrc: PropTypes.string,
@@ -133,4 +133,8 @@ ProductCard.propTypes = {
   }).isRequired,
   handleAddToCart: PropTypes.func.isRequired,
   showAddToCartButton: PropTypes.bool.isRequired
+};
+
+ProductCard.defaultProps = {
+  conditionIdentifier: null
 };

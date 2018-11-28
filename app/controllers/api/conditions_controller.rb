@@ -2,11 +2,13 @@
 
 module Api
   class ConditionsController < ApplicationController
+    include Concerns::GetsCondition
+
     skip_power_check
     skip_before_action :authenticate_user!
 
     def show
-      condition = Condition.find_by(uuid: params[:condition_identifier])
+      condition = condition_from_uuid
       render json: ConditionSerializer.new(condition).serialize.to_json
     end
   end
