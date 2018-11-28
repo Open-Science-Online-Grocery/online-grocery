@@ -11,21 +11,21 @@
       <div class="field">
         <div class="ui checkbox">
           <%= f.check_box :show_food_count, data: { refresh_form: true } %>
-          <label>Show count of foods with health labels</label>
+          <label>Show count of foods with health labels (see "Labeling" tab)</label>
         </div>
       </div>
 
       <div class="ui segment nested-fields <%= 'disabled' unless condition.show_food_count %>">
         <div class="field">
           <div class="ui radio checkbox">
-            <%= f.radio_button :food_count_format, Condition.food_count_formats.ratio, disabled: !condition.show_food_count %>
+            <%= f.radio_button :food_count_format, Condition.food_count_formats.ratio, disabled: !condition.show_food_count, data: { refresh_form: true } %>
             <label>Show as ratio ("8 out of 20 products")</label>
           </div>
         </div>
 
         <div class="field">
           <div class="ui radio checkbox">
-            <%= f.radio_button :food_count_format, Condition.food_count_formats.percent, disabled: !condition.show_food_count %>
+            <%= f.radio_button :food_count_format, Condition.food_count_formats.percent, disabled: !condition.show_food_count, data: { refresh_form: true } %>
             <label>Show as percent ("40% of products")</label>
           </div>
         </div>
@@ -37,6 +37,19 @@
         <label>Preview</label>
         <div class="ui segment cart-preview">
           <%= image_tag ('checkout_top.png')%>
+
+          <% if condition.show_food_count %>
+            <div class="label-summary">
+              <%= condition.preview_cart_summary_label %>
+            </div>
+          <% end %>
+
+          <div class="summary-images">
+            <% @condition.preview_cart_image_urls.each do |image_url| %>
+              <%= image_tag (image_url), class: 'summary-image' %>
+            <% end %>
+          </div>
+
           <% if condition.show_price_total? %>
             <%= image_tag ('checkout_total.png')%>
           <% end %>
