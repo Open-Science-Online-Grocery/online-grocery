@@ -93,7 +93,7 @@ export default class ProductCard extends React.Component {
         <Link to={{ pathname: '/store/product', state: { product: this.props.product } }}>
           <div className="product-card-image-wrapper">
             <img className="product-card-image" alt="product" src={this.props.product.imageSrc} />
-            <div className="product-card-overlay" style={this.labelStyles()}></div>
+            <div className="product-card-overlay" style={this.labelStyles()} />
           </div>
           <div className="product-card-name">{this.props.product.name}</div>
         </Link>
