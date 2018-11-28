@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Equation do
   let(:token_string) { [].to_json }
+
   describe '.for_type' do
     it 'returns the expected subclass' do
       expect(described_class.for_type(token_string, 'label')).to be_a Equations::Label

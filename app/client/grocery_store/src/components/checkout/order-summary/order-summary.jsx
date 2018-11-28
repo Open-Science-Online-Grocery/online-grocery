@@ -113,7 +113,7 @@ export default class OrderSummary extends React.Component {
   }
 
   healthLabelsSection() {
-    if (!this.props.cart.showFoodCount) return null;
+    if (!this.props.cart.healthLabelSummary) return null;
     return (
       <div className="label-summary">
         {this.props.cart.healthLabelSummary}
@@ -159,7 +159,6 @@ OrderSummary.propTypes = {
     count: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
     showPriceTotal: PropTypes.bool.isRequired,
-    showFoodCount: PropTypes.bool.isRequired,
     healthLabelSummary: PropTypes.string,
     labelImageUrls: PropTypes.arrayOf(PropTypes.string),
     items: PropTypes.arrayOf(

@@ -4,7 +4,6 @@ const initialCartState = {
   count: 0,
   price: 0,
   showPriceTotal: true,
-  showFoodCount: false,
   foodCountFormat: 'percent',
   items: [],
   healthLabelSummary: null,
@@ -57,14 +56,12 @@ export default function cartReducer(state = initialCartState, action) {
     case cartActionTypes.SET_CART_SETTINGS: {
       const {
         showPriceTotal,
-        showFoodCount,
         foodCountFormat,
         healthLabelSummary,
         labelImageUrls
       } = action;
       return Object.assign({}, state, {
         showPriceTotal,
-        showFoodCount,
         foodCountFormat,
         healthLabelSummary,
         labelImageUrls

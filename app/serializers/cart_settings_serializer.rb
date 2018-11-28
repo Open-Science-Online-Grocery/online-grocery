@@ -15,7 +15,6 @@ class CartSettingsSerializer
     {
       health_label_summary: health_label_summary,
       show_price_total: @condition.show_price_total,
-      show_food_count: @condition.show_food_count,
       label_image_urls: label_image_urls
     }
   end
@@ -37,7 +36,7 @@ class CartSettingsSerializer
   end
 
   private def percent_label_prefix
-    "#{percent_of_products_with_label.round}% of products have "
+    "#{percent_of_products_with_label.round}% of products have"
   end
 
   private def label_name
