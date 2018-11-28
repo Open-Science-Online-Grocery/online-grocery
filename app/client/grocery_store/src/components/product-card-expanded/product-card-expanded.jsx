@@ -152,7 +152,7 @@ export default class ProductCardExpanded extends React.Component {
 
 ProductCardExpanded.propTypes = {
   sessionId: PropTypes.string.isRequired,
-  conditionIdentifier: PropTypes.string.isRequired,
+  conditionIdentifier: PropTypes.string,
   name: PropTypes.string.isRequired,
   starpoints: PropTypes.number,
   size: PropTypes.string.isRequired,
@@ -181,6 +181,7 @@ ProductCardExpanded.propTypes = {
 };
 
 ProductCardExpanded.defaultProps = {
+  conditionIdentifier: null,
   starpoints: null,
   labelImageUrl: null,
   labelPosition: null,

@@ -3,6 +3,10 @@ class NullCondition
     Condition.style_use_types
   end
 
+  def id
+    nil
+  end
+
   def product_sort_fields
     []
   end
@@ -37,5 +41,17 @@ class NullCondition
 
   def sort_type
     Condition.sort_types.none
+  end
+
+  def show_price_total
+    true
+  end
+
+  def condition_cart_summary_labels
+    []
+  end
+
+  def show_food_count
+    false
   end
 end

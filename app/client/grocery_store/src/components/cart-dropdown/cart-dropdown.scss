@@ -66,9 +66,11 @@
       }
 
       &.cart-checkout-bar {
+        cursor: pointer;
         background-color: $price-green;
         color: white;
         font-weight: 600;
+
         &:hover {
           background-color: #019801;
         }
