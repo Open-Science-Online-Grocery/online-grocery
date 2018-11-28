@@ -2,16 +2,27 @@ import calculator from './calculator/src/index';
 
 export default class CocoonCallbacks {
   initialize() {
-    this.addEquationAttributeEventListener('[data-cart-summary-labels]', 'cocoon:after-insert');
     $('[data-cart-summary-label]').each(
       (_index, renderedLabel) => {
-        this.addCartSummaryLabelEquationAttribute(null, renderedLabel);
+        this.initializeCalculator($(renderedLabel));
       }
+    );
+    $('[data-cart-summary-labels]').on(
+      'cocoon:after-insert',
+      (_event, $insertedItem) => this.initializeCalculator($insertedItem)
+    );
+
+    $('[data-cart-summary-labels]').on(
+      'cocoon:after-remove',
+      this.triggerFormRefresh
     );
   }
 
-  addEquationAttributeEventListener(targetIdentifier, addEvent) {
-    $(targetIdentifier).on(addEvent, this.addCartSummaryLabelEquationAttribute.bind(this));
+  triggerFormRefresh() {
+    $('[data-cart-summary-labels]').closest('form')
+      .find('[data-refresh-form]')
+      .first()
+      .trigger('change');
   }
 
   // this method adds an input name attribute needed by React to render the Equation widget.
@@ -19,8 +30,7 @@ export default class CocoonCallbacks {
   // (either by cocoon's JS or on page load) in order to assign it the correct Id
   // corresponding to the random one set by Cocoon. It also then must initialize the
   // calculator to ensure the added attribute gets into React props
-  addCartSummaryLabelEquationAttribute(_event, insertedItem) {
-    const $insertedItem = $(insertedItem);
+  initializeCalculator($insertedItem) {
     if ($insertedItem.length === 0) return;
     const cocoonId = this.extractCocoonId($insertedItem.find('input').first());
     const inputName = `condition[condition_cart_summary_labels_attributes][${cocoonId}][equation_tokens]`;

@@ -62,7 +62,8 @@ class ConditionPresenter < SimpleDelegator
   end
 
   def preview_cart_image_urls
-    condition_cart_summary_labels.map(&:cart_summary_label_image_url)
+    condition_cart_summary_labels.reject(&:marked_for_destruction?)
+      .map(&:cart_summary_label_image_url)
   end
 
   private def format_spend(amount)

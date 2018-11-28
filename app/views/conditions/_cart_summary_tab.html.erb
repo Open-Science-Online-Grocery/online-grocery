@@ -45,7 +45,7 @@
           <% end %>
 
           <div class="summary-images">
-            <% @condition.preview_cart_image_urls.each do |image_url| %>
+            <% @condition.preview_cart_image_urls.compact.each do |image_url| %>
               <%= image_tag (image_url), class: 'summary-image' %>
             <% end %>
           </div>
@@ -63,15 +63,13 @@
     <h3>Conditional images</h3>
   </div>
 
-  <%= f.fields_for :condition_cart_summary_labels do |condition_cart_summary_label| %>
-    <%= render 'condition_cart_summary_label_fields', f: condition_cart_summary_label %>
-  <% end %>
-
-  <div data-cart-summary-labels>
+  <div class="segments" data-cart-summary-labels>
+    <%= f.fields_for :condition_cart_summary_labels do |condition_cart_summary_label| %>
+      <%= render 'condition_cart_summary_label_fields', f: condition_cart_summary_label %>
+    <% end %>
   </div>
 
   <div class="field">
-    <div class="ui short hidden divider"></div>
     <%=
       link_to_add_association(
         f,

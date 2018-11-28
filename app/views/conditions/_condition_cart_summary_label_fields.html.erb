@@ -1,6 +1,6 @@
 <% custom_cart_summary_label = f.object.cart_summary_label.try(:custom?) || CartSummaryLabel.new(built_in: false) %>
 
-<div data-cart-summary-label>
+<div class="nested-fields no-indent <%= 'hidden' if f.object.marked_for_destruction? %>" data-cart-summary-label>
   <div class="ui segment with-margin">
     <div class="right aligned">
       <%= link_to_remove_association f do %>
@@ -11,7 +11,7 @@
       <% cart_summary_label = cart_summary_label_form.object %>
       <% label_type = f.object.label_type %>
 
-      <div class="ui grid">
+      <div class="ui grid no-top-margin">
         <div class="eight wide column">
           <div class="grouped fields">
             <div class="field">
