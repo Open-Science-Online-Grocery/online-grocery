@@ -99,79 +99,79 @@ RSpec.describe Cart do
 
   describe '#avg_calories_from_fat' do
     it 'returns the expected number' do
-      expect(subject.avg_calories_from_fat).to eq 37
+      expect(subject.avg_calories_from_fat).to eq 53.5
     end
   end
 
   describe '#avg_calories' do
     it 'returns the expected number' do
-      expect(subject.avg_calories).to eq 74
+      expect(subject.avg_calories).to eq 107
     end
   end
 
   describe '#avg_total_fat' do
     it 'returns the expected number' do
-      expect(subject.avg_total_fat).to eq 111
+      expect(subject.avg_total_fat).to eq 160.5
     end
   end
 
   describe '#avg_saturated_fat' do
     it 'returns the expected number' do
-      expect(subject.avg_saturated_fat).to eq 148
+      expect(subject.avg_saturated_fat).to eq 214
     end
   end
 
   describe '#avg_trans_fat' do
     it 'returns the expected number' do
-      expect(subject.avg_trans_fat).to eq 185
+      expect(subject.avg_trans_fat).to eq 267.5
     end
   end
 
   describe '#avg_cholesterol' do
     it 'returns the expected number' do
-      expect(subject.avg_cholesterol).to eq 296
+      expect(subject.avg_cholesterol).to eq 428
     end
   end
 
   describe '#avg_sodium' do
     it 'returns the expected number' do
-      expect(subject.avg_sodium).to eq 333
+      expect(subject.avg_sodium).to eq 481.5
     end
   end
 
   describe '#avg_carbs' do
     it 'returns the expected number' do
-      expect(subject.avg_carbs).to eq 407
+      expect(subject.avg_carbs).to eq 588.5
     end
   end
 
   describe '#avg_fiber' do
     it 'returns the expected number' do
-      expect(subject.avg_fiber).to eq 444
+      expect(subject.avg_fiber).to eq 642
     end
   end
 
   describe '#avg_sugar' do
     it 'returns the expected number' do
-      expect(subject.avg_sugar).to eq 481
+      expect(subject.avg_sugar).to eq 695.5
     end
   end
 
   describe '#avg_protein' do
     it 'returns the expected number' do
-      expect(subject.avg_protein).to eq 518
+      expect(subject.avg_protein).to eq 749
     end
   end
 
   describe '#avg_price' do
     it 'returns the expected number' do
-      expect(subject.avg_price).to eq 555.0
+      expect(subject.avg_price).to eq 802.5
     end
   end
 
   describe '#avg_starpoints' do
     it 'returns the expected number' do
-      expect(subject.avg_starpoints).to eq 592
+      expect(subject.avg_starpoints).to eq 856
     end
   end
 end

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# responsible to generating the cart summary text about products with health
+# labels for a given cart an condition
 class CartSummarizer
   delegate :total_products, :number_of_products_with_label,
            :percent_of_products_with_label, to: :@cart
