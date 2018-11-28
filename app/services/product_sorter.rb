@@ -49,7 +49,7 @@ class ProductSorter
 
   private def calculation_sorted_products
     @product_hashes.sort_by do |product_hash|
-      sort_equation.evaluate_with_product(product_hash)
+      sort_equation.evaluate(product_hash)
     end
   end
 

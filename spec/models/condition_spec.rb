@@ -18,7 +18,9 @@ RSpec.describe Condition, type: :model do
     it { is_expected.to delegate_method(:label_types).to(:class) }
     it { is_expected.to delegate_method(:sort_types).to(:class) }
     it { is_expected.to delegate_method(:style_use_types).to(:class) }
+    it { is_expected.to delegate_method(:food_count_formats).to(:class) }
     it { is_expected.to delegate_method(:image_url).to(:label).with_prefix }
+    it { is_expected.to delegate_method(:name).to(:label).with_prefix }
     it { is_expected.to delegate_method(:name).to(:default_sort_field).with_prefix }
   end
 

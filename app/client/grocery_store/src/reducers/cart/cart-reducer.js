@@ -1,13 +1,13 @@
 import { cartActionTypes } from './cart-actions';
-import { userActionTypes } from '../user/user-actions';
 
 const initialCartState = {
   count: 0,
   price: 0,
   showPriceTotal: true,
-  showFoodCount: false,
   foodCountFormat: 'percent',
-  items: []
+  items: [],
+  healthLabelSummary: null,
+  labelImageUrls: []
 };
 
 // An index of -1 indicates that the item is not in the cart
@@ -53,16 +53,18 @@ export default function cartReducer(state = initialCartState, action) {
         price: state.price - action.product.price * action.product.quantity
       });
     }
-    case userActionTypes.SET_CONDITION_DATA: {
+    case cartActionTypes.SET_CART_SETTINGS: {
       const {
         showPriceTotal,
-        showFoodCount,
-        foodCountFormat
+        foodCountFormat,
+        healthLabelSummary,
+        labelImageUrls
       } = action;
       return Object.assign({}, state, {
         showPriceTotal,
-        showFoodCount,
-        foodCountFormat
+        foodCountFormat,
+        healthLabelSummary,
+        labelImageUrls
       });
     }
     case (cartActionTypes.CLEAR_CART):

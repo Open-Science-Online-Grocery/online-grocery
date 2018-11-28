@@ -29,13 +29,13 @@ class ProductSerializer
   end
 
   private def gets_label?
-    @condition.label_equation.evaluate_with_product(@product.attributes)
+    @condition.label_equation.evaluate(@product.attributes)
   end
 
   private def gets_custom_nutrition_styling?
     if @condition.style_use_type == @condition.style_use_types.always
       return true
     end
-    @condition.nutrition_equation.evaluate_with_product(@product.attributes)
+    @condition.nutrition_equation.evaluate(@product.attributes)
   end
 end

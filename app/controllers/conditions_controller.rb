@@ -107,7 +107,7 @@ class ConditionsController < ApplicationController
         :_destroy,
         :cart_summary_label_id,
         :label_type,
-        :label_equation_tokens,
+        :equation_tokens,
         :always_show,
         cart_summary_label_attributes: %i[
           id

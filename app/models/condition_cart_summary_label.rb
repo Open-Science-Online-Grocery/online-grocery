@@ -24,10 +24,13 @@ class ConditionCartSummaryLabel < ApplicationRecord
     label_types.custom
   end
 
-  def label_equation
-    @label_equation ||= Equation.new(
-      label_equation_tokens,
-      Equation.types.label
-    )
+  def equation
+    @equation ||= Equation.for_type(equation_tokens, Equation.types.cart)
+  end
+
+  def applies_to_cart?(cart)
+    return true if always_show
+    cart_data = equation.prepare_cart_data(cart)
+    equation.evaluate(cart_data)
   end
 end

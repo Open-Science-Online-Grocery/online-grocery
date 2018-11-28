@@ -17,6 +17,9 @@ const mapDispatchToProps = dispatch => (
     },
     handleClearCart: () => {
       dispatch(cartActionCreators.clearCart());
+    },
+    getCartSettings: () => {
+      dispatch(cartActionCreators.getCartSettings());
     }
   }
 );

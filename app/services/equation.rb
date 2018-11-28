@@ -10,10 +10,15 @@ class Equation
   delegate :types, to: :class
 
   def self.types
-    OpenStruct.new(label: 'label', sort: 'sort', nutrition: 'nutrition')
+    OpenStruct.new(
+      label: 'label',
+      sort: 'sort',
+      nutrition: 'nutrition',
+      cart: 'cart'
+    )
   end
 
-  def self.individual_product_variables
+  def self.product_variables
     {
       calories_from_fat: 'Calories from fat per serving',
       calories: 'Calories per serving',
@@ -31,6 +36,39 @@ class Equation
     }
   end
 
+  # rubocop:disable Metrics/MethodLength
+  def self.cart_variables
+    {
+      number_of_products_with_label: 'Number of products with health label',
+      percent_of_products_with_label: 'Percent of products with health label',
+      avg_calories_from_fat: 'Average calories from fat per serving',
+      avg_calories: 'Average calories per serving',
+      avg_total_fat: 'Average total fat per serving (g)',
+      avg_saturated_fat: 'Average saturated fat per serving (g)',
+      avg_trans_fat: 'Average trans fat per serving (g)',
+      avg_cholesterol: 'Average cholesterol per serving (mg)',
+      avg_sodium: 'Average sodium per serving (mg)',
+      avg_carbs: 'Average total carbohydrates per serving (g)',
+      avg_fiber: 'Average dietary fiber per serving (g)',
+      avg_sugar: 'Average sugars per serving (g)',
+      avg_protein: 'Average protein per serving (g)',
+      avg_price: 'Average price',
+      avg_starpoints: 'Average star points'
+    }
+    # TODO: add "total" version of most facts as well
+  end
+  # rubocop:enable Metrics/MethodLength
+
+  def self.for_type(token_string, type)
+    klass = {
+      types.label => Equations::Label,
+      types.sort => Equations::Sort,
+      types.nutrition => Equations::Nutrition,
+      types.cart => Equations::Cart
+    }[type]
+    klass.new(token_string)
+  end
+
   # @param [string] token_string - a JSON-ified string representing an array of
   #   token hashes as output by the React `calculator` widget. Before JSON
   #   serializing, it should look like this:
@@ -40,9 +78,8 @@ class Equation
   #       { id: <some uuid>, type: 'digit', value: '2' }
   #     ]
   #   note: `id` is not strictly needed here and is only used by the React code
-  def initialize(token_string, type)
+  def initialize(token_string)
     @tokens = JSON.parse(token_string).map(&:with_indifferent_access)
-    @type = type
   end
 
   def to_s
@@ -59,31 +96,14 @@ class Equation
     str
   end
 
-  def evaluate_with_product(product_attributes)
-    return nil if @tokens.none?
-    calculator.evaluate(to_s, product_attributes)
+  def variables
+    @tokens.map { |token| token[:value] if token[:type] == 'variable' }.compact
   end
 
-  private def should_return_boolean?
-    {
-      types.label => true,
-      types.sort => false,
-      types.nutrition => true
-    }[@type]
-  end
-
-  # here we test the equation by evaluating it against fake food attributes
-  # checking that it returns the right kind of value.
+  # here we test the equation by evaluating it against fake attributes to check
+  # that it returns the right kind of value.
   private def test_value
-    @test_value ||= evaluate_with_product(fake_product_data)
-  end
-
-  private def fake_product_data
-    self.class.individual_product_variables.keys
-      .each_with_object({}) do |colname, data|
-        data[colname] = 1
-        data
-      end
+    @test_value ||= evaluate_with_fake_data
   end
 
   # Dentaku is a parser and evaluator for a mathematical and logical formula

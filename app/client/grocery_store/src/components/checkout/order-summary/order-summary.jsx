@@ -5,6 +5,16 @@ import * as fromApi from '../../../../../utils/api_call';
 import './order-summary.scss';
 
 export default class OrderSummary extends React.Component {
+  componentDidMount() {
+    this.props.getCartSettings();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.cart.items !== this.props.cart.items) {
+      this.props.getCartSettings();
+    }
+  }
+
   removeFromCart(product) {
     this.props.handleRemoveFromCart(product);
     const actionParams = {
@@ -41,10 +51,22 @@ export default class OrderSummary extends React.Component {
     });
   }
 
+  labelStyles(item) {
+    if (!item.labelImageUrl) return {};
+    return {
+      backgroundImage: `url(${item.labelImageUrl})`,
+      backgroundPosition: item.labelPosition,
+      backgroundSize: `${item.labelSize}%`
+    };
+  }
+
   listCartItems() {
     const listedItems = this.props.cart.items.map(item => (
-      <div className="order-item">
-        <img src={item.imageSrc} className="order-item-image" />
+      <div key={item.id} className="order-item">
+        <div className="order-item-image-wrapper">
+          <img className="order-item-image" src={item.imageSrc} />
+          <div className="order-item-overlay" style={this.labelStyles(item)} />
+        </div>
         <div className="order-item-name">{item.name} </div>
         <span className="order-item-detail">
           {
@@ -91,36 +113,27 @@ export default class OrderSummary extends React.Component {
   }
 
   healthLabelsSection() {
-    if (!this.props.cart.showFoodCount) return null;
+    if (!this.props.cart.healthLabelSummary) return null;
     return (
-      <div className="order-item bold">
-        Healthy Choices
-        <span className="order-item-detail normal-height">
-          <span className="order-item-price">{this.healthyChoicesValue()}</span>
-        </span>
+      <div className="label-summary">
+        {this.props.cart.healthLabelSummary}
       </div>
     );
   }
 
-  healthyChoicesValue() {
-    if (this.props.cart.foodCountFormat === 'ratio') {
-      return (`${this.numberOfHealthyChoices()} out of ${this.props.cart.count} products`);
+  customImagesSection() {
+    if (this.props.cart.labelImageUrls.length > 0) {
+      return (
+        <div className="custom-images">
+          {
+            this.props.cart.labelImageUrls.map(imageUrl => (
+              <img key={imageUrl} src={imageUrl} />
+            ))
+          }
+        </div>
+      );
     }
-    return (
-      `${this.percentageOfHealthyChoices()}%`
-    );
-  }
-
-  numberOfHealthyChoices() {
-    return 3; // TODO: How do we get this number?
-  }
-
-  percentageOfHealthyChoices() {
-    return (
-      Math.round(
-        this.numberOfHealthyChoices() / this.props.cart.count * 100
-      )
-    );
+    return null;
   }
 
   render() {
@@ -131,6 +144,7 @@ export default class OrderSummary extends React.Component {
         </div>
         {this.listCartItems()}
         {this.healthLabelsSection()}
+        {this.customImagesSection()}
         {this.cartTotalSection()}
         <button type="submit" onClick={() => this.clearCart()} className="checkout-button bold">
           Complete Order
@@ -145,18 +159,23 @@ OrderSummary.propTypes = {
     count: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
     showPriceTotal: PropTypes.bool.isRequired,
-    showFoodCount: PropTypes.bool.isRequired,
-    foodCountFormat: PropTypes.string.isRequired, // should be 'percent' or 'ratio'
+    healthLabelSummary: PropTypes.string,
+    labelImageUrls: PropTypes.arrayOf(PropTypes.string),
     items: PropTypes.arrayOf(
       PropTypes.shape({
         quantity: PropTypes.number.isRequired,
         price: PropTypes.string.isRequired, // TODO: Change this to number
-        name: PropTypes.string.isRequired
+        name: PropTypes.string.isRequired,
+        imageSrc: PropTypes.string.isRequired,
+        labelImageUrl: PropTypes.string,
+        labelPosition: PropTypes.string,
+        labelSize: PropTypes.number
       })
     )
   }).isRequired,
   handleClearCart: PropTypes.func.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
   sessionId: PropTypes.string.isRequired,
-  conditionIdentifier: PropTypes.string.isRequired
+  conditionIdentifier: PropTypes.string.isRequired,
+  getCartSettings: PropTypes.func.isRequired
 };

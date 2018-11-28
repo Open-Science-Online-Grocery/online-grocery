@@ -25,3 +25,10 @@ export function condition() {
     method: 'GET'
   };
 }
+
+export function cartSettings() {
+  return {
+    url: '/api/cart_settings',
+    method: 'GET'
+  };
+}

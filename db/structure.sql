@@ -51,7 +51,7 @@ CREATE TABLE `condition_cart_summary_labels` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `condition_id` bigint(20) DEFAULT NULL,
   `cart_summary_label_id` bigint(20) DEFAULT NULL,
-  `label_equation_tokens` text,
+  `equation_tokens` text,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `always_show` tinyint(1) DEFAULT '1',
@@ -92,9 +92,9 @@ CREATE TABLE `conditions` (
   `default_sort_field_id` bigint(20) DEFAULT NULL,
   `default_sort_order` varchar(255) DEFAULT NULL,
   `sort_equation_tokens` text,
-  `show_price_total` tinyint(1) NOT NULL DEFAULT '0',
-  `food_count_format` varchar(255) DEFAULT NULL,
   `filter_by_custom_categories` tinyint(1) NOT NULL DEFAULT '0',
+  `show_price_total` tinyint(1) NOT NULL DEFAULT '1',
+  `food_count_format` varchar(255) DEFAULT NULL,
   `only_add_from_detail_page` tinyint(1) DEFAULT '0',
   `nutrition_equation_tokens` text,
   `minimum_spend` decimal(10,2) DEFAULT NULL,
@@ -371,6 +371,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20181114142831'),
 ('20181114144446'),
 ('20181119164647'),
-('20181126022808');
+('20181126022808'),
+('20181127155504'),
+('20181127212210');
 
 
