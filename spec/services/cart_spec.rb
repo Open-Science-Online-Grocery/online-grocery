@@ -3,10 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Cart do
-  # need to actually create these products because `average` operation happens
-  # in the database
   let(:product_1) do
-    create(
+    build(
       :product,
       calories_from_fat: 1,
       calories: 2,
@@ -27,7 +25,7 @@ RSpec.describe Cart do
     )
   end
   let(:product_2) do
-    create(
+    build(
       :product,
       calories_from_fat: 10,
       calories: 20,
@@ -48,7 +46,7 @@ RSpec.describe Cart do
     )
   end
   let(:product_3) do
-    create(
+    build(
       :product,
       calories_from_fat: 100,
       calories: 200,
@@ -71,13 +69,23 @@ RSpec.describe Cart do
 
   let(:product_data) do
     [
-      { id: product_1.id.to_s, quantity: '1', has_label: 'false' },
-      { id: product_2.id.to_s, quantity: '2', has_label: 'true' },
-      { id: product_3.id.to_s, quantity: '3', has_label: 'true' }
+      { id: '1', quantity: '1', has_label: 'false' },
+      { id: '2', quantity: '2', has_label: 'true' },
+      { id: '3', quantity: '3', has_label: 'true' }
     ]
   end
 
   subject { described_class.new(product_data) }
+
+  before do
+    allow(Product).to receive(:find) do |arg|
+      {
+        '1' => product_1,
+        '2' => product_2,
+        '3' => product_3
+      }[arg]
+    end
+  end
 
   describe '#total_products' do
     it 'returns the expected number' do
