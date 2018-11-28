@@ -3,7 +3,7 @@
     <div class="eight wide column">
       <div class="field">
         <div class="ui checkbox">
-          <%= f.check_box :show_price_total %>
+          <%= f.check_box :show_price_total, data: { refresh_form: true } %>
           <%= f.label :show_price_total %>
         </div>
       </div>
@@ -35,8 +35,12 @@
     <div class="eight wide column">
       <div class="field cart-summary-label-preview">
         <label>Preview</label>
-        <div class="ui segment">
-          TODO
+        <div class="ui segment cart-preview">
+          <%= image_tag ('checkout_top.png')%>
+          <% if condition.show_price_total? %>
+            <%= image_tag ('checkout_total.png')%>
+          <% end %>
+          <%= image_tag ('checkout_bottom.png')%>
         </div>
       </div>
     </div>

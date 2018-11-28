@@ -11,7 +11,7 @@ class Cart
   #   ]
   def initialize(product_data)
     @product_data = product_data
-    @products = Product.where(id: @product_data.map { |d| d[:id] })
+    @product_data.each { |data| data[:product] = Product.find(data[:id]) }
   end
 
   def total_products
@@ -85,6 +85,9 @@ class Cart
   end
 
   private def average(field)
-    @products.average(field)
+    sum = @product_data.reduce(0) do |total, item|
+      total + (item[:quantity].to_i * item[:product].public_send(field))
+    end
+    sum / total_products.to_f
   end
 end
