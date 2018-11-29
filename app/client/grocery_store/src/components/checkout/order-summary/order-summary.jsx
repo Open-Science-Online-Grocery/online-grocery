@@ -7,6 +7,11 @@ import './order-summary.scss';
 // NOTE: if the appearance of this component changes, be sure to also update the
 // images used in app/views/conditions/_cart_summary_tab.html.erb
 export default class OrderSummary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.setTotals(this.props.cart.price);
+  }
+
   componentDidMount() {
     this.props.getCartSettings();
   }
@@ -14,7 +19,14 @@ export default class OrderSummary extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.cart.items !== this.props.cart.items) {
       this.props.getCartSettings();
+      this.setTotals(nextProps.cart.price);
     }
+  }
+
+  setTotals(price) {
+    this.subtotal = price.toFixed(2);
+    this.tax = (price * 0.075).toFixed(2);
+    this.total = (price * 1.075).toFixed(2);
   }
 
   removeFromCart(product) {
@@ -76,7 +88,7 @@ export default class OrderSummary extends React.Component {
               && <span className="order-item-quantity">{item.quantity} x </span>
           }
           <span className="order-item-price">
-            ${parseFloat(Math.round(item.price * 100) / 100).toFixed(2)}
+            ${parseFloat(item.price).toFixed(2)}
           </span>
         </span>
         <span onClick={() => this.removeFromCart(item)} className="order-delete-item">X</span>
@@ -92,7 +104,7 @@ export default class OrderSummary extends React.Component {
         <div className="order-item bold">Subtotal
           <span className="order-item-detail normal-height">
             <span className="order-item-price bold">
-              ${parseFloat(Math.round(this.props.cart.price * 100) / 100).toFixed(2)}
+              ${this.subtotal}
             </span>
           </span>
         </div>
@@ -100,14 +112,14 @@ export default class OrderSummary extends React.Component {
         <div className="order-item bold">Sales tax (7.5%)
           <span className="order-item-detail normal-height">
             <span className="order-item-price">
-              ${parseFloat(Math.round(this.props.cart.price * 100) * 0.075 / 100).toFixed(2)}
+              ${this.tax}
             </span>
           </span>
         </div>
 
         <div className="order-item bold order-final-total">Total
           <span className="order-item-detail">
-            ${parseFloat(Math.round(this.props.cart.price * 100) * 1.075 / 100).toFixed(2)}
+            ${this.total}
           </span>
         </div>
       </div>
@@ -138,6 +150,44 @@ export default class OrderSummary extends React.Component {
     return null;
   }
 
+  checkoutErrorMessage() {
+    const maxSpend = parseFloat(this.props.cart.maximumSpend);
+    const minSpend = parseFloat(this.props.cart.minimumSpend);
+    let message;
+    if (!Number.isNaN(maxSpend) && this.total > maxSpend) {
+      message = `less than $${maxSpend.toFixed(2)}`;
+    } else if (!Number.isNaN(minSpend) && this.total < minSpend) {
+      message = `more than $${minSpend.toFixed(2)}`;
+    }
+    if (message) {
+      return (
+        <div className="error-message">
+          In order to check out, you must spend {message}.
+        </div>
+      );
+    }
+    return null;
+  }
+
+  checkoutButtonSection() {
+    const errorMessage = this.checkoutErrorMessage();
+    if (errorMessage) {
+      return (
+        <React.Fragment>
+          {errorMessage}
+          <button type="submit" disabled className="checkout-button bold disabled">
+            Complete Order
+          </button>
+        </React.Fragment>
+      );
+    }
+    return (
+      <button type="submit" onClick={() => this.clearCart()} className="checkout-button bold">
+        Complete Order
+      </button>
+    );
+  }
+
   render() {
     return (
       <div className="order-summary">
@@ -148,9 +198,7 @@ export default class OrderSummary extends React.Component {
         {this.healthLabelsSection()}
         {this.customImagesSection()}
         {this.cartTotalSection()}
-        <button type="submit" onClick={() => this.clearCart()} className="checkout-button bold">
-          Complete Order
-        </button>
+        {this.checkoutButtonSection()}
       </div>
     );
   }
@@ -163,10 +211,12 @@ OrderSummary.propTypes = {
     showPriceTotal: PropTypes.bool.isRequired,
     healthLabelSummary: PropTypes.string,
     labelImageUrls: PropTypes.arrayOf(PropTypes.string),
+    minimumSpend: PropTypes.string,
+    maximumSpend: PropTypes.string,
     items: PropTypes.arrayOf(
       PropTypes.shape({
         quantity: PropTypes.number.isRequired,
-        price: PropTypes.string.isRequired, // TODO: Change this to number
+        price: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         imageSrc: PropTypes.string.isRequired,
         labelImageUrl: PropTypes.string,

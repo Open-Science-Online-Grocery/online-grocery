@@ -64,7 +64,13 @@ export default function cartReducer(state = initialCartState, action) {
       return Object.assign({}, state, { healthLabelSummary, labelImageUrls });
     }
     case (cartActionTypes.CLEAR_CART):
-      return initialCartState;
+      return Object.assign({}, state, {
+        count: 0,
+        price: 0,
+        items: [],
+        healthLabelSummary: null,
+        labelImageUrls: []
+      });
     default:
       return state;
   }

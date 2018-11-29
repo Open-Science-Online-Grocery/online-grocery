@@ -105,6 +105,12 @@
     }
   }
 
+  .error-message {
+    padding: 1.5rem 0 1rem 0;
+    color: red;
+    text-align: center;
+  }
+
   .checkout-button {
     background-color: $cart-color;
     color: white;
@@ -116,8 +122,17 @@
     font-size: 16px;
     border: none;
     cursor: pointer;
+
     &:hover {
       background-color: #eb1bfe;
+    }
+
+    &.disabled {
+      opacity: 0.3;
+
+      &:hover {
+        background-color: $cart-color;
+      }
     }
   }
 }
