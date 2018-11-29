@@ -59,4 +59,16 @@ class NullCondition
   def show_food_count
     false
   end
+
+  def minimum_spend
+    nil
+  end
+
+  def maximum_spend
+    nil
+  end
+
+  def may_add_to_cart_by_dollar_amount
+    false
+  end
 end

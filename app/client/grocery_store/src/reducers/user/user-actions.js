@@ -5,7 +5,8 @@ import { categoryActionCreators } from '../category/category-actions';
 
 export const userActionTypes = {
   SET_USER: 'SET_USER',
-  SET_CONDITION_DATA: 'SET_CONDITION_DATA'
+  SET_CONDITION_DATA: 'SET_CONDITION_DATA',
+  RESET_ALL: 'RESET_ALL'
 };
 
 function setUser(sessionId, conditionIdentifier) {
@@ -36,8 +37,14 @@ function setConditionData(conditionData) {
   };
 }
 
+function resetAll() {
+  return { type: userActionTypes.RESET_ALL };
+}
+
 function sessionIdSubmitted(sessionId) {
   return (dispatch) => {
+    dispatch(resetAll());
+
     const conditionIdentifier = qs.parse(window.location.search).condId;
     dispatch(setUser(sessionId, conditionIdentifier));
 
