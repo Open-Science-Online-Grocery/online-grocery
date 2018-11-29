@@ -3,10 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Cart do
-  # need to actually create these products because `average` operation happens
-  # in the database
   let(:product_1) do
-    create(
+    build(
       :product,
       calories_from_fat: 1,
       calories: 2,
@@ -27,7 +25,7 @@ RSpec.describe Cart do
     )
   end
   let(:product_2) do
-    create(
+    build(
       :product,
       calories_from_fat: 10,
       calories: 20,
@@ -48,7 +46,7 @@ RSpec.describe Cart do
     )
   end
   let(:product_3) do
-    create(
+    build(
       :product,
       calories_from_fat: 100,
       calories: 200,
@@ -71,13 +69,23 @@ RSpec.describe Cart do
 
   let(:product_data) do
     [
-      { id: product_1.id.to_s, quantity: '1', has_label: 'false' },
-      { id: product_2.id.to_s, quantity: '2', has_label: 'true' },
-      { id: product_3.id.to_s, quantity: '3', has_label: 'true' }
+      { id: '1', quantity: '1', has_label: 'false' },
+      { id: '2', quantity: '2', has_label: 'true' },
+      { id: '3', quantity: '3', has_label: 'true' }
     ]
   end
 
   subject { described_class.new(product_data) }
+
+  before do
+    allow(Product).to receive(:find) do |arg|
+      {
+        '1' => product_1,
+        '2' => product_2,
+        '3' => product_3
+      }[arg]
+    end
+  end
 
   describe '#total_products' do
     it 'returns the expected number' do
@@ -99,79 +107,79 @@ RSpec.describe Cart do
 
   describe '#avg_calories_from_fat' do
     it 'returns the expected number' do
-      expect(subject.avg_calories_from_fat).to eq 37
+      expect(subject.avg_calories_from_fat).to eq 53.5
     end
   end
 
   describe '#avg_calories' do
     it 'returns the expected number' do
-      expect(subject.avg_calories).to eq 74
+      expect(subject.avg_calories).to eq 107
     end
   end
 
   describe '#avg_total_fat' do
     it 'returns the expected number' do
-      expect(subject.avg_total_fat).to eq 111
+      expect(subject.avg_total_fat).to eq 160.5
     end
   end
 
   describe '#avg_saturated_fat' do
     it 'returns the expected number' do
-      expect(subject.avg_saturated_fat).to eq 148
+      expect(subject.avg_saturated_fat).to eq 214
     end
   end
 
   describe '#avg_trans_fat' do
     it 'returns the expected number' do
-      expect(subject.avg_trans_fat).to eq 185
+      expect(subject.avg_trans_fat).to eq 267.5
     end
   end
 
   describe '#avg_cholesterol' do
     it 'returns the expected number' do
-      expect(subject.avg_cholesterol).to eq 296
+      expect(subject.avg_cholesterol).to eq 428
     end
   end
 
   describe '#avg_sodium' do
     it 'returns the expected number' do
-      expect(subject.avg_sodium).to eq 333
+      expect(subject.avg_sodium).to eq 481.5
     end
   end
 
   describe '#avg_carbs' do
     it 'returns the expected number' do
-      expect(subject.avg_carbs).to eq 407
+      expect(subject.avg_carbs).to eq 588.5
     end
   end
 
   describe '#avg_fiber' do
     it 'returns the expected number' do
-      expect(subject.avg_fiber).to eq 444
+      expect(subject.avg_fiber).to eq 642
     end
   end
 
   describe '#avg_sugar' do
     it 'returns the expected number' do
-      expect(subject.avg_sugar).to eq 481
+      expect(subject.avg_sugar).to eq 695.5
     end
   end
 
   describe '#avg_protein' do
     it 'returns the expected number' do
-      expect(subject.avg_protein).to eq 518
+      expect(subject.avg_protein).to eq 749
     end
   end
 
   describe '#avg_price' do
     it 'returns the expected number' do
-      expect(subject.avg_price).to eq 555.0
+      expect(subject.avg_price).to eq 802.5
     end
   end
 
   describe '#avg_starpoints' do
     it 'returns the expected number' do
-      expect(subject.avg_starpoints).to eq 592
+      expect(subject.avg_starpoints).to eq 856
     end
   end
 end

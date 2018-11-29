@@ -14,7 +14,7 @@
     height: 2.7rem;
   }
 
-  .nested-fields {
+  .nested-fields:not(.no-indent) {
     margin: 1rem 0 1rem 2rem;
 
     .fields {

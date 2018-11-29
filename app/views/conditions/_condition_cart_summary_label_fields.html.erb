@@ -1,6 +1,6 @@
 <% custom_cart_summary_label = f.object.cart_summary_label.try(:custom?) || CartSummaryLabel.new(built_in: false) %>
 
-<div data-cart-summary-label>
+<div class="nested-fields no-indent <%= 'hidden' if f.object.marked_for_destruction? %>" data-cart-summary-label>
   <div class="ui segment with-margin">
     <div class="right aligned">
       <%= link_to_remove_association f do %>
@@ -11,19 +11,19 @@
       <% cart_summary_label = cart_summary_label_form.object %>
       <% label_type = f.object.label_type %>
 
-      <div class="ui grid">
+      <div class="ui grid no-top-margin">
         <div class="eight wide column">
           <div class="grouped fields">
             <div class="field">
               <div class="ui radio checkbox">
-                <%= f.radio_button :label_type, 'custom', data: { refresh_form: true } %>
+                <%= f.radio_button :label_type, CartSummaryLabel.types.custom, data: { refresh_form: true } %>
                 <label>Use custom image</label>
               </div>
-              <div class="ui segment nested-fields <%= 'disabled' unless label_type == 'custom' %>">
+              <div class="ui segment nested-fields <%= 'disabled' unless label_type == CartSummaryLabel.types.custom %>">
                 <%= cart_summary_label_form.hidden_field :built_in %>
                 <div class="field">
                   <%= cart_summary_label_form.label :name %>
-                  <%= cart_summary_label_form.text_field :name, disabled: label_type != 'custom' %>
+                  <%= cart_summary_label_form.text_field :name, disabled: label_type != CartSummaryLabel.types.custom %>
                 </div>
                 <% if cart_summary_label_form.object.image? %>
                   <div class="field">
@@ -32,24 +32,24 @@
                   </div>
                   <div class="field">
                     <%= cart_summary_label_form.label :image, 'Replace image' %>
-                    <%= cart_summary_label_form.file_field :image, data: { refresh_form: true }, disabled: label_type != 'custom' %>
+                    <%= cart_summary_label_form.file_field :image, data: { refresh_form: true }, disabled: label_type != CartSummaryLabel.types.custom %>
                     <%= cart_summary_label_form.hidden_field :image_cache %>
                   </div>
                 <% else %>
                   <div class="required field">
                     <%= cart_summary_label_form.label :image, 'Upload image' %>
-                    <%= cart_summary_label_form.file_field :image, data: { refresh_form: true }, disabled: label_type != 'custom' %>
+                    <%= cart_summary_label_form.file_field :image, data: { refresh_form: true }, disabled: label_type != CartSummaryLabel.types.custom %>
                   </div>
                 <% end %>
               </div>
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <%= f.radio_button :label_type, 'provided', data: { refresh_form: true } %>
+                <%= f.radio_button :label_type, CartSummaryLabel.types.provided, data: { refresh_form: true } %>
                 <label>Use provided image</label>
               </div>
 
-              <div class="ui segment nested-fields <%= 'disabled' unless label_type == 'provided' %>">
+              <div class="ui segment nested-fields <%= 'disabled' unless label_type == CartSummaryLabel.types.provided %>">
                 <div class="field">
                   <%= f.label :cart_summary_label_id, 'Cart summary label' %>
                   <%=
@@ -61,7 +61,7 @@
                       { include_blank: true },
                       class: 'ui dropdown',
                       data: { refresh_form: true },
-                      disabled: label_type != 'provided'
+                      disabled: label_type != CartSummaryLabel.types.provided
                     )
                   %>
                 </div>

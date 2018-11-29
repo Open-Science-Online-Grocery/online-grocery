@@ -1,0 +1,20 @@
+.ui.segment.cart-preview {
+  img {
+    max-width: 100%;
+  }
+
+  .label-summary {
+    text-align: center;
+    font-family: "Century Gothic", sans-serif;
+    font-size: 0.7rem;
+  }
+
+  .summary-images {
+    text-align: center;
+
+    img {
+      margin-top: 0.5rem;
+      max-height: 2rem;
+    }
+  }
+}

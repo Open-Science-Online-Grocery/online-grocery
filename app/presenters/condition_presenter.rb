@@ -51,6 +51,21 @@ class ConditionPresenter < SimpleDelegator
     format_spend(maximum_spend)
   end
 
+  def preview_cart_summary_label
+    fake_cart = OpenStruct.new(
+      total_products: 3,
+      number_of_products_with_label: 2,
+      percent_of_products_with_label: 66
+    )
+    summarizer = CartSummarizer.new(condition, fake_cart)
+    summarizer.health_label_summary
+  end
+
+  def preview_cart_image_urls
+    condition_cart_summary_labels.reject(&:marked_for_destruction?)
+      .map(&:cart_summary_label_image_url)
+  end
+
   private def format_spend(amount)
     number_with_precision(amount, precision: 2)
   end

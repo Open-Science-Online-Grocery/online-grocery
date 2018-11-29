@@ -127,13 +127,20 @@ class ConditionManager
     params_to_validate = @params[:condition_cart_summary_labels_attributes]
     return unless params_to_validate
     params_to_validate.each do |_, label_attrs|
-      no_provided_image = label_attrs[:cart_summary_label_id].blank?
-      no_custom_image = label_attrs.dig(
-        :cart_summary_label_attributes,
-        :image_cache
-      ).blank?
-      cart_summary_label_missing_error if no_provided_image && no_custom_image
+      cart_summary_label_missing_error unless cart_image_exists?(label_attrs)
     end
+  end
+
+  private def cart_image_exists?(cart_label_attrs)
+    if cart_label_attrs[:label_type] == CartSummaryLabel.types.provided
+      return cart_label_attrs[:cart_summary_label_id].present?
+    end
+    custom_image_cache = cart_label_attrs.dig(
+      :cart_summary_label_attributes,
+      :image_cache
+    )
+    custom_image_id = cart_label_attrs.dig(:cart_summary_label_attributes, :id)
+    custom_image_cache.present? || custom_image_id.present?
   end
 
   private def cart_summary_label_missing_error

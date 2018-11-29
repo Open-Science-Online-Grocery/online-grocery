@@ -4,6 +4,8 @@ import * as routes from '../../../../../utils/routes';
 import * as fromApi from '../../../../../utils/api_call';
 import './order-summary.scss';
 
+// NOTE: if the appearance of this component changes, be sure to also update the
+// images used in app/views/conditions/_cart_summary_tab.html.erb
 export default class OrderSummary extends React.Component {
   componentDidMount() {
     this.props.getCartSettings();
