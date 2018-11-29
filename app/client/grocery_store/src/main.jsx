@@ -12,11 +12,13 @@ import ThankYouPage from './thank-you-page';
 import SessionIDPage from './session-id-container';
 import { persistor, store } from './reducers/createStore';
 import SearchPageContainer from './search-page-container';
+import Alert from './components/alert/alert';
 
 export default function initialize(wrapperElement) {
   render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+        <Alert visible message="hello" />
         <Router>
           <Switch>
             <Route exact path="/store" component={SessionIDPage} />
