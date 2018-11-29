@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+# meant to be an inactive stand-in for an actual Condition. its purpose is to
+# allow the grocery store react app to function in a default manner when the
+# store is visited without specifying a Condition
 class NullCondition
   def style_use_types
     Condition.style_use_types
