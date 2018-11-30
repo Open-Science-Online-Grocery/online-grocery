@@ -7,7 +7,7 @@ class ConditionSerializer
     @condition = condition
   end
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Metrics/LineLength, Metrics/AbcSize
   def serialize
     {
       sort_fields: @condition.product_sort_fields.map(&:description),
@@ -23,5 +23,5 @@ class ConditionSerializer
       may_add_to_cart_by_dollar_amount: @condition.may_add_to_cart_by_dollar_amount
     }
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Metrics/LineLength, Metrics/AbcSize
 end

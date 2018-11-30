@@ -24,7 +24,7 @@ RSpec.describe CartSettingsSerializer do
       cart_summary_label_image_url: 'third/label/url'
     )
   end
-  let(:condition) { build(:condition, show_price_total: true) }
+  let(:condition) { build(:condition) }
   let(:cart) { instance_double('Cart') }
   let(:cart_summarizer) do
     instance_double('CartSummarizer', health_label_summary: 'a summary!')
@@ -45,7 +45,6 @@ RSpec.describe CartSettingsSerializer do
       expect(CartSummarizer).to receive(:new).with(condition, cart)
       expected_results = {
         health_label_summary: 'a summary!',
-        show_price_total: true,
         label_image_urls: ['first/label/url', 'third/label/url']
       }
       expect(subject.serialize).to eq expected_results
