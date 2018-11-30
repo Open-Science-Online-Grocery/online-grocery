@@ -1,10 +1,10 @@
 import { cartActionTypes } from './cart-actions';
+import { userActionTypes } from '../user/user-actions';
 
 const initialCartState = {
   count: 0,
   price: 0,
   showPriceTotal: true,
-  foodCountFormat: 'percent',
   items: [],
   healthLabelSummary: null,
   labelImageUrls: []
@@ -17,7 +17,13 @@ const getItemIndexInCart = (item, itemsInCart) => (
 
 export default function cartReducer(state = initialCartState, action) {
   switch (action.type) {
-    case (cartActionTypes.ADD_TO_CART): {
+    case userActionTypes.SET_CONDITION_DATA:
+      return Object.assign({}, state, {
+        showPriceTotal: action.showPriceTotal,
+        minimumSpend: action.minimumSpend,
+        maximumSpend: action.maximumSpend
+      });
+    case cartActionTypes.ADD_TO_CART: {
       const itemIndexInCart = getItemIndexInCart(action.product, state.items);
 
       if (itemIndexInCart > -1) {
@@ -40,7 +46,7 @@ export default function cartReducer(state = initialCartState, action) {
         price: state.price + action.product.price * action.product.quantity
       });
     }
-    case (cartActionTypes.REMOVE_FROM_CART): {
+    case cartActionTypes.REMOVE_FROM_CART: {
       const productIndex = state.items.indexOf(action.product);
       const newItems = Object.assign([], state.items);
 
@@ -54,21 +60,17 @@ export default function cartReducer(state = initialCartState, action) {
       });
     }
     case cartActionTypes.SET_CART_SETTINGS: {
-      const {
-        showPriceTotal,
-        foodCountFormat,
-        healthLabelSummary,
-        labelImageUrls
-      } = action;
-      return Object.assign({}, state, {
-        showPriceTotal,
-        foodCountFormat,
-        healthLabelSummary,
-        labelImageUrls
-      });
+      const { healthLabelSummary, labelImageUrls } = action;
+      return Object.assign({}, state, { healthLabelSummary, labelImageUrls });
     }
     case (cartActionTypes.CLEAR_CART):
-      return initialCartState;
+      return Object.assign({}, state, {
+        count: 0,
+        price: 0,
+        items: [],
+        healthLabelSummary: null,
+        labelImageUrls: []
+      });
     default:
       return state;
   }

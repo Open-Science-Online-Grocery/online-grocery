@@ -76,7 +76,7 @@ export default class OrderSummary extends React.Component {
               && <span className="order-item-quantity">{item.quantity} x </span>
           }
           <span className="order-item-price">
-            ${parseFloat(Math.round(item.price * 100) / 100).toFixed(2)}
+            ${parseFloat(item.price).toFixed(2)}
           </span>
         </span>
         <span onClick={() => this.removeFromCart(item)} className="order-delete-item">X</span>
@@ -92,7 +92,7 @@ export default class OrderSummary extends React.Component {
         <div className="order-item bold">Subtotal
           <span className="order-item-detail normal-height">
             <span className="order-item-price bold">
-              ${parseFloat(Math.round(this.props.cart.price * 100) / 100).toFixed(2)}
+              ${this.props.subtotal}
             </span>
           </span>
         </div>
@@ -100,14 +100,14 @@ export default class OrderSummary extends React.Component {
         <div className="order-item bold">Sales tax (7.5%)
           <span className="order-item-detail normal-height">
             <span className="order-item-price">
-              ${parseFloat(Math.round(this.props.cart.price * 100) * 0.075 / 100).toFixed(2)}
+              ${this.props.tax}
             </span>
           </span>
         </div>
 
         <div className="order-item bold order-final-total">Total
           <span className="order-item-detail">
-            ${parseFloat(Math.round(this.props.cart.price * 100) * 1.075 / 100).toFixed(2)}
+            ${this.props.total}
           </span>
         </div>
       </div>
@@ -138,6 +138,35 @@ export default class OrderSummary extends React.Component {
     return null;
   }
 
+  checkoutErrorMessage() {
+    if (this.props.errorMessage) {
+      return (
+        <div className="error-message">
+          {this.props.errorMessage}
+        </div>
+      );
+    }
+    return null;
+  }
+
+  checkoutButtonSection() {
+    if (this.props.errorMessage) {
+      return (
+        <React.Fragment>
+          {this.checkoutErrorMessage()}
+          <button type="submit" disabled className="checkout-button bold disabled">
+            Complete Order
+          </button>
+        </React.Fragment>
+      );
+    }
+    return (
+      <button type="submit" onClick={() => this.clearCart()} className="checkout-button bold">
+        Complete Order
+      </button>
+    );
+  }
+
   render() {
     return (
       <div className="order-summary">
@@ -148,9 +177,7 @@ export default class OrderSummary extends React.Component {
         {this.healthLabelsSection()}
         {this.customImagesSection()}
         {this.cartTotalSection()}
-        <button type="submit" onClick={() => this.clearCart()} className="checkout-button bold">
-          Complete Order
-        </button>
+        {this.checkoutButtonSection()}
       </div>
     );
   }
@@ -159,14 +186,13 @@ export default class OrderSummary extends React.Component {
 OrderSummary.propTypes = {
   cart: PropTypes.shape({
     count: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
     showPriceTotal: PropTypes.bool.isRequired,
     healthLabelSummary: PropTypes.string,
     labelImageUrls: PropTypes.arrayOf(PropTypes.string),
     items: PropTypes.arrayOf(
       PropTypes.shape({
         quantity: PropTypes.number.isRequired,
-        price: PropTypes.string.isRequired, // TODO: Change this to number
+        price: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         imageSrc: PropTypes.string.isRequired,
         labelImageUrl: PropTypes.string,
@@ -175,6 +201,10 @@ OrderSummary.propTypes = {
       })
     )
   }).isRequired,
+  subtotal: PropTypes.string.isRequired,
+  tax: PropTypes.string.isRequired,
+  total: PropTypes.string.isRequired,
+  errorMessage: PropTypes.string,
   handleClearCart: PropTypes.func.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
   sessionId: PropTypes.string.isRequired,
@@ -183,5 +213,6 @@ OrderSummary.propTypes = {
 };
 
 OrderSummary.defaultProps = {
-  conditionIdentifier: null
+  conditionIdentifier: null,
+  errorMessage: null
 };

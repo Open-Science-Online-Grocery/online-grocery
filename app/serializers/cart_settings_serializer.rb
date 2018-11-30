@@ -13,7 +13,6 @@ class CartSettingsSerializer
   def serialize
     {
       health_label_summary: health_label_summary,
-      show_price_total: @condition.show_price_total,
       label_image_urls: label_image_urls
     }
   end

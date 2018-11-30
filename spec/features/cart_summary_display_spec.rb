@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Showing labels in grocery store', :feature do
+RSpec.describe 'Showing cart summary information', :feature do
   let(:cart_label_1) do
     create(
       :cart_summary_label,

@@ -7,6 +7,7 @@ class ConditionSerializer
     @condition = condition
   end
 
+  # rubocop:disable Metrics/LineLength, Metrics/AbcSize
   def serialize
     {
       sort_fields: @condition.product_sort_fields.map(&:description),
@@ -15,7 +16,12 @@ class ConditionSerializer
       tags: @condition.tags.order(:id).uniq,
       subtags: @condition.subtags.order(:tag_id).uniq,
       filter_by_tags: @condition.filter_by_custom_categories,
-      only_add_to_cart_from_detail_page: @condition.only_add_from_detail_page
+      only_add_to_cart_from_detail_page: @condition.only_add_from_detail_page,
+      show_price_total: @condition.show_price_total,
+      minimum_spend: @condition.minimum_spend,
+      maximum_spend: @condition.maximum_spend,
+      may_add_to_cart_by_dollar_amount: @condition.may_add_to_cart_by_dollar_amount
     }
   end
+  # rubocop:enable Metrics/LineLength, Metrics/AbcSize
 end

@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe ConditionSerializer do
-  let(:condition) { build(:condition) }
   let(:sort_field_1) { build(:product_sort_field, description: 'first sort field') }
   let(:sort_field_2) { build(:product_sort_field, description: 'second sort field') }
   let(:category_1) { build(:category) }
@@ -14,6 +13,16 @@ RSpec.describe ConditionSerializer do
   let(:tag_2) { build(:tag) }
   let(:subtag_1) { build(:subtag) }
   let(:subtag_2) { build(:subtag) }
+  let(:condition) do
+    build(
+      :condition,
+      filter_by_custom_categories: true,
+      only_add_from_detail_page: true,
+      minimum_spend: 10,
+      maximum_spend: 50,
+      may_add_to_cart_by_dollar_amount: false
+    )
+  end
 
   subject { described_class.new(condition) }
 
@@ -27,8 +36,6 @@ RSpec.describe ConditionSerializer do
     allow(condition).to receive_message_chain(:subtags, :order) do
       [subtag_1, subtag_2]
     end
-    allow(condition).to receive(:filter_by_custom_categories) { true }
-    allow(condition).to receive(:only_add_from_detail_page) { true }
     allow(Category).to receive(:order) { [category_1, category_2] }
     allow(Subcategory).to receive(:order) { [subcategory_1, subcategory_2] }
   end
@@ -42,7 +49,11 @@ RSpec.describe ConditionSerializer do
         tags: [tag_1, tag_2],
         subtags: [subtag_1, subtag_2],
         filter_by_tags: true,
-        only_add_to_cart_from_detail_page: true
+        only_add_to_cart_from_detail_page: true,
+        show_price_total: true,
+        minimum_spend: BigDecimal(10),
+        maximum_spend: BigDecimal(50),
+        may_add_to_cart_by_dollar_amount: false
       }
       expect(subject.serialize).to eq expected_data
     end
