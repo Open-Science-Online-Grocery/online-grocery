@@ -19,37 +19,13 @@ export default class OrderSummary extends React.Component {
 
   removeFromCart(product) {
     this.props.handleRemoveFromCart(product);
-    const actionParams = {
-      sessionId: this.props.sessionId,
-      conditionIdentifier: this.props.conditionIdentifier,
-      actionType: 'delete',
-      product: product.name,
-      quantity: product.quantity
-    };
-    fromApi.jsonApiCall(
-      routes.addParticipantAction(),
-      actionParams,
-      data => console.log(data),
-      error => console.log(error)
-    );
+    this.props.logParticipantAction('delete', product.id, product.quantity);
   }
 
   clearCart() {
     this.props.handleClearCart();
     this.props.cart.items.forEach((item) => {
-      const actionParams = {
-        sessionId: this.props.sessionId,
-        conditionIdentifier: this.props.conditionIdentifier,
-        actionType: 'checkout',
-        product: item.name,
-        quantity: item.quantity
-      };
-      fromApi.jsonApiCall(
-        routes.addParticipantAction(),
-        actionParams,
-        data => console.log(data),
-        error => console.log(error)
-      );
+      this.props.logParticipantAction('checkout', item.id, item.quantity);
     });
   }
 
@@ -207,12 +183,10 @@ OrderSummary.propTypes = {
   errorMessage: PropTypes.string,
   handleClearCart: PropTypes.func.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
-  sessionId: PropTypes.string.isRequired,
-  conditionIdentifier: PropTypes.string,
-  getCartSettings: PropTypes.func.isRequired
+  getCartSettings: PropTypes.func.isRequired,
+  logParticipantAction: PropTypes.func.isRequired
 };
 
 OrderSummary.defaultProps = {
-  conditionIdentifier: null,
   errorMessage: null
 };
