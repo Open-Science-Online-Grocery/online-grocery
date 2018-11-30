@@ -28,6 +28,7 @@ class Cart
 
   def percent_of_products_with_label
     @percent_of_products_with_label ||= begin
+      return 0 if total_products.zero?
       (number_of_products_with_label / total_products.to_f) * 100
     end
   end

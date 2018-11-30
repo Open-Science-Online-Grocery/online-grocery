@@ -14,7 +14,8 @@ class ConditionSerializer
       subcategories: Subcategory.order(:category_id, :display_order),
       tags: @condition.tags.order(:id).uniq,
       subtags: @condition.subtags.order(:tag_id).uniq,
-      filter_by_tags: @condition.filter_by_custom_categories
+      filter_by_tags: @condition.filter_by_custom_categories,
+      only_add_to_cart_from_detail_page: @condition.only_add_from_detail_page
     }
   end
 end

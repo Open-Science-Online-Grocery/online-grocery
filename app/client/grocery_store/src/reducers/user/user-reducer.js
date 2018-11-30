@@ -1,6 +1,10 @@
 import { userActionTypes } from './user-actions';
 
-const initialUserState = { user: null };
+const initialUserState = {
+  user: null,
+  conditionIdentifier: null,
+  onlyAddToCartFromDetailPage: false
+};
 
 export default function userReducer(state = initialUserState, action) {
   switch (action.type) {
@@ -8,6 +12,10 @@ export default function userReducer(state = initialUserState, action) {
       return Object.assign({}, state, {
         sessionId: action.sessionId,
         conditionIdentifier: action.conditionIdentifier
+      });
+    case userActionTypes.SET_CONDITION_DATA:
+      return Object.assign({}, state, {
+        onlyAddToCartFromDetailPage: action.onlyAddToCartFromDetailPage
       });
     default:
       return state;

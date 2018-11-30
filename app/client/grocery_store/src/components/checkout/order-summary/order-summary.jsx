@@ -178,6 +178,10 @@ OrderSummary.propTypes = {
   handleClearCart: PropTypes.func.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
   sessionId: PropTypes.string.isRequired,
-  conditionIdentifier: PropTypes.string.isRequired,
+  conditionIdentifier: PropTypes.string,
   getCartSettings: PropTypes.func.isRequired
+};
+
+OrderSummary.defaultProps = {
+  conditionIdentifier: null
 };

@@ -14,6 +14,21 @@ export default class ProductCardExpanded extends React.Component {
     this.addQuantity = this.addQuantity.bind(this);
   }
 
+  componentDidMount() {
+    const actionParams = {
+      sessionId: this.props.sessionId,
+      conditionIdentifier: this.props.conditionIdentifier,
+      actionType: 'view',
+      product: this.props.name
+    };
+    fromApi.jsonApiCall(
+      routes.addParticipantAction(),
+      actionParams,
+      data => console.log(data),
+      error => console.log(error)
+    );
+  }
+
   handleAddToCart() {
     this.props.handleAddToCart(this.props, this.state.quantity);
     const actionParams = {
@@ -73,18 +88,6 @@ export default class ProductCardExpanded extends React.Component {
   }
 
   render() {
-    const actionParams = {
-      sessionId: this.props.sessionId,
-      conditionIdentifier: this.props.conditionIdentifier,
-      actionType: 'view',
-      product: this.props.name
-    };
-    fromApi.jsonApiCall(
-      routes.addParticipantAction(),
-      actionParams,
-      data => console.log(data),
-      error => console.log(error)
-    );
     return (
       <div>
         <div className="product-card-expanded">
@@ -152,7 +155,7 @@ export default class ProductCardExpanded extends React.Component {
 
 ProductCardExpanded.propTypes = {
   sessionId: PropTypes.string.isRequired,
-  conditionIdentifier: PropTypes.string.isRequired,
+  conditionIdentifier: PropTypes.string,
   name: PropTypes.string.isRequired,
   starpoints: PropTypes.number,
   size: PropTypes.string.isRequired,
@@ -181,6 +184,7 @@ ProductCardExpanded.propTypes = {
 };
 
 ProductCardExpanded.defaultProps = {
+  conditionIdentifier: null,
   starpoints: null,
   labelImageUrl: null,
   labelPosition: null,

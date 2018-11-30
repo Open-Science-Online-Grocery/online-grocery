@@ -18,7 +18,6 @@ RSpec.describe ProductFetcher do
       selected_subcategory_id: 5,
       selected_category_type: category_type,
       selected_filter_id: filter_id,
-      condition_identifier: condition.uuid,
       sort_field: 'foo',
       sort_direction: 'asc'
     }
@@ -28,7 +27,7 @@ RSpec.describe ProductFetcher do
     instance_double('ProductSorter', sorted_products: 'the sorted products!')
   end
 
-  subject { described_class.new(params) }
+  subject { described_class.new(condition, params) }
 
   before do
     allow(Product).to receive(:name_matches) { [product_1, product_2] }
@@ -40,7 +39,6 @@ RSpec.describe ProductFetcher do
       'second serialized product'
     )
     allow(ProductSorter).to receive(:new) { product_sorter }
-    allow(Condition).to receive(:find_by) { condition }
   end
 
   context 'when search term should be used to fetch products' do
@@ -48,7 +46,6 @@ RSpec.describe ProductFetcher do
 
     it 'calls classes with the expected args' do
       expect(Product).to receive(:name_matches).with('zip')
-      expect(Condition).to receive(:find_by).with(uuid: condition.uuid)
       expect(ProductSerializer).to receive(:new).with(product_1, condition)
       expect(ProductSerializer).to receive(:new).with(product_2, condition)
       expect(ProductSorter).to receive(:new).with(
@@ -69,7 +66,6 @@ RSpec.describe ProductFetcher do
 
       it 'calls classes with the expected args' do
         expect(Product).to receive(:where).with(subcategory_id: 5)
-        expect(Condition).to receive(:find_by).with(uuid: condition.uuid)
         expect(ProductSerializer).to receive(:new).with(product_3, condition)
         expect(ProductSerializer).to receive(:new).with(product_4, condition)
         expect(ProductSorter).to receive(:new).with(
@@ -92,7 +88,6 @@ RSpec.describe ProductFetcher do
             subtag_id: 5
           }
         )
-        expect(Condition).to receive(:find_by).with(uuid: condition.uuid)
         expect(ProductSerializer).to receive(:new).with(product_3, condition)
         expect(ProductSerializer).to receive(:new).with(product_4, condition)
         expect(ProductSorter).to receive(:new).with(

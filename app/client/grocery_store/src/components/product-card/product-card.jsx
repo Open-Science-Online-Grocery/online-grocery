@@ -68,13 +68,32 @@ export default class ProductCard extends React.Component {
     };
   }
 
+  addToCartButtons() {
+    if (!this.props.showAddToCartButton) return null;
+    return (
+      <React.Fragment>
+        <img
+          onClick={this.handleAddToCart}
+          className="product-card-add-to-cart"
+          src={require('../../images/trolley-clipart.png')}
+          alt="cart icon"
+        />
+        <div className="product-card-quantity">
+          <div className="product-card-quantity-change" onClick={this.subtractQuantity}>-</div>
+          {this.state.quantity}
+          <div className="product-card-quantity-change" onClick={this.addQuantity}>+</div>
+        </div>
+      </React.Fragment>
+    );
+  }
+
   render() {
     return (
       <div className="product-card">
         <Link to={{ pathname: '/store/product', state: { product: this.props.product } }}>
           <div className="product-card-image-wrapper">
             <img className="product-card-image" alt="product" src={this.props.product.imageSrc} />
-            <div className="product-card-overlay" style={this.labelStyles()}></div>
+            <div className="product-card-overlay" style={this.labelStyles()} />
           </div>
           <div className="product-card-name">{this.props.product.name}</div>
         </Link>
@@ -83,17 +102,7 @@ export default class ProductCard extends React.Component {
           ${parseFloat(Math.round(this.props.product.price * 100) / 100).toFixed(2)}
         </div>
         <div className="product-card-buttons">
-          <img
-            onClick={this.handleAddToCart}
-            className="product-card-add-to-cart"
-            src={require('../../images/trolley-clipart.png')}
-            alt="cart icon"
-          />
-          <div className="product-card-quantity">
-            <div className="product-card-quantity-change" onClick={this.subtractQuantity}>-</div>
-            {this.state.quantity}
-            <div className="product-card-quantity-change" onClick={this.addQuantity}>+</div>
-          </div>
+          {this.addToCartButtons()}
           <div className="tooltip--triangle" data-tooltip="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!">
             <a href="https://guidingstars.com/what-is-guiding-stars/">
               <img
@@ -111,7 +120,7 @@ export default class ProductCard extends React.Component {
 
 ProductCard.propTypes = {
   sessionId: PropTypes.string.isRequired,
-  conditionIdentifier: PropTypes.string.isRequired,
+  conditionIdentifier: PropTypes.string,
   product: PropTypes.shape({
     name: PropTypes.string,
     imageSrc: PropTypes.string,
@@ -122,5 +131,10 @@ ProductCard.propTypes = {
     labelPosition: PropTypes.string,
     labelSize: PropTypes.number
   }).isRequired,
-  handleAddToCart: PropTypes.func.isRequired
+  handleAddToCart: PropTypes.func.isRequired,
+  showAddToCartButton: PropTypes.bool.isRequired
+};
+
+ProductCard.defaultProps = {
+  conditionIdentifier: null
 };

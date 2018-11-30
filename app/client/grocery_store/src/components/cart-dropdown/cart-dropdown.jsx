@@ -65,8 +65,8 @@ export default class CartDropdown extends React.Component {
     );
 
     return (
-      <div className="cart-button">
-        <img className="cart-image" src={require('../../images/trolley-clipart-white.png')} onClick={this.openCloseDropdown} />
+      <div className="cart-button" onClick={this.openCloseDropdown}>
+        <img className="cart-image" src={require('../../images/trolley-clipart-white.png')} />
         <div className="cart-count">{this.props.cart.count}</div>
         {
           this.state.dropdownOpen
@@ -102,5 +102,9 @@ CartDropdown.propTypes = {
   }).isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
   sessionId: PropTypes.string.isRequired,
-  conditionIdentifier: PropTypes.string.isRequired
+  conditionIdentifier: PropTypes.string
+};
+
+CartDropdown.defaultProps = {
+  conditionIdentifier: null
 };

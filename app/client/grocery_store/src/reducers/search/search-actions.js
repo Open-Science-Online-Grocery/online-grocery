@@ -28,7 +28,9 @@ function updateSearchTerm(searchTerm) {
 }
 
 function updateSearchType(searchType) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const currentSearchType = getState().search.type;
+    if (searchType === currentSearchType) return;
     dispatch(setSearchType(searchType));
     dispatch(categoryActionCreators.getProducts());
   };

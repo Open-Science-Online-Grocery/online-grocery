@@ -20,17 +20,18 @@ class ProductFetcher
   #     - records should be sorted by the specified `sort_field` and
   #       `sort_direction` if present. otherwise, we use the condition's default
   #        sorting if present.
-  def initialize(params)
+  def initialize(condition, params)
+    @condition = condition
     @params = params
   end
 
   def fetch_products
     product_hashes = products.map do |product|
-      ProductSerializer.new(product, condition).serialize
+      ProductSerializer.new(product, @condition).serialize
     end
     ProductSorter.new(
       product_hashes,
-      condition,
+      @condition,
       @params[:sort_field],
       @params[:sort_direction]
     ).sorted_products
@@ -70,10 +71,6 @@ class ProductFetcher
     subtag_id = @params[:selected_filter_id]
     return products unless subtag_id.present?
     products.with_subtag(subtag_id)
-  end
-
-  private def condition
-    @condition ||= Condition.find_by(uuid: @params[:condition_identifier])
   end
 
   private def term_search_type

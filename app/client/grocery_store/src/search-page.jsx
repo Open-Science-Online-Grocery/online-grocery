@@ -18,7 +18,7 @@ class SearchPage extends React.Component {
         <div className="search-container">
           <SortLinksContainer />
         </div>
-        <div className="title"> Search Results: "{this.props.searchTerm}"</div>
+        <div className="title"> Search Results: &quot;{this.props.searchTerm}&quot;</div>
         <ProductGridContainer />
       </div>
     );
