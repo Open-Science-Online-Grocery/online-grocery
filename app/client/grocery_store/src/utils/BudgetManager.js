@@ -17,15 +17,19 @@ export default class BudgetManager {
     return (this.cartPrice * 1.075).toFixed(2);
   }
 
-  isOverBudget() {
+  overMaxSpend() {
     return !Number.isNaN(this.maxSpend) && this.total() > this.maxSpend;
+  }
+
+  underMinSpend() {
+    return !Number.isNaN(this.minSpend) && this.total() < this.minSpend;
   }
 
   checkoutErrorMessage() {
     let message;
-    if (this.isOverBudget()) {
+    if (this.overMaxSpend()) {
       message = `less than $${this.maxSpend.toFixed(2)}`;
-    } else if (!Number.isNaN(this.minSpend) && this.total() < this.minSpend) {
+    } else if (this.underMinSpend()) {
       message = `more than $${this.minSpend.toFixed(2)}`;
     }
     if (message) {
