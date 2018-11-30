@@ -4,6 +4,7 @@ import category from './category/category-reducer';
 import user from './user/user-reducer';
 import sorting from './sorting/sorting-reducer';
 import search from './search/search-reducer';
+import alert from './alert/alert-reducer';
 import { userActionTypes } from './user/user-actions';
 
 const appReducer = combineReducers({
@@ -11,7 +12,8 @@ const appReducer = combineReducers({
   search,
   cart,
   category,
-  user
+  user,
+  alert
 });
 
 // reset approach adapted from https://stackoverflow.com/a/35641992/10410128

@@ -11,7 +11,7 @@ export default class Alert extends React.Component {
           <div className="modal-window">
 
             <div className="header">
-              <button type="button">
+              <button type="button" onClick={this.props.handleDismiss}>
                 &times;
               </button>
               <div className="title">Alert</div>
@@ -30,7 +30,8 @@ export default class Alert extends React.Component {
 
 Alert.propTypes = {
   message: PropTypes.string,
-  visible: PropTypes.bool
+  visible: PropTypes.bool,
+  handleDismiss: PropTypes.func.isRequired
 };
 
 Alert.defaultProps = {
