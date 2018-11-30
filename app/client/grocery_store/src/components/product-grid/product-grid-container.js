@@ -4,7 +4,8 @@ import ProductGrid from './product-grid';
 const mapStateToProps = state => (
   {
     sessionId: state.user.sessionId,
-    products: state.category.products
+    products: state.category.products,
+    searchType: state.search.type
   }
 );
 
