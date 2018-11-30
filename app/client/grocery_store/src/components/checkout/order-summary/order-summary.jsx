@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as routes from '../../../../../utils/routes';
-import * as fromApi from '../../../../../utils/api_call';
 import './order-summary.scss';
 
 // NOTE: if the appearance of this component changes, be sure to also update the
