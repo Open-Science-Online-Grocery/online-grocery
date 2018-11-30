@@ -7,11 +7,6 @@ import './order-summary.scss';
 // NOTE: if the appearance of this component changes, be sure to also update the
 // images used in app/views/conditions/_cart_summary_tab.html.erb
 export default class OrderSummary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.setTotals(this.props.cart.price);
-  }
-
   componentDidMount() {
     this.props.getCartSettings();
   }
@@ -19,14 +14,7 @@ export default class OrderSummary extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.cart.items !== this.props.cart.items) {
       this.props.getCartSettings();
-      this.setTotals(nextProps.cart.price);
     }
-  }
-
-  setTotals(price) {
-    this.subtotal = price.toFixed(2);
-    this.tax = (price * 0.075).toFixed(2);
-    this.total = (price * 1.075).toFixed(2);
   }
 
   removeFromCart(product) {
@@ -104,7 +92,7 @@ export default class OrderSummary extends React.Component {
         <div className="order-item bold">Subtotal
           <span className="order-item-detail normal-height">
             <span className="order-item-price bold">
-              ${this.subtotal}
+              ${this.props.subtotal}
             </span>
           </span>
         </div>
@@ -112,14 +100,14 @@ export default class OrderSummary extends React.Component {
         <div className="order-item bold">Sales tax (7.5%)
           <span className="order-item-detail normal-height">
             <span className="order-item-price">
-              ${this.tax}
+              ${this.props.tax}
             </span>
           </span>
         </div>
 
         <div className="order-item bold order-final-total">Total
           <span className="order-item-detail">
-            ${this.total}
+            ${this.props.total}
           </span>
         </div>
       </div>
@@ -151,18 +139,10 @@ export default class OrderSummary extends React.Component {
   }
 
   checkoutErrorMessage() {
-    const maxSpend = parseFloat(this.props.cart.maximumSpend);
-    const minSpend = parseFloat(this.props.cart.minimumSpend);
-    let message;
-    if (!Number.isNaN(maxSpend) && this.total > maxSpend) {
-      message = `less than $${maxSpend.toFixed(2)}`;
-    } else if (!Number.isNaN(minSpend) && this.total < minSpend) {
-      message = `more than $${minSpend.toFixed(2)}`;
-    }
-    if (message) {
+    if (this.props.errorMessage) {
       return (
         <div className="error-message">
-          In order to check out, you must spend {message}.
+          {this.props.errorMessage}
         </div>
       );
     }
@@ -170,11 +150,10 @@ export default class OrderSummary extends React.Component {
   }
 
   checkoutButtonSection() {
-    const errorMessage = this.checkoutErrorMessage();
-    if (errorMessage) {
+    if (this.props.errorMessage) {
       return (
         <React.Fragment>
-          {errorMessage}
+          {this.checkoutErrorMessage()}
           <button type="submit" disabled className="checkout-button bold disabled">
             Complete Order
           </button>
@@ -207,12 +186,9 @@ export default class OrderSummary extends React.Component {
 OrderSummary.propTypes = {
   cart: PropTypes.shape({
     count: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
     showPriceTotal: PropTypes.bool.isRequired,
     healthLabelSummary: PropTypes.string,
     labelImageUrls: PropTypes.arrayOf(PropTypes.string),
-    minimumSpend: PropTypes.string,
-    maximumSpend: PropTypes.string,
     items: PropTypes.arrayOf(
       PropTypes.shape({
         quantity: PropTypes.number.isRequired,
@@ -225,6 +201,10 @@ OrderSummary.propTypes = {
       })
     )
   }).isRequired,
+  subtotal: PropTypes.string.isRequired,
+  tax: PropTypes.string.isRequired,
+  total: PropTypes.string.isRequired,
+  errorMessage: PropTypes.string,
   handleClearCart: PropTypes.func.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
   sessionId: PropTypes.string.isRequired,
@@ -233,5 +213,6 @@ OrderSummary.propTypes = {
 };
 
 OrderSummary.defaultProps = {
-  conditionIdentifier: null
+  conditionIdentifier: null,
+  errorMessage: null
 };

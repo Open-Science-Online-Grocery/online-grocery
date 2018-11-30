@@ -1,5 +1,6 @@
 import * as routes from '../../../../utils/routes';
 import * as fromApi from '../../../../utils/api_call';
+import { alertActionCreators } from '../alert/alert-actions';
 
 export const cartActionTypes = {
   ADD_TO_CART: 'ADD_TO_CART',
@@ -9,12 +10,14 @@ export const cartActionTypes = {
 };
 
 function addToCart(product, quantity = 1) {
-  const newProduct = Object.assign({}, product, {
-    quantity
-  });
-  return {
-    type: cartActionTypes.ADD_TO_CART,
-    product: newProduct
+  return (dispatch, getState) => {
+    const newProduct = Object.assign({}, product, { quantity });
+    const action = {
+      type: cartActionTypes.ADD_TO_CART,
+      product: newProduct
+    };
+    dispatch(action);
+    dispatch(alertActionCreators.showAlert('product added!'));
   };
 }
 
