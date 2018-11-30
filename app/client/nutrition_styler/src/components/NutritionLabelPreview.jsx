@@ -56,7 +56,7 @@ export default class NutritionLabelPreview extends PureComponent {
   fakeProductData() {
     return {
       servings: '8',
-      servingSize: '2/3 cup (55g)',
+      servingSize: '8 Fluid ounce(s) (240ml)',
       calories: 230,
       totalFat: 8,
       saturatedFat: 1,
