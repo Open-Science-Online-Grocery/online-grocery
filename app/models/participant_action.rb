@@ -5,5 +5,5 @@ class ParticipantAction < ApplicationRecord
   validates :session_identifier, presence: true
 
   belongs_to :condition, optional: true
-  belongs_to :product, optional: true
+  belongs_to :product
 end
