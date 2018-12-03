@@ -30,35 +30,39 @@ class CheckoutProductsExporter
   end
 
   private def participant_row(session_identifier, results)
-    products = results.map(&:product)
     { 'Participant' => session_identifier }
-      .merge(all_product_fields(products))
-      .merge(total_fields(products))
+      .merge(all_product_fields(results))
+      .merge(total_fields(results))
   end
 
-  private def all_product_fields(products)
-    # the format of this csv entails that every row have as many product columns
+  private def all_product_fields(results)
+    # the format of this csv entails that every row has as many product columns
     # as the row for the participant with the most products. here we pad the
-    # array of products with `nil`s to generate the columns needed for rows with
+    # array of results with `nil`s to generate the columns needed for rows with
     # fewer products.
-    padded_products = Array.new(max_product_count) { |i| products[i] }
+    padded_results = Array.new(max_product_count) { |i| results[i] }
     fields = {}
-    padded_products.each_with_index do |product, index|
-      fields.merge!(product_fields(product, index))
+    padded_results.each_with_index do |result, index|
+      fields.merge!(product_fields(result, index))
     end
     fields
   end
 
-  private def product_fields(product, index)
+  private def product_fields(result, index)
+    product = result.try(:product)
     ordered_fields = %i[name price category] + nutrition_fields
-    ordered_fields.each_with_object({}) do |field, data|
+    product_data = ordered_fields.each_with_object({}) do |field, data|
       data["Item#{index + 1}_#{field.capitalize}"] = product.try(field)
     end
+    { "Item#{index + 1}_Quantity" => result.try(:quantity) }.merge(product_data)
   end
 
-  private def total_fields(products)
+  private def total_fields(results)
+    products = results.flat_map do |result|
+      Array.new(result.quantity, result.product)
+    end
     {
-      'TotalPrice' => products.sum(&:price),
+      'TotalPrice_Pretax' => products.sum(&:price),
       'TotalNumItems' => products.count
     }.merge(total_nutrition_fields(products))
   end
