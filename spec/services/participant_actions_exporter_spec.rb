@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ExperimentResultsExporter do
+RSpec.describe ParticipantActionsExporter do
   let(:result_1) do
     instance_double(
       'ExperimentResult',

@@ -4,7 +4,7 @@ require 'csv'
 
 # creates a CSV of products in the cart at checkout for each participant in
 # a given Experiment
-class ExperimentSummaryExporter
+class CheckoutProductsExporter
   def initialize(experiment)
     @experiment = experiment
   end
@@ -30,7 +30,7 @@ class ExperimentSummaryExporter
   end
 
   private def participant_row(session_identifier, results)
-    {'Participant' => session_identifier }
+    { 'Participant' => session_identifier }
       .merge(all_product_fields(results))
       .merge(total_fields(results))
   end
@@ -51,7 +51,7 @@ class ExperimentSummaryExporter
   private def product_fields(product, index)
     ordered_fields = %i[name price category] + nutrition_fields
     ordered_fields.each_with_object({}) do |field, data|
-      data["Item#{index + 1}_#{field.capitalize}"] = product.try(:field)
+      data["Item#{index + 1}_#{field.capitalize}"] = product.try(field)
     end
   end
 
@@ -79,7 +79,6 @@ class ExperimentSummaryExporter
       fiber
       sugar
       protein
-      vitamins
       starpoints
     ]
   end
