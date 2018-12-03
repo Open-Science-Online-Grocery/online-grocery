@@ -53,7 +53,9 @@ export default class TopNav extends React.Component {
     } = this.props;
 
     if (displayedTag) {
-      const subtagsForTab = subtags.filter(subtag => subtag.tagId === displayedTag.id);
+      const subtagsForTab = subtags.filter(subtag => (
+        subtag.name && subtag.tagId === displayedTag.id
+      ));
       return (
         <Tab
           tabName={displayedTag.name}
