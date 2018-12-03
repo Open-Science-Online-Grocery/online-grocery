@@ -5,8 +5,9 @@ class DataDownloadsController < ApplicationController
     %i[index create] => :own_experiment
   }
 
+  before_action :set_breadcrumbs
+
   def index
-    @resource_name = 'Download Data'
   end
 
   def create
@@ -29,5 +30,12 @@ class DataDownloadsController < ApplicationController
 
   private def set_experiment
     @experiment = Experiment.find(params[:experiment_id])
+  end
+
+  private def set_breadcrumbs
+    @breadcrumbs = [
+      OpenStruct.new(name: @experiment.name, path: experiment_path(@experiment))
+    ]
+    @resource_name = 'Download Data'
   end
 end

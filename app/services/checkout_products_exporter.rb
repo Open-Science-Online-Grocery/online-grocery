@@ -30,20 +30,21 @@ class CheckoutProductsExporter
   end
 
   private def participant_row(session_identifier, results)
+    products = results.map(&:product)
     { 'Participant' => session_identifier }
-      .merge(all_product_fields(results))
-      .merge(total_fields(results))
+      .merge(all_product_fields(products))
+      .merge(total_fields(products))
   end
 
-  private def all_product_fields(results)
+  private def all_product_fields(products)
     # the format of this csv entails that every row have as many product columns
     # as the row for the participant with the most products. here we pad the
-    # array of results with `nil`s to generate the columns needed for rows with
+    # array of products with `nil`s to generate the columns needed for rows with
     # fewer products.
-    padded_results = Array.new(max_product_count) { |i| results[i] }
+    padded_products = Array.new(max_product_count) { |i| products[i] }
     fields = {}
-    padded_results.each_with_index do |result, index|
-      fields.merge!(product_fields(result.try(:product), index))
+    padded_products.each_with_index do |product, index|
+      fields.merge!(product_fields(product, index))
     end
     fields
   end
@@ -55,8 +56,17 @@ class CheckoutProductsExporter
     end
   end
 
-  private def total_fields(results)
-    {}
+  private def total_fields(products)
+    {
+      'TotalPrice' => products.sum(&:price),
+      'TotalNumItems' => products.count
+    }.merge(total_nutrition_fields(products))
+  end
+
+  private def total_nutrition_fields(products)
+    nutrition_fields.each_with_object({}) do |field, data|
+      data["Total_#{field.capitalize}"] = products.map(&field).compact.sum
+    end
   end
 
   private def max_product_count
