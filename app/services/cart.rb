@@ -85,10 +85,68 @@ class Cart
     average(:starpoints)
   end
 
+  def total_calories_from_fat
+    total(:calories_from_fat)
+  end
+
+  def total_calories
+    total(:calories)
+  end
+
+  def total_total_fat
+    total(:total_fat)
+  end
+
+  def total_saturated_fat
+    total(:saturated_fat)
+  end
+
+  def total_trans_fat
+    total(:trans_fat)
+  end
+
+  def total_cholesterol
+    total(:cholesterol)
+  end
+
+  def total_sodium
+    total(:sodium)
+  end
+
+  def total_carbs
+    total(:carbs)
+  end
+
+  def total_fiber
+    total(:fiber)
+  end
+
+  def total_sugar
+    total(:sugar)
+  end
+
+  def total_protein
+    total(:protein)
+  end
+
+  def total_price
+    total(:price)
+  end
+
+  def total_starpoints
+    total(:starpoints)
+  end
+
   private def average(field)
-    sum = @product_data.reduce(0) do |total, item|
+    total(field) / total_products.to_f
+  end
+
+  # note that this is intentionally calculating the total *per serving* in
+  # the cart, not the total in the cart as a whole. see the descriptions of
+  # these fields in Equation.cart_variables
+  private def total(field)
+    @product_data.reduce(0) do |total, item|
       total + (item[:quantity].to_i * item[:product].public_send(field))
     end
-    sum / total_products.to_f
   end
 end

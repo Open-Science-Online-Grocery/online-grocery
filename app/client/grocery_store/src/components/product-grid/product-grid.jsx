@@ -13,7 +13,10 @@ export default class ProductGrid extends React.Component {
   }
 
   noProductsMessage() {
-    return (<p>No matching products were found</p>);
+    if (this.props.searchType === 'term') {
+      return (<p>No matching products were found</p>);
+    }
+    return null;
   }
 
   render() {
@@ -26,6 +29,7 @@ export default class ProductGrid extends React.Component {
 }
 
 ProductGrid.propTypes = {
+  searchType: PropTypes.string.isRequired,
   products: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,

@@ -53,9 +53,21 @@ class Equation
       avg_sugar: 'Average sugars per serving (g)',
       avg_protein: 'Average protein per serving (g)',
       avg_price: 'Average price',
-      avg_starpoints: 'Average star points'
+      avg_starpoints: 'Average star points',
+      total_calories_from_fat: 'Total calories from fat per serving',
+      total_calories: 'Total calories per serving',
+      total_total_fat: 'Total fat per serving (g)',
+      total_saturated_fat: 'Total saturated fat per serving (g)',
+      total_trans_fat: 'Total trans fat per serving (g)',
+      total_cholesterol: 'Total cholesterol per serving (mg)',
+      total_sodium: 'Total sodium per serving (mg)',
+      total_carbs: 'Total carbohydrates per serving (g)',
+      total_fiber: 'Total dietary fiber per serving (g)',
+      total_sugar: 'Total sugars per serving (g)',
+      total_protein: 'Total protein per serving (g)',
+      total_price: 'Total price (before tax)',
+      total_starpoints: 'Total star points'
     }
-    # TODO: add "total" version of most facts as well
   end
   # rubocop:enable Metrics/MethodLength
 
