@@ -11,7 +11,7 @@ class ExperimentSummaryExporter
 
   def generate_csv
     CSV.generate(headers: true) do |csv|
-      csv << rows.first.keys
+      csv << rows.first.try(:keys)
       rows.each { |row| csv << row }
     end
   end

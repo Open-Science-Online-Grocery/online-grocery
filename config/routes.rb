@@ -10,15 +10,12 @@ Rails.application.routes.draw do
   end
 
   resources :experiments do
-    member do
-      get :download_data
-    end
-
     resources :conditions do
       collection do
         put :refresh_form
       end
     end
+    resources :data_downloads, only: [:index, :create]
   end
 
   resource :product_download, only: [:new, :show]

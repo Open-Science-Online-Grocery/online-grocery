@@ -2,28 +2,10 @@
 
 class ExperimentsController < ApplicationController
   power :experiments, as: :experiment_scope, map: {
-    %i[download_data index new create show edit update destroy] =>
-      :own_experiments
+    %i[index new create show edit update destroy] => :own_experiments
   }
 
-  before_action :set_experiment, only: %i[
-    download_data
-    show
-    edit
-    update
-    destroy
-  ]
-
-  def download_data
-    respond_to do |format|
-      format.csv do
-        send_data(
-          ExperimentResultsExporter.new(@experiment).generate_csv,
-          filename: 'experiment_results.csv'
-        )
-      end
-    end
-  end
+  before_action :set_experiment, only: %i[show edit update destroy]
 
   def index
     @experiments = Experiment.for_user(current_user).order(created_at: :desc)
