@@ -24,7 +24,7 @@ class CheckoutProductsExporter
 
   private def results_by_participant
     @results_by_participant ||= @experiment.experiment_results
-      .includes(:product)
+      .includes(product: :category)
       .where(action_type: 'checkout')
       .group_by(&:session_identifier)
   end
@@ -73,6 +73,7 @@ class CheckoutProductsExporter
     @max_product_count ||= results_by_participant.values.max_by(&:length).length
   end
 
+  # rubocop:disable Metrics/MethodLength
   private def nutrition_fields
     %i[
       calories_from_fat
@@ -92,4 +93,5 @@ class CheckoutProductsExporter
       starpoints
     ]
   end
+  # rubocop:enable Metrics/MethodLength
 end
