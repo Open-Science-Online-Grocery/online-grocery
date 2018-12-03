@@ -70,6 +70,21 @@ RSpec.configure do |config|
   end
 
   config.append_after { DatabaseCleaner.clean }
+  
+  # this variable is set here: https://gitlab.com/scimedsolutions/HowesGrocery/howes_grocery_researcher_portal/settings/ci_cd
+  if ENV['TEST_ENVIRONMENT'] == 'CI'
+    Capybara.default_max_wait_time = 30
+
+    Capybara::Screenshot.s3_configuration = {
+      s3_client_credentials: {
+        access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+        secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+      },
+      bucket_name: 'com-scimed-gitlab-ci-screenshots',
+      key_prefix: 'howes_grocery_researcher_portal/'
+    }
+  end
+  Capybara::Screenshot.prune_strategy = { keep: 20 }
 
   Capybara.register_driver :selenium_chrome_headless do |app|
     browser_options = ::Selenium::WebDriver::Chrome::Options.new
