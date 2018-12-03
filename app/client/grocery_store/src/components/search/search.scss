@@ -6,7 +6,19 @@
   align-items: center;
   margin-bottom: 1rem;
 
+  & > * {
+    &:not(:first-child) {
+      margin-left: 1rem;
+    }
+
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+
   form {
+    flex-grow: 1;
+    text-align: right;
     flex-shrink: 0;
     input[type=text] {
       margin-top: 0px;
