@@ -96,6 +96,45 @@ To navigate to the Grocery Store, visit `http://localhost:3000/store`. You may
 enter any text as your session ID to continue.  No other login is needed.
 
 
+## Testing
+
+All rspec tests, JS tests, rubocop, and eslint can be run with the default rake
+task (`bundle exec rake`)
+
+If feature specs are not running correctly, try updating the chromedriver
+version from the command line: `chromedriver-update <version number>`.
+
+Currently all feature tests run in a headless chrome browser. To troubleshoot feature
+tests you can view them running in a Chrome browser. To do this add the `BROWSER` environment
+variable to your rspec command:
+
+`BROWSER=1 bundle exec rspec spec/feature/feature_spec.rb`
+
+
+### Testing Troubleshooting
+
+Occasionally webpacker will not recognize javascript changes, especially when
+the changes came from a git pull. If this happens many, if not all, of the
+javascript enabled tests will fail.
+To fix, run `RAILS_ENV=test ./bin/webpack`
+
+
+## CI
+
+To fetch screenshots of feature specs that fail on CI, complete this one-time setup:
+
+* Install the `aws` command line client
+* Log in to AWS via the `aws` command line client:
+  * the "alias" to use is `scimed`.
+  * ask Adam for your AWS username and password if you do not already have an account.
+  * ask Adam to give you the following permission: `iam:CreateAccessKey`
+  * Follow the instructions [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-quick-configuration) to configure your AWS client.
+
+Then, to fetch the screenshots, run the following from the root directory of this project:
+
+`aws s3 cp --recursive s3://com-scimed-gitlab-ci-screenshots/howes_grocery_researcher_portal/ ./ci_failures/`
+
+
 ## Servers and Credentials
 
 At present, we have a staging server and a production server.  For any server, if you are unable to ssh in without a password, ask another developer with ssh access to add your public key to the authorized keys file.

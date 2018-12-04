@@ -52,3 +52,5 @@ uploads/
 /ansible/roles/scimed.*
 
 db/schema.rb
+
+ci_failures/
