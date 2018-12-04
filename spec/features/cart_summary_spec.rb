@@ -34,6 +34,8 @@ RSpec.describe 'Configuring the cart summary', :feature do
       expect(page).to have_content 'Use custom image'
     end
 
+    screenshot_and_save_page
+
     # Invalid save
     force_click_on 'Save'
     expect(page).to have_content 'A cart summary image must be uploaded or selected for all conditional images'
