@@ -25,16 +25,14 @@ RSpec.describe 'Configuring the cart summary', :feature do
     force_click(first('label', text: 'Show as percent ("40% of products")'))
 
     within('.tab.segment[data-tab="cart-summary"]') do
-      expect(page).to have_no_content 'Use custom image'
+      expect(page).to have_no_css '[data-cart-summary-label]'
     end
 
     force_click_on('Add a cart summary image')
 
     within('.tab.segment[data-tab="cart-summary"]') do
-      expect(page).to have_content 'Use custom image'
+      expect(page).to have_css '[data-cart-summary-label]'
     end
-
-    screenshot_and_save_page
 
     # Invalid save
     force_click_on 'Save'
