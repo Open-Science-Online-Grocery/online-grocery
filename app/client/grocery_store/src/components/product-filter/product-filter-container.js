@@ -4,15 +4,23 @@ import { filteringActionCreators } from '../../reducers/filtering/filtering-acti
 
 const mapStateToProps = state => (
   {
-    filterByTags: state.sorting.filterByTags,
-    subtags: state.category.subtags
+    filterByTags: state.filtering.filterByTags,
+    selectedFilterId: state.filtering.selectedFilterId,
+    selectedFilterType: state.filtering.selectedFilterType,
+    tags: state.category.tags,
+    subtags: state.category.subtags.filter(subtag => subtag.name)
   }
 );
 
 const mapDispatchToProps = dispatch => (
   {
-    handleFilterChange: (selectedFilterId) => {
-      dispatch(filteringActionCreators.updateFilter(selectedFilterId));
+    handleFilterChange: (selectedFilterId, selectedFilterType) => {
+      dispatch(
+        filteringActionCreators.updateFilter(
+          selectedFilterId,
+          selectedFilterType
+        )
+      );
     }
   }
 );

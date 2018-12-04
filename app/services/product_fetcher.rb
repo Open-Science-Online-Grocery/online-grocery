@@ -45,7 +45,6 @@ class ProductFetcher
     else
       products = products_from_category
     end
-
     filtered_products(products)
   end
 
@@ -68,9 +67,14 @@ class ProductFetcher
   end
 
   private def filtered_products(products)
-    subtag_id = @params[:selected_filter_id]
-    return products unless subtag_id.present?
-    products.with_subtag(subtag_id)
+    # `tag_id` could actually be a Subtag's id - the `selected_filter_type`
+    # param indicates if it is a tag or subtag id
+    tag_id = @params[:selected_filter_id]
+    return products unless tag_id.present?
+    if @params[:selected_filter_type]  == 'subtag'
+      return products.with_subtag(tag_id)
+    end
+    products.with_tag(tag_id)
   end
 
   private def term_search_type
