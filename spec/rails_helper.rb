@@ -70,7 +70,7 @@ RSpec.configure do |config|
   end
 
   config.append_after { DatabaseCleaner.clean }
-  
+
   # this variable is set here: https://gitlab.com/scimedsolutions/HowesGrocery/howes_grocery_researcher_portal/settings/ci_cd
   if ENV['TEST_ENVIRONMENT'] == 'CI'
     Capybara.default_max_wait_time = 30
