@@ -71,7 +71,7 @@ class ProductFetcher
     # param indicates if it is a tag or subtag id
     tag_id = @params[:selected_filter_id]
     return products unless tag_id.present?
-    if @params[:selected_filter_type]  == 'subtag'
+    if @params[:selected_filter_type] == 'subtag'
       return products.with_subtag(tag_id)
     end
     products.with_tag(tag_id)

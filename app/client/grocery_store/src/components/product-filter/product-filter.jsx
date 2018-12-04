@@ -11,7 +11,8 @@ export default class ProductFilter extends React.Component {
   onSelectChange(event) {
     const selectedValue = event.target.value;
     const [filterType, filterId] = selectedValue.split('_');
-    this.props.handleFilterChange(parseInt(filterId, 10), filterType);
+    const parsedFilterId = filterId ? parseInt(filterId, 10) : null;
+    this.props.handleFilterChange(parsedFilterId, filterType);
   }
 
   tagOption(tag) {
