@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as routes from '../../../../utils/routes';
-import * as fromApi from '../../../../utils/api_call';
 import NutritionLabel from '../nutrition-label/nutrition-label';
 import './product-card-expanded.scss';
 
@@ -15,35 +13,12 @@ export default class ProductCardExpanded extends React.Component {
   }
 
   componentDidMount() {
-    const actionParams = {
-      sessionId: this.props.sessionId,
-      conditionIdentifier: this.props.conditionIdentifier,
-      actionType: 'view',
-      product: this.props.name
-    };
-    fromApi.jsonApiCall(
-      routes.addParticipantAction(),
-      actionParams,
-      data => console.log(data),
-      error => console.log(error)
-    );
+    this.props.logParticipantAction('view', this.props.id);
   }
 
   handleAddToCart() {
     this.props.handleAddToCart(this.props, this.state.quantity);
-    const actionParams = {
-      sessionId: this.props.sessionId,
-      conditionIdentifier: this.props.conditionIdentifier,
-      actionType: 'add',
-      product: this.props.name,
-      quantity: this.state.quantity
-    };
-    fromApi.jsonApiCall(
-      routes.addParticipantAction(),
-      actionParams,
-      data => console.log(data),
-      error => console.log(error)
-    );
+    this.props.logParticipantAction('add', this.props.id, this.state.quantity);
   }
 
   subtractQuantity() {
@@ -110,8 +85,8 @@ export default class ProductCardExpanded extends React.Component {
               </div>
             </div>
             <div className="product-card-expanded-image-wrapper">
-              <img className="product-card-expanded-image" src={this.props.imageSrc}/>
-              <div className="product-card-expanded-overlay" style={this.labelStyles()}></div>
+              <img className="product-card-expanded-image" src={this.props.imageSrc} />
+              <div className="product-card-expanded-overlay" style={this.labelStyles()} />
             </div>
             <div className="product-card-expanded-description">{this.props.description}</div>
           </div>
@@ -154,8 +129,7 @@ export default class ProductCardExpanded extends React.Component {
 }
 
 ProductCardExpanded.propTypes = {
-  sessionId: PropTypes.string.isRequired,
-  conditionIdentifier: PropTypes.string,
+  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   starpoints: PropTypes.number,
   size: PropTypes.string.isRequired,
@@ -180,11 +154,11 @@ ProductCardExpanded.propTypes = {
   sugar: PropTypes.number,
   protein: PropTypes.number,
   vitamins: PropTypes.string,
-  nutritionLabelCss: PropTypes.string
+  nutritionLabelCss: PropTypes.string,
+  logParticipantAction: PropTypes.func.isRequired
 };
 
 ProductCardExpanded.defaultProps = {
-  conditionIdentifier: null,
   starpoints: null,
   labelImageUrl: null,
   labelPosition: null,

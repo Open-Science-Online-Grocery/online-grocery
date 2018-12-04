@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import * as routes from '../../../../utils/routes';
-import * as fromApi from '../../../../utils/api_call';
 import './product-card.scss';
 
 export default class ProductCard extends React.Component {
@@ -16,19 +14,7 @@ export default class ProductCard extends React.Component {
 
   handleAddToCart() {
     this.props.handleAddToCart(this.props.product, this.state.quantity);
-    const actionParams = {
-      sessionId: this.props.sessionId,
-      conditionIdentifier: this.props.conditionIdentifier,
-      actionType: 'add',
-      product: this.props.product.name,
-      quantity: this.state.quantity
-    };
-    fromApi.jsonApiCall(
-      routes.addParticipantAction(),
-      actionParams,
-      data => console.log(data),
-      error => console.log(error)
-    );
+    this.props.logParticipantAction('add', this.props.product.id, this.state.quantity);
   }
 
   subtractQuantity() {
@@ -119,9 +105,8 @@ export default class ProductCard extends React.Component {
 }
 
 ProductCard.propTypes = {
-  sessionId: PropTypes.string.isRequired,
-  conditionIdentifier: PropTypes.string,
   product: PropTypes.shape({
+    id: PropTypes.number,
     name: PropTypes.string,
     imageSrc: PropTypes.string,
     size: PropTypes.string,
@@ -132,9 +117,6 @@ ProductCard.propTypes = {
     labelSize: PropTypes.number
   }).isRequired,
   handleAddToCart: PropTypes.func.isRequired,
-  showAddToCartButton: PropTypes.bool.isRequired
-};
-
-ProductCard.defaultProps = {
-  conditionIdentifier: null
+  showAddToCartButton: PropTypes.bool.isRequired,
+  logParticipantAction: PropTypes.func.isRequired
 };

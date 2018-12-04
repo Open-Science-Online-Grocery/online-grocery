@@ -1,0 +1,17 @@
+<%= render 'layouts/breadcrumbs' %>
+
+<div class="page-heading">
+  <h2><%= @experiment.name %></h2>
+</div>
+
+<h3>
+  <%= link_to experiment_data_downloads_path(@experiment, export_type: 'actions', format: :csv), method: :post do %>
+    <i class="download icon"></i>All participant actions
+  <% end %>
+</h3>
+
+<h3>
+  <%= link_to experiment_data_downloads_path(@experiment, export_type: 'checkout', format: :csv), method: :post do %>
+    <i class="download icon"></i>Products in cart at checkout
+  <% end %>
+</h3>

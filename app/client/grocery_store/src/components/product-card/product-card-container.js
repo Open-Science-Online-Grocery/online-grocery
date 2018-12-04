@@ -1,11 +1,10 @@
 import { connect } from 'react-redux';
 import ProductCard from './product-card';
 import { cartActionCreators } from '../../reducers/cart/cart-actions';
+import { userActionCreators } from '../../reducers/user/user-actions';
 
 const mapStateToProps = state => (
   {
-    sessionId: state.user.sessionId,
-    conditionIdentifier: state.user.conditionIdentifier,
     showAddToCartButton: !state.user.onlyAddToCartFromDetailPage
   }
 );
@@ -14,6 +13,11 @@ const mapDispatchToProps = dispatch => (
   {
     handleAddToCart: (product, quantity) => {
       dispatch(cartActionCreators.addToCart(product, quantity));
+    },
+    logParticipantAction: (actionType, productId, quantity) => {
+      dispatch(
+        userActionCreators.logParticipantAction(actionType, productId, quantity)
+      );
     }
   }
 );

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import * as routes from '../../../../utils/routes';
-import * as fromApi from '../../../../utils/api_call';
 import './cart-dropdown.scss';
 
 export default class CartDropdown extends React.Component {
@@ -26,19 +24,7 @@ export default class CartDropdown extends React.Component {
 
   removeFromCart(product) {
     this.props.handleRemoveFromCart(product);
-    const actionParams = {
-      sessionId: this.props.sessionId,
-      conditionIdentifier: this.props.conditionIdentifier,
-      actionType: 'delete',
-      product: product.name,
-      quantity: product.quantity
-    };
-    fromApi.jsonApiCall(
-      routes.addParticipantAction(),
-      actionParams,
-      data => console.log(data),
-      error => console.log(error)
-    );
+    this.props.logParticipantAction('delete', product.id, product.quantity);
   }
 
   render() {
@@ -95,16 +81,11 @@ CartDropdown.propTypes = {
       PropTypes.shape({
         id: PropTypes.number.isRequired,
         quantity: PropTypes.number.isRequired,
-        price: PropTypes.string.isRequired, // TODO: Change this to number
+        price: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired
       })
     )
   }).isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
-  sessionId: PropTypes.string.isRequired,
-  conditionIdentifier: PropTypes.string
-};
-
-CartDropdown.defaultProps = {
-  conditionIdentifier: null
+  logParticipantAction: PropTypes.func.isRequired
 };
