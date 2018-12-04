@@ -30,7 +30,7 @@ RSpec.describe 'Configuring the cart summary', :feature do
 
     force_click_on('Add a cart summary image')
 
-    within(first('[data-cart-summary-label]')) do
+    within('.tab.segment[data-tab="cart-summary"]') do
       expect(page).to have_content 'Use custom image'
     end
 
