@@ -20,7 +20,7 @@ cache:
     - vendor/ruby
 
 before_script:
-  - echo '127.0.0.1 mariadb' >> /etc/hosts # So that we can use the same databse hostname with Kubernetes
+  - echo '127.0.0.1 mysql' >> /etc/hosts # So that we can use the same database hostname with Kubernetes
   - eval $(ssh-agent -s)
   - mkdir -p ~/.ssh
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
