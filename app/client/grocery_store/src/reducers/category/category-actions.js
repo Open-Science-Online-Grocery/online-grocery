@@ -34,7 +34,8 @@ function getProducts() {
       searchType: state.search.type,
       sortField: state.sorting.selectedSortField,
       sortDirection: state.sorting.sortDirection,
-      selectedFilterId: state.sorting.selectedFilterId
+      selectedFilterId: state.filtering.selectedFilterId,
+      selectedFilterType: state.filtering.selectedFilterType
     };
     fromApi.jsonApiCall(
       routes.products(),

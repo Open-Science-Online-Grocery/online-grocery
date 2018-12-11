@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import SortLinksContainer from '../sort-links/sort-links-container';
-import ProductFilter from '../product-filter/product-filter-container';
+import ProductFilterContainer from '../product-filter/product-filter-container';
 import './search.scss';
 
 class Search extends React.Component {
@@ -27,7 +27,7 @@ class Search extends React.Component {
     return (
       <div className="search-container">
         <SortLinksContainer />
-        <ProductFilter />
+        <ProductFilterContainer />
         <form onSubmit={this.handleSubmit}>
           <input
             className="form-input"

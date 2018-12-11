@@ -4,16 +4,17 @@ export const filteringActionTypes = {
   SET_FILTER: 'SET_FILTER'
 };
 
-function setFilter(selectedFilterId) {
+function setFilter(selectedFilterId, selectedFilterType) {
   return {
     selectedFilterId,
+    selectedFilterType,
     type: filteringActionTypes.SET_FILTER
   };
 }
 
-function updateFilter(selectedFilterId) {
+function updateFilter(selectedFilterId, selectedFilterType) {
   return (dispatch) => {
-    dispatch(setFilter(selectedFilterId));
+    dispatch(setFilter(selectedFilterId, selectedFilterType));
     dispatch(categoryActionCreators.getProducts());
   };
 }

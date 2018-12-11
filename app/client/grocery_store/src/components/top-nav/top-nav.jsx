@@ -53,7 +53,9 @@ export default class TopNav extends React.Component {
     } = this.props;
 
     if (displayedTag) {
-      const subtagsForTab = subtags.filter(subtag => subtag.tagId === displayedTag.id);
+      const subtagsForTab = subtags.filter(subtag => (
+        subtag.name && subtag.tagId === displayedTag.id
+      ));
       return (
         <Tab
           tabName={displayedTag.name}
@@ -77,16 +79,14 @@ export default class TopNav extends React.Component {
       categories,
       tags
     } = this.props;
-
-    if (selectedCategoryType === 'tag' && tags[selectedCategoryId - 1]) {
-      return (tags[selectedCategoryId - 1].name);
+    switch (selectedCategoryType) {
+      case 'tag':
+        return tags.find(tag => tag.id === selectedCategoryId).name;
+      case 'category':
+        return categories.find(category => category.id === selectedCategoryId).name;
+      default:
+        return null;
     }
-
-    if (selectedCategoryType === 'category' && categories[selectedCategoryId - 1]) {
-      return (categories[selectedCategoryId - 1].name);
-    }
-
-    return null;
   }
 
   render() {
