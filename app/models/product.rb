@@ -4,6 +4,8 @@
 class Product < ApplicationRecord
   belongs_to :category
   belongs_to :subcategory
+  belongs_to :subsubcategory, optional: true
+
   has_many :product_tags, dependent: :destroy
 
   scope :name_matches, ->(string) {
