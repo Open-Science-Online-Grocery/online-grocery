@@ -1,27 +1,25 @@
 @import "../../base/base";
 
 .tab-container {
-  height: 40px;
+  height: 2.6rem;
   background-color: #333333;
   color: #ffffff;
   outline: 1px solid #ffffff;
   text-align: center;
   position: relative;
-  font-size: 10px;
+  font-size: 0.6rem;
+  line-height: 0.6rem;
   flex-grow: 1;
   flex-basis: 0;
   z-index: 1;
 
   .tab {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    padding-top: 1rem;
   }
 
   .tab-dropdown {
     position: absolute;
-    top: 40px;
+    top: 2.6rem;
     left: 0px;
     padding-top: 2px;
     width: 100%;
@@ -58,24 +56,18 @@
 
 }
 .selected {
-  height: 40px;
-  margin: 0;
-  padding: 0;
   background-color: $price-green;
   color: #ffffff;
   display: inline-block;
   outline: 1px solid #ffffff;
   text-align: center;
   position: relative;
-  font-size: 10px;
 
   &:hover {
     background-color: $price-green;
   }
 
   .tab {
-    padding: 0;
-    margin: 0;
     display: inline-block;
   }
 
@@ -88,4 +80,11 @@
       }
     }
   }
+}
+
+.tab-subsubcat-list {
+  position: absolute;
+  border: 1px solid red;
+  z-index: 99;
+  top: 0;
 }
