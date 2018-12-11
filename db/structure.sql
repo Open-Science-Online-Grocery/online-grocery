@@ -228,7 +228,6 @@ CREATE TABLE `products` (
   `starpoints` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `original_id` int(11) DEFAULT NULL,
   `subsubcategory_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_products_on_subsubcategory_id` (`subsubcategory_id`)
@@ -395,7 +394,6 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20181127212210'),
 ('20181130211619'),
 ('20181211164301'),
-('20181211182131'),
 ('20181211184522');
 
 

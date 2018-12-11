@@ -2,12 +2,14 @@
 
 require 'csv'
 
+# responsible for importing product data from a spreadsheet
 class ProductImporter
   def initialize(only_random_subset = false)
     @only_random_subset = only_random_subset
     @sampled_rows = (1..total_count).to_a.sample(1000)
   end
 
+  # rubocop:disable Rails/Output
   def import
     csv = Rails.root.join('db', 'seeds', 'base', 'products.csv')
     i = 0
@@ -17,26 +19,21 @@ class ProductImporter
       puts "seeded product #{i} of #{total_count}" if i % 1000 == 0
     end
   end
+  # rubocop:enable Rails/Output
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   private def import_row(row)
     return unless row['id']
     product_attrs = row.to_h.except(
-      'id',
       'category',
       'subcategory',
       'newcategory',
       'newsubcategory',
       'newsubsubid'
-    ).select { |k, v| k.present? }
-    product_attrs.transform_keys! { |key| key.underscore }
+    ).select { |k, _v| k.present? }
+    product_attrs.transform_keys!(&:underscore)
 
     category = Category.find_by(id: row['newcategory'])
-
-    unless category
-      puts "#{row['id']}, #{row['name']}"
-      return
-    end
-
     subcategory = category.subcategories.find_by(
       display_order: row['newsubcategory']
     )
@@ -44,20 +41,20 @@ class ProductImporter
       display_order: row['newsubsubid']
     )
 
-    product_attrs['original_id'] = row['id']
     product_attrs['category_id'] = category.id
     product_attrs['subcategory_id'] = subcategory.id
     product_attrs['subsubcategory_id'] = subsubcategory.try(:id)
 
     Product.create!(product_attrs)
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
-  private def sampled_row?(i)
+  private def sampled_row?(row_index)
     return true unless @only_random_subset
-    @sampled_rows.include?(i)
+    @sampled_rows.include?(row_index)
   end
 
   private def total_count
-    11027
+    11_027
   end
 end
