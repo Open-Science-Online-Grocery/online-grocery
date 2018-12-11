@@ -1,41 +1,24 @@
 @import "../../base/base";
 
-// These styles are to dynamically allow different numbers of tabs.
-// A new entry in the style below must be added for each possible number
-// of tabs. See https://stackoverflow.com/questions/8720931/can-css-detect-the-number-of-children-an-element-has
-.tab-container:first-child:nth-last-child(8),
-.tab-container:first-child:nth-last-child(8) ~ .tab-container {
-  width: 12.5%
-}
-
-.tab-container:first-child:nth-last-child(7),
-.tab-container:first-child:nth-last-child(7) ~ .tab-container {
-  width: 14.285%;
-}
-
 .tab-container {
-  width: 14.285%;
   height: 40px;
-  margin: 0;
-  padding: 0;
   background-color: #333333;
   color: #ffffff;
-  display: inline-block;
   outline: 1px solid #ffffff;
   text-align: center;
   position: relative;
   font-size: 10px;
+  flex-grow: 1;
+  flex-basis: 0;
   z-index: 1;
 
   .tab {
-    padding: 0;
-    margin: 0;
-    display: inline-block;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
   .tab-dropdown {
     position: absolute;
     top: 40px;
@@ -75,7 +58,6 @@
 
 }
 .selected {
-  width: 14.2%;
   height: 40px;
   margin: 0;
   padding: 0;
@@ -90,14 +72,11 @@
   &:hover {
     background-color: $price-green;
   }
+
   .tab {
     padding: 0;
     margin: 0;
     display: inline-block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
   }
 
   .tab-dropdown {
@@ -109,7 +88,4 @@
       }
     }
   }
-
-
-
 }
