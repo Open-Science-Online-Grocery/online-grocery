@@ -5,7 +5,7 @@ import './tab.scss';
 export default class Tab extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { open: false };
+    this.state = { open: this.props.tabName === 'Pantry' };
     this.openDropdown = this.openDropdown.bind(this);
     this.closeDropdown = this.closeDropdown.bind(this);
   }
@@ -23,30 +23,39 @@ export default class Tab extends React.Component {
       <div
         className="tab-subcat-bar"
         key={subcat.id}
-        onClick={
-          () => (
-            this.props.handleSetCategory(
-              this.props.categoryId,
-              subcat.id,
-              this.props.categoryType
-            )
-          )
-        }
       >
-        <div className="tab-subcat-title">
-          {subcat.name}
-
-          <div className="tab-subsubcat-list">
-            <div className="tab-subsubcat">
-              foo
-            </div>
-            <div className="tab-subsubcat">
-              bar
-            </div>
-            <div className="tab-subsubcat">
-              baz
-            </div>
+        <div className="tab-subcat-item">
+          <div
+            className="tab-subcat-title"
+            onClick={
+              () => (
+                this.props.handleSetCategory(
+                  this.props.categoryId,
+                  subcat.id,
+                  this.props.categoryType
+                )
+              )
+            }
+          >
+            {subcat.name}
           </div>
+
+
+          {
+            subcat.name === 'Salad Dressing' && (
+              <div className="tab-subsubcat-list">
+                <div className="tab-subsubcat">
+                  foo
+                </div>
+                <div className="tab-subsubcat">
+                  bar
+                </div>
+                <div className="tab-subsubcat">
+                  baz
+                </div>
+              </div>
+            )
+          }
         </div>
       </div>
     ));
