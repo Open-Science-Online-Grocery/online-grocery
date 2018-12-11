@@ -8,13 +8,14 @@ const initialCategoryState = {
   products: [],
   categories: [],
   subcategories: [],
+  subsubcategories: [],
   tags: [],
   subtags: []
 };
 
 export default function categoryReducer(state = initialCategoryState, action) {
   const {
-    categories, subcategories, products, selectedCategoryId,
+    categories, subcategories, subsubcategories, products, selectedCategoryId,
     selectedSubcategoryId, tags, subtags, selectedCategoryType
   } = action;
 
@@ -33,6 +34,7 @@ export default function categoryReducer(state = initialCategoryState, action) {
       return Object.assign({}, state, {
         categories,
         subcategories,
+        subsubcategories,
         tags,
         subtags
       });
