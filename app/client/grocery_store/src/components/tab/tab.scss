@@ -32,10 +32,7 @@
       background-color: #666666;
       position: relative;
       display: inline-block;
-
-      &:hover {
-        cursor: pointer;
-      }
+      cursor: pointer;
 
       .tab-subcat-item {
         height: 2.3rem;
@@ -92,12 +89,27 @@
   top: 0;
   width: 100%;
   left: 100%;
+  background-color: #333333;
 
   .tab-subsubcat {
     box-sizing: border-box;
-    height: 2.3rem;
+    height: calc(2.3rem + 1px);
     padding-top: 0.8rem;
-    background-color: #333333;
     color: white;
+    border-bottom: 1px solid white;
+
+    &:hover {
+      background-color: #999999;
+    }
+  }
+}
+
+.tab-container.selected {
+  .tab-subsubcat-list {
+    background-color: #4acf4c;
+
+    .tab-subsubcat:hover {
+      background-color: #30b532;
+    }
   }
 }

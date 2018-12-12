@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SubtabContainer from '../subtab/subtab-container';
 import './tab.scss';
 
 export default class Tab extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { open: this.props.tabName === 'Pantry' };
+    this.state = { open: false };
     this.openDropdown = this.openDropdown.bind(this);
     this.closeDropdown = this.closeDropdown.bind(this);
   }
@@ -20,44 +21,11 @@ export default class Tab extends React.Component {
 
   buildSubcategories() {
     return this.props.subcats.map(subcat => (
-      <div
-        className="tab-subcat-bar"
+      <SubtabContainer
         key={subcat.id}
-      >
-        <div className="tab-subcat-item">
-          <div
-            className="tab-subcat-title"
-            onClick={
-              () => (
-                this.props.handleSetCategory(
-                  this.props.categoryId,
-                  subcat.id,
-                  this.props.categoryType
-                )
-              )
-            }
-          >
-            {subcat.name}
-          </div>
-
-
-          {
-            subcat.name === 'Salad Dressing' && (
-              <div className="tab-subsubcat-list">
-                <div className="tab-subsubcat">
-                  foo
-                </div>
-                <div className="tab-subsubcat">
-                  bar
-                </div>
-                <div className="tab-subsubcat">
-                  baz
-                </div>
-              </div>
-            )
-          }
-        </div>
-      </div>
+        subcat={subcat}
+        categoryType={this.props.categoryType}
+      />
     ));
   }
 
@@ -98,8 +66,7 @@ Tab.propTypes = {
     })
   ).isRequired,
   selectedCategoryId: PropTypes.number,
-  selectedCategoryType: PropTypes.string, // should be 'category' or 'tag'
-  handleSetCategory: PropTypes.func.isRequired
+  selectedCategoryType: PropTypes.string // should be 'category' or 'tag'
 };
 
 Tab.defaultProps = {
