@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import TopNav from './top-nav';
-import { categoryActionCreators } from '../../reducers/category/category-actions';
 
 const mapStateToProps = (state) => {
   const {
@@ -20,12 +19,4 @@ const mapStateToProps = (state) => {
   });
 };
 
-const mapDispatchToProps = dispatch => (
-  {
-    handleSetCategory: (category, subcategory, categoryType) => {
-      dispatch(categoryActionCreators.updateCategory(category, subcategory, categoryType));
-    }
-  }
-);
-
-export default connect(mapStateToProps, mapDispatchToProps)(TopNav);
+export default connect(mapStateToProps)(TopNav);

@@ -17,6 +17,14 @@ export default class Subtab extends React.Component {
     this.setState({ open: false });
   }
 
+  buildSubsubcategories() {
+    return this.props.subsubcats.map(subsubcat => (
+      <div key={subsubcat.id} className="tab-subsubcat">
+        {subsubcat.name}
+      </div>
+    ));
+  }
+
   render() {
     return (
       <div
@@ -39,20 +47,10 @@ export default class Subtab extends React.Component {
           >
             {this.props.subcat.name}
           </div>
-
-
           {
             this.state.open && (
               <div className="tab-subsubcat-list">
-                <div className="tab-subsubcat">
-                  foo
-                </div>
-                <div className="tab-subsubcat">
-                  bar
-                </div>
-                <div className="tab-subsubcat">
-                  baz
-                </div>
+                {this.buildSubsubcategories()}
               </div>
             )
           }
@@ -69,5 +67,10 @@ Subtab.propTypes = {
     name: PropTypes.string,
     categoryId: PropTypes.number
   }).isRequired,
+  subsubcats: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string
+    })
+  ).isRequired,
   handleSetCategory: PropTypes.func.isRequired
 };

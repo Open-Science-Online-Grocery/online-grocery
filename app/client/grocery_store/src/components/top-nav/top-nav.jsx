@@ -18,8 +18,7 @@ export default class TopNav extends React.Component {
       selectedCategoryId,
       selectedCategoryType,
       categories,
-      subcategories,
-      handleSetCategory
+      subcategories
     } = this.props;
     const duplicatedSubcats = Object.assign([], subcategories);
 
@@ -37,7 +36,6 @@ export default class TopNav extends React.Component {
           subcats={tabSubcats}
           selectedCategoryId={selectedCategoryId}
           selectedCategoryType={selectedCategoryType}
-          handleSetCategory={handleSetCategory}
         />
       );
     });
@@ -48,8 +46,7 @@ export default class TopNav extends React.Component {
       selectedCategoryId,
       selectedCategoryType,
       displayedTag,
-      subtags,
-      handleSetCategory
+      subtags
     } = this.props;
 
     if (displayedTag) {
@@ -65,7 +62,6 @@ export default class TopNav extends React.Component {
           subcats={subtagsForTab}
           selectedCategoryId={selectedCategoryId}
           selectedCategoryType={selectedCategoryType}
-          handleSetCategory={handleSetCategory}
         />
       );
     }
@@ -132,8 +128,7 @@ TopNav.propTypes = {
     PropTypes.shape({
       name: PropTypes.string
     })
-  ).isRequired,
-  handleSetCategory: PropTypes.func.isRequired
+  ).isRequired
 };
 
 TopNav.defaultProps = {

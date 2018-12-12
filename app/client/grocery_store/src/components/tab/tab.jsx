@@ -62,7 +62,9 @@ Tab.propTypes = {
   categoryType: PropTypes.string.isRequired,
   subcats: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string
+      id: PropTypes.number,
+      name: PropTypes.string,
+      categoryId: PropTypes.number
     })
   ).isRequired,
   selectedCategoryId: PropTypes.number,
