@@ -25,7 +25,7 @@ export default class Subtab extends React.Component {
         onClick={
           () => (
             this.props.handleSetCategory(
-              this.props.subcat.categoryId,
+              this.props.categoryId,
               this.props.subcat.id,
               subsubcat.id,
               this.props.categoryType
@@ -51,7 +51,7 @@ export default class Subtab extends React.Component {
             onClick={
               () => (
                 this.props.handleSetCategory(
-                  this.props.subcat.categoryId,
+                  this.props.categoryId,
                   this.props.subcat.id,
                   null,
                   this.props.categoryType
@@ -76,10 +76,10 @@ export default class Subtab extends React.Component {
 
 Subtab.propTypes = {
   categoryType: PropTypes.string.isRequired,
+  categoryId: PropTypes.number.isRequired,
   subcat: PropTypes.shape({
     id: PropTypes.number,
-    name: PropTypes.string,
-    categoryId: PropTypes.number
+    name: PropTypes.string
   }).isRequired,
   subsubcats: PropTypes.arrayOf(
     PropTypes.shape({

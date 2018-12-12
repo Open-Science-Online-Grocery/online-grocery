@@ -24,6 +24,7 @@ export default class Tab extends React.Component {
       <SubtabContainer
         key={subcat.id}
         subcat={subcat}
+        categoryId={this.props.categoryId}
         categoryType={this.props.categoryType}
         flyoutDirection={this.props.flyoutDirection}
       />
@@ -42,7 +43,7 @@ export default class Tab extends React.Component {
         onMouseLeave={this.closeDropdown}
       >
         <div className="tab">
-          {this.props.tabName}
+          <div>{this.props.tabName}</div>
         </div>
         {
           this.state.open

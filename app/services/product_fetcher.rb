@@ -7,7 +7,8 @@ class ProductFetcher
   #     {
   #       condition_identifier: the :uuid for the current Condition,
   #       selected_subcategory_id: a Subcategory id to find products within,
-  #       selected_subsubcategory_id: a Subsubcategory id to find products within,
+  #       selected_subsubcategory_id: a Subsubcategory id to find products
+  #         within,
   #       selected_category_type: either 'tag' or 'category' - indicates if we
   #         should scope products to a category or tag
   #       search_term: a string that represents part of a Product name,

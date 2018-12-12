@@ -83,10 +83,7 @@ RSpec.describe ProductFetcher do
 
       it 'calls classes with the expected args' do
         expect(Product.joins(:product_tags)).to receive(:where).with(
-          product_tags: {
-            tag_id: 4,
-            subtag_id: 5
-          }
+          product_tags: { subtag_id: 5 }
         )
         expect(ProductSerializer).to receive(:new).with(product_3, condition)
         expect(ProductSerializer).to receive(:new).with(product_4, condition)

@@ -31,13 +31,10 @@ export default class TopNav extends React.Component {
       categories,
       subcategories
     } = this.props;
-    const duplicatedSubcats = Object.assign([], subcategories);
-
     return categories.map((tabCategory, index) => {
-      const tabSubcats = [];
-      while (duplicatedSubcats.length > 0 && duplicatedSubcats[0].categoryId === tabCategory.id) {
-        tabSubcats.push(duplicatedSubcats.shift());
-      }
+      const tabSubcats = subcategories.filter(subcat => (
+        subcat.categoryId === tabCategory.id
+      ));
       return (
         <Tab
           tabName={tabCategory.name}
