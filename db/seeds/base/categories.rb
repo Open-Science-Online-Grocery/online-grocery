@@ -5,13 +5,15 @@ module Seeds
     module Categories
       def self.seed_categories
         names = [
+          'Produce',
+          'Meat, Dairy & Eggs',
+          'Bakery, Pasta & Grains',
+          'Dry Goods, Breakfast & Spices',
+          'Pantry',
+          'Canned',
+          'Snacks',
           'Beverages',
-          'Bread, Pasta & Rice',
-          'Condiments, Spreads & Sauces',
-          'Dairy, Deli, Milk & Meat',
-          'Frozen Foods',
-          'Packaged & Canned',
-          'Produce'
+          'Frozen Foods'
         ]
         names.each do |name|
           Category.find_or_create_by!(name: name)

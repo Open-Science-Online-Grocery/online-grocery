@@ -9,6 +9,10 @@ Rails.application.load_tasks
 if Rails.env.test? || Rails.env.development?
   require 'rspec/core/rake_task'
 
+  task :js_tests do
+    sh 'yarn test'
+  end
+
   task :rubocop do
     sh 'rubocop --fail-level convention'
   end
@@ -25,7 +29,7 @@ if Rails.env.test? || Rails.env.development?
     sh 'bundle audit'
   end
 
-  task default: [:spec, :rubocop, :eslint, :bundler_audit]
+  task default: [:spec, :js_tests, :rubocop, :eslint, :bundler_audit]
   task ci:      [:default]
 end
 
