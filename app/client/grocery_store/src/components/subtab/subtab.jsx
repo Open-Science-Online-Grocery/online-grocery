@@ -19,7 +19,20 @@ export default class Subtab extends React.Component {
 
   buildSubsubcategories() {
     return this.props.subsubcats.map(subsubcat => (
-      <div key={subsubcat.id} className="tab-subsubcat">
+      <div
+        key={subsubcat.id}
+        className="tab-subsubcat"
+        onClick={
+          () => (
+            this.props.handleSetCategory(
+              this.props.subcat.categoryId,
+              this.props.subcat.id,
+              subsubcat.id,
+              this.props.categoryType
+            )
+          )
+        }
+      >
         {subsubcat.name}
       </div>
     ));
@@ -40,6 +53,7 @@ export default class Subtab extends React.Component {
                 this.props.handleSetCategory(
                   this.props.subcat.categoryId,
                   this.props.subcat.id,
+                  null,
                   this.props.categoryType
                 )
               )

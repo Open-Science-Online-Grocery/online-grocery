@@ -6,10 +6,13 @@ export const categoryActionTypes = {
   SET_PRODUCTS: 'SET_PRODUCTS'
 };
 
-function setCategory(selectedCategoryId, selectedSubcategoryId, selectedCategoryType) {
+function setCategory(
+  selectedCategoryId, selectedSubcategoryId, selectedSubsubcategoryId, selectedCategoryType
+) {
   return {
     selectedCategoryId,
     selectedSubcategoryId,
+    selectedSubsubcategoryId,
     selectedCategoryType,
     type: categoryActionTypes.SET_CATEGORY
   };
@@ -46,9 +49,16 @@ function getProducts() {
   };
 }
 
-function updateCategory(selectedCategoryId, selectedSubcategoryId, selectedCategoryType) {
+function updateCategory(
+  selectedCategoryId, selectedSubcategoryId, selectedSubsubcategoryId, selectedCategoryType
+) {
   return (dispatch) => {
-    dispatch(setCategory(selectedCategoryId, selectedSubcategoryId, selectedCategoryType));
+    dispatch(setCategory(
+      selectedCategoryId,
+      selectedSubcategoryId,
+      selectedSubsubcategoryId,
+      selectedCategoryType
+    ));
     dispatch(getProducts());
   };
 }
