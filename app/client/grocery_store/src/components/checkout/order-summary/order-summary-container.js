@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import OrderSummary from './order-summary';
 import { cartActionCreators } from '../../../reducers/cart/cart-actions';
+import { userActionCreators } from '../../../reducers/user/user-actions';
 import BudgetManager from '../../../utils/BudgetManager';
 
 const mapStateToProps = (state) => {
@@ -11,8 +12,6 @@ const mapStateToProps = (state) => {
   );
   return {
     cart: state.cart,
-    sessionId: state.user.sessionId,
-    conditionIdentifier: state.user.conditionIdentifier,
     subtotal: budgetManager.subtotal(),
     tax: budgetManager.tax(),
     total: budgetManager.total(),
@@ -30,6 +29,11 @@ const mapDispatchToProps = dispatch => (
     },
     getCartSettings: () => {
       dispatch(cartActionCreators.getCartSettings());
+    },
+    logParticipantAction: (actionType, productId, quantity) => {
+      dispatch(
+        userActionCreators.logParticipantAction(actionType, productId, quantity)
+      );
     }
   }
 );

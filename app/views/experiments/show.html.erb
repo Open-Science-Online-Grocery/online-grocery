@@ -7,7 +7,7 @@
       <i class="pencil icon"></i> Edit Experiment
     <% end %>
 
-    <%= link_to download_data_experiment_url(@experiment, format: :csv), class: 'ui button' do %>
+    <%= link_to experiment_data_downloads_path(@experiment), class: 'ui button' do %>
       <i class="download icon"></i> Download Data
     <% end %>
   </div>

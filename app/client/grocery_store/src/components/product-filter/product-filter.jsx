@@ -10,23 +10,33 @@ export default class ProductFilter extends React.Component {
 
   onSelectChange(event) {
     const selectedValue = event.target.value;
-    this.props.handleFilterChange(selectedValue);
+    const [filterType, filterId] = selectedValue.split('_');
+    const parsedFilterId = filterId ? parseInt(filterId, 10) : null;
+    this.props.handleFilterChange(parsedFilterId, filterType);
+  }
+
+  tagOption(tag) {
+    return (
+      <option value={`tag_${tag.id}`} key={tag.id}>
+        {tag.name}
+      </option>
+    );
+  }
+
+  subtagOption(subtag) {
+    const parentTag = this.props.tags.find(tag => tag.id === subtag.tagId);
+    return (
+      <option value={`subtag_${subtag.id}`} key={subtag.id}>
+        {`${parentTag.name}: ${subtag.name}`}
+      </option>
+    );
   }
 
   selectOptions() {
     const blankOption = (<option value="" key="0">None</option>);
-    const subtagOptions = this.props.subtags.map(
-      subtag => (
-        <option
-          value={subtag.id}
-          key={subtag.id}
-        >
-          {subtag.name}
-        </option>
-      )
-    );
-    subtagOptions.unshift(blankOption);
-    return subtagOptions;
+    const tagOptions = this.props.tags.map(tag => this.tagOption(tag));
+    const subtagOptions = this.props.subtags.map(subtag => this.subtagOption(subtag));
+    return [blankOption].concat(tagOptions).concat(subtagOptions);
   }
 
   render() {
@@ -37,6 +47,7 @@ export default class ProductFilter extends React.Component {
         <select
           id="product-filter-select"
           onChange={this.onSelectChange}
+          value={`${this.props.selectedFilterType}_${this.props.selectedFilterId}`}
         >
           {this.selectOptions()}
         </select>
@@ -54,9 +65,19 @@ ProductFilter.propTypes = {
       name: PropTypes.string
     })
   ).isRequired,
+  tags: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string
+    })
+  ).isRequired,
+  selectedFilterId: PropTypes.number,
+  selectedFilterType: PropTypes.string, // should be "tag" or "subtag"
   handleFilterChange: PropTypes.func.isRequired
 };
 
 ProductFilter.defaultProps = {
-  filterByTags: false
+  filterByTags: false,
+  selectedFilterId: null,
+  selectedFilterType: null
 };

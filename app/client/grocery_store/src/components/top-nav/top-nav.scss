@@ -1,5 +1,10 @@
 @import "../../base/base";
 
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+}
+
 .logo-style {
   display: inline-block;
   width: 40%;

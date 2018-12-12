@@ -3,7 +3,7 @@
 require 'csv'
 
 # creates a CSV of participant actions for an Experiment
-class ExperimentResultsExporter
+class ParticipantActionsExporter
   def initialize(experiment)
     @experiment = experiment
   end

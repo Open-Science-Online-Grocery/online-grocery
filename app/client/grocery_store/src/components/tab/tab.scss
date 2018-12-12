@@ -1,44 +1,28 @@
 @import "../../base/base";
 
-// These styles are to dynamically allow different numbers of tabs.
-// A new entry in the style below must be added for each possible number
-// of tabs. See https://stackoverflow.com/questions/8720931/can-css-detect-the-number-of-children-an-element-has
-.tab-container:first-child:nth-last-child(8),
-.tab-container:first-child:nth-last-child(8) ~ .tab-container {
-  width: 12.5%
-}
-
-.tab-container:first-child:nth-last-child(7),
-.tab-container:first-child:nth-last-child(7) ~ .tab-container {
-  width: 14.285%;
-}
-
 .tab-container {
-  width: 14.285%;
-  height: 40px;
-  margin: 0;
-  padding: 0;
+  height: 2.7rem;
   background-color: #333333;
   color: #ffffff;
-  display: inline-block;
   outline: 1px solid #ffffff;
   text-align: center;
   position: relative;
-  font-size: 10px;
+  font-size: 0.7rem;
+  line-height: 0.7rem;
+  flex-grow: 1;
+  flex-basis: 0;
   z-index: 1;
 
   .tab {
-    padding: 0;
-    margin: 0;
-    display: inline-block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
   }
+
   .tab-dropdown {
     position: absolute;
-    top: 40px;
+    top: 2.7rem;
     left: 0px;
     padding-top: 2px;
     width: 100%;
@@ -46,25 +30,26 @@
     display: inline-block;
 
     .tab-subcat-bar {
-      height: 30px;
+      height: 2.3rem;
       width: 100%;
       background-color: #666666;
       position: relative;
       display: inline-block;
+      cursor: pointer;
 
-      &:hover {
-        cursor: pointer;
-      }
-
-      .tab-subcat-title {
-        padding: 0;
-        margin: 0;
+      .tab-subcat-item {
+        height: 2.3rem;
         display: inline-block;
         position: absolute;
-        top: 50%;
         left: 50%;
         width: 100%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, 0);
+
+        .tab-subcat-title {
+          box-sizing: border-box;
+          height: 2.3rem;
+          padding-top: 0.8rem;
+        }
       }
 
       &:hover {
@@ -72,32 +57,18 @@
       }
     }
   }
-
 }
+
 .selected {
-  width: 14.2%;
-  height: 40px;
-  margin: 0;
-  padding: 0;
   background-color: $price-green;
   color: #ffffff;
   display: inline-block;
   outline: 1px solid #ffffff;
   text-align: center;
   position: relative;
-  font-size: 10px;
 
   &:hover {
     background-color: $price-green;
-  }
-  .tab {
-    padding: 0;
-    margin: 0;
-    display: inline-block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
   }
 
   .tab-dropdown {
@@ -109,7 +80,42 @@
       }
     }
   }
+}
 
+.tab-subsubcat-list {
+  position: absolute;
+  z-index: 99;
+  top: 0;
+  width: 100%;
+  background-color: #333333;
 
+  &.flyout-right {
+    left: 100%;
+  }
 
+  &.flyout-left {
+    left: -100%;
+  }
+
+  .tab-subsubcat {
+    box-sizing: border-box;
+    height: calc(2.3rem + 1px);
+    padding-top: 0.8rem;
+    color: white;
+    border-bottom: 1px solid white;
+
+    &:hover {
+      background-color: #999999;
+    }
+  }
+}
+
+.tab-container.selected {
+  .tab-subsubcat-list {
+    background-color: #4acf4c;
+
+    .tab-subsubcat:hover {
+      background-color: #30b532;
+    }
+  }
 }

@@ -182,4 +182,82 @@ RSpec.describe Cart do
       expect(subject.avg_starpoints).to eq 856
     end
   end
+
+  describe '#total_calories_from_fat' do
+    it 'returns the expected number' do
+      expect(subject.total_calories_from_fat).to eq 321
+    end
+  end
+
+  describe '#total_calories' do
+    it 'returns the expected number' do
+      expect(subject.total_calories).to eq 642
+    end
+  end
+
+  describe '#total_total_fat' do
+    it 'returns the expected number' do
+      expect(subject.total_total_fat).to eq 963
+    end
+  end
+
+  describe '#total_saturated_fat' do
+    it 'returns the expected number' do
+      expect(subject.total_saturated_fat).to eq 1284
+    end
+  end
+
+  describe '#total_trans_fat' do
+    it 'returns the expected number' do
+      expect(subject.total_trans_fat).to eq 1605
+    end
+  end
+
+  describe '#total_cholesterol' do
+    it 'returns the expected number' do
+      expect(subject.total_cholesterol).to eq 2568
+    end
+  end
+
+  describe '#total_sodium' do
+    it 'returns the expected number' do
+      expect(subject.total_sodium).to eq 2889
+    end
+  end
+
+  describe '#total_carbs' do
+    it 'returns the expected number' do
+      expect(subject.total_carbs).to eq 3531
+    end
+  end
+
+  describe '#total_fiber' do
+    it 'returns the expected number' do
+      expect(subject.total_fiber).to eq 3852
+    end
+  end
+
+  describe '#total_sugar' do
+    it 'returns the expected number' do
+      expect(subject.total_sugar).to eq 4173
+    end
+  end
+
+  describe '#total_protein' do
+    it 'returns the expected number' do
+      expect(subject.total_protein).to eq 4494
+    end
+  end
+
+  describe '#total_price' do
+    it 'returns the expected number' do
+      expect(subject.total_price).to eq 4815
+    end
+  end
+
+  describe '#total_starpoints' do
+    it 'returns the expected number' do
+      expect(subject.total_starpoints).to eq 5136
+    end
+  end
 end

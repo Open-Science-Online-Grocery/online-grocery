@@ -10,7 +10,7 @@ class ProductDownloadsController < ApplicationController
   }
 
   def new
-    tempfile = Tempfile.new('product_categories_data.csv')
+    tempfile = Tempfile.new(filename)
     tempfile.write(ProductDataCsvManager.generate_csv)
     url = product_download_path(filepath: tempfile.path)
     respond_to do |format|
@@ -21,6 +21,10 @@ class ProductDownloadsController < ApplicationController
   end
 
   def show
-    send_file(params[:filepath], disposition: 'attachment')
+    send_file(params[:filepath], disposition: 'attachment', filename: filename)
+  end
+
+  private def filename
+    'product_categories_data.csv'
   end
 end

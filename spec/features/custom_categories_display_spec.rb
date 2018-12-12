@@ -78,8 +78,10 @@ RSpec.describe 'Showing custom category tab and filter dropdown in grocery store
     expect(page).to have_content 'Product 2'
 
     # custom category tab
-    expect(page).to have_content 'Tag 1'
-    expect(page).to have_no_content 'Tag 2'
+    within('.top-nav') do
+      expect(page).to have_content 'Tag 1'
+      expect(page).to have_no_content 'Tag 2'
+    end
 
     find('.tab', text: 'Tag 1').hover
     find('.tab-dropdown', text: 'Subtag 1').click

@@ -4,4 +4,5 @@
 # and condition
 class ExperimentResult < ApplicationRecord
   belongs_to :experiment
+  belongs_to :product
 end

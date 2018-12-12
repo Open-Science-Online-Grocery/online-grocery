@@ -3,20 +3,17 @@
   "private": true,
   "scripts": {
     "eslint": "eslint --format codeframe --ignore-pattern \"**/app/client/grocery_store/**/*.js*\" \"**/app/client/**/*.js*\"",
-    "test": "jest",
-    "audit": "npm i && npm audit"
+    "test": "jest"
   },
   "dependencies": {
     "@rails/webpacker": "3.5",
     "babel-polyfill": "^6.26.0",
     "babel-preset-react": "^6.24.1",
-    "express": "^4.16.4",
     "humps": "^2.0.1",
     "immutable": "^3.8.2",
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^3.3.1",
     "node-sass": "^4.10.0",
-    "path": "^0.12.7",
     "prop-types": "^15.6.2",
     "query-string": "^6.2.0",
     "react": "^16.6.0",

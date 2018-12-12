@@ -15,7 +15,7 @@ module Api
         session_identifier: params[:session_id],
         condition_id: condition.id,
         action_type: params[:action_type],
-        product_name: params[:product],
+        product_id: params[:product_id],
         quantity: params[:quantity]
       )
       json = {

@@ -1,6 +1,6 @@
 <% custom_cart_summary_label = f.object.cart_summary_label.try(:custom?) || CartSummaryLabel.new(built_in: false) %>
 
-<div class="nested-fields no-indent <%= 'hidden' if f.object.marked_for_destruction? %>" data-cart-summary-label>
+<div class="nested-fields no-indent <%= 'hide' if f.object.marked_for_destruction? %>" data-cart-summary-label>
   <div class="ui segment with-margin">
     <div class="right aligned">
       <%= link_to_remove_association f do %>

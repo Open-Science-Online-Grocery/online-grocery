@@ -54,6 +54,7 @@ function sessionIdSubmitted(sessionId) {
         categoryActionCreators.updateCategory(
           data.categories[0].id,
           data.subcategories[0].id,
+          null,
           'category'
         )
       );
@@ -68,7 +69,29 @@ function sessionIdSubmitted(sessionId) {
   };
 }
 
+// `actionType` here is a string representing the action the participant has
+// taken, such as 'view', 'add', 'delete', 'checkout'
+function logParticipantAction(actionType, productId, quantity) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const params = {
+      actionType,
+      productId,
+      quantity,
+      sessionId: state.user.sessionId,
+      conditionIdentifier: state.user.conditionIdentifier
+    };
+    fromApi.jsonApiCall(
+      routes.addParticipantAction(),
+      params,
+      data => console.log(data),
+      error => console.log(error)
+    );
+  };
+}
+
 export const userActionCreators = {
   setUser,
-  sessionIdSubmitted
+  sessionIdSubmitted,
+  logParticipantAction
 };

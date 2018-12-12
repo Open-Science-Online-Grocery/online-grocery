@@ -30,7 +30,7 @@ export default class SortLinks extends React.Component {
   }
 
   render() {
-    if (!this.props.sortFields.length) return <div />;
+    if (!this.props.sortFields.length) return null;
     return (
       <div className="sort-links">
         <span className="sort-label">Sort by:</span>

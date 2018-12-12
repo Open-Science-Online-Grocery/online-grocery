@@ -76,6 +76,25 @@ RSpec.describe ProductFetcher do
         )
         expect(subject.fetch_products).to eq 'the sorted products!'
       end
+
+      context 'when there is also a subsubcategory' do
+        before do
+          params[:selected_subsubcategory_id] = 99
+        end
+
+        it 'calls classes with the expected args' do
+          expect(Product).to receive(:where).with(subcategory_id: 5, subsubcategory_id: 99)
+          expect(ProductSerializer).to receive(:new).with(product_3, condition)
+          expect(ProductSerializer).to receive(:new).with(product_4, condition)
+          expect(ProductSorter).to receive(:new).with(
+            ['first serialized product', 'second serialized product'],
+            condition,
+            'foo',
+            'asc'
+          )
+          expect(subject.fetch_products).to eq 'the sorted products!'
+        end
+      end
     end
 
     context 'when the category type is `tag`' do
@@ -83,10 +102,7 @@ RSpec.describe ProductFetcher do
 
       it 'calls classes with the expected args' do
         expect(Product.joins(:product_tags)).to receive(:where).with(
-          product_tags: {
-            tag_id: 4,
-            subtag_id: 5
-          }
+          product_tags: { subtag_id: 5 }
         )
         expect(ProductSerializer).to receive(:new).with(product_3, condition)
         expect(ProductSerializer).to receive(:new).with(product_4, condition)
