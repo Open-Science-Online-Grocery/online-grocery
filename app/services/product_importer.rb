@@ -2,7 +2,8 @@
 
 require 'csv'
 
-# responsible for importing product data from a spreadsheet
+# responsible for importing product data from a spreadsheet. change the value
+# returned by #total_count if the number of products in the spreadsheet changes.
 class ProductImporter
   def initialize(only_random_subset = false)
     @only_random_subset = only_random_subset
@@ -27,9 +28,9 @@ class ProductImporter
     product_attrs = row.to_h.except(
       'category',
       'subcategory',
-      'newcategory',
-      'newsubcategory',
-      'newsubsubid'
+      'newcategory', # the ID of the product's Category
+      'newsubcategory', # the display order of the product's Subcategory
+      'newsubsubid' # the display order of the product's Subsubcategory
     ).select { |k, _v| k.present? }
     product_attrs.transform_keys!(&:underscore)
 
