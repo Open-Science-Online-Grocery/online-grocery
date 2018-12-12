@@ -30,8 +30,8 @@ function getProducts() {
     const state = getState();
     const params = {
       conditionIdentifier: state.user.conditionIdentifier,
-      selectedCategoryId: state.category.selectedCategoryId,
       selectedSubcategoryId: state.category.selectedSubcategoryId,
+      selectedSubsubcategoryId: state.category.selectedSubsubcategoryId,
       selectedCategoryType: state.category.selectedCategoryType,
       searchTerm: state.search.term,
       searchType: state.search.type,
