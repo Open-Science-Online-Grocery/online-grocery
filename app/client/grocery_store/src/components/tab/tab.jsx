@@ -25,6 +25,7 @@ export default class Tab extends React.Component {
         key={subcat.id}
         subcat={subcat}
         categoryType={this.props.categoryType}
+        flyoutDirection={this.props.flyoutDirection}
       />
     ));
   }
@@ -68,7 +69,8 @@ Tab.propTypes = {
     })
   ).isRequired,
   selectedCategoryId: PropTypes.number,
-  selectedCategoryType: PropTypes.string // should be 'category' or 'tag'
+  selectedCategoryType: PropTypes.string, // should be 'category' or 'tag'
+  flyoutDirection: PropTypes.string.isRequired
 };
 
 Tab.defaultProps = {

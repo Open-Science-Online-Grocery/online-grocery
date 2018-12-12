@@ -63,7 +63,7 @@ export default class Subtab extends React.Component {
           </div>
           {
             this.state.open && (
-              <div className="tab-subsubcat-list">
+              <div className={`tab-subsubcat-list flyout-${this.props.flyoutDirection}`}>
                 {this.buildSubsubcategories()}
               </div>
             )
@@ -86,5 +86,6 @@ Subtab.propTypes = {
       name: PropTypes.string
     })
   ).isRequired,
+  flyoutDirection: PropTypes.string.isRequired,
   handleSetCategory: PropTypes.func.isRequired
 };

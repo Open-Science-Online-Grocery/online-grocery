@@ -13,6 +13,17 @@ export default class TopNav extends React.Component {
     this.categoryTitle = this.categoryTitle.bind(this);
   }
 
+  // this determines which side the sub-sub-category flyout menus should
+  // appear on based on the tab's position on the screen, which we calculate
+  // based on the tab's index in the list of tabs to render. if the tab is on
+  // the left 50% of the screen, the flyout menu should appear on the right,
+  // else on the left.
+  flyoutDirection(tabIndex) {
+    let tabCount = this.props.categories.length;
+    if (this.props.displayedTag) tabCount += 1;
+    return (tabIndex / tabCount < 0.5) ? 'right' : 'left';
+  }
+
   categoryTabs() {
     const {
       selectedCategoryId,
@@ -22,7 +33,7 @@ export default class TopNav extends React.Component {
     } = this.props;
     const duplicatedSubcats = Object.assign([], subcategories);
 
-    return categories.map((tabCategory) => {
+    return categories.map((tabCategory, index) => {
       const tabSubcats = [];
       while (duplicatedSubcats.length > 0 && duplicatedSubcats[0].categoryId === tabCategory.id) {
         tabSubcats.push(duplicatedSubcats.shift());
@@ -36,6 +47,7 @@ export default class TopNav extends React.Component {
           subcats={tabSubcats}
           selectedCategoryId={selectedCategoryId}
           selectedCategoryType={selectedCategoryType}
+          flyoutDirection={this.flyoutDirection(index)}
         />
       );
     });
@@ -62,6 +74,7 @@ export default class TopNav extends React.Component {
           subcats={subtagsForTab}
           selectedCategoryId={selectedCategoryId}
           selectedCategoryType={selectedCategoryType}
+          flyoutDirection="left" // always flyout left since it's the rightmost tab on the screen
         />
       );
     }
