@@ -52,41 +52,46 @@
 
   .product-card-buttons {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
 
-    .product-card-add-to-cart {
-      width: auto;
-      height: 20px;
-      padding: 5px 12px;
-      border: 1px solid $cart-color;
-      margin: 5px 5px 0 0;
+    .product-card-add-to-cart-wrapper {
+      display: flex;
 
-      &:hover {
-        cursor: pointer;
-        background-color: $hovered-cart-color;
-        border: 1px solid $hovered-cart-color;
-        box-shadow: -2px 2px 5px $light-shadow;
-      }
-    }
+      .product-card-add-to-cart {
+        width: auto;
+        height: 20px;
+        padding: 5px 12px;
+        border: 1px solid $cart-color;
+        margin: 5px 5px 0 0;
 
-    .product-card-quantity {
-      color: $quantity-color;
-      width: 50px;
-      height: 25px;
-      border: 1px solid $quantity-color;
-      text-align: center;
-      margin: 5px 5px 0 0;
-      padding-top: 5px;
-
-      .product-card-quantity-change {
-        display: inline-block;
-        font-weight: 600;
-        margin: 0 3px;
-        padding: 0 2px;
-        cursor: pointer;
         &:hover {
-          background-color: $quantity-color;
-          color: white;
+          cursor: pointer;
+          background-color: $hovered-cart-color;
+          border: 1px solid $hovered-cart-color;
+          box-shadow: -2px 2px 5px $light-shadow;
+        }
+      }
+
+      .product-card-quantity {
+        display: inline-block;
+        color: $quantity-color;
+        width: 50px;
+        height: 25px;
+        border: 1px solid $quantity-color;
+        text-align: center;
+        margin: 5px 5px 0 0;
+        padding-top: 5px;
+
+        .product-card-quantity-change {
+          display: inline-block;
+          font-weight: 600;
+          margin: 0 3px;
+          padding: 0 2px;
+          cursor: pointer;
+          &:hover {
+            background-color: $quantity-color;
+            color: white;
+          }
         }
       }
     }
@@ -100,7 +105,7 @@ a {
 .product-card-guiding-stars {
   width: auto;
   height: 25px;
-  padding: 1px 5px;
+  padding: 1px 5px -5px 1px;
   margin: 7px 5px 0 0;
   z-index: 1;
 

@@ -57,7 +57,7 @@ export default class ProductCard extends React.Component {
   addToCartButtons() {
     if (!this.props.showAddToCartButton) return null;
     return (
-      <React.Fragment>
+      <div className="product-card-add-to-cart-wrapper">
         <img
           onClick={this.handleAddToCart}
           className="product-card-add-to-cart"
@@ -69,7 +69,7 @@ export default class ProductCard extends React.Component {
           {this.state.quantity}
           <div className="product-card-quantity-change" onClick={this.addQuantity}>+</div>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 
@@ -88,7 +88,6 @@ export default class ProductCard extends React.Component {
           ${parseFloat(Math.round(this.props.product.price * 100) / 100).toFixed(2)}
         </div>
         <div className="product-card-buttons">
-          {this.addToCartButtons()}
           <div className="tooltip--triangle" data-tooltip="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!">
             <a href="https://guidingstars.com/what-is-guiding-stars/">
               <img
@@ -98,6 +97,7 @@ export default class ProductCard extends React.Component {
               />
             </a>
           </div>
+          {this.addToCartButtons()}
         </div>
       </div>
     );
