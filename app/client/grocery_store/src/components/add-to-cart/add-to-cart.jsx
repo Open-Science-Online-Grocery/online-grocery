@@ -5,10 +5,10 @@ import './add-to-cart.scss';
 export default class AddToCart extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { quantity: 1, open: false, addByDollar: false };
+    this.state = { amount: 1, open: false, addByDollar: false };
     this.handleAddToCart = this.handleAddToCart.bind(this);
-    this.subtractQuantity = this.subtractQuantity.bind(this);
-    this.addQuantity = this.addQuantity.bind(this);
+    this.subtractAmount = this.subtractAmount.bind(this);
+    this.addAmount = this.addAmount.bind(this);
     this.openDropdown = this.openDropdown.bind(this);
     this.closeDropdown = this.closeDropdown.bind(this);
     this.handleOptionClick = this.handleOptionClick.bind(this);
@@ -23,19 +23,18 @@ export default class AddToCart extends React.Component {
   }
 
   handleAddToCart() {
-    this.props.handleAddToCart(this.props.product, this.state.quantity);
-    this.props.logParticipantAction('add', this.props.product.id, this.state.quantity);
+    this.props.handleAddToCart(this.props.product, this.state.amount);
   }
 
-  subtractQuantity() {
+  subtractAmount() {
     this.setState(prevState => (
-      { quantity: prevState.quantity > 1 ? prevState.quantity - 1 : 1 }
+      { amount: prevState.amount > 1 ? prevState.amount - 1 : 1 }
     ));
   }
 
-  addQuantity() {
+  addAmount() {
     this.setState(prevState => (
-      { quantity: prevState.quantity + 1 }
+      { amount: prevState.amount + 1 }
     ));
   }
 
@@ -63,9 +62,9 @@ export default class AddToCart extends React.Component {
             {this.state.open && <div className="option" onClick={this.handleOptionClick}>{this.nonSelectedOption()}</div>}
           </div>
           <div className="count">
-            <button className="decrement" type="button" onClick={this.subtractQuantity}>-</button>
-            <span className="quantity">{this.state.addByDollar && '$'}{this.state.quantity}</span>
-            <button className="increment" type="button" onClick={this.addQuantity}>+</button>
+            <button className="decrement" type="button" onClick={this.subtractAmount}>-</button>
+            <span className="amount">{this.state.addByDollar && '$'}{this.state.amount}</span>
+            <button className="increment" type="button" onClick={this.addAmount}>+</button>
           </div>
           <div onClick={this.handleAddToCart} className="submit">✓</div>
         </div>
@@ -86,6 +85,5 @@ AddToCart.propTypes = {
     labelPosition: PropTypes.string,
     labelSize: PropTypes.number
   }).isRequired,
-  handleAddToCart: PropTypes.func.isRequired,
-  logParticipantAction: PropTypes.func.isRequired
+  handleAddToCart: PropTypes.func.isRequired
 };
