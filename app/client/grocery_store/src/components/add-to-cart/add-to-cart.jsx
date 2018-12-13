@@ -56,14 +56,31 @@ export default class AddToCart extends React.Component {
     return this.state.addByDollar ? 'quantity' : 'dollar amount';
   }
 
+  selectorClassName() {
+    if (this.props.mayAddToCartByDollarAmount) return 'selector active';
+    return 'selector';
+  }
+
   render() {
     return (
       <div className="add-to-cart">
-        <div className="label">Add to cart by:</div>
+        <div className="label">
+          {this.props.mayAddToCartByDollarAmount ? 'Add to cart by:' : 'Add to cart:'}
+        </div>
         <div className="form-container">
-          <div className="selector" onClick={this.state.open ? this.closeDropdown : this.openDropdown}>
-            <div className="selected">{this.selectedOption()} <span className="down-arrow">▼</span></div>
-            {this.state.open && <div className="option" onClick={this.handleOptionClick}>{this.nonSelectedOption()}</div>}
+          <div
+            className={this.selectorClassName()}
+            onClick={this.state.open ? this.closeDropdown : this.openDropdown}
+          >
+            <div className="selected">
+              {this.selectedOption()}
+              {this.props.mayAddToCartByDollarAmount && <span className="down-arrow">▼</span>}
+            </div>
+            {
+              this.state.open
+              && this.props.mayAddToCartByDollarAmount
+              && <div className="option" onClick={this.handleOptionClick}>{this.nonSelectedOption()}</div>
+            }
           </div>
           <div className="count">
             <button className="decrement" type="button" onClick={this.subtractAmount}>-</button>
@@ -89,5 +106,6 @@ AddToCart.propTypes = {
     labelPosition: PropTypes.string,
     labelSize: PropTypes.number
   }).isRequired,
-  handleAddToCart: PropTypes.func.isRequired
+  handleAddToCart: PropTypes.func.isRequired,
+  mayAddToCartByDollarAmount: PropTypes.bool.isRequired
 };

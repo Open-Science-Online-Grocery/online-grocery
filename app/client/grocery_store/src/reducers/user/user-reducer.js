@@ -3,7 +3,8 @@ import { userActionTypes } from './user-actions';
 const initialUserState = {
   user: null,
   conditionIdentifier: null,
-  onlyAddToCartFromDetailPage: false
+  onlyAddToCartFromDetailPage: false,
+  mayAddToCartByDollarAmount: false
 };
 
 export default function userReducer(state = initialUserState, action) {
@@ -15,7 +16,8 @@ export default function userReducer(state = initialUserState, action) {
       });
     case userActionTypes.SET_CONDITION_DATA:
       return Object.assign({}, state, {
-        onlyAddToCartFromDetailPage: action.onlyAddToCartFromDetailPage
+        onlyAddToCartFromDetailPage: action.onlyAddToCartFromDetailPage,
+        mayAddToCartByDollarAmount: action.mayAddToCartByDollarAmount
       });
     default:
       return state;

@@ -4,6 +4,7 @@ import { cartActionCreators } from '../../reducers/cart/cart-actions';
 
 const mapStateToProps = state => (
   {
+    mayAddToCartByDollarAmount: state.user.mayAddToCartByDollarAmount
   }
 );
 

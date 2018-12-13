@@ -23,8 +23,11 @@
       background-color: $price-green;
       color: white;
       padding: 0.2rem 0.5rem;
-      cursor: pointer;
       position: relative;
+
+      &.active {
+        cursor: pointer;
+      }
 
       .down-arrow {
         padding: 0.2rem;
@@ -41,6 +44,7 @@
         border: 1px solid black;
         min-width: 100%;
         box-sizing: border-box;
+        z-index: 1;
       }
     }
 

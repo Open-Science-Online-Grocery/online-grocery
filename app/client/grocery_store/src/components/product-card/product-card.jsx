@@ -50,7 +50,7 @@ export default class ProductCard extends React.Component {
           ${parseFloat(Math.round(this.props.product.price * 100) / 100).toFixed(2)}
         </div>
         <div className="product-card-buttons">
-          <div className="tooltip--triangle" data-tooltip="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!">
+          <div className="tooltip--triangle product-card-guiding-stars-wrapper" data-tooltip="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!">
             <a href="https://guidingstars.com/what-is-guiding-stars/">
               <img
                 className="product-card-guiding-stars"
