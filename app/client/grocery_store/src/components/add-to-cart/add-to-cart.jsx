@@ -5,10 +5,21 @@ import './add-to-cart.scss';
 export default class AddToCart extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { quantity: 1 };
+    this.state = { quantity: 1, open: false, addByDollar: false };
     this.handleAddToCart = this.handleAddToCart.bind(this);
     this.subtractQuantity = this.subtractQuantity.bind(this);
     this.addQuantity = this.addQuantity.bind(this);
+    this.openDropdown = this.openDropdown.bind(this);
+    this.closeDropdown = this.closeDropdown.bind(this);
+    this.handleOptionClick = this.handleOptionClick.bind(this);
+  }
+
+  openDropdown() {
+    this.setState({ open: true });
+  }
+
+  closeDropdown() {
+    this.setState({ open: false });
   }
 
   handleAddToCart() {
@@ -17,15 +28,29 @@ export default class AddToCart extends React.Component {
   }
 
   subtractQuantity() {
-    const currentQuantity = this.state.quantity;
-    if (currentQuantity > 1) {
-      this.setState({ quantity: currentQuantity - 1 });
-    }
+    this.setState(prevState => (
+      { quantity: prevState.quantity > 1 ? prevState.quantity - 1 : 1 }
+    ));
   }
 
   addQuantity() {
-    const currentQuantity = this.state.quantity;
-    this.setState({ quantity: currentQuantity + 1 });
+    this.setState(prevState => (
+      { quantity: prevState.quantity + 1 }
+    ));
+  }
+
+  handleOptionClick() {
+    this.setState(prevState => (
+      { addByDollar: !prevState.addByDollar }
+    ));
+  }
+
+  selectedOption() {
+    return this.state.addByDollar ? 'dollar amount' : 'quantity';
+  }
+
+  nonSelectedOption() {
+    return this.state.addByDollar ? 'quantity' : 'dollar amount';
   }
 
   render() {
@@ -33,12 +58,13 @@ export default class AddToCart extends React.Component {
       <div className="add-to-cart">
         <div className="label">Add to cart by:</div>
         <div className="form-container">
-          <div className="selector">
-            <div className="selected">quantity <span className="down-arrow">▼</span></div>
+          <div className="selector" onClick={this.state.open ? this.closeDropdown : this.openDropdown}>
+            <div className="selected">{this.selectedOption()} <span className="down-arrow">▼</span></div>
+            {this.state.open && <div className="option" onClick={this.handleOptionClick}>{this.nonSelectedOption()}</div>}
           </div>
           <div className="count">
             <button className="decrement" type="button" onClick={this.subtractQuantity}>-</button>
-            <span className="quantity">{this.state.quantity}</span>
+            <span className="quantity">{this.state.addByDollar && '$'}{this.state.quantity}</span>
             <button className="increment" type="button" onClick={this.addQuantity}>+</button>
           </div>
           <div onClick={this.handleAddToCart} className="submit">✓</div>

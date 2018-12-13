@@ -23,6 +23,8 @@
       background-color: $price-green;
       color: white;
       padding: 0.2rem 0.5rem;
+      cursor: pointer;
+      position: relative;
 
       .down-arrow {
         padding: 0.2rem;
@@ -32,11 +34,13 @@
       .option {
         position: absolute;
         left: -1px;
-        top: 2.2rem;
+        top: 100%;
         color: black;
-        padding: 0.5rem;
+        padding: 0.2rem 0.5rem;
         background-color: white;
         border: 1px solid black;
+        min-width: 100%;
+        box-sizing: border-box;
       }
     }
 
