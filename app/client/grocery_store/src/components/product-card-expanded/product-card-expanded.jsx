@@ -1,40 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import NutritionLabel from '../nutrition-label/nutrition-label';
+import AddToCartContainer from '../add-to-cart/add-to-cart-container';
 import './product-card-expanded.scss';
 
 export default class ProductCardExpanded extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { quantity: 1 };
-    this.handleAddToCart = this.handleAddToCart.bind(this);
-    this.subtractQuantity = this.subtractQuantity.bind(this);
-    this.addQuantity = this.addQuantity.bind(this);
-  }
-
   componentDidMount() {
     this.props.logParticipantAction('view', this.props.id);
-  }
-
-  handleAddToCart() {
-    this.props.handleAddToCart(this.props, this.state.quantity);
-    this.props.logParticipantAction('add', this.props.id, this.state.quantity);
-  }
-
-  subtractQuantity() {
-    const currentQuantity = this.state.quantity;
-    if (currentQuantity > 1) {
-      this.setState({
-        quantity: currentQuantity - 1
-      });
-    }
-  }
-
-  addQuantity() {
-    const currentQuantity = this.state.quantity;
-    this.setState({
-      quantity: currentQuantity + 1
-    });
   }
 
   // webpack's `require` seems to have problems with interpolated strings and
@@ -73,16 +45,7 @@ export default class ProductCardExpanded extends React.Component {
               ${parseFloat(Math.round(this.props.price * 100) / 100).toFixed(2)}
             </div>
             <div className="product-card-expanded-buttons">
-              <img
-                className="product-card-expanded-add-to-cart"
-                onClick={this.handleAddToCart}
-                src={require('../../images/trolley-clipart.png')}
-              />
-              <div className="product-card-expanded-quantity">
-                <div className="product-card-expanded-quantity-change" onClick={this.subtractQuantity}>-</div>
-                {this.state.quantity}
-                <div className="product-card-expanded-quantity-change" onClick={this.addQuantity}>+</div>
-              </div>
+              <AddToCartContainer product={this.props} />
             </div>
             <div className="product-card-expanded-image-wrapper">
               <img className="product-card-expanded-image" src={this.props.imageSrc} />
@@ -136,11 +99,10 @@ ProductCardExpanded.propTypes = {
   price: PropTypes.string.isRequired,
   imageSrc: PropTypes.string.isRequired,
   description: PropTypes.string,
-  ingredients: PropTypes.string.isRequired,
+  ingredients: PropTypes.string,
   labelImageUrl: PropTypes.string,
   labelPosition: PropTypes.string,
   labelSize: PropTypes.number,
-  handleAddToCart: PropTypes.func.isRequired,
   servings: PropTypes.string,
   servingSize: PropTypes.string,
   calories: PropTypes.number,
@@ -160,6 +122,7 @@ ProductCardExpanded.propTypes = {
 
 ProductCardExpanded.defaultProps = {
   starpoints: null,
+  ingredients: null,
   labelImageUrl: null,
   labelPosition: null,
   labelSize: null,
