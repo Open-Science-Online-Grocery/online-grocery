@@ -29,13 +29,24 @@ function underMinSpend(state) {
   return budgetManager.underMinSpend();
 }
 
-function addToCart(product, quantity, additionType) {
+function dollarsToQuantity(product, amount) {
+  return Math.floor(amount / product.price);
+}
+
+function addToCart(product, amount, addByDollar) {
   return (dispatch, getState) => {
     const overMaxSpendBefore = overMaxSpend(getState());
 
+    const quantity = addByDollar ? dollarsToQuantity(product, amount) : amount;
     const newProduct = Object.assign({}, product, { quantity });
     dispatch({ type: cartActionTypes.ADD_TO_CART, product: newProduct });
-    dispatch(userActionCreators.logParticipantAction('add', newProduct.id, quantity));
+    dispatch(
+      userActionCreators.logParticipantAction(
+        'add',
+        newProduct.id,
+        quantity
+      )
+    );
 
     const overMaxSpendAfter = overMaxSpend(getState());
 

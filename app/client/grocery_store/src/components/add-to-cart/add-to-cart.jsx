@@ -23,7 +23,11 @@ export default class AddToCart extends React.Component {
   }
 
   handleAddToCart() {
-    this.props.handleAddToCart(this.props.product, this.state.amount);
+    this.props.handleAddToCart(
+      this.props.product,
+      this.state.amount,
+      this.state.addByDollar
+    );
   }
 
   subtractAmount() {

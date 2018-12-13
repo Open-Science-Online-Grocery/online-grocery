@@ -9,8 +9,8 @@ const mapStateToProps = state => (
 
 const mapDispatchToProps = dispatch => (
   {
-    handleAddToCart: (product, quantity) => {
-      dispatch(cartActionCreators.addToCart(product, quantity));
+    handleAddToCart: (product, amount, addByDollar) => {
+      dispatch(cartActionCreators.addToCart(product, amount, addByDollar));
     }
   }
 );
