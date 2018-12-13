@@ -9,6 +9,8 @@ RSpec.describe ConditionSerializer do
   let(:category_2) { build(:category) }
   let(:subcategory_1) { build(:subcategory) }
   let(:subcategory_2) { build(:subcategory) }
+  let(:subsubcategory_1) { build(:subsubcategory) }
+  let(:subsubcategory_2) { build(:subsubcategory) }
   let(:tag_1) { build(:tag) }
   let(:tag_2) { build(:tag) }
   let(:subtag_1) { build(:subtag) }
@@ -38,6 +40,7 @@ RSpec.describe ConditionSerializer do
     end
     allow(Category).to receive(:order) { [category_1, category_2] }
     allow(Subcategory).to receive(:order) { [subcategory_1, subcategory_2] }
+    allow(Subsubcategory).to receive(:order) { [subsubcategory_1, subsubcategory_2] }
   end
 
   describe '#serialize' do
@@ -46,6 +49,7 @@ RSpec.describe ConditionSerializer do
         sort_fields: ['first sort field', 'second sort field'],
         categories: [category_1, category_2],
         subcategories: [subcategory_1, subcategory_2],
+        subsubcategories: [subsubcategory_1, subsubcategory_2],
         tags: [tag_1, tag_2],
         subtags: [subtag_1, subtag_2],
         filter_by_tags: true,

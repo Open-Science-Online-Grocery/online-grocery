@@ -21,7 +21,7 @@ export default class ProductGrid extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="product-grid">
         {this.props.products.length > 0 ? this.productCards() : this.noProductsMessage()}
       </div>
     );

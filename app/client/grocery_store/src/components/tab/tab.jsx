@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SubtabContainer from '../subtab/subtab-container';
 import './tab.scss';
 
 export default class Tab extends React.Component {
@@ -20,23 +21,13 @@ export default class Tab extends React.Component {
 
   buildSubcategories() {
     return this.props.subcats.map(subcat => (
-      <div
-        className="tab-subcat-bar"
+      <SubtabContainer
         key={subcat.id}
-        onClick={
-          () => (
-            this.props.handleSetCategory(
-              this.props.categoryId,
-              subcat.id,
-              this.props.categoryType
-            )
-          )
-        }
-      >
-        <div className="tab-subcat-title">
-          {subcat.name}
-        </div>
-      </div>
+        subcat={subcat}
+        categoryId={this.props.categoryId}
+        categoryType={this.props.categoryType}
+        flyoutDirection={this.props.flyoutDirection}
+      />
     ));
   }
 
@@ -52,7 +43,7 @@ export default class Tab extends React.Component {
         onMouseLeave={this.closeDropdown}
       >
         <div className="tab">
-          {this.props.tabName}
+          <div>{this.props.tabName}</div>
         </div>
         {
           this.state.open
@@ -73,12 +64,14 @@ Tab.propTypes = {
   categoryType: PropTypes.string.isRequired,
   subcats: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string
+      id: PropTypes.number,
+      name: PropTypes.string,
+      categoryId: PropTypes.number
     })
   ).isRequired,
   selectedCategoryId: PropTypes.number,
   selectedCategoryType: PropTypes.string, // should be 'category' or 'tag'
-  handleSetCategory: PropTypes.func.isRequired
+  flyoutDirection: PropTypes.string.isRequired
 };
 
 Tab.defaultProps = {

@@ -54,6 +54,7 @@ function sessionIdSubmitted(sessionId) {
         categoryActionCreators.updateCategory(
           data.categories[0].id,
           data.subcategories[0].id,
+          null,
           'category'
         )
       );

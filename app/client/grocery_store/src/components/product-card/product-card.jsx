@@ -1,34 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import AddToCartContainer from '../add-to-cart/add-to-cart-container';
 import './product-card.scss';
 
 export default class ProductCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { quantity: 1 };
-    this.handleAddToCart = this.handleAddToCart.bind(this);
-    this.subtractQuantity = this.subtractQuantity.bind(this);
-    this.addQuantity = this.addQuantity.bind(this);
-  }
-
-  handleAddToCart() {
-    this.props.handleAddToCart(this.props.product, this.state.quantity);
-    this.props.logParticipantAction('add', this.props.product.id, this.state.quantity);
-  }
-
-  subtractQuantity() {
-    const currentQuantity = this.state.quantity;
-    if (currentQuantity > 1) {
-      this.setState({ quantity: currentQuantity - 1 });
-    }
-  }
-
-  addQuantity() {
-    const currentQuantity = this.state.quantity;
-    this.setState({ quantity: currentQuantity + 1 });
-  }
-
   // webpack's `require` seems to have problems with interpolated strings and
   // method calls within it. using a literal string works, however.
   starImagePath() {
@@ -56,21 +32,7 @@ export default class ProductCard extends React.Component {
 
   addToCartButtons() {
     if (!this.props.showAddToCartButton) return null;
-    return (
-      <React.Fragment>
-        <img
-          onClick={this.handleAddToCart}
-          className="product-card-add-to-cart"
-          src={require('../../images/trolley-clipart.png')}
-          alt="cart icon"
-        />
-        <div className="product-card-quantity">
-          <div className="product-card-quantity-change" onClick={this.subtractQuantity}>-</div>
-          {this.state.quantity}
-          <div className="product-card-quantity-change" onClick={this.addQuantity}>+</div>
-        </div>
-      </React.Fragment>
-    );
+    return (<AddToCartContainer product={this.props.product} />);
   }
 
   render() {
@@ -88,8 +50,7 @@ export default class ProductCard extends React.Component {
           ${parseFloat(Math.round(this.props.product.price * 100) / 100).toFixed(2)}
         </div>
         <div className="product-card-buttons">
-          {this.addToCartButtons()}
-          <div className="tooltip--triangle" data-tooltip="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!">
+          <div className="tooltip--triangle product-card-guiding-stars-wrapper" data-tooltip="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!">
             <a href="https://guidingstars.com/what-is-guiding-stars/">
               <img
                 className="product-card-guiding-stars"
@@ -98,6 +59,7 @@ export default class ProductCard extends React.Component {
               />
             </a>
           </div>
+          {this.addToCartButtons()}
         </div>
       </div>
     );
@@ -116,7 +78,5 @@ ProductCard.propTypes = {
     labelPosition: PropTypes.string,
     labelSize: PropTypes.number
   }).isRequired,
-  handleAddToCart: PropTypes.func.isRequired,
-  showAddToCartButton: PropTypes.bool.isRequired,
-  logParticipantAction: PropTypes.func.isRequired
+  showAddToCartButton: PropTypes.bool.isRequired
 };
