@@ -77,7 +77,7 @@ RSpec.describe 'Using budget constraints in grocery store', :feature do
       )
     )
     within(product_div) do
-      force_click(find('.product-card-add-to-cart'))
+      force_click(find('.add-to-cart .submit'))
     end
   end
 end
