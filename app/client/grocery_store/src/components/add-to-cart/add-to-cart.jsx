@@ -37,11 +37,11 @@ export default class AddToCart extends React.Component {
             <div className="selected">quantity <span className="down-arrow">▼</span></div>
           </div>
           <div className="count">
-            <button>-</button>
+            <button className="decrement" type="button" onClick={this.subtractQuantity}>-</button>
             <span className="quantity">{this.state.quantity}</span>
-            <button>+</button>
+            <button className="increment" type="button" onClick={this.addQuantity}>+</button>
           </div>
-          <div className="submit">✓</div>
+          <div onClick={this.handleAddToCart} className="submit">✓</div>
         </div>
       </div>
     );

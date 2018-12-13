@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import AddToCart from '../add-to-cart/add-to-cart';
+import AddToCartContainer from '../add-to-cart/add-to-cart-container';
 import './product-card.scss';
 
 export default class ProductCard extends React.Component {
@@ -32,7 +32,7 @@ export default class ProductCard extends React.Component {
 
   addToCartButtons() {
     if (!this.props.showAddToCartButton) return null;
-    return (<AddToCart product={this.props.product} />);
+    return (<AddToCartContainer product={this.props.product} />);
   }
 
   render() {

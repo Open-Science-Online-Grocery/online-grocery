@@ -53,6 +53,7 @@
   .product-card-buttons {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
 
     .product-card-add-to-cart-wrapper {
       display: flex;
