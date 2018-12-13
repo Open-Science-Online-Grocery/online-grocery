@@ -1,6 +1,7 @@
 import * as routes from '../../../../utils/routes';
 import * as fromApi from '../../../../utils/api_call';
 import { alertActionCreators } from '../alert/alert-actions';
+import { userActionCreators } from '../user/user-actions';
 import BudgetManager from '../../utils/BudgetManager';
 
 export const cartActionTypes = {
@@ -28,12 +29,24 @@ function underMinSpend(state) {
   return budgetManager.underMinSpend();
 }
 
-function addToCart(product, quantity = 1) {
+function dollarsToQuantity(product, amount) {
+  return Math.floor(amount / product.price);
+}
+
+function addToCart(product, amount, addByDollar) {
   return (dispatch, getState) => {
     const overMaxSpendBefore = overMaxSpend(getState());
 
+    const quantity = addByDollar ? dollarsToQuantity(product, amount) : amount;
     const newProduct = Object.assign({}, product, { quantity });
     dispatch({ type: cartActionTypes.ADD_TO_CART, product: newProduct });
+    dispatch(
+      userActionCreators.logParticipantAction(
+        'add',
+        newProduct.id,
+        quantity
+      )
+    );
 
     const overMaxSpendAfter = overMaxSpend(getState());
 
@@ -66,6 +79,13 @@ function clearCart() {
   };
 }
 
+function setCartSettings(cartSettings) {
+  return {
+    type: cartActionTypes.SET_CART_SETTINGS,
+    ...cartSettings
+  };
+}
+
 function getCartSettings() {
   return (dispatch, getState) => {
     const state = getState();
@@ -81,13 +101,6 @@ function getCartSettings() {
       data => dispatch(setCartSettings(data)),
       error => console.log(error)
     );
-  };
-}
-
-function setCartSettings(cartSettings) {
-  return {
-    type: cartActionTypes.SET_CART_SETTINGS,
-    ...cartSettings
   };
 }
 

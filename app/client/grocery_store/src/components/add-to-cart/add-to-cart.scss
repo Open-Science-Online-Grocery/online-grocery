@@ -1,0 +1,79 @@
+@import "../../base/base";
+
+.add-to-cart {
+  font-family: "Century Gothic", sans-serif;
+  display: flex;
+  align-items: center;
+  text-transform: none;
+
+  .label {
+    font-size: 0.7rem;
+    text-align: right
+  }
+
+  .form-container {
+    white-space: nowrap;
+    display: flex;
+    margin-left: 0.5rem;
+    border: 1px solid black;
+    position: relative;
+    font-size: 0.7rem;
+
+    .selector {
+      background-color: $price-green;
+      color: white;
+      padding: 0.2rem 0.5rem;
+      position: relative;
+
+      &.active {
+        cursor: pointer;
+      }
+
+      .down-arrow {
+        padding: 0.2rem;
+        font-size: 0.5rem;
+      }
+
+      .option {
+        position: absolute;
+        left: -1px;
+        top: 100%;
+        color: black;
+        padding: 0.2rem 0.5rem;
+        background-color: white;
+        border: 1px solid black;
+        min-width: 100%;
+        box-sizing: border-box;
+        z-index: 1;
+      }
+    }
+
+    .count {
+      padding: 0 0.2rem;
+      font-weight: bold;
+
+      button {
+        border: none;
+        font-weight: bold;
+        font-size: 0.9rem;
+        outline: none;
+        cursor: pointer;
+
+        &.decrement {
+          padding: 0 4px 0 0;
+        }
+
+        &.increment {
+          padding: 0 0 0 4px;
+        }
+      }
+    }
+
+    .submit {
+      background-color: $price-green;
+      color: white;
+      padding: 0.3rem 0.8rem;
+      cursor: pointer;
+    }
+  }
+}

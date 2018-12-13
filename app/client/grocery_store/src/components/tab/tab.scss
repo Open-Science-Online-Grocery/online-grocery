@@ -13,6 +13,29 @@
   flex-basis: 0;
   z-index: 1;
 
+  &.selected {
+    background-color: $price-green;
+    color: #ffffff;
+    display: inline-block;
+    outline: 1px solid #ffffff;
+    text-align: center;
+    position: relative;
+
+    &:hover {
+      background-color: $price-green;
+    }
+
+    .tab-dropdown {
+      .tab-subcat-bar {
+        background-color: #30b532;
+
+        &:hover {
+          background-color: #4acf4c;
+        }
+      }
+    }
+  }
+
   .tab {
     display: flex;
     height: 100%;
@@ -54,29 +77,6 @@
 
       &:hover {
         background-color: #999999;
-      }
-    }
-  }
-}
-
-.selected {
-  background-color: $price-green;
-  color: #ffffff;
-  display: inline-block;
-  outline: 1px solid #ffffff;
-  text-align: center;
-  position: relative;
-
-  &:hover {
-    background-color: $price-green;
-  }
-
-  .tab-dropdown {
-    .tab-subcat-bar {
-      background-color: #30b532;
-
-      &:hover {
-        background-color: #4acf4c;
       }
     }
   }

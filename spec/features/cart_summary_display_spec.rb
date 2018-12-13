@@ -85,7 +85,7 @@ RSpec.describe 'Showing cart summary information', :feature do
       )
     )
     within(low_cal_product_div) do
-      force_click(find('.product-card-add-to-cart'))
+      force_click(find('.add-to-cart .submit'))
     end
 
     force_click(first('.cart-image'))
@@ -102,7 +102,7 @@ RSpec.describe 'Showing cart summary information', :feature do
       )
     )
     within(high_cal_product_div) do
-      force_click(find('.product-card-add-to-cart'))
+      force_click(find('.add-to-cart .submit'))
     end
 
     force_click(first('.cart-image'))
