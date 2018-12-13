@@ -1,34 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import AddToCart from '../add-to-cart/add-to-cart';
 import './product-card.scss';
 
 export default class ProductCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { quantity: 1 };
-    this.handleAddToCart = this.handleAddToCart.bind(this);
-    this.subtractQuantity = this.subtractQuantity.bind(this);
-    this.addQuantity = this.addQuantity.bind(this);
-  }
-
-  handleAddToCart() {
-    this.props.handleAddToCart(this.props.product, this.state.quantity);
-    this.props.logParticipantAction('add', this.props.product.id, this.state.quantity);
-  }
-
-  subtractQuantity() {
-    const currentQuantity = this.state.quantity;
-    if (currentQuantity > 1) {
-      this.setState({ quantity: currentQuantity - 1 });
-    }
-  }
-
-  addQuantity() {
-    const currentQuantity = this.state.quantity;
-    this.setState({ quantity: currentQuantity + 1 });
-  }
-
   // webpack's `require` seems to have problems with interpolated strings and
   // method calls within it. using a literal string works, however.
   starImagePath() {
@@ -56,21 +32,7 @@ export default class ProductCard extends React.Component {
 
   addToCartButtons() {
     if (!this.props.showAddToCartButton) return null;
-    return (
-      <div className="product-card-add-to-cart-wrapper">
-        <img
-          onClick={this.handleAddToCart}
-          className="product-card-add-to-cart"
-          src={require('../../images/trolley-clipart.png')}
-          alt="cart icon"
-        />
-        <div className="product-card-quantity">
-          <div className="product-card-quantity-change" onClick={this.subtractQuantity}>-</div>
-          {this.state.quantity}
-          <div className="product-card-quantity-change" onClick={this.addQuantity}>+</div>
-        </div>
-      </div>
-    );
+    return (<AddToCart product={this.props.product} />);
   }
 
   render() {
@@ -116,7 +78,5 @@ ProductCard.propTypes = {
     labelPosition: PropTypes.string,
     labelSize: PropTypes.number
   }).isRequired,
-  handleAddToCart: PropTypes.func.isRequired,
-  showAddToCartButton: PropTypes.bool.isRequired,
-  logParticipantAction: PropTypes.func.isRequired
+  showAddToCartButton: PropTypes.bool.isRequired
 };
