@@ -45,8 +45,7 @@ describe('with a nonzero cart price', () => {
 });
 
 describe('when over max spend', () => {
-  // 9.31 will be 10.01 after tax
-  const subject = new BudgetManager(9.31, 10, 5);
+  const subject = new BudgetManager(10.01, 10, 5);
 
   describe('overMaxSpend', () => {
     it('returns true', () => {
@@ -70,8 +69,7 @@ describe('when over max spend', () => {
 });
 
 describe('when under min spend', () => {
-  // 4.64 will be 4.99 after tax
-  const subject = new BudgetManager(4.64, 10, 5);
+  const subject = new BudgetManager(4.99, 10, 5);
 
   describe('overMaxSpend', () => {
     it('returns false', () => {
