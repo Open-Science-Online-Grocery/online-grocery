@@ -18,11 +18,11 @@ export default class BudgetManager {
   }
 
   overMaxSpend() {
-    return !Number.isNaN(this.maxSpend) && this.total() > this.maxSpend;
+    return !Number.isNaN(this.maxSpend) && this.subtotal() > this.maxSpend;
   }
 
   underMinSpend() {
-    return !Number.isNaN(this.minSpend) && this.total() < this.minSpend;
+    return !Number.isNaN(this.minSpend) && this.subtotal() < this.minSpend;
   }
 
   checkoutErrorMessage() {
