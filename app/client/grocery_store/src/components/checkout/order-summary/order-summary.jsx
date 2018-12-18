@@ -25,6 +25,7 @@ export default class OrderSummary extends React.Component {
     this.props.cart.items.forEach((item) => {
       this.props.logParticipantAction('checkout', item.id, item.quantity);
     });
+    this.props.onSubmit();
   }
 
   labelStyles(item) {
@@ -182,7 +183,8 @@ OrderSummary.propTypes = {
   handleClearCart: PropTypes.func.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
   getCartSettings: PropTypes.func.isRequired,
-  logParticipantAction: PropTypes.func.isRequired
+  logParticipantAction: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired
 };
 
 OrderSummary.defaultProps = {

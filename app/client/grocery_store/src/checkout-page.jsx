@@ -17,13 +17,8 @@ export default class CheckoutPage extends React.Component {
         <Route
           render={
             ({ history }) => (
-              <form
-                onSubmit={() => {
-                  history.push('/store/thank-you');
-                }}
-                className="checkout-sections"
-              >
-                <OrderSummaryContainer />
+              <form className="checkout-sections">
+                <OrderSummaryContainer onSubmit={() => history.push('/store/thank-you')} />
               </form>
             )
           }
