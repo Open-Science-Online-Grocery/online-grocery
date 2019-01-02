@@ -5,7 +5,6 @@ module Seeds
     module ProductSortFields
       def self.seed_product_sort_fields
         sort_fields = ProductVariable.all + [
-          { description: 'Price', attribute: :price },
           { description: 'Name', attribute: :name },
           { description: 'Custom label', attribute: :label_image_url }
         ]
