@@ -11,21 +11,14 @@ module Equations
     end
 
     private def prepare_cart_data(cart)
-      variables.each_with_object({}) do |variable, data|
-        data[variable] = cart.public_send(variable)
+      variable_tokens.each_with_object({}) do |variable_token, data|
+        data[variable_token] = cart.get_value(variable_token)
+        data
       end
     end
 
     private def evaluate_with_fake_data
-      evaluate(fake_cart_data)
-    end
-
-    private def fake_cart_data
-      self.class.cart_variables.keys
-        .each_with_object(OpenStruct.new) do |colname, data|
-          data[colname] = 1
-          data
-        end
+      evaluate(::Cart.new([]))
     end
 
     private def should_return_boolean?

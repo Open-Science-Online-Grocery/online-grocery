@@ -71,7 +71,7 @@ class Equation
     str
   end
 
-  def variables
+  def variable_tokens
     @tokens.map { |token| token[:value] if token[:type] == 'variable' }.compact
   end
 
