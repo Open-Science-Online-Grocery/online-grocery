@@ -64,7 +64,7 @@ class CheckoutProductsExporter
   #   }
   private def product_fields(result, index)
     product = result.try(:product)
-    ordered_fields = %i[name price category] + nutrition_fields
+    ordered_fields = %i[name price category] + Product.nutrition_fields
     product_data = ordered_fields.each_with_object({}) do |field, data|
       data["Item#{index + 1}_#{field.capitalize}"] = product.try(field)
     end
