@@ -62,8 +62,7 @@ RSpec.describe Equations::Cart do
       let(:cart) { instance_double('Cart', avg_calories_from_fat: 20) }
 
       it 'returns false' do
-        cart_data = subject.prepare_cart_data(cart)
-        expect(subject.evaluate(cart_data)).to eq false
+        expect(subject.evaluate(cart)).to eq false
       end
     end
 
@@ -71,8 +70,7 @@ RSpec.describe Equations::Cart do
       let(:cart) { instance_double('Cart', avg_calories_from_fat: 19) }
 
       it 'returns true' do
-        cart_data = subject.prepare_cart_data(cart)
-        expect(subject.evaluate(cart_data)).to eq true
+        expect(subject.evaluate(cart)).to eq true
       end
     end
 
@@ -81,8 +79,7 @@ RSpec.describe Equations::Cart do
       let(:cart) { instance_double('Cart', avg_calories_from_fat: 19) }
 
       it 'returns nil' do
-        cart_data = subject.prepare_cart_data(cart)
-        expect(subject.evaluate(cart_data)).to be_nil
+        expect(subject.evaluate(cart)).to be_nil
       end
     end
   end

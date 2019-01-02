@@ -21,6 +21,6 @@ class Product < ApplicationRecord
   }
 
   def self.nutrition_fields
-    ProductVariable.nutrition_fields.map { |field| field[:attribute] }
+    ProductVariable.nutrition.map { |variable| variable[:attribute] }
   end
 end

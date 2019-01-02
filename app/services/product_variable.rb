@@ -1,6 +1,6 @@
 class ProductVariable
   def self.all
-    nutrition_fields + [
+    nutrition + [
       {
         token_name: :price,
         description: 'Price',
@@ -9,7 +9,7 @@ class ProductVariable
     ]
   end
 
-  def self.nutrition_fields
+  def self.nutrition
     [
       {
         token_name: :calories_from_fat,

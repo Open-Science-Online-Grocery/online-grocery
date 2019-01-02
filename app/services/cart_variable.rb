@@ -18,7 +18,7 @@ class CartVariable
     ProductVariable.all.map do |product_variable|
       {
         token_name: "total_#{product_variable[:token_name]}",
-        description: "Total #{product_variable[:token_name]}".capitalize,
+        description: "Total #{product_variable[:description]}".capitalize,
         attribute: product_variable[:attribute]
       }
     end
@@ -27,8 +27,8 @@ class CartVariable
   def self.average_fields
     ProductVariable.all.map do |product_variable|
       {
-        token_name: "average_#{product_variable[:token_name]}",
-        description: "Average #{product_variable[:token_name]}".capitalize,
+        token_name: "avg_#{product_variable[:token_name]}",
+        description: "Average #{product_variable[:description]}".capitalize,
         attribute: product_variable[:attribute]
       }
     end

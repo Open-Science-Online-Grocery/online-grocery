@@ -18,58 +18,21 @@ class Equation
     )
   end
 
+  # TODO: remove this, refer directly to ProductVariable.all instead
   def self.product_variables
-    {
-      calories_from_fat: 'Calories from fat per serving',
-      calories: 'Calories per serving',
-      total_fat: 'Total fat per serving (g)',
-      saturated_fat: 'Saturated fat per serving (g)',
-      trans_fat: 'Trans fat per serving (g)',
-      cholesterol: 'Cholesterol per serving (mg)',
-      sodium: 'Sodium per serving (mg)',
-      carbs: 'Total carbohydrates per serving (g)',
-      fiber: 'Dietary fiber per serving (g)',
-      sugar: 'Sugars per serving (g)',
-      protein: 'Protein per serving (g)',
-      price: 'Price',
-      starpoints: 'Star points'
-    }
+    ProductVariable.all.each_with_object({}) do |variable, data|
+      data[variable[:token_name]] = variable[:description]
+      data
+    end
   end
 
-  # rubocop:disable Metrics/MethodLength
+  # TODO: remove this, refer directly to CartVariable.all instead
   def self.cart_variables
-    {
-      number_of_products_with_label: 'Number of products with health label',
-      percent_of_products_with_label: 'Percent of products with health label',
-      avg_calories_from_fat: 'Average calories from fat per serving',
-      avg_calories: 'Average calories per serving',
-      avg_total_fat: 'Average total fat per serving (g)',
-      avg_saturated_fat: 'Average saturated fat per serving (g)',
-      avg_trans_fat: 'Average trans fat per serving (g)',
-      avg_cholesterol: 'Average cholesterol per serving (mg)',
-      avg_sodium: 'Average sodium per serving (mg)',
-      avg_carbs: 'Average total carbohydrates per serving (g)',
-      avg_fiber: 'Average dietary fiber per serving (g)',
-      avg_sugar: 'Average sugars per serving (g)',
-      avg_protein: 'Average protein per serving (g)',
-      avg_price: 'Average price',
-      avg_starpoints: 'Average star points',
-      total_calories_from_fat: 'Total calories from fat per serving',
-      total_calories: 'Total calories per serving',
-      total_total_fat: 'Total fat per serving (g)',
-      total_saturated_fat: 'Total saturated fat per serving (g)',
-      total_trans_fat: 'Total trans fat per serving (g)',
-      total_cholesterol: 'Total cholesterol per serving (mg)',
-      total_sodium: 'Total sodium per serving (mg)',
-      total_carbs: 'Total carbohydrates per serving (g)',
-      total_fiber: 'Total dietary fiber per serving (g)',
-      total_sugar: 'Total sugars per serving (g)',
-      total_protein: 'Total protein per serving (g)',
-      total_price: 'Total price (before tax)',
-      total_starpoints: 'Total star points'
-    }
+    CartVariable.all.each_with_object({}) do |variable, data|
+      data[variable[:token_name]] = variable[:description]
+      data
+    end
   end
-  # rubocop:enable Metrics/MethodLength
 
   def self.for_type(token_string, type)
     klass = {
