@@ -19,4 +19,26 @@ class Product < ApplicationRecord
   scope :with_subtag, ->(subtag_id) {
     joins(:product_tags).where(product_tags: { subtag_id: subtag_id })
   }
+
+  # rubocop:disable Metrics/MethodLength
+  def self.nutrition_fields
+    %i[
+      calories_from_fat
+      calories
+      total_fat
+      saturated_fat
+      trans_fat
+      poly_fat
+      mono_fat
+      cholesterol
+      sodium
+      potassium
+      carbs
+      fiber
+      sugar
+      protein
+      starpoints
+    ]
+  end
+  # rubocop:enable Metrics/MethodLength
 end

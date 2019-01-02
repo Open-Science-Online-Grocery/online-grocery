@@ -60,27 +60,7 @@ class ProductExporter
   private def product_attribute(product, attribute)
     value = product.public_send(attribute)
     return value if value.present?
-    attribute.in?(nutrition_fields) ? 'NULL' : nil
-  end
-
-  private def nutrition_fields
-    %i[
-      calories_from_fat
-      calories
-      total_fat
-      saturated_fat
-      trans_fat
-      poly_fat
-      mono_fat
-      cholesterol
-      sodium
-      potassium
-      carbs
-      fiber
-      sugar
-      protein
-      starpoints
-    ]
+    attribute.in?(Product.nutrition_fields) ? 'NULL' : nil
   end
 
   private def export_filepath
