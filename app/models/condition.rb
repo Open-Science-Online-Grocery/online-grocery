@@ -76,6 +76,10 @@ class Condition < ApplicationRecord
     style_use_types.always
   end
 
+  def style_uses_calculation?
+    style_use_type == Condition.style_use_types.calculation
+  end
+
   def label_equation
     @label_equation ||= Equation.for_type(
       Equation.types.label,

@@ -7,10 +7,10 @@ RSpec.describe Equation do
 
   describe '.for_type' do
     it 'returns the expected subclass' do
-      expect(described_class.for_type(token_string, 'label')).to be_a Equations::Label
-      expect(described_class.for_type(token_string, 'sort')).to be_a Equations::Sort
-      expect(described_class.for_type(token_string, 'nutrition')).to be_a Equations::Nutrition
-      expect(described_class.for_type(token_string, 'cart')).to be_a Equations::Cart
+      expect(described_class.for_type('label', token_string)).to be_a Equations::Label
+      expect(described_class.for_type('sort', token_string)).to be_a Equations::Sort
+      expect(described_class.for_type('nutrition', token_string)).to be_a Equations::Nutrition
+      expect(described_class.for_type('cart', token_string)).to be_a Equations::Cart
     end
   end
 end
