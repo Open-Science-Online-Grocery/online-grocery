@@ -6,8 +6,9 @@ RSpec.describe 'Configuring condition sorting', :feature do
   let(:user) { create(:user) }
   let(:experiment) { create(:experiment, user: user) }
   let(:condition) { create(:condition, experiment: experiment) }
-  let!(:sort_field_1) { create(:product_sort_field, description: 'Calories') }
-  let!(:sort_field_2) { create(:product_sort_field, description: 'Sodium') }
+  let!(:sort_field_1) { create(:product_sort_field, description: 'Calories', name: 'calories') }
+  let!(:sort_field_2) { create(:product_sort_field, description: 'Sodium', name: 'sodium') }
+  let!(:product_1) { create(:product, sodium: nil) }
 
   before do
     sign_in user
@@ -26,6 +27,12 @@ RSpec.describe 'Configuring condition sorting', :feature do
       semantic_select('Field', 'Calories')
     end
     semantic_select('Order', 'Descending')
+    expect(page).to have_no_content 'Warning: Incomplete data'
+
+    expect_form_refresh do
+      semantic_select('Field', 'Sodium')
+    end
+    expect(page).to have_content 'Warning: Incomplete data'
 
     semantic_select('Allow participants to sort products by:', 'Calories')
     semantic_select('Allow participants to sort products by:', 'Sodium')
