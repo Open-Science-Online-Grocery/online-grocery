@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Calculator from '../components/Calculator';
-import { getInputName, getTokensJson, getTokenCount} from '../store';
+import { getInputName, getTokensJson, getTokenCount } from '../store';
 import { testCalculation } from '../actions';
 
 const mapStateToProps = $$state => (
