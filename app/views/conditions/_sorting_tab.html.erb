@@ -16,13 +16,7 @@
           </div>
           <div class="ui segment nested-fields <%= 'disabled' unless condition.sort_type == Condition.sort_types.field %>">
             <% if condition.default_sort_field.try(:incomplete_data?) %>
-              <div class="ui tiny icon warning message">
-                <i class="exclamation circle icon"></i>
-                <div class="content">
-                  <div class="header">Warning: Incomplete data</div>
-                  Not all products have information for this field. This may result in misleading sorting.
-                </div>
-              </div>
+              <%= render 'sort_warning', incomplete_sort_fields: [condition.default_sort_field] %>
             <% end %>
             <div class="equal width fields">
               <div class="field">
@@ -74,6 +68,9 @@
 
     <div class="eight wide column">
       <div class="field">
+        <% if condition.incomplete_sort_fields.any? %>
+          <%= render 'sort_warning', incomplete_sort_fields: condition.incomplete_sort_fields %>
+        <% end %>
         <%= f.label :product_sort_field_ids, 'Allow participants to sort products by:' %>
         <%=
           f.collection_select(
@@ -83,7 +80,8 @@
             :description,
             {},
             class: 'ui dropdown',
-            multiple: true
+            multiple: true,
+            data: { refresh_form: true }
           )
         %>
       </div>

@@ -4,6 +4,10 @@
 class ProductSortField < ApplicationRecord
   validates :name, :description, presence: true, uniqueness: true
 
+  def to_s
+    description
+  end
+
   # we don't have every piece of nutrition data for every product. this method
   # indicates if the store contains any products missing data for this field
   def incomplete_data?

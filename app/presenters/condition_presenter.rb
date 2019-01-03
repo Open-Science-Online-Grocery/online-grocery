@@ -66,6 +66,10 @@ class ConditionPresenter < SimpleDelegator
       .map(&:cart_summary_label_image_url)
   end
 
+  def incomplete_sort_fields
+    product_sort_fields.select(&:incomplete_data?)
+  end
+
   private def format_spend(amount)
     number_with_precision(amount, precision: 2)
   end
