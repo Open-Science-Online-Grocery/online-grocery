@@ -22,7 +22,9 @@ RSpec.describe 'Configuring condition sorting', :feature do
     expect_form_refresh do
       force_click(first('label', text: 'A specified field'))
     end
-    semantic_select('Field', 'Calories')
+    expect_form_refresh do
+      semantic_select('Field', 'Calories')
+    end
     semantic_select('Order', 'Descending')
 
     semantic_select('Allow participants to sort products by:', 'Calories')
