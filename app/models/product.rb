@@ -19,4 +19,8 @@ class Product < ApplicationRecord
   scope :with_subtag, ->(subtag_id) {
     joins(:product_tags).where(product_tags: { subtag_id: subtag_id })
   }
+
+  def self.nutrition_fields
+    ProductVariable.nutrition.map { |variable| variable[:attribute] }
+  end
 end

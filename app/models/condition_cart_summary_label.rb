@@ -30,7 +30,6 @@ class ConditionCartSummaryLabel < ApplicationRecord
 
   def applies_to_cart?(cart)
     return true if always_show
-    cart_data = equation.prepare_cart_data(cart)
-    equation.evaluate(cart_data)
+    equation.evaluate(cart)
   end
 end

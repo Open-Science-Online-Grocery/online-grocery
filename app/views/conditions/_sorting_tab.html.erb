@@ -15,6 +15,15 @@
             <label>A specified field</label>
           </div>
           <div class="ui segment nested-fields <%= 'disabled' unless condition.sort_type == Condition.sort_types.field %>">
+            <% if condition.default_sort_field.try(:incomplete_data?) %>
+              <div class="ui tiny icon warning message">
+                <i class="exclamation circle icon"></i>
+                <div class="content">
+                  <div class="header">Warning: Incomplete data</div>
+                  Not all products have information for this field. This may result in misleading sorting.
+                </div>
+              </div>
+            <% end %>
             <div class="equal width fields">
               <div class="field">
                 <%= f.label :default_sort_field_id, 'Field' %>
@@ -25,7 +34,8 @@
                     :id,
                     :description,
                     { include_blank: true },
-                    class: 'ui dropdown'
+                    class: 'ui dropdown',
+                    data: { refresh_form: true }
                   )
                 %>
               </div>

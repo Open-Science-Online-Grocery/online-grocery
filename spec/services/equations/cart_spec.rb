@@ -58,31 +58,36 @@ RSpec.describe Equations::Cart do
   end
 
   describe '#evaluate' do
+    let(:cart) { instance_double(Cart) }
+
+    before do
+      allow(cart).to receive(:get_value) do |arg|
+        avg_calories_from_fat if arg == 'avg_calories_from_fat'
+      end
+    end
+
     context 'when it evaluates to false' do
-      let(:cart) { instance_double('Cart', avg_calories_from_fat: 20) }
+      let(:avg_calories_from_fat) { 20 }
 
       it 'returns false' do
-        cart_data = subject.prepare_cart_data(cart)
-        expect(subject.evaluate(cart_data)).to eq false
+        expect(subject.evaluate(cart)).to eq false
       end
     end
 
     context 'when it evaluates to true' do
-      let(:cart) { instance_double('Cart', avg_calories_from_fat: 19) }
+      let(:avg_calories_from_fat) { 19 }
 
       it 'returns true' do
-        cart_data = subject.prepare_cart_data(cart)
-        expect(subject.evaluate(cart_data)).to eq true
+        expect(subject.evaluate(cart)).to eq true
       end
     end
 
     context 'when equation has no tokens' do
       let(:token_string) { [].to_json }
-      let(:cart) { instance_double('Cart', avg_calories_from_fat: 19) }
+      let(:avg_calories_from_fat) { 19 }
 
       it 'returns nil' do
-        cart_data = subject.prepare_cart_data(cart)
-        expect(subject.evaluate(cart_data)).to be_nil
+        expect(subject.evaluate(cart)).to be_nil
       end
     end
   end

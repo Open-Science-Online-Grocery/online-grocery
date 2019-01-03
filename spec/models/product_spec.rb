@@ -9,4 +9,27 @@ RSpec.describe Product, type: :model do
     it { is_expected.to belong_to(:subsubcategory) }
     it { is_expected.to have_many(:product_tags) }
   end
+
+  describe '.nutrition_fields' do
+    it 'returns the expected fields' do
+      expected_results = %i[
+        calories_from_fat
+        calories
+        total_fat
+        saturated_fat
+        trans_fat
+        poly_fat
+        mono_fat
+        cholesterol
+        sodium
+        potassium
+        carbs
+        fiber
+        sugar
+        protein
+        starpoints
+      ]
+      expect(described_class.nutrition_fields).to eq expected_results
+    end
+  end
 end

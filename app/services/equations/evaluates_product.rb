@@ -13,7 +13,7 @@ module Equations
     end
 
     private def fake_product_data
-      self.class.product_variables.keys
+      ProductVariable.all.map { |variable| variable[:attribute] }
         .each_with_object({}) do |colname, data|
           data[colname] = 1
           data

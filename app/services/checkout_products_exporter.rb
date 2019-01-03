@@ -64,7 +64,7 @@ class CheckoutProductsExporter
   #   }
   private def product_fields(result, index)
     product = result.try(:product)
-    ordered_fields = %i[name price category] + nutrition_fields
+    ordered_fields = %i[name price category] + Product.nutrition_fields
     product_data = ordered_fields.each_with_object({}) do |field, data|
       data["Item#{index + 1}_#{field.capitalize}"] = product.try(field)
     end
@@ -92,7 +92,7 @@ class CheckoutProductsExporter
   end
 
   private def total_nutrition_fields(products)
-    nutrition_fields.each_with_object({}) do |field, data|
+    Product.nutrition_fields.each_with_object({}) do |field, data|
       data["Total_#{field.capitalize}"] = products.map(&field).compact.sum
     end
   end
@@ -100,26 +100,4 @@ class CheckoutProductsExporter
   private def max_product_count
     @max_product_count ||= results_by_participant.values.max_by(&:length).length
   end
-
-  # rubocop:disable Metrics/MethodLength
-  private def nutrition_fields
-    %i[
-      calories_from_fat
-      calories
-      total_fat
-      saturated_fat
-      trans_fat
-      poly_fat
-      mono_fat
-      cholesterol
-      sodium
-      potassium
-      carbs
-      fiber
-      sugar
-      protein
-      starpoints
-    ]
-  end
-  # rubocop:enable Metrics/MethodLength
 end

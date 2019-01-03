@@ -25,7 +25,8 @@ class ProductImporter
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   private def import_row(row)
     return unless row['id']
-    product_attrs = row.to_h.except(
+    cleaned_row = clean_row(row)
+    product_attrs = cleaned_row.except(
       'category',
       'subcategory',
       'newcategory', # the ID of the product's Category
@@ -34,12 +35,12 @@ class ProductImporter
     ).select { |k, _v| k.present? }
     product_attrs.transform_keys!(&:underscore)
 
-    category = Category.find_by(id: row['newcategory'])
+    category = Category.find_by(id: cleaned_row['newcategory'])
     subcategory = category.subcategories.find_by(
-      display_order: row['newsubcategory']
+      display_order: cleaned_row['newsubcategory']
     )
     subsubcategory = subcategory.subsubcategories.find_by(
-      display_order: row['newsubsubid']
+      display_order: cleaned_row['newsubsubid']
     )
 
     product_attrs['category_id'] = category.id
@@ -49,6 +50,15 @@ class ProductImporter
     Product.create!(product_attrs)
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
+  private def clean_row(row)
+    row.to_h.reduce({}) do |cleaned_row, (key, value)|
+      # 'NULL' will be inappropriately cast to `0` for integer columns, so we
+      # explicitly change it to `nil` to avoid this.
+      new_value = value == 'NULL' ? nil : value
+      cleaned_row.merge(key => new_value)
+    end
+  end
 
   private def sampled_row?(row_index)
     return true unless @only_random_subset
