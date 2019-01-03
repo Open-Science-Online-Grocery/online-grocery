@@ -22,6 +22,9 @@ RSpec.describe Condition, type: :model do
     it { is_expected.to delegate_method(:image_url).to(:label).with_prefix }
     it { is_expected.to delegate_method(:name).to(:label).with_prefix }
     it { is_expected.to delegate_method(:name).to(:default_sort_field).with_prefix }
+    it { is_expected.to delegate_method(:variables).to(:label_equation).with_prefix }
+    it { is_expected.to delegate_method(:variables).to(:nutrition_equation).with_prefix }
+    it { is_expected.to delegate_method(:variables).to(:sort_equation).with_prefix }
   end
 
   describe 'associations' do

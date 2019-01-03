@@ -8,7 +8,7 @@ RSpec.describe 'Configuring condition sorting', :feature do
   let(:condition) { create(:condition, experiment: experiment) }
   let!(:sort_field_1) { create(:product_sort_field, description: 'Calories', name: 'calories') }
   let!(:sort_field_2) { create(:product_sort_field, description: 'Sodium', name: 'sodium') }
-  let!(:product_1) { create(:product, sodium: nil) }
+  let!(:product) { create(:product, sodium: nil) }
 
   before do
     sign_in user

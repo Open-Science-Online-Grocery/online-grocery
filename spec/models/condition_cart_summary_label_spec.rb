@@ -8,9 +8,9 @@ RSpec.describe ConditionCartSummaryLabel, type: :model do
     it { is_expected.to delegate_method(:name).to(:cart_summary_label) }
     it { is_expected.to delegate_method(:image).to(:cart_summary_label) }
     it { is_expected.to delegate_method(:image?).to(:cart_summary_label) }
-
     it { is_expected.to delegate_method(:image_url).to(:cart_summary_label).with_prefix }
     it { is_expected.to delegate_method(:label_types).to(:class) }
+    it { is_expected.to delegate_method(:variables).to(:equation).with_prefix }
   end
 
   describe 'associations' do

@@ -7,6 +7,7 @@ RSpec.describe 'Configuring condition labels', :feature do
   let(:experiment) { create(:experiment, user: user) }
   let(:condition) { create(:condition, experiment: experiment) }
   let!(:label) { create(:label, name: 'Organic', built_in: true) }
+  let!(:product) { create(:product, sodium: nil) }
 
   before do
     sign_in user
@@ -28,6 +29,14 @@ RSpec.describe 'Configuring condition labels', :feature do
 
     within('[data-tab="labeling"] div.calculator') do
       force_click find('.ui.selection.dropdown')
+
+      force_click find('div.item', text: 'Sodium per serving (mg)', exact_text: true)
+      force_click_on('Insert field')
+      expect(page).to have_content 'Warning: Not all products have information for the following fields.'
+
+      force_click(first('.arrow.left.icon'))
+      expect(page).to have_no_content 'Warning: Not all products have information for the following fields.'
+
       force_click find('div.item', text: 'Calories per serving', exact_text: true)
       force_click_on('Insert field')
 
