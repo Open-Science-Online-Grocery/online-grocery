@@ -8,10 +8,11 @@ class ProductSortField < ApplicationRecord
     description
   end
 
-  # we don't have every piece of nutrition data for every product. this method
-  # indicates if the store contains any products missing data for this field
+  # we don't have every piece of data for every product. this method indicates
+  # whether the store contains any products missing data for this field
   def incomplete_data?
-    return false unless name.to_sym.in?(Product.nutrition_fields)
-    Product.where(name => nil).any?
+    variable = ProductVariable.from_attribute(name)
+    return false unless variable
+    variable.incomplete_data?
   end
 end

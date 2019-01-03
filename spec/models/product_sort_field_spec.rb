@@ -12,19 +12,19 @@ RSpec.describe ProductSortField, type: :model do
 
   describe '#incomplete_data?' do
     before do
-      allow(Product).to receive(:where).with('calories' => nil).and_return([])
-      allow(Product).to receive(:where).with('total_fat' => nil).and_return(['x'])
+      allow(Product).to receive(:where).with(calories: nil).and_return([])
+      allow(Product).to receive(:where).with(total_fat: nil).and_return(['x'])
     end
 
-    context 'when not a nutrition field' do
-      subject { described_class.new(name: 'price') }
+    context 'when not a product variable' do
+      subject { described_class.new(name: 'foo') }
 
       it 'returns false' do
         expect(subject.incomplete_data?).to eq false
       end
     end
 
-    context 'when a nutrition field' do
+    context 'when a product variable' do
       context 'when there are no records with nil data' do
         subject { described_class.new(name: 'calories') }
 

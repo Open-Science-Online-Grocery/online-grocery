@@ -11,7 +11,7 @@ module Equations
     def variables
       # TODO: remove this, refer directly to ProductVariable.all instead
       ProductVariable.all.each_with_object({}) do |variable, data|
-        data[variable[:token_name]] = variable[:description]
+        data[variable.token_name] = variable.description
         data
       end
     end
@@ -21,7 +21,7 @@ module Equations
     end
 
     private def fake_product_data
-      ProductVariable.all.map { |variable| variable[:attribute] }
+      ProductVariable.all.map(&:attribute)
         .each_with_object({}) do |colname, data|
           data[colname] = 1
           data

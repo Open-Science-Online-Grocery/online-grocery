@@ -13,7 +13,7 @@ module Equations
     def variables
       # TODO: remove this, refer directly to CartVariable.all instead
       CartVariable.all.each_with_object({}) do |variable, data|
-        data[variable[:token_name]] = variable[:description]
+        data[variable.token_name] = variable.description
         data
       end
     end

@@ -18,9 +18,9 @@ class Cart
   def get_value(variable_token)
     variable = CartVariable.from_token(variable_token)
     if variable.in?(CartVariable.total_fields)
-      return total(variable[:attribute])
+      return total(variable.attribute)
     elsif variable.in?(CartVariable.average_fields)
-      return average(variable[:attribute])
+      return average(variable.attribute)
     end
     public_send(variable_token)
   end
