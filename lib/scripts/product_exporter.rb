@@ -2,26 +2,36 @@
 
 require 'csv'
 
+# this script is used to export all products in the database to a CSV in a
+# format specified by the client. it is not part of application operations, but
+# can be used to allow clients to be able to inspect/edit product data
+#
 # Use the following in the rails console to run this script:
 # load './lib/scripts/product_exporter.rb'
 # ProductExporter.new.run
 class ProductExporter
+  # rubocop:disable Metrics/AbcSize
   def run
-    products = Product.includes(:subcategory, :subsubcategory).order(:id).to_a
     first_product_row = product_row(products.first)
-
     CSV.open(export_filepath, 'w') do |csv|
       csv << first_product_row.map(&:first)
       csv << first_product_row.map(&:last)
 
-      products.from(1).each_with_index do |product, idx|
-        puts "exported product #{idx}" if idx % 1000 == 0
+      products.from(1).each do |product|
         csv << product_row(product).map(&:last)
       end
       nil
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
+  private def products
+    @products ||= begin
+      Product.includes(:subcategory, :subsubcategory).order(:id).to_a
+    end
+  end
+
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   private def product_row(product)
     [
       ['id', product_attribute(product, :id)],
@@ -56,10 +66,13 @@ class ProductExporter
       ['name', product_attribute(product, :name)]
     ]
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   private def product_attribute(product, attribute)
     value = product.public_send(attribute)
     return value if value.present?
+    # for nutrition fields only, the client uses a convention of indicating
+    # null values with "NULL" instead of a blank cell.
     attribute.in?(Product.nutrition_fields) ? 'NULL' : nil
   end
 

@@ -14,6 +14,7 @@ class Cart
     @product_data.each { |data| data[:product] = Product.find(data[:id]) }
   end
 
+  # rubocop:disable Style/GuardClause
   def get_value(variable_token)
     variable = CartVariable.from_token(variable_token)
     if variable.in?(CartVariable.total_fields)
@@ -21,8 +22,9 @@ class Cart
     elsif variable.in?(CartVariable.average_fields)
       return average(variable[:attribute])
     end
-    public_send(variable[:attribute])
+    public_send(variable_token)
   end
+  # rubocop:enable Style/GuardClause
 
   def total_products
     @total_products ||= @product_data.reduce(0) do |total, item|

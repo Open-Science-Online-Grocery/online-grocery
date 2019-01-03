@@ -1,23 +1,34 @@
+# frozen_string_literal: true
+
+# captures information about attributes relevant to Carts as used in Equations.
+#  - `token_name` is a string used for referring to the variable in the
+#    calculator react widget and in database columns (like
+#    Condition#label_equation_tokens)
+#  - `description` is a string that users will see in the UI
+#  - `attribute`, if present, indicates an attribute on Product relevant to
+#    determining the value of the variable.
 class CartVariable
+  # rubocop:disable Metrics/MethodLength
   def self.all
     [
       {
         token_name: 'number_of_products_with_label',
         description: 'Number of products with health label',
-        attribute: :number_of_products_with_label
+        attribute: nil
       },
       {
         token_name: 'percent_of_products_with_label',
         description: 'Percent of products with health label',
-        attribute: :percent_of_products_with_label
+        attribute: nil
       },
       {
         token_name: 'total_products',
         description: 'Total number of products',
-        attribute: :total_products
+        attribute: nil
       }
     ] + total_fields + average_fields
   end
+  # rubocop:enable Metrics/MethodLength
 
   def self.total_fields
     ProductVariable.all.map do |product_variable|
