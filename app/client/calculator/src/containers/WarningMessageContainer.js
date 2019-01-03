@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import WarningMessage from '../components/WarningMessage';
-// import { getValid, getValidationMessage } from '../store';
+import { getIncompleteDataVariables } from '../store';
 
 const mapStateToProps = $$state => (
   {
-    incompleteDataVariables: ['foo', 'bar']
+    incompleteDataVariables: getIncompleteDataVariables($$state)
   }
 );
 
