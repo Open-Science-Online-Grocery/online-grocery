@@ -15,7 +15,7 @@ export function getVariables($$state) {
   return $$state.get('variables').toJS();
 }
 
-export function getVariable($$state, token) {
+function getVariable($$state, token) {
   return getVariables($$state).find(variable => variable.token === token.value);
 }
 
@@ -39,7 +39,7 @@ export function getValidationMessage($$state) {
   return $$state.get('validationMessage');
 }
 
-export function getTokens($$state) {
+function getTokens($$state) {
   return $$state.get('tokens').toJS();
 }
 
@@ -68,7 +68,8 @@ export function getIncompleteDataVariables($$state) {
     token => token.type === 'variable'
   );
   const variables = variableTokens.map(token => getVariable($$state, token));
-  return variables
+  const uniqueVariables = Array.from(new Set(variables));
+  return uniqueVariables
     .filter(variable => variable.incompleteData)
     .map(variable => variable.description);
 }

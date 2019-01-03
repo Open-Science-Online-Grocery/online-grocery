@@ -11,11 +11,15 @@ export default class WarningMessage extends PureComponent {
           <Icon name="exclamation circle" />
           <Message.Content>
             <Message.Header>
-              Warning: Not all products have information on the following fields.
+              Warning: Not all products have information for the following fields.
               This may result in biased calculations.
             </Message.Header>
             <ul>
-              {this.props.incompleteDataVariables.map(variableName => <li>{variableName}</li>)}
+              {
+                this.props.incompleteDataVariables.map(
+                  variableName => <li key={variableName}>{variableName}</li>
+                )
+              }
             </ul>
           </Message.Content>
         </Message>

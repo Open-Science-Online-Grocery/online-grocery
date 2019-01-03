@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# captures information about attributes relevant to Products and Carts as used
+# in Equations.
 class Variable
   include ActiveModel::Model
 

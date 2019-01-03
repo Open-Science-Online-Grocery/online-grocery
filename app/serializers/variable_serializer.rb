@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# serializes Variables for use by the Calculator react widget
 class VariableSerializer
   def initialize(variables)
     @variables = variables
