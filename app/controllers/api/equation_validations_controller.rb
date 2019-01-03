@@ -5,7 +5,7 @@ module Api
     skip_power_check
 
     def show
-      equation = Equation.for_type(params[:tokens], params[:type])
+      equation = Equation.for_type(params[:type], params[:tokens])
       json = {
         data: { valid: equation.valid? },
         errors: equation.errors.full_messages.map { |error| { title: error } }

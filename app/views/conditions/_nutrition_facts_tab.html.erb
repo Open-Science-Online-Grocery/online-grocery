@@ -31,7 +31,7 @@
     <div class="ui segment nested-calculator <%= 'disabled' unless condition.style_use_type == Condition.style_use_types.calculation %>">
       <div
         data-calculator
-        data-variables="<%= Equation.product_variables.to_json %>"
+        data-variables="<%= condition.nutrition_equation_variables.to_json %>"
         data-input-name="condition[nutrition_equation_tokens]"
         data-tokens="<%= condition.nutrition_equation_tokens || [] %>"
         data-equation-type="<%= Equation.types.nutrition %>"

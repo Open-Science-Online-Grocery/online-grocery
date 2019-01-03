@@ -58,7 +58,7 @@
       <div class="ui segment nested-calculator <%= 'disabled' unless condition.sort_type == Condition.sort_types.calculation %>">
         <div
           data-calculator
-          data-variables="<%= Equation.product_variables.to_json %>"
+          data-variables="<%= condition.sort_equation_variables.to_json %>"
           data-input-name="condition[sort_equation_tokens]"
           data-tokens="<%= condition.sort_equation_tokens || [] %>"
           data-equation-type="<%= Equation.types.sort %>"

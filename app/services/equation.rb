@@ -18,23 +18,8 @@ class Equation
     )
   end
 
-  # TODO: remove this, refer directly to ProductVariable.all instead
-  def self.product_variables
-    ProductVariable.all.each_with_object({}) do |variable, data|
-      data[variable[:token_name]] = variable[:description]
-      data
-    end
-  end
-
-  # TODO: remove this, refer directly to CartVariable.all instead
-  def self.cart_variables
-    CartVariable.all.each_with_object({}) do |variable, data|
-      data[variable[:token_name]] = variable[:description]
-      data
-    end
-  end
-
-  def self.for_type(token_string, type)
+  def self.for_type(type, token_string)
+    token_string ||= '[]'
     klass = {
       types.label => Equations::Label,
       types.sort => Equations::Sort,

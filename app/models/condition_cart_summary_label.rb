@@ -8,6 +8,7 @@ class ConditionCartSummaryLabel < ApplicationRecord
            to: :cart_summary_label
   delegate :image_url, to: :cart_summary_label, prefix: true, allow_nil: true
   delegate :label_types, to: :class
+  delegate :variables, to: :equation, prefix: true
 
   belongs_to :condition
   belongs_to :cart_summary_label
@@ -25,7 +26,7 @@ class ConditionCartSummaryLabel < ApplicationRecord
   end
 
   def equation
-    @equation ||= Equation.for_type(equation_tokens, Equation.types.cart)
+    @equation ||= Equation.for_type(Equation.types.cart, equation_tokens)
   end
 
   def applies_to_cart?(cart)

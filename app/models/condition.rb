@@ -14,6 +14,9 @@ class Condition < ApplicationRecord
            to: :class
   delegate :image_url, :name, to: :label, prefix: true, allow_nil: true
   delegate :name, to: :default_sort_field, prefix: true, allow_nil: true
+  delegate :variables, to: :label_equation, prefix: true
+  delegate :variables, to: :nutrition_equation, prefix: true
+  delegate :variables, to: :sort_equation, prefix: true
 
   belongs_to :experiment
   belongs_to :label, optional: true
@@ -75,15 +78,15 @@ class Condition < ApplicationRecord
 
   def label_equation
     @label_equation ||= Equation.for_type(
-      label_equation_tokens,
-      Equation.types.label
+      Equation.types.label,
+      label_equation_tokens
     )
   end
 
   def sort_equation
     @sort_equation ||= Equation.for_type(
-      sort_equation_tokens,
-      Equation.types.sort
+      Equation.types.sort,
+      sort_equation_tokens
     )
   end
 
@@ -112,8 +115,8 @@ class Condition < ApplicationRecord
 
   def nutrition_equation
     @nutrition_equation ||= Equation.for_type(
-      nutrition_equation_tokens,
-      Equation.types.nutrition
+      Equation.types.nutrition,
+      nutrition_equation_tokens
     )
   end
 

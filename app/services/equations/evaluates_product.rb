@@ -8,6 +8,14 @@ module Equations
       calculator.evaluate(to_s, product_attributes)
     end
 
+    def variables
+      # TODO: remove this, refer directly to ProductVariable.all instead
+      ProductVariable.all.each_with_object({}) do |variable, data|
+        data[variable[:token_name]] = variable[:description]
+        data
+      end
+    end
+
     private def evaluate_with_fake_data
       evaluate(fake_product_data)
     end
