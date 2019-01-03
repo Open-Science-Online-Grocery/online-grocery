@@ -20,10 +20,10 @@ export default class VariableSelector extends PureComponent {
 
   options() {
     // sorting alphabetically by description
-    const sortedVariableEntries = Object.entries(this.props.variables)
-      .sort((a, b) => a[1].localeCompare(b[1]));
-    const variables = sortedVariableEntries.map(
-      ([token, description]) => ({ value: token, text: description })
+    const sortedVariables = this.props.variables
+      .sort((a, b) => a.description.localeCompare(b.description));
+    const variables = sortedVariables.map(
+      variable => ({ value: variable.tokenName, text: variable.description })
     );
     return [{ value: '', text: '' }].concat(variables);
   }
@@ -50,7 +50,13 @@ export default class VariableSelector extends PureComponent {
 }
 
 VariableSelector.propTypes = {
-  variables: PropTypes.objectOf(PropTypes.string).isRequired,
+  variables: PropTypes.arrayOf(
+    PropTypes.shape({
+      tokenName: PropTypes.string,
+      description: PropTypes.string,
+      incompleteData: PropTypes.bool
+    })
+  ).isRequired,
   selectToken: PropTypes.func.isRequired,
   deletePreviousToken: PropTypes.func.isRequired
 };

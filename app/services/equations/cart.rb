@@ -11,11 +11,7 @@ module Equations
     end
 
     def variables
-      # TODO: remove this, refer directly to CartVariable.all instead
-      CartVariable.all.each_with_object({}) do |variable, data|
-        data[variable.token_name] = variable.description
-        data
-      end
+      CartVariable.all
     end
 
     private def prepare_cart_data(cart)

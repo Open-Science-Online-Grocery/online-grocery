@@ -9,11 +9,7 @@ module Equations
     end
 
     def variables
-      # TODO: remove this, refer directly to ProductVariable.all instead
-      ProductVariable.all.each_with_object({}) do |variable, data|
-        data[variable.token_name] = variable.description
-        data
-      end
+      ProductVariable.all
     end
 
     private def evaluate_with_fake_data
