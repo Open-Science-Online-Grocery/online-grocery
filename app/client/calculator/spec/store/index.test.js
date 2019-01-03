@@ -172,8 +172,8 @@ describe('reducers', () => {
 describe('selectors', () => {
   describe('getVariables', () => {
     it('returns the variables', () => {
-      const state = Immutable.fromJS({ variables: { foo: 'bar' } });
-      expect(fromSubject.getVariables(state)).toEqual({ foo: 'bar' });
+      const state = Immutable.fromJS({ variables: [{ foo: 'bar' }] });
+      expect(fromSubject.getVariables(state)).toEqual([{ foo: 'bar' }]);
     });
   });
 
@@ -220,7 +220,13 @@ describe('selectors', () => {
           { id: 'b', type: 'operator', value: '>' },
           { id: 'c', type: 'digit', value: '2' }
         ],
-        variables: { calories: 'Calories per serving' }
+        variables: [
+          {
+            token: 'calories',
+            description: 'Calories per serving',
+            incompleteData: false
+          }
+        ]
       }
     );
 

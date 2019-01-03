@@ -8,7 +8,7 @@ class VariableSerializer
   def serialize
     @variables.map do |variable|
       {
-        token_name: variable.token_name,
+        token: variable.token_name,
         description: variable.description,
         incomplete_data: variable.incomplete_data?
       }

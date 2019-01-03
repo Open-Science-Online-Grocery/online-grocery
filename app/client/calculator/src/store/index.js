@@ -45,7 +45,9 @@ export function getTokenCount($$state) {
 
 function getTokenName($$state, token) {
   if (token.type !== 'variable') return null;
-  return getVariables($$state)[token.value];
+  return getVariables($$state)
+    .find(variable => variable.token === token.value)
+    .description;
 }
 
 export function getTokensWithName($$state) {

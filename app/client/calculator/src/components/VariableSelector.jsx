@@ -5,16 +5,16 @@ import { Button, Icon, Select } from 'semantic-ui-react';
 export default class VariableSelector extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = { selectedVariable: '' };
+    this.state = { selectedToken: '' };
     this.handleSelectChange = (event, data) => (
-      this.setState({ selectedVariable: data.value })
+      this.setState({ selectedToken: data.value })
     );
     this.onButtonClick = this.handleButtonClick.bind(this);
   }
 
   handleButtonClick() {
-    if (this.state.selectedVariable.length) {
-      this.props.selectToken(this.state.selectedVariable);
+    if (this.state.selectedToken.length) {
+      this.props.selectToken(this.state.selectedToken);
     }
   }
 
@@ -23,7 +23,7 @@ export default class VariableSelector extends PureComponent {
     const sortedVariables = this.props.variables
       .sort((a, b) => a.description.localeCompare(b.description));
     const variables = sortedVariables.map(
-      variable => ({ value: variable.tokenName, text: variable.description })
+      variable => ({ value: variable.token, text: variable.description })
     );
     return [{ value: '', text: '' }].concat(variables);
   }
@@ -33,7 +33,7 @@ export default class VariableSelector extends PureComponent {
       <div className="insert-field">
         <Select
           options={this.options()}
-          value={this.state.selectedVariable}
+          value={this.state.selectedToken}
           onChange={this.handleSelectChange}
           placeholder="Select a field"
         />
@@ -52,7 +52,7 @@ export default class VariableSelector extends PureComponent {
 VariableSelector.propTypes = {
   variables: PropTypes.arrayOf(
     PropTypes.shape({
-      tokenName: PropTypes.string,
+      token: PropTypes.string,
       description: PropTypes.string,
       incompleteData: PropTypes.bool
     })
