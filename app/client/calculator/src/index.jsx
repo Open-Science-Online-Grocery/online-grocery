@@ -15,8 +15,6 @@ export default function initialize(wrapperElement) {
     cursorPosition: tokens.length
   };
   const store = configureStore(props);
-  // TODO: remove next line
-  if (props.equationType !== 'label') return;
   render(
     <Provider store={store}>
       <CalculatorContainer />
