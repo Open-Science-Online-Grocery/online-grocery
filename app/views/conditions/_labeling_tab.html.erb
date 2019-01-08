@@ -96,7 +96,7 @@
         <label>Show this label on all products where the following calculation is true:</label>
         <div
           data-calculator
-          data-variables="<%= Equation.product_variables.to_json %>"
+          data-variables="<%= VariableSerializer.new(condition.label_equation_variables).serialize %>"
           data-input-name="condition[label_equation_tokens]"
           data-tokens="<%= condition.label_equation_tokens || [] %>"
           data-equation-type="<%= Equation.types.label %>"

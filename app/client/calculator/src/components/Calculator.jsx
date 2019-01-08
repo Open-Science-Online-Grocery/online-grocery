@@ -6,6 +6,7 @@ import EquationEditorContainer from '../containers/EquationEditorContainer';
 import OperatorButtonRowContainer from '../containers/OperatorButtonRowContainer';
 import DigitButtonRowContainer from '../containers/DigitButtonRowContainer';
 import TestResultsContainer from '../containers/TestResultsContainer';
+import WarningMessageContainer from '../containers/WarningMessageContainer';
 
 const operators1 = ['+', '-', '*', '/', '%', '^', '|', '&'];
 const operators2 = ['<', '>', '<=', '>=', '!=', '=', '(', ')'];
@@ -17,6 +18,7 @@ export default class Calculator extends PureComponent {
     return (
       <div className="calculator">
         <TestResultsContainer />
+        <WarningMessageContainer />
         <EquationEditorContainer />
         <VariableSelectorContainer />
         <OperatorButtonRowContainer values={operators1} className="operators" />

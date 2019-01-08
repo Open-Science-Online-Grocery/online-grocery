@@ -10,6 +10,10 @@ module Equations
       calculator.evaluate(to_s, cart_data)
     end
 
+    def variables
+      CartVariable.all
+    end
+
     private def prepare_cart_data(cart)
       variable_tokens.each_with_object({}) do |variable_token, data|
         data[variable_token] = cart.get_value(variable_token)

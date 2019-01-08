@@ -33,7 +33,7 @@ class NullCondition
   end
 
   def label_equation
-    Equation.for_type('[]', Equation.types.label)
+    Equation.for_type(Equation.types.label, '[]')
   end
 
   def style_use_type

@@ -8,20 +8,20 @@
 #  - `description` is a string that users will see in the UI
 #  - `attribute` indicates an attribute on Product corresponding to the value of
 #    the variable.
-class ProductVariable
+class ProductVariable < Variable
   def self.all
-    nutrition + [
-      {
+    @all ||= nutrition + [
+      new(
         token_name: 'price',
         description: 'Price',
         attribute: :price
-      }
+      )
     ]
   end
 
   # rubocop:disable Metrics/MethodLength
   def self.nutrition
-    [
+    @nutrition ||= [
       {
         token_name: 'calories_from_fat',
         description: 'Calories from fat per serving',
@@ -97,7 +97,7 @@ class ProductVariable
         description: 'Star points',
         attribute: :starpoints
       }
-    ]
+    ].map { |attrs| new(attrs) }
   end
   # rubocop:enable Metrics/MethodLength
 end

@@ -172,8 +172,8 @@ describe('reducers', () => {
 describe('selectors', () => {
   describe('getVariables', () => {
     it('returns the variables', () => {
-      const state = Immutable.fromJS({ variables: { foo: 'bar' } });
-      expect(fromSubject.getVariables(state)).toEqual({ foo: 'bar' });
+      const state = Immutable.fromJS({ variables: [{ foo: 'bar' }] });
+      expect(fromSubject.getVariables(state)).toEqual([{ foo: 'bar' }]);
     });
   });
 
@@ -217,27 +217,29 @@ describe('selectors', () => {
       {
         tokens: [
           { id: 'a', type: 'variable', value: 'calories' },
-          { id: 'b', type: 'operator', value: '>' },
-          { id: 'c', type: 'digit', value: '2' }
+          { id: 'b', type: 'operator', value: '+' },
+          { id: 'c', type: 'variable', value: 'sodium' },
+          { id: 'd', type: 'operator', value: '>' },
+          { id: 'e', type: 'digit', value: '2' }
         ],
-        variables: { calories: 'Calories per serving' }
+        variables: [
+          {
+            token: 'calories',
+            description: 'Calories per serving',
+            incompleteData: false
+          },
+          {
+            token: 'sodium',
+            description: 'Sodium per serving',
+            incompleteData: true
+          }
+        ]
       }
     );
 
-    describe('getTokens', () => {
-      it('returns the tokens as JS', () => {
-        const expectedOutput = [
-          { id: 'a', type: 'variable', value: 'calories' },
-          { id: 'b', type: 'operator', value: '>' },
-          { id: 'c', type: 'digit', value: '2' }
-        ];
-        expect(fromSubject.getTokens(state)).toEqual(expectedOutput);
-      });
-    });
-
     describe('getTokenCount', () => {
       it('returns the tokens as JS', () => {
-        expect(fromSubject.getTokenCount(state)).toEqual(3);
+        expect(fromSubject.getTokenCount(state)).toEqual(5);
       });
     });
 
@@ -253,11 +255,23 @@ describe('selectors', () => {
           {
             id: 'b',
             type: 'operator',
-            value: '>',
+            value: '+',
             name: null
           },
           {
             id: 'c',
+            type: 'variable',
+            value: 'sodium',
+            name: 'Sodium per serving'
+          },
+          {
+            id: 'd',
+            type: 'operator',
+            value: '>',
+            name: null
+          },
+          {
+            id: 'e',
             type: 'digit',
             value: '2',
             name: null
@@ -269,8 +283,16 @@ describe('selectors', () => {
 
     describe('getTokensJson', () => {
       it('returns the tokens as JSON', () => {
-        const expectedOutput = '[{"id":"a","type":"variable","value":"calories"},{"id":"b","type":"operator","value":">"},{"id":"c","type":"digit","value":"2"}]';
+        const expectedOutput = '[{"id":"a","type":"variable","value":"calories"},{"id":"b","type":"operator","value":"+"},{"id":"c","type":"variable","value":"sodium"},{"id":"d","type":"operator","value":">"},{"id":"e","type":"digit","value":"2"}]';
         expect(fromSubject.getTokensJson(state)).toEqual(expectedOutput);
+      });
+    });
+
+    describe('getIncompleteDataVariables', () => {
+      it('returns the expected variable descriptions', () => {
+        expect(fromSubject.getIncompleteDataVariables(state)).toEqual(
+          ['Sodium per serving']
+        );
       });
     });
   });

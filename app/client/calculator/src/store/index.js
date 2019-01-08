@@ -15,6 +15,10 @@ export function getVariables($$state) {
   return $$state.get('variables').toJS();
 }
 
+function getVariable($$state, token) {
+  return getVariables($$state).find(variable => variable.token === token.value);
+}
+
 export function getCursorPosition($$state) {
   return $$state.get('cursorPosition');
 }
@@ -35,7 +39,7 @@ export function getValidationMessage($$state) {
   return $$state.get('validationMessage');
 }
 
-export function getTokens($$state) {
+function getTokens($$state) {
   return $$state.get('tokens').toJS();
 }
 
@@ -45,7 +49,7 @@ export function getTokenCount($$state) {
 
 function getTokenName($$state, token) {
   if (token.type !== 'variable') return null;
-  return getVariables($$state)[token.value];
+  return getVariable($$state, token).description;
 }
 
 export function getTokensWithName($$state) {
@@ -57,6 +61,17 @@ export function getTokensWithName($$state) {
 
 export function getTokensJson($$state) {
   return JSON.stringify(getTokens($$state));
+}
+
+export function getIncompleteDataVariables($$state) {
+  const variableTokens = getTokens($$state).filter(
+    token => token.type === 'variable'
+  );
+  const variables = variableTokens.map(token => getVariable($$state, token));
+  const uniqueVariables = Array.from(new Set(variables));
+  return uniqueVariables
+    .filter(variable => variable.incompleteData)
+    .map(variable => variable.description);
 }
 
 /* ******************************* reducers ********************************* */

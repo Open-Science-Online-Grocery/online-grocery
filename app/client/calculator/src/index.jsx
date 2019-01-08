@@ -1,3 +1,4 @@
+import humps from 'humps';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
@@ -8,7 +9,7 @@ export default function initialize(wrapperElement) {
   const tokens = JSON.parse(wrapperElement.dataset.tokens);
   const props = {
     tokens,
-    variables: JSON.parse(wrapperElement.dataset.variables),
+    variables: humps.camelizeKeys(JSON.parse(wrapperElement.dataset.variables)),
     inputName: wrapperElement.dataset.inputName,
     equationType: wrapperElement.dataset.equationType,
     cursorPosition: tokens.length
