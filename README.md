@@ -162,8 +162,6 @@ all changes merged in.
 
 1. Update the app version. (This is done by using one of the git commands found in the comment of `config/app_version.yml`. Ask your project manager if you're unsure of what the new version should be.)
 
-1. Ensure you are on the SciMed VPN if you are working outside the office.
-
 1. Enable the maintenance page for the application: `bundle exec cap #{environment} maintenance:enable`. If you are deploying to staging environment you would enter
 `bundle exec cap staging maintenance:enable`
 
