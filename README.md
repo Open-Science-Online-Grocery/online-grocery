@@ -30,6 +30,7 @@ The pre-existing database tables are:
   (see "Rails credentials" for more information)
 * Set the local ruby version to the one defined in `.ruby-version` using a ruby version manager like `rbenv`
 * From the root directory of the application, run the following commands:
+  * `gem install bundler`
   * `bundle install`
   * `yarn install`
   * `rake db:setup`
