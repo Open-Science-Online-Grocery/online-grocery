@@ -1,7 +1,7 @@
 # If you have gitlab-runner installed you can run this locally by doing:
 # `gitlab-runner exec docker --docker-pull-policy="if-not-present" ci`
 
-image: registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.1
+image: registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.2
 
 services:
   - mysql:5.7
@@ -14,6 +14,7 @@ variables:
   TZ: "America/New_York"
   MYSQL_ALLOW_EMPTY_PASSWORD: '1'
   DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: 'true'
+  BUNDLER_VERSION: '2.0.1'
 
 cache:
   paths:
