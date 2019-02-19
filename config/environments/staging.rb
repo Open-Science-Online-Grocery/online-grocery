@@ -104,6 +104,10 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
+  config.action_mailer.default_options = {
+    from: 'no-reply@howes-grocery.scimed-test.com'
+  }
+
   config.action_mailer.default_url_options = { host: 'howes-grocery.scimed-test.com' }
   Rails.application.routes.default_url_options[:host] = 'howes-grocery.scimed-test.com'
 end
