@@ -14,6 +14,7 @@ variables:
   TZ: "America/New_York"
   MYSQL_ALLOW_EMPTY_PASSWORD: '1'
   DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: 'true'
+  BUNDLER_VERSION: '2.0.1'
 
 cache:
   paths:
