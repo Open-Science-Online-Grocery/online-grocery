@@ -56,3 +56,6 @@ db/schema.rb
 ci_failures/
 
 spec/examples.txt
+
+howes_grocery.priv
+howes_grocery.pub
