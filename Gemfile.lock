@@ -1,5 +1,5 @@
 GIT
-  remote: git@git.scimedsolutions.com:scimed/git_rails_tagger.git
+  remote: git@gitlab.com:scimed-public/git-rails-tagger.git
   revision: 0dd7d712a7550556c15d4f83de1ce8f5e80fe243
   specs:
     git_rails_tagger (0.0.1)
@@ -415,4 +415,4 @@ RUBY VERSION
    ruby 2.4.2p198
 
 BUNDLED WITH
-   1.16.4
+   2.0.1

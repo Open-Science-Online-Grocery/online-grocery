@@ -30,6 +30,7 @@ The pre-existing database tables are:
   (see "Rails credentials" for more information)
 * Set the local ruby version to the one defined in `.ruby-version` using a ruby version manager like `rbenv`
 * From the root directory of the application, run the following commands:
+  * `gem install bundler`
   * `bundle install`
   * `yarn install`
   * `rake db:setup`
@@ -161,8 +162,6 @@ Note: All of the following commands are run from your local machine. No need to 
 all changes merged in.
 
 1. Update the app version. (This is done by using one of the git commands found in the comment of `config/app_version.yml`. Ask your project manager if you're unsure of what the new version should be.)
-
-1. Ensure you are on the SciMed VPN if you are working outside the office.
 
 1. Enable the maintenance page for the application: `bundle exec cap #{environment} maintenance:enable`. If you are deploying to staging environment you would enter
 `bundle exec cap staging maintenance:enable`
