@@ -103,10 +103,10 @@ RSpec.configure do |config|
     client.read_timeout = 240 # instead of the default 60
     Capybara::Selenium::Driver.new(
       app,
-      browser:              :chrome,
-      options:              browser_options,
+      browser: :chrome,
+      options: browser_options,
       desired_capabilities: capabilities,
-      http_client:          client
+      http_client: client
     )
   end
 

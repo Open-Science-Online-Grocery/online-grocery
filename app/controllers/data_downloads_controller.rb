@@ -24,7 +24,7 @@ class DataDownloadsController < ApplicationController
   private def exporter
     {
       'actions' => ParticipantActionsExporter.new(@experiment),
-      'checkout' =>  CheckoutProductsExporter.new(@experiment)
+      'checkout' => CheckoutProductsExporter.new(@experiment)
     }[params[:export_type]]
   end
 

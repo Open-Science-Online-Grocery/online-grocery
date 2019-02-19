@@ -41,7 +41,7 @@ group :development do
   gem 'capistrano-rbenv'
   gem 'capistrano-rails'
   gem 'chromedriver-helper'
-  gem 'git_rails_tagger', git: 'git@gitlab.com:scimed-public/git-rails-tagger.git'
+  gem 'git_rails_tagger', git: 'https://gitlab.com/scimed-public/git-rails-tagger.git'
   gem 'letter_opener'
   gem 'listen'
   gem 'spring'

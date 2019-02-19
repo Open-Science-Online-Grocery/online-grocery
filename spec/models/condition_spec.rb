@@ -29,7 +29,7 @@ RSpec.describe Condition, type: :model do
 
   describe 'associations' do
     it { is_expected.to belong_to(:experiment) }
-    it { is_expected.to belong_to(:label) }
+    it { is_expected.to belong_to(:label).optional }
     it { is_expected.to have_many(:condition_product_sort_fields) }
     it do
       is_expected.to have_many(:product_sort_fields)

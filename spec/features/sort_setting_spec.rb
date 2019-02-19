@@ -34,8 +34,12 @@ RSpec.describe 'Configuring condition sorting', :feature do
     end
     expect(page).to have_content 'Warning: Incomplete data'
 
-    semantic_select('Allow participants to sort products by:', 'Calories')
-    semantic_select('Allow participants to sort products by:', 'Sodium')
+    expect_form_refresh do
+      semantic_select('Allow participants to sort products by:', 'Calories')
+    end
+    expect_form_refresh do
+      semantic_select('Allow participants to sort products by:', 'Sodium')
+    end
 
     force_click_on 'Save'
 

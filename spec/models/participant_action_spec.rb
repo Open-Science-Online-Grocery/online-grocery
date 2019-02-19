@@ -8,7 +8,7 @@ RSpec.describe ParticipantAction, type: :model do
   end
 
   describe 'associations' do
-    it { is_expected.to belong_to(:condition) }
+    it { is_expected.to belong_to(:condition).optional }
     it { is_expected.to belong_to(:product) }
   end
 end
