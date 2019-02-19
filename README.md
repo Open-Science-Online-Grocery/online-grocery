@@ -26,6 +26,7 @@ The pre-existing database tables are:
 * Ensure MySQL is installed locally and running.
 * Copy `config/database.yml.example` to `config/database.yml` and fill in the
   needed mysql password (if the `root` database user needs a password).
+* Copy `howes_grocery.priv.example` to `howes_grocery.priv`.
 * Get the `config/master.key` file from another developer on the project.
   (see "Rails credentials" for more information)
 * Set the local ruby version to the one defined in `.ruby-version` using a ruby version manager like `rbenv`

@@ -1,0 +1,16 @@
+this is a pretend private key for development only; on the servers, use the real private keys
+-----BEGIN RSA PRIVATE KEY-----
+MIICXAIBAAKBgQDAdfO9a4qi7BRZ2WhyuDviCMafSzRy02MMfA254uZMEJGAWYkV
+ALivMgJXkXCntorFK4L4eKozR/nCJ9rjTQJ+4zqav9OZyc20noOi59snCfxzfJo6
+/iD9GWiKgN6kTE45QTeHQTU7kDIiLg9kznYarusGjl1MD1K4MmhWpA0fwwIDAQAB
+AoGBALQ6wPIVj1JaugQZ8BHeLVXS2g26I3eUNSEv2rrEnN2Gdns3XYPplQmbT04p
+yNGFxBY4VQHSHbDAKkeDgxtwtm/x14k+Iksyrind48EScDJItLSLsT2gkxnk0EGl
+wcJhEoC1p60YuBByrlSPgIvaIGQqupCh0/OP5ARLSkmkpK9BAkEA+9E+vyyh6ES1
+W6ZUA4+/3DlA4wf5VtkGiLlz3zZA1lCZUB7gxbWGlAacYXlJ2NZEPEkziQzELMrU
+GjERdX7zmwJBAMOoUPM0uDkgXMOzSFvWlmCSrAyf4fkrMAu6UuxTgrvUvR+YnSMY
+nxDl5hTYVM/3CpNoMk7Tq47wp/sfeS1cavkCQBN4IxzOy5nUrhzu6DH6TEAvoQes
+lyeS0gGCLSZF4I9xXdkm+gPvO/9332Fd6kq8jjwHANgIx6Ya7Hk17/6gmR8CQDXK
+tsbGvcdm8FoVllU5gAp5CLhH1LbOet0ekuHKa+z8JirjqIAXqtPYgRNGDrtGbi/s
+u7gUVdxsqaJPGt+vwvECQD9asREghbTKJQajzaARoGi7uIcc6YEoCTnBChdOsc54
+SKnQ7E3bIt/Li5ijEoMyzU1ObgbqHtPDV6yPgi0gDxs=
+-----END RSA PRIVATE KEY-----
