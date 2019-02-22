@@ -34,6 +34,17 @@ export default class ProductCardExpanded extends React.Component {
     };
   }
 
+  guidingStars() {
+    if (!this.props.showGuidingStars) return null;
+    return (
+      <div className="tooltip--triangle" data-tooltip="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!">
+        <a href="https://guidingstars.com/what-is-guiding-stars/">
+          <img className="product-card-guiding-stars" src={this.starImagePath()} />
+        </a>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div>
@@ -54,11 +65,7 @@ export default class ProductCardExpanded extends React.Component {
             <div className="product-card-expanded-description">{this.props.description}</div>
           </div>
           <div className="product-card-expanded-right-section">
-            <div className="tooltip--triangle" data-tooltip="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!">
-              <a href="https://guidingstars.com/what-is-guiding-stars/">
-                <img className="product-card-guiding-stars" src={this.starImagePath()} />
-              </a>
-            </div>
+            {this.guidingStars()}
             {
               this.props.servingSize
                 && (
@@ -117,7 +124,8 @@ ProductCardExpanded.propTypes = {
   protein: PropTypes.number,
   vitamins: PropTypes.string,
   nutritionLabelCss: PropTypes.string,
-  logParticipantAction: PropTypes.func.isRequired
+  logParticipantAction: PropTypes.func.isRequired,
+  showGuidingStars: PropTypes.bool.isRequired
 };
 
 ProductCardExpanded.defaultProps = {

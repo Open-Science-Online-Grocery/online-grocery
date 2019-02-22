@@ -57,7 +57,8 @@ RSpec.describe ConditionSerializer do
         show_price_total: true,
         minimum_spend: BigDecimal(10),
         maximum_spend: BigDecimal(50),
-        may_add_to_cart_by_dollar_amount: false
+        may_add_to_cart_by_dollar_amount: false,
+        show_guiding_stars: true
       }
       expect(subject.serialize).to eq expected_data
     end
