@@ -100,6 +100,7 @@ class ConditionsController < ApplicationController
       :may_add_to_cart_by_dollar_amount,
       :minimum_spend,
       :maximum_spend,
+      :show_guiding_stars,
       product_sort_field_ids: [],
       label_attributes: %i[id image image_cache name built_in],
       condition_cart_summary_labels_attributes: [

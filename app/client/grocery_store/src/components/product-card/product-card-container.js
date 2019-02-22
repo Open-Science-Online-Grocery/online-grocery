@@ -3,7 +3,8 @@ import ProductCard from './product-card';
 
 const mapStateToProps = state => (
   {
-    showAddToCartButton: !state.user.onlyAddToCartFromDetailPage
+    showAddToCartButton: !state.user.onlyAddToCartFromDetailPage,
+    showGuidingStars: state.user.showGuidingStars
   }
 );
 

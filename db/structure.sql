@@ -100,6 +100,7 @@ CREATE TABLE `conditions` (
   `minimum_spend` decimal(10,2) DEFAULT NULL,
   `maximum_spend` decimal(10,2) DEFAULT NULL,
   `may_add_to_cart_by_dollar_amount` tinyint(1) DEFAULT '0',
+  `show_guiding_stars` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `index_conditions_on_experiment_id` (`experiment_id`),
   KEY `index_conditions_on_label_id` (`label_id`),
@@ -394,6 +395,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20181127212210'),
 ('20181130211619'),
 ('20181211164301'),
-('20181211184522');
+('20181211184522'),
+('20190221200154');
 
 
