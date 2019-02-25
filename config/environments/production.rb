@@ -94,6 +94,20 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { host: '18.204.34.178' }
-  Rails.application.routes.default_url_options[:host] = '18.204.34.178'
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: 'email-smtp.us-east-1.amazonaws.com',
+    port: 587,
+    user_name: Rails.application.credentials.dig(:aws_production, :smtp_username),
+    password: Rails.application.credentials.dig(:aws_production, :smtp_password),
+    authentication: :login,
+    enable_starttls_auto: true
+  }
+
+  config.action_mailer.default_options = {
+    from: 'no-reply@openscience-onlinegrocery.com'
+  }
+
+  config.action_mailer.default_url_options = { host: 'openscience-onlinegrocery.com' }
+  Rails.application.routes.default_url_options[:host] = 'openscience-onlinegrocery.com'
 end

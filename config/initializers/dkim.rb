@@ -1,7 +1,7 @@
 if Rails.env.development? || Rails.env.staging?
   Dkim::domain = 'howes-grocery.scimed-test.com'
 elsif Rails.env.production?
-  Dkim::domain = 'howesgrocery.com'
+  Dkim::domain = 'openscience-onlinegrocery.com'
 end
 unless Rails.env.test?
   Dkim::signable_headers = Dkim::DefaultHeaders -
