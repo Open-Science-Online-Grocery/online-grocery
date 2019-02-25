@@ -71,4 +71,8 @@ class NullCondition
   def may_add_to_cart_by_dollar_amount
     false
   end
+
+  def show_guiding_stars
+    true
+  end
 end
