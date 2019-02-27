@@ -1,0 +1,106 @@
+<div class="page-heading">
+  <h2>Welcome to Howe's Grocery Store!</h2>
+</div>
+<div class="page-heading-text">
+  Howe’s Grocery is a research tool that simulates a real online grocery
+  shopping experience. Researchers at Duke University developed the store
+  by pulling product information from live online grocery retailers in the
+  U.S., including up-to-date images, ingredients, nutrition information,
+  and prices. There are over 20,000 food products available on our store
+  across all product categories, from produce to beverages. The store does
+  not include alcohol or household products.
+</div>
+
+<div class="ui accordion">
+  <div class="title bold">
+    <i class="dropdown icon"></i>
+    How closely does Howe’s resemble a real online shopping experience?
+  </div>
+  <div class="content">
+    Howe’s Grocery closely replicates a realistic online shopping experience.
+    Participants can click on an item to view its nutrition fact label and
+    ingredients. The item can be added to a shopping cart, and the cart can
+    be viewed prior to checkout. Sales tax will be added to the grand total.
+    There is a cart icon in the upper righthand corner for users to quickly
+    access their cart information. Howes grocery does not deliver food to
+    participants or collect payment information.
+
+    <%= image_tag('store_products_page.png', class: 'accordion-image')%>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold">
+    <i class="dropdown icon"></i>
+    What are the default product categories?
+  </div>
+  <div class="content">
+    At the top of the store’s page, the following product categories are
+    displayed: Produce; Deli & Dairy; Bread, Pasta & Rice; Packaged & Canned;
+    Condiments, Spreads & Sauces; Frozen Foods; and Beverages. Each category
+    has relevant subcategories to make navigation easier.
+
+    <%= image_tag('store_menu_bar.png', class: 'accordion-image') %>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold">
+    <i class="dropdown icon"></i>
+    What aspects of the store can be customized by researchers?
+  </div>
+  <div class="content">
+    Researchers can alter food labeling (e.g., “heart healthy”), product sorting
+    (e.g., ascending by calories per serving), cart summaries (e.g., display
+    count of foods with health labels), the nutrition fact label (e.g., total
+    fat appears in red text), and budgeting (i.e. participants can spend no more
+    than $200). Custom food categories can be created as well. Researchers can
+    also change whether participants are able to add items to cart by dollar
+    amount (e.g., $5 worth of bananas), by number (e.g., 5 bananas) or both.
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold">
+    <i class="dropdown icon"></i>
+    What information can researchers track?
+  </div>
+  <div class="content">
+    Data sheets can be generated from the store that include the products added
+    to cart, the total amount spent, items viewed but not added to cart, items
+    removed from cart, and the category, nutritional value, and price of each
+    item purchased.
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold">
+    <i class="dropdown icon"></i>
+    Want to learn more?
+  </div>
+  <div class="content">
+    <a href="<%= tutorials_pages_path %>">Click here to access tutorial videos and FAQs</a>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold">
+    <i class="dropdown icon"></i>
+    Want to see the store?
+  </div>
+  <div class="content">
+    <a href="<%= home_store_path %>" target="_blank">Click here to browse</a>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold">
+    <i class="dropdown icon"></i>
+    Want to sign up?
+  </div>
+  <div class="content">
+    <a href="<%= new_user_registration_path %>">Click here</a>
+  </div>
+</div>
+
+<%= render 'contact_footer' %>
