@@ -4,22 +4,18 @@
 class Condition < ApplicationRecord
   include Rails.application.routes.url_helpers
 
-  attr_writer :label_type, :show_food_count, :sort_type, :active_tag_csv,
-              :style_use_type
+  attr_writer :show_food_count, :sort_type, :active_tag_csv, :style_use_type
 
   validates :name, :uuid, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
 
-  delegate :label_types, :sort_types, :style_use_types, :food_count_formats,
+  delegate :sort_types, :style_use_types, :food_count_formats,
            to: :class
-  delegate :image_url, :name, to: :label, prefix: true, allow_nil: true
   delegate :name, to: :default_sort_field, prefix: true, allow_nil: true
-  delegate :variables, to: :label_equation, prefix: true
   delegate :variables, to: :nutrition_equation, prefix: true
   delegate :variables, to: :sort_equation, prefix: true
 
   belongs_to :experiment
-  belongs_to :label, optional: true
   belongs_to :default_sort_field, optional: true, class_name: 'ProductSortField'
   has_many :condition_product_sort_fields, dependent: :destroy
   has_many :product_sort_fields, through: :condition_product_sort_fields
@@ -29,15 +25,14 @@ class Condition < ApplicationRecord
   has_many :subtags, through: :product_tags
   has_many :condition_cart_summary_labels, dependent: :destroy
   has_many :cart_summary_labels, through: :condition_cart_summary_labels
+  has_many :condition_labels, dependent: :destroy
+  has_many :labels, through: :condition_labels
 
-  accepts_nested_attributes_for :label, :product_sort_fields
+  accepts_nested_attributes_for :product_sort_fields
   accepts_nested_attributes_for :condition_cart_summary_labels,
+                                :condition_labels,
                                 :tag_csv_files,
                                 allow_destroy: true
-
-  def self.label_types
-    OpenStruct.new(none: 'none', provided: 'provided', custom: 'custom')
-  end
 
   def self.sort_types
     OpenStruct.new(none: 'none', field: 'field', calculation: 'calculation')
@@ -57,12 +52,6 @@ class Condition < ApplicationRecord
     store_url(condId: uuid)
   end
 
-  def label_type
-    return @label_type if @label_type
-    return label_types.none if label.nil?
-    label.built_in? ? label_types.provided : label_types.custom
-  end
-
   def sort_type
     return @sort_type if @sort_type
     return sort_types.field if default_sort_field
@@ -78,13 +67,6 @@ class Condition < ApplicationRecord
 
   def style_uses_calculation?
     style_use_type == Condition.style_use_types.calculation
-  end
-
-  def label_equation
-    @label_equation ||= Equation.for_type(
-      Equation.types.label,
-      label_equation_tokens
-    )
   end
 
   def sort_equation
