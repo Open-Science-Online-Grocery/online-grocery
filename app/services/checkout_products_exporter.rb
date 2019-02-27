@@ -5,12 +5,20 @@ require 'csv'
 # creates a CSV of products in the cart at checkout for each participant in
 # a given Experiment
 class CheckoutProductsExporter
+  attr_reader :errors
+
   def initialize(experiment)
     @experiment = experiment
+    @errors = []
   end
 
   def generate_csv
     CSV.generate(headers: true) do |csv|
+      if rows.blank?
+        add_no_data_error
+        break
+      end
+
       csv << rows.first.try(:keys)
       rows.each { |row| csv << row }
     end
@@ -64,7 +72,8 @@ class CheckoutProductsExporter
   #   }
   private def product_fields(result, index)
     product = result.try(:product)
-    ordered_fields = %i[name price category] + Product.nutrition_fields
+    ordered_fields = %i[name price category subcategory serving_size] +
+      Product.nutrition_fields
     product_data = ordered_fields.each_with_object({}) do |field, data|
       data["Item#{index + 1}_#{field.capitalize}"] = product.try(field)
     end
@@ -99,5 +108,9 @@ class CheckoutProductsExporter
 
   private def max_product_count
     @max_product_count ||= results_by_participant.values.max_by(&:length).length
+  end
+
+  private def add_no_data_error
+    @errors << 'There is no product data available for export.'
   end
 end
