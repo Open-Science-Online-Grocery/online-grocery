@@ -43,6 +43,9 @@
 .ui.accordion {
   .title.bold{
     font-weight: bold;
+  }
+
+  .title.large {
     font-size: 1.5rem;
   }
 
@@ -54,4 +57,9 @@
     width: 100%;
     margin-top: 10px;
   }
+}
+
+iframe.youtube {
+  width: 640px;
+  height: 385px;
 }
