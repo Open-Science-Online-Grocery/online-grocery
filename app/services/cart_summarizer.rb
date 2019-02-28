@@ -11,14 +11,16 @@ class CartSummarizer
     @cart = cart
   end
 
-  def health_label_summary
+  def health_label_summaries
     return unless @condition.show_food_count
     if @condition.ratio_count?
       prefix = ratio_label_prefix
     else
       prefix = percent_label_prefix
     end
-    "#{prefix} #{label_name}"
+    @condition.labels.map do |label|
+      "#{prefix} #{label_name(label)}"
+    end
   end
 
   private def ratio_label_prefix
@@ -31,11 +33,9 @@ class CartSummarizer
     "#{percent_of_products_with_label.round}% of products have"
   end
 
-  private def label_name
+  private def label_name(label)
     @label_name ||= begin
-      if @condition.label_name.present?
-        return "the #{@condition.label_name} label"
-      end
+      return "the #{label.name} label" if label.name.present?
       'a health label'
     end
   end

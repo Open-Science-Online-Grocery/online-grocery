@@ -6,24 +6,6 @@ class ConditionPresenter < SimpleDelegator
 
   alias condition __getobj__
 
-  def custom_label
-    label.try(:custom?) ? label : Label.new(built_in: false)
-  end
-
-  def label_position_options
-    [
-      'top left',
-      'top center',
-      'top right',
-      'center left',
-      'center',
-      'center right',
-      'bottom left',
-      'bottom center',
-      'bottom right'
-    ]
-  end
-
   def current_tag_csv_file_presenter
     ResourcePresenter.new(current_tag_csv_file)
   end
@@ -51,14 +33,14 @@ class ConditionPresenter < SimpleDelegator
     format_spend(maximum_spend)
   end
 
-  def preview_cart_summary_label
+  def preview_cart_summary_labels
     fake_cart = OpenStruct.new(
       total_products: 3,
       number_of_products_with_label: 2,
       percent_of_products_with_label: 66
     )
     summarizer = CartSummarizer.new(condition, fake_cart)
-    summarizer.health_label_summary
+    summarizer.health_label_summaries
   end
 
   def preview_cart_image_urls

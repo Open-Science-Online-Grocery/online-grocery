@@ -21,8 +21,8 @@ class ConditionCartSummaryLabel < ApplicationRecord
 
   def label_type
     return @label_type if @label_type
-    return label_types.none if label.nil?
-    label.built_in? ? label_types.provided : label_types.custom
+    return label_types.provided if cart_summary_label.try(:built_in)
+    label_types.custom
   end
 
   def equation

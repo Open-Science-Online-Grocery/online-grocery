@@ -27,14 +27,14 @@ RSpec.describe CartSummarizer do
     end
   end
 
-  describe '#health_label_summary' do
+  describe '#health_label_summaries' do
     context 'when no food count is shown' do
       before do
         allow(condition).to receive(:show_food_count) { false }
       end
 
       it 'returns nil' do
-        expect(subject.health_label_summary).to be_nil
+        expect(subject.health_label_summaries).to be_nil
       end
     end
 
@@ -49,7 +49,7 @@ RSpec.describe CartSummarizer do
         end
 
         it 'returns the expected text' do
-          expect(subject.health_label_summary).to eq '3 out of 10 products have the foo label'
+          expect(subject.health_label_summaries).to eq ['3 out of 10 products have the foo label']
         end
       end
 
@@ -59,7 +59,7 @@ RSpec.describe CartSummarizer do
         end
 
         it 'returns the expected text' do
-          expect(subject.health_label_summary).to eq '3 out of 10 products have a health label'
+          expect(subject.health_label_summaries).to eq ['3 out of 10 products have a health label']
         end
       end
     end
@@ -71,7 +71,7 @@ RSpec.describe CartSummarizer do
       end
 
       it 'returns the expected text' do
-        expect(subject.health_label_summary).to eq '33% of products have the foo label'
+        expect(subject.health_label_summaries).to eq ['33% of products have the foo label']
       end
     end
   end

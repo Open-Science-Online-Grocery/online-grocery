@@ -3,7 +3,7 @@
 # responsible for collecting/formatting info about a cart based on a condition,
 # for consumption by the grocery store react app
 class CartSettingsSerializer
-  delegate :health_label_summary, to: :cart_summarizer
+  delegate :health_label_summaries, to: :cart_summarizer
 
   def initialize(condition, cart_product_data)
     @condition = condition
@@ -12,7 +12,7 @@ class CartSettingsSerializer
 
   def serialize
     {
-      health_label_summary: health_label_summary,
+      health_label_summaries: health_label_summaries,
       label_image_urls: label_image_urls
     }
   end
