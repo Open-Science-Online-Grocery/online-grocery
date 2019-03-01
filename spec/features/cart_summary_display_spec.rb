@@ -50,6 +50,12 @@ RSpec.describe 'Showing cart summary information', :feature do
       ].to_json
     )
   end
+  let(:label) { create :label, name: nil }
+  let!(:condition_label) do
+    create :condition_label,
+           label: label,
+           condition: condition
+  end
 
   let!(:low_cal_product) do
     create(

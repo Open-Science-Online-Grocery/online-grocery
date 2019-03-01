@@ -56,6 +56,10 @@ class NullCondition
     []
   end
 
+  def condition_labels
+    []
+  end
+
   def show_food_count
     false
   end

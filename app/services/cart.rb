@@ -56,7 +56,7 @@ class Cart
 
   private def product_labels_in_cart
     @product_data.flat_map do |product|
-      product[:has_labels]
+      Array.new(product[:quantity].to_i, product[:has_labels]).flatten
     end
   end
 

@@ -55,9 +55,9 @@ class ConditionPresenter < SimpleDelegator
   end
 
   private def fake_cart
-    fake_cart_data = (1..4).map do |index|
+    fake_cart_data = Product.first(4).pluck(:id).map do |id|
       OpenStruct.new(
-        id: index.to_s,
+        id: id.to_s,
         quantity: '1',
         has_labels: random_labels
       )

@@ -10,21 +10,31 @@ RSpec.describe CartSummarizer do
       show_food_count: true
     )
   end
+  let(:label_1) { build :label }
+  let(:label_2) { build :label }
   let(:cart) do
     instance_double(
       'Cart',
       total_products: 10,
-      number_of_products_with_label: 3,
-      percent_of_products_with_label: 33.33333
+      number_of_products_with_each_label: {
+        label_1.image_url => 3,
+        label_2.image_url => 6
+      },
+      percent_of_products_with_each_label: {
+        label_1.image_url => 33.33333,
+        label_2.image_url => 66.66666
+      }
     )
   end
 
   subject { described_class.new(condition, cart) }
 
   before do
-    allow(condition).to receive(:condition_cart_summary_labels) do
-      [label_1, label_2, label_3]
+    allow(condition).to receive(:labels) do
+      [label_1, label_2]
     end
+    allow(label_1).to receive(:image_url) { 'foo.png' }
+    allow(label_2).to receive(:image_url) { 'bar.png' }
   end
 
   describe '#health_label_summaries' do
@@ -43,23 +53,26 @@ RSpec.describe CartSummarizer do
         allow(condition).to receive(:ratio_count?) { true }
       end
 
-      context 'when label has a name' do
-        before do
-          allow(condition).to receive(:label_name) { 'foo' }
-        end
-
+      context 'when labels have names' do
         it 'returns the expected text' do
-          expect(subject.health_label_summaries).to eq ['3 out of 10 products have the foo label']
+          expect(subject.health_label_summaries).to eq [
+            "3 out of 10 products have the #{label_1.name} label",
+            "6 out of 10 products have the #{label_2.name} label"
+          ]
         end
       end
 
-      context 'when label has no name' do
+      context 'when the labels have no names' do
         before do
-          allow(condition).to receive(:label_name) { '' }
+          allow(label_1).to receive(:name) { nil }
+          allow(label_2).to receive(:name) { nil }
         end
 
         it 'returns the expected text' do
-          expect(subject.health_label_summaries).to eq ['3 out of 10 products have a health label']
+          expect(subject.health_label_summaries).to eq [
+            '3 out of 10 products have a health label',
+            '6 out of 10 products have a health label'
+          ]
         end
       end
     end
@@ -67,11 +80,13 @@ RSpec.describe CartSummarizer do
     context 'when percent count should be shown' do
       before do
         allow(condition).to receive(:ratio_count?) { false }
-        allow(condition).to receive(:label_name) { 'foo' }
       end
 
       it 'returns the expected text' do
-        expect(subject.health_label_summaries).to eq ['33% of products have the foo label']
+        expect(subject.health_label_summaries).to eq [
+          "33% of products have the #{label_1.name} label",
+          "67% of products have the #{label_2.name} label"
+        ]
       end
     end
   end

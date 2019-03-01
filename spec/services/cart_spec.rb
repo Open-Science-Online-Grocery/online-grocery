@@ -69,9 +69,9 @@ RSpec.describe Cart do
 
   let(:product_data) do
     [
-      { id: '1', quantity: '1', has_label: 'false' },
-      { id: '2', quantity: '2', has_label: 'true' },
-      { id: '3', quantity: '3', has_label: 'true' }
+      { id: '1', quantity: '1', has_labels: ['label_2.png'] },
+      { id: '2', quantity: '2', has_labels: ['label_1.png', 'label_2.png'] },
+      { id: '3', quantity: '3', has_labels: ['label_2.png'] }
     ]
   end
 
@@ -90,8 +90,17 @@ RSpec.describe Cart do
   describe '#get_value' do
     it 'returns the expected numbers' do
       expect(subject.get_value('total_products')).to eq 6
-      expect(subject.get_value('number_of_products_with_label')).to eq 5
-      expect(subject.get_value('percent_of_products_with_label').round(3)).to eq 83.333
+      expect(subject.get_value('number_of_products_with_each_label')).to eql(
+        'label_1.png' => 2,
+        'label_2.png' => 6
+      )
+      expect(
+        subject.get_value('percent_of_products_with_each_label')
+          .transform_values { |val| val.round(3) }
+      ).to eql(
+        'label_1.png' => 33.333,
+        'label_2.png' => 100.0
+      )
       expect(subject.get_value('avg_calories_from_fat')).to eq 53.5
       expect(subject.get_value('avg_calories')).to eq 107
       expect(subject.get_value('avg_total_fat')).to eq 160.5

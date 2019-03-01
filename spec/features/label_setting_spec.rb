@@ -17,8 +17,11 @@ RSpec.describe 'Configuring condition labels', :feature do
   it 'allows label configuration', :js do
     expect(page).to have_content 'Edit Condition'
     force_click(find('.item[data-tab="labeling"]'))
+    within '.tab.segment[data-tab="labeling"]' do
+      force_click(find('a.add_fields'))
+    end
 
-    expect(find('#condition_label_type_none')).to be_checked
+    expect(first('label', text: 'Use custom label').sibling('input')).to be_checked
 
     expect_form_refresh do
       force_click(first('label', text: 'Use provided label'))
@@ -54,7 +57,7 @@ RSpec.describe 'Configuring condition labels', :feature do
     end
 
     expect_form_refresh do
-      semantic_select('Label position', 'center')
+      semantic_select('Position', 'center')
     end
 
     force_click_on 'Save'
@@ -62,7 +65,7 @@ RSpec.describe 'Configuring condition labels', :feature do
     expect(page).to have_content 'Condition successfully updated'
 
     force_click(find('.item[data-tab="labeling"]'))
-    expect(find('#condition_label_type_provided')).to be_checked
+    expect(first('label', text: 'Use provided label').sibling('input')).to be_checked
     expect(page).to have_selector('.item.active', text: 'Organic')
 
     within('[data-tab="labeling"] .equation-editor') do
