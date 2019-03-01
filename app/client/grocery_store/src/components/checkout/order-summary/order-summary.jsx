@@ -28,12 +28,24 @@ export default class OrderSummary extends React.Component {
     this.props.onSubmit();
   }
 
-  labelStyles(item) {
-    if (!item.labelImageUrl) return {};
+  productLabels(item) {
+    return (
+      item.labels.map(label => (
+        <div
+          className="order-item-overlay"
+          style={this.labelStyles(label)}
+          key={label.labelImageUrl}
+        />
+      ))
+    );
+  }
+
+  labelStyles(labelAttributes) {
+    if (!labelAttributes.labelImageUrl) return {};
     return {
-      backgroundImage: `url(${item.labelImageUrl})`,
-      backgroundPosition: item.labelPosition,
-      backgroundSize: `${item.labelSize}%`
+      backgroundImage: `url(${labelAttributes.labelImageUrl})`,
+      backgroundPosition: labelAttributes.labelPosition,
+      backgroundSize: `${labelAttributes.labelSize}%`
     };
   }
 
@@ -42,7 +54,7 @@ export default class OrderSummary extends React.Component {
       <div key={item.id} className="order-item">
         <div className="order-item-image-wrapper">
           <img className="order-item-image" src={item.imageSrc} />
-          <div className="order-item-overlay" style={this.labelStyles(item)} />
+          {this.productLabels(item)}
         </div>
         <div className="order-item-name">{item.name} </div>
         <span className="order-item-detail">
@@ -90,11 +102,13 @@ export default class OrderSummary extends React.Component {
   }
 
   healthLabelsSection() {
-    if (!this.props.cart.healthLabelSummary) return null;
+    if (this.props.cart.healthLabelSummaries === []) return null;
     return (
-      <div className="label-summary">
-        {this.props.cart.healthLabelSummary}
-      </div>
+      this.props.cart.healthLabelSummaries.map(summary => (
+        <div className="label-summary" key={summary}>
+          {summary}
+        </div>
+      ))
     );
   }
 
@@ -162,7 +176,7 @@ OrderSummary.propTypes = {
   cart: PropTypes.shape({
     count: PropTypes.number.isRequired,
     showPriceTotal: PropTypes.bool.isRequired,
-    healthLabelSummary: PropTypes.string,
+    healthLabelSummaries: PropTypes.arrayOf(PropTypes.string),
     labelImageUrls: PropTypes.arrayOf(PropTypes.string),
     items: PropTypes.arrayOf(
       PropTypes.shape({
@@ -170,9 +184,13 @@ OrderSummary.propTypes = {
         price: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         imageSrc: PropTypes.string.isRequired,
-        labelImageUrl: PropTypes.string,
-        labelPosition: PropTypes.string,
-        labelSize: PropTypes.number
+        labels: PropTypes.arrayOf(
+          PropTypes.shape({
+            labelImageUrl: PropTypes.string,
+            labelPosition: PropTypes.string,
+            labelSize: PropTypes.number
+          })
+        )
       })
     )
   }).isRequired,

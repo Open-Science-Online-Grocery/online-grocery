@@ -33,12 +33,10 @@ class ConditionPresenter < SimpleDelegator
     format_spend(maximum_spend)
   end
 
+  # Due to the random nature of the label selection, the data will be random
+  # each time the page is reloaded, meaning the preview will not be consistent
+  # switching between ratio and percent view
   def preview_cart_summary_labels
-    fake_cart = OpenStruct.new(
-      total_products: 3,
-      number_of_products_with_label: 2,
-      percent_of_products_with_label: 66
-    )
     summarizer = CartSummarizer.new(condition, fake_cart)
     summarizer.health_label_summaries
   end
@@ -54,5 +52,29 @@ class ConditionPresenter < SimpleDelegator
 
   private def format_spend(amount)
     number_with_precision(amount, precision: 2)
+  end
+
+  private def fake_cart
+    fake_cart_data = (1..4).map do |index|
+      OpenStruct.new(
+        id: index.to_s,
+        quantity: '1',
+        has_labels: random_labels
+      )
+    end
+
+    Cart.new(fake_cart_data)
+  end
+
+  private def random_labels
+    return [] unless condition.labels.present?
+
+    condition.labels.map do |label|
+      if rand(0..100) % 4 == 0
+        nil
+      else
+        label.image_url
+      end
+    end.compact || []
   end
 end

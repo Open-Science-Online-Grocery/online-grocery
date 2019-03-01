@@ -92,7 +92,13 @@ function getCartSettings() {
     const params = {
       conditionIdentifier: state.user.conditionIdentifier,
       cartProducts: state.cart.items.map(item => (
-        { id: item.id, quantity: item.quantity, hasLabel: !!item.labelImageUrl }
+        {
+          id: item.id,
+          quantity: item.quantity,
+          hasLabels: item.labels.map(label => (
+            label.labelImageUrl
+          ))
+        }
       ))
     };
     fromApi.jsonApiCall(

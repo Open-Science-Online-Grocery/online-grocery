@@ -6,8 +6,8 @@ class Cart
   # @param [Array of Hashes] - an array of hashes representing some abbreviated
   #   data about products in a cart. it looks like this:
   #   [
-  #     { id: '11', quantity: '1', has_label: 'true' },
-  #     { id: '22', quantity: '2', has_label: 'false' }
+  #     { id: '11', quantity: '1', has_labels: ['images/label_1.png'] },
+  #     { id: '22', quantity: '2', has_labels: ['images/label_2.png'] }
   #   ]
   def initialize(product_data)
     @product_data = product_data
@@ -32,16 +32,31 @@ class Cart
     end
   end
 
-  def number_of_products_with_label
-    @number_of_products_with_label ||= @product_data.reduce(0) do |total, item|
-      item[:has_label] == 'true' ? total + item[:quantity].to_i : total
+  def number_of_products_with_each_label
+    @number_of_products_with_each_label ||= begin
+      label_counts = {}
+
+      product_labels_in_cart.each do |label|
+        label_counts[label] ||= 0
+        label_counts[label] += 1
+      end
+
+      label_counts
     end
   end
 
-  def percent_of_products_with_label
-    @percent_of_products_with_label ||= begin
+  def percent_of_products_with_each_label
+    @percent_of_products_with_each_label ||= begin
       return 0 if total_products.zero?
-      (number_of_products_with_label / total_products.to_f) * 100
+      number_of_products_with_each_label.transform_values do |count|
+        (count / total_products.to_f) * 100
+      end
+    end
+  end
+
+  private def product_labels_in_cart
+    @product_data.flat_map do |product|
+      product[:has_labels]
     end
   end
 
