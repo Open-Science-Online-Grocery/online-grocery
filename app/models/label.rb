@@ -4,6 +4,8 @@
 class Label < ApplicationRecord
   mount_uploader :image, LabelImageUploader
 
+  validates :name, presence: true, uniqueness: true
+
   scope :built_in, -> { where(built_in: true) }
 
   def custom?

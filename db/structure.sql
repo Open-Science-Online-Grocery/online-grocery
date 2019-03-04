@@ -158,7 +158,8 @@ CREATE TABLE `labels` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `image` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_labels_on_name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `participant_actions`;
@@ -411,6 +412,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20181211184522'),
 ('20190221200154'),
 ('20190227175452'),
-('20190227180805');
+('20190227180805'),
+('20190304204826');
 
 
