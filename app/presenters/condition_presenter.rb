@@ -63,7 +63,7 @@ class ConditionPresenter < SimpleDelegator
       )
     end
 
-    Cart.new(fake_cart_data)
+    Cart.new(fake_cart_data, condition)
   end
 
   private def random_labels
@@ -73,7 +73,7 @@ class ConditionPresenter < SimpleDelegator
       if rand(0..100) % 4 == 0
         nil
       else
-        label.image_url
+        label.name
       end
     end.compact || []
   end

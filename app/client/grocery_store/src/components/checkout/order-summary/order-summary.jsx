@@ -186,6 +186,7 @@ OrderSummary.propTypes = {
         imageSrc: PropTypes.string.isRequired,
         labels: PropTypes.arrayOf(
           PropTypes.shape({
+            labelName: PropTypes.string,
             labelImageUrl: PropTypes.string,
             labelPosition: PropTypes.string,
             labelSize: PropTypes.number

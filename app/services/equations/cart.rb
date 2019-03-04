@@ -11,7 +11,7 @@ module Equations
     end
 
     def variables
-      CartVariable.all
+      CartVariable.all(@condition)
     end
 
     private def prepare_cart_data(cart)
@@ -22,7 +22,7 @@ module Equations
     end
 
     private def evaluate_with_fake_data
-      evaluate(::Cart.new([]))
+      evaluate(::Cart.new([], @condition))
     end
 
     private def should_return_boolean?
