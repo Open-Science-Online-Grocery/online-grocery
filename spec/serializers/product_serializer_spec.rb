@@ -12,7 +12,8 @@ RSpec.describe ProductSerializer do
       position: 'bottom right',
       size: 20,
       equation: label_equation_1,
-      image_url: 'foo.jpg'
+      image_url: 'foo.jpg',
+      name: 'foo label'
     )
   end
   let(:condition_label_2) do
@@ -21,7 +22,8 @@ RSpec.describe ProductSerializer do
       position: 'top left',
       size: 25,
       equation: label_equation_2,
-      image_url: 'bar.jpg'
+      image_url: 'bar.jpg',
+      name: 'bar label'
     )
   end
   let(:condition) do
@@ -69,6 +71,8 @@ RSpec.describe ProductSerializer do
           'foo' => 'bar',
           labels: [
             {
+
+              'label_name' => 'foo label',
               'label_image_url' => 'foo.jpg',
               'label_position' => 'bottom right',
               'label_size' => 20
@@ -85,11 +89,13 @@ RSpec.describe ProductSerializer do
           'foo' => 'bar',
           labels: [
             {
+              'label_name' => 'foo label',
               'label_image_url' => 'foo.jpg',
               'label_position' => 'bottom right',
               'label_size' => 20
             },
             {
+              'label_name' => 'bar label',
               'label_image_url' => 'bar.jpg',
               'label_position' => 'top left',
               'label_size' => 25

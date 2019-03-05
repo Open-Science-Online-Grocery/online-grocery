@@ -91,15 +91,15 @@ function getCartSettings() {
     const state = getState();
     const params = {
       conditionIdentifier: state.user.conditionIdentifier,
-      cartProducts: state.cart.items.map((item) => {
-        return ({
+      cartProducts: state.cart.items.map(item => (
+        {
           id: item.id,
           quantity: item.quantity,
           hasLabels: item.labels.map(label => (
             label.labelName
           ))
-        });
-      })
+        }
+      ))
     };
     fromApi.jsonApiCall(
       routes.cartSettings(),

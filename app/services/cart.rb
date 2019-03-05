@@ -41,7 +41,7 @@ class Cart
         label_counts[label] = 0
       end
 
-      product_labels_in_cart.each do |label|
+      product_labels_in_cart.compact.each do |label|
         label_counts[label] += 1
       end
 

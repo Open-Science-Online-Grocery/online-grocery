@@ -66,7 +66,6 @@ RSpec.describe Cart do
       starpoints: 1600
     )
   end
-
   let(:product_data) do
     [
       { id: '1', quantity: '1', has_labels: ['bar image'] },
@@ -74,8 +73,13 @@ RSpec.describe Cart do
       { id: '3', quantity: '3', has_labels: ['bar image'] }
     ]
   end
+  let(:condition) { create :condition }
+  let(:label_1) { create :label, name: 'foo image' }
+  let(:label_2) { create :label, name: 'bar image' }
+  let(:cond_label_1) { create :condition_label, condition: condition, label: label_1 }
+  let(:cond_label_2) { create :condition_label, condition: condition, label: label_2 }
 
-  subject { described_class.new(product_data) }
+  subject { described_class.new(product_data, condition) }
 
   before do
     allow(Product).to receive(:find) do |arg|
@@ -85,6 +89,8 @@ RSpec.describe Cart do
         '3' => product_3
       }[arg]
     end
+    cond_label_1
+    cond_label_2
   end
 
   describe '#get_value' do

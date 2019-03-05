@@ -6,7 +6,7 @@ module Api
 
     def show
       condition_id = params[:condition_id]
-      condition = Condition.find(condition_id) if condition_id
+      condition = Condition.find(condition_id) if condition_id.present?
       equation = Equation.for_type(params[:type], params[:tokens], condition)
       json = {
         data: { valid: equation.valid? },
