@@ -12,7 +12,7 @@ RSpec.describe 'Showing labels in grocery store', :feature do
   let(:condition) do
     create(
       :condition,
-      experiment: experiment,
+      experiment: experiment
     )
   end
   let!(:condition_label_1) do
