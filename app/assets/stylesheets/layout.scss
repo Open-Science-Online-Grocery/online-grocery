@@ -56,10 +56,16 @@
   .accordion-image {
     width: 100%;
     margin-top: 10px;
+    max-width: 400px;
   }
 }
 
 iframe.youtube {
   width: 640px;
   height: 385px;
+
+  &.small {
+    width: 350px;
+    height: 210px;
+  }
 }
