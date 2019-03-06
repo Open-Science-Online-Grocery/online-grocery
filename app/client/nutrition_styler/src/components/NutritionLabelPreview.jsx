@@ -29,6 +29,8 @@ export default class NutritionLabelPreview extends PureComponent {
     if (element.classList.contains(selectedClassName)) {
       classes.splice(classes.indexOf(selectedClassName), 1);
     }
+    if (classes.length === 0) { return null; }
+
     return `.${classes.join('.')}`;
   }
 
