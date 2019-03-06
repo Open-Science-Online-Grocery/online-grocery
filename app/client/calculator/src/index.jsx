@@ -12,7 +12,8 @@ export default function initialize(wrapperElement) {
     variables: humps.camelizeKeys(JSON.parse(wrapperElement.dataset.variables)),
     inputName: wrapperElement.dataset.inputName,
     equationType: wrapperElement.dataset.equationType,
-    cursorPosition: tokens.length
+    cursorPosition: tokens.length,
+    calculatorFocus: false
   };
   const store = configureStore(props);
   render(

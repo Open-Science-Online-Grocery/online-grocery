@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 const RIGHT = 39;
 const LEFT = 37;
 const BACKSPACE = 8;
+const FOCUS_BORDER_STYLING = '1px solid #93BAD4';
 
 export default class EquationEditor extends PureComponent {
   componentDidMount() {
@@ -14,7 +15,15 @@ export default class EquationEditor extends PureComponent {
     document.removeEventListener('keydown', this.handleKeydown.bind(this), false);
   }
 
+  setStyle(focus) {
+    if (!focus) { return null; }
+    return { border: FOCUS_BORDER_STYLING };
+  }
+
   handleKeydown(event) {
+    // Ignore key presses for calculators without the current focus
+    if (!this.props.calculatorFocus) { return; }
+
     if (event.keyCode === RIGHT) this.props.arrowKeyPressed(true);
     if (event.keyCode === LEFT) this.props.arrowKeyPressed(false);
     if (event.keyCode === BACKSPACE) this.props.deletePreviousToken();
@@ -41,7 +50,7 @@ export default class EquationEditor extends PureComponent {
   render() {
     return (
       <div className="equation-editor">
-        <div className="ui segment">
+        <div className="ui segment" style={this.setStyle(this.props.calculatorFocus)}>
           {this.tokensWithCursor()}
         </div>
       </div>
@@ -59,6 +68,7 @@ EquationEditor.propTypes = {
     })
   ).isRequired,
   cursorPosition: PropTypes.number.isRequired,
+  calculatorFocus: PropTypes.bool.isRequired,
   arrowKeyPressed: PropTypes.func.isRequired,
   deletePreviousToken: PropTypes.func.isRequired
 };
