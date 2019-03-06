@@ -19,9 +19,11 @@ RSpec.describe 'Condition model CRUD', :feature do
     # invalid creation
     force_click_on('Save')
     expect(page).to have_content 'Condition name must have a value'
+    expect(page).to have_content 'Qualtrics code must have a value'
 
     # valid creation
     fill_in 'Condition name', with: 'Control'
+    fill_in 'Qualtrics code', with: 'ABCDEFG'
     force_click_on('Save')
 
     expect(page).to have_content 'Condition successfully created'

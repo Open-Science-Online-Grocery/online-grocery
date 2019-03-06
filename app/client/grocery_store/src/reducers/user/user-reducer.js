@@ -5,7 +5,8 @@ const initialUserState = {
   conditionIdentifier: null,
   onlyAddToCartFromDetailPage: false,
   mayAddToCartByDollarAmount: false,
-  showGuidingStars: true
+  showGuidingStars: true,
+  qualtricsCode: null
 };
 
 export default function userReducer(state = initialUserState, action) {
@@ -19,7 +20,8 @@ export default function userReducer(state = initialUserState, action) {
       return Object.assign({}, state, {
         onlyAddToCartFromDetailPage: action.onlyAddToCartFromDetailPage,
         mayAddToCartByDollarAmount: action.mayAddToCartByDollarAmount,
-        showGuidingStars: action.showGuidingStars
+        showGuidingStars: action.showGuidingStars,
+        qualtricsCode: action.qualtricsCode
       });
     default:
       return state;

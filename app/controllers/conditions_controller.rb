@@ -78,6 +78,7 @@ class ConditionsController < ApplicationController
     params.require(:condition).permit(
       :id,
       :name,
+      :qualtrics_code,
       :label_type,
       :label_id,
       :label_position,

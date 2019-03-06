@@ -6,5 +6,6 @@ FactoryBot.define do
     experiment
     uuid { SecureRandom.uuid }
     label_equation_tokens { [].to_json }
+    qualtrics_code { 'ABCDEFG' }
   end
 end

@@ -75,4 +75,8 @@ class NullCondition
   def show_guiding_stars
     true
   end
+
+  def qualtrics_code
+    'ABCDEFG'
+  end
 end
