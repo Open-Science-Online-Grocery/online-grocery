@@ -14,9 +14,31 @@ const operators3 = ['IF', 'AND', 'OR', 'NOT', 'MIN', 'MAX', 'SUM', 'AVG'];
 const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
 
 export default class Calculator extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentWillMount() {
+    document.addEventListener('click', this.handleClick, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleClick, false);
+  }
+
+  handleClick(event) {
+    this.props.setCalculatorFocus(this.node.contains(event.target));
+  }
+
   render() {
     return (
-      <div className="calculator">
+      <div
+        className="calculator"
+        onClick={this.handleClick}
+        role="presentation"
+        ref={(node) => { this.node = node; }}
+      >
         <TestResultsContainer />
         <WarningMessageContainer />
         <EquationEditorContainer />
@@ -46,5 +68,6 @@ Calculator.propTypes = {
   inputName: PropTypes.string.isRequired,
   tokensJson: PropTypes.string.isRequired,
   testCalculation: PropTypes.func.isRequired,
-  testable: PropTypes.bool.isRequired
+  testable: PropTypes.bool.isRequired,
+  setCalculatorFocus: PropTypes.func.isRequired
 };

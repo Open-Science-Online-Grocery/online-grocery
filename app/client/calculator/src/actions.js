@@ -13,11 +13,19 @@ export const INSERT_TOKEN = 'INSERT_TOKEN';
 export const MOVE_CURSOR = 'MOVE_CURSOR';
 export const REMOVE_TOKEN = 'REMOVE_TOKEN';
 export const REPORT_TEST_RESULTS = 'REPORT_TEST_RESULTS';
+export const SET_CALCULATOR_FOCUS = 'SET_CALCULATOR_FOCUS';
 
 function insertToken(type, value, position) {
   return {
     type: INSERT_TOKEN,
     payload: { type, value, position }
+  };
+}
+
+export function setCalculatorFocus(calculatorFocus) {
+  return {
+    type: SET_CALCULATOR_FOCUS,
+    payload: { calculatorFocus }
   };
 }
 

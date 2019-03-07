@@ -17,7 +17,8 @@ export default function initialize(wrapperElement) {
     conditionId,
     inputName: wrapperElement.dataset.inputName,
     equationType: wrapperElement.dataset.equationType,
-    cursorPosition: tokens.length
+    cursorPosition: tokens.length,
+    calculatorFocus: false
   };
   const store = configureStore(props);
   render(
