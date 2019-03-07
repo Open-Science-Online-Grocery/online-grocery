@@ -6,7 +6,7 @@
   shopping experience. Researchers at Duke University developed the store
   by pulling product information from live online grocery retailers in the
   U.S., including up-to-date images, ingredients, nutrition information,
-  and prices. There are over 20,000 food products available on our store
+  and prices. There are over 11,000 food products available on our store
   across all product categories, from produce to beverages. The store does
   not include alcohol or household products.
 </div>
@@ -21,8 +21,8 @@
     Participants can click on an item to view its nutrition fact label and
     ingredients. The item can be added to a shopping cart, and the cart can
     be viewed prior to checkout. Sales tax will be added to the grand total.
-    There is a cart icon in the upper righthand corner for users to quickly
-    access their cart information. Howes grocery does not deliver food to
+    There is a cart icon in the upper right-hand corner for users to quickly
+    access their cart information. Howe's Grocery does not deliver food to
     participants or collect payment information.
 
     <%= image_tag('store_products_page.png', class: 'accordion-image')%>
@@ -36,9 +36,9 @@
   </div>
   <div class="content">
     At the top of the store’s page, the following product categories are
-    displayed: Produce; Deli & Dairy; Bread, Pasta & Rice; Packaged & Canned;
-    Condiments, Spreads & Sauces; Frozen Foods; and Beverages. Each category
-    has relevant subcategories to make navigation easier.
+    displayed: Produce; Meat, Dairy & Eggs; Bakery, Pasta & Grains; Dry Goods,
+    Breakfast & Spices; Pantry; Canned; Snacks; Beverages; and Frozen Foods.
+    Each category has relevant subcategories to make navigation easier.
 
     <%= image_tag('store_menu_bar.png', class: 'accordion-image') %>
   </div>
@@ -89,7 +89,8 @@
     Want to see the store?
   </div>
   <div class="content">
-    <a href="<%= home_store_path %>" target="_blank">Click here to browse</a>
+    <a href="<%= store_path %>" target="_blank">Click here to browse</a>
+    <p>Enter "1" for the Qualtrics code.</p>
   </div>
 </div>
 
