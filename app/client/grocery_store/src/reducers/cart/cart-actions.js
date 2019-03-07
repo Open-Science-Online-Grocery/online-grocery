@@ -96,7 +96,7 @@ function getCartSettings() {
           id: item.id,
           quantity: item.quantity,
           hasLabels: item.labels.map(label => (
-            label.labelImageUrl
+            label.labelName
           ))
         }
       ))

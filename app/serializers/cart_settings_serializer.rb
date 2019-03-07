@@ -28,6 +28,6 @@ class CartSettingsSerializer
   end
 
   private def cart
-    @cart ||= Cart.new(@cart_product_data)
+    @cart ||= Cart.new(@cart_product_data, @condition)
   end
 end

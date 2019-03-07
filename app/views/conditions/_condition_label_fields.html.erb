@@ -14,7 +14,7 @@
             <div class="ui segment <%= 'disabled' unless condition_label.label_type == ConditionLabel.label_types.custom %>">
               <%= f.fields_for :label, custom_condition_label do |custom_label_fields| %>
                 <%= custom_label_fields.hidden_field :built_in %>
-                <div class="field">
+                <div class="required field">
                   <%= custom_label_fields.label :name %>
                   <%= custom_label_fields.text_field :name, disabled: condition_label.label_type != ConditionLabel.label_types.custom %>
                 </div>

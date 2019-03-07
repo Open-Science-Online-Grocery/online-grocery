@@ -66,16 +66,20 @@ RSpec.describe Cart do
       starpoints: 1600
     )
   end
-
   let(:product_data) do
     [
-      { id: '1', quantity: '1', has_labels: ['label_2.png'] },
-      { id: '2', quantity: '2', has_labels: ['label_1.png', 'label_2.png'] },
-      { id: '3', quantity: '3', has_labels: ['label_2.png'] }
+      { id: '1', quantity: '1', has_labels: ['bar image'] },
+      { id: '2', quantity: '2', has_labels: ['foo image', 'bar image'] },
+      { id: '3', quantity: '3', has_labels: ['bar image'] }
     ]
   end
+  let(:condition) { create :condition }
+  let(:label_1) { create :label, name: 'foo image' }
+  let(:label_2) { create :label, name: 'bar image' }
+  let(:cond_label_1) { create :condition_label, condition: condition, label: label_1 }
+  let(:cond_label_2) { create :condition_label, condition: condition, label: label_2 }
 
-  subject { described_class.new(product_data) }
+  subject { described_class.new(product_data, condition) }
 
   before do
     allow(Product).to receive(:find) do |arg|
@@ -85,21 +89,23 @@ RSpec.describe Cart do
         '3' => product_3
       }[arg]
     end
+    cond_label_1
+    cond_label_2
   end
 
   describe '#get_value' do
     it 'returns the expected numbers' do
       expect(subject.get_value('total_products')).to eq 6
       expect(subject.get_value('number_of_products_with_each_label')).to eql(
-        'label_1.png' => 2,
-        'label_2.png' => 6
+        'foo image' => 2,
+        'bar image' => 6
       )
       expect(
         subject.get_value('percent_of_products_with_each_label')
           .transform_values { |val| val.round(3) }
       ).to eql(
-        'label_1.png' => 33.333,
-        'label_2.png' => 100.0
+        'foo image' => 33.333,
+        'bar image' => 100.0
       )
       expect(subject.get_value('avg_calories_from_fat')).to eq 53.5
       expect(subject.get_value('avg_calories')).to eq 107

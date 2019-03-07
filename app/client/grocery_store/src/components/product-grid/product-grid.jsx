@@ -37,9 +37,14 @@ ProductGrid.propTypes = {
       size: PropTypes.string,
       price: PropTypes.string,
       starpoints: PropTypes.number,
-      labelImageUrl: PropTypes.string,
-      labelPosition: PropTypes.string,
-      labelSize: PropTypes.number
+      labels: PropTypes.arrayOf(
+        PropTypes.shape({
+          labelName: PropTypes.string,
+          labelImageUrl: PropTypes.string,
+          labelPosition: PropTypes.string,
+          labelSize: PropTypes.number
+        })
+      )
     })
   ).isRequired
 };

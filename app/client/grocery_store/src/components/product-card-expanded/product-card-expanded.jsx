@@ -121,6 +121,7 @@ ProductCardExpanded.propTypes = {
   ingredients: PropTypes.string,
   labels: PropTypes.arrayOf(
     PropTypes.shape({
+      labelName: PropTypes.string,
       labelImageUrl: PropTypes.string,
       labelPosition: PropTypes.string,
       labelSize: PropTypes.number
@@ -148,9 +149,6 @@ ProductCardExpanded.defaultProps = {
   starpoints: null,
   ingredients: null,
   labels: [],
-  labelImageUrl: null,
-  labelPosition: null,
-  labelSize: null,
   description: null,
   servings: null,
   servingSize: null,

@@ -95,6 +95,7 @@ ProductCard.propTypes = {
     starpoints: PropTypes.number,
     labels: PropTypes.arrayOf(
       PropTypes.shape({
+        labelName: PropTypes.string,
         labelImageUrl: PropTypes.string,
         labelPosition: PropTypes.string,
         labelSize: PropTypes.number

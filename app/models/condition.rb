@@ -8,6 +8,7 @@ class Condition < ApplicationRecord
 
   validates :name, :uuid, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
+  validate :unique_label_names
 
   delegate :sort_types, :style_use_types, :food_count_formats,
            to: :class
@@ -108,5 +109,22 @@ class Condition < ApplicationRecord
 
   def ratio_count?
     food_count_format == food_count_formats.ratio
+  end
+
+  def unique_label_names
+    # The names of all the non-destroyed labels, this allows deletion of
+    # a label with a conflicting name
+    label_names = condition_labels
+      .reject(&:marked_for_destruction?)
+      .map(&:label)
+      .map(&:name)
+
+    duplicate_names = label_names.select.with_index do |name, index|
+      label_names.index(name) != index
+    end
+
+    duplicate_names.uniq.each do |dup_name|
+      errors.add(:base, "Label name '#{dup_name}' is already in use.")
+    end
   end
 end

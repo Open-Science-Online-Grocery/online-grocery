@@ -102,7 +102,8 @@ export default class OrderSummary extends React.Component {
   }
 
   healthLabelsSection() {
-    if (this.props.cart.healthLabelSummaries === []) return null;
+    const healthLabelSummaries = this.props.cart.healthLabelSummaries;
+    if (healthLabelSummaries === null || healthLabelSummaries.length === 0) return null;
     return (
       this.props.cart.healthLabelSummaries.map(summary => (
         <div className="label-summary" key={summary}>
@@ -186,6 +187,7 @@ OrderSummary.propTypes = {
         imageSrc: PropTypes.string.isRequired,
         labels: PropTypes.arrayOf(
           PropTypes.shape({
+            labelName: PropTypes.string,
             labelImageUrl: PropTypes.string,
             labelPosition: PropTypes.string,
             labelSize: PropTypes.number

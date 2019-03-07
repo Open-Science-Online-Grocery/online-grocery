@@ -25,6 +25,7 @@ class ProductSerializer
   private def label_information(condition_label)
     return nil unless gets_label?(condition_label)
     {
+      'label_name' => condition_label.name,
       'label_image_url' => condition_label.image_url,
       'label_position' => condition_label.position,
       'label_size' => condition_label.size
