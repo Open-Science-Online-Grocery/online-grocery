@@ -71,12 +71,13 @@ class Cart
       number_label_name
     ]
 
+    return number_with_label if number_with_label.present?
+
     percent_label_name = percent_of_products_label_name(method_name)
     percent_with_label = percent_of_products_with_each_label[
       percent_label_name
     ]
 
-    return number_with_label if number_with_label.present?
     return percent_with_label if percent_with_label.present?
 
     super
