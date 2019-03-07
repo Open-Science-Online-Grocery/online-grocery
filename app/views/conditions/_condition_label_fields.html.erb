@@ -1,0 +1,107 @@
+<% condition_label = f.object %>
+<% custom_condition_label = condition_label.label.try(:custom?) || Label.new(built_in: false) %>
+
+<div class="nested-fields no-indent <%= 'hide' if f.object.marked_for_destruction? %>" data-condition-label>
+  <div class="ui segment with-margin">
+    <div class="two fields">
+      <div class="field">
+        <div class="grouped fields">
+          <div class="field">
+            <div class="ui radio checkbox">
+              <%= f.radio_button :label_type, ConditionLabel.label_types.custom, data: { refresh_form: true } %>
+              <label>Use custom label</label>
+            </div>
+            <div class="ui segment <%= 'disabled' unless condition_label.label_type == ConditionLabel.label_types.custom %>">
+              <%= f.fields_for :label, custom_condition_label do |custom_label_fields| %>
+                <%= custom_label_fields.hidden_field :built_in %>
+                <div class="required field">
+                  <%= custom_label_fields.label :name %>
+                  <%= custom_label_fields.text_field :name, disabled: condition_label.label_type != ConditionLabel.label_types.custom %>
+                </div>
+                <% if custom_label_fields.object.image? %>
+                  <div class="field">
+                    <label>Current image</label>
+                    <%= link_to(custom_label_fields.object.name.presence || 'Unnamed', custom_label_fields.object.image_url) %>
+                  </div>
+                  <div class="field">
+                    <%= custom_label_fields.label :image, 'Replace image' %>
+                    <%= custom_label_fields.file_field :image, data: { refresh_form: true }, disabled: condition_label.label_type != ConditionLabel.label_types.custom %>
+                    <%= custom_label_fields.hidden_field :image_cache %>
+                  </div>
+                <% else %>
+                  <div class="required field">
+                    <%= custom_label_fields.label :image, 'Upload image' %>
+                    <%= custom_label_fields.file_field :image, data: { refresh_form: true }, disabled: condition_label.label_type != ConditionLabel.label_types.custom %>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="ui hidden divider"></div>
+
+          <div class="field">
+            <div class="ui radio checkbox">
+              <%= f.radio_button :label_type, ConditionLabel.label_types.provided, data: { refresh_form: true } %>
+              <label>Use provided label</label>
+            </div>
+            <div class="ui segment <%= 'disabled' unless condition_label.label_type == ConditionLabel.label_types.provided %>">
+              <div class="field">
+                <%= f.label :label_id %>
+                <%=
+                  f.collection_select(
+                    :label_id,
+                    Label.built_in,
+                    :id,
+                    :name,
+                    { include_blank: true },
+                    class: 'ui dropdown',
+                    data: { refresh_form: true },
+                    disabled: condition_label.label_type != ConditionLabel.label_types.provided
+                  )
+                %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui hidden divider"></div>
+
+
+      </div>
+
+      <div class="field">
+        <div class="right aligned">
+          <%= link_to_remove_association f do %>
+            <i class="red remove icon"></i>
+          <% end %>
+        </div>
+
+        <div class="two fields">
+          <div class="field">
+            <%= f.label :position %>
+            <%= f.select(:position, condition_label.label_position_options, {}, class: 'ui dropdown', data: { refresh_form: true }) %>
+          </div>
+          <div class="field">
+            <%= f.label :size %>
+            <div class="ui right labeled input">
+              <%= f.text_field :size, value: (condition_label.size || 100), data: { refresh_form: true } %>
+              <div class="ui basic label">%</div>
+            </div>
+          </div>
+        </div>
+
+        <label>Show this label on all products where the following calculation is true:</label>
+        <div
+          data-calculator
+          data-variables="<%= VariableSerializer.new(condition_label.equation_variables).serialize %>"
+          data-input-name="<%# added by CocoonCallbacks.js %>"
+          data-tokens="<%= condition_label.equation_tokens || [] %>"
+          data-equation-type="<%= Equation.types.label %>"
+          data-delay-initialize
+        ></div>
+      </div>
+
+    </div>
+  </div>
+</div>

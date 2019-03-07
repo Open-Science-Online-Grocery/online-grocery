@@ -6,7 +6,7 @@ const initialCartState = {
   price: 0,
   showPriceTotal: true,
   items: [],
-  healthLabelSummary: null,
+  healthLabelSummaries: [],
   labelImageUrls: []
 };
 
@@ -60,15 +60,15 @@ export default function cartReducer(state = initialCartState, action) {
       });
     }
     case cartActionTypes.SET_CART_SETTINGS: {
-      const { healthLabelSummary, labelImageUrls } = action;
-      return Object.assign({}, state, { healthLabelSummary, labelImageUrls });
+      const { healthLabelSummaries, labelImageUrls } = action;
+      return Object.assign({}, state, { healthLabelSummaries, labelImageUrls });
     }
     case (cartActionTypes.CLEAR_CART):
       return Object.assign({}, state, {
         count: 0,
         price: 0,
         items: [],
-        healthLabelSummary: null,
+        healthLabelSummaries: [],
         labelImageUrls: []
       });
     default:

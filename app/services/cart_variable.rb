@@ -8,29 +8,19 @@
 #  - `attribute`, if present, indicates an attribute on Product relevant to
 #    determining the value of the variable.
 class CartVariable < Variable
-  # rubocop:disable Metrics/MethodLength
-  def self.all
+  def self.all(condition = nil)
     @all ||= begin
       [
-        {
-          token_name: 'number_of_products_with_label',
-          description: 'Number of products with health label',
-          attribute: nil
-        },
-        {
-          token_name: 'percent_of_products_with_label',
-          description: 'Percent of products with health label',
-          attribute: nil
-        },
+        number_of_products_tokens(condition),
+        percent_of_products_tokens(condition),
         {
           token_name: 'total_products',
           description: 'Total number of products',
           attribute: nil
         }
-      ].map { |attrs| new(attrs) } + total_fields + average_fields
+      ].flatten.map { |attrs| new(attrs) } + total_fields + average_fields
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   def self.total_fields
     @total_fields ||= begin
@@ -53,6 +43,38 @@ class CartVariable < Variable
           attribute: product_variable.attribute
         )
       end
+    end
+  end
+
+  def self.from_token(token_name, condition = nil)
+    all(condition).find { |variable| variable.token_name == token_name }
+  end
+
+  def self.from_attribute(attribute, condition = nil)
+    all(condition).find { |variable| variable.attribute == attribute.to_sym }
+  end
+
+  private_class_method def self.number_of_products_tokens(condition)
+    return unless condition.present?
+
+    condition.labels.map do |label|
+      {
+        token_name: "number_of_products_with_#{label.name}_label",
+        description: "Number of products with #{label.name} label",
+        attribute: nil
+      }
+    end
+  end
+
+  private_class_method def self.percent_of_products_tokens(condition)
+    return unless condition.present?
+
+    condition.labels.map do |label|
+      {
+        token_name: "percent_of_products_with_#{label.name}_label",
+        description: "Percent of products with #{label.name} label",
+        attribute: nil
+      }
     end
   end
 end

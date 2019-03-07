@@ -31,6 +31,10 @@ export function getEquationType($$state) {
   return $$state.get('equationType');
 }
 
+export function getConditionId($$state) {
+  return $$state.get('conditionId');
+}
+
 export function getValid($$state) {
   return $$state.get('valid');
 }
@@ -151,7 +155,8 @@ const rootReducer = combineReducers({
   validationMessage,
   variables: noOpReducer(Immutable.Map()),
   inputName: noOpReducer(''),
-  equationType: noOpReducer('')
+  equationType: noOpReducer(''),
+  conditionId: noOpReducer('')
 });
 
 export default rootReducer;
