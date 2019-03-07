@@ -7,12 +7,12 @@ class ConditionPresenter < SimpleDelegator
   alias condition __getobj__
 
   def current_tag_csv_file_presenter
-    ResourcePresenter.new(current_tag_csv_file)
+    TagCsvFilePresenter.new(current_tag_csv_file)
   end
 
   def historical_tag_csv_files_presenters
     historical_tag_csv_files.map do |tag_csv_file|
-      ResourcePresenter.new(tag_csv_file)
+      TagCsvFilePresenter.new(tag_csv_file)
     end
   end
 
