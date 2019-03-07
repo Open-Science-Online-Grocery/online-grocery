@@ -5,12 +5,16 @@ require 'rails_helper'
 RSpec.describe CheckoutProductsExporter do
   let(:category_1) { build(:category, name: 'Chips') }
   let(:category_2) { build(:category, name: 'Nuts and Seeds') }
+  let(:subcategory_1) { build(:subcategory, name: 'Corn Chips') }
+  let(:subcategory_2) { build(:subcategory, name: 'Pistachios') }
 
   let(:product_1) do
     build(
       :product,
       name: 'Doritos',
       category: category_1,
+      subcategory: subcategory_1,
+      serving_size: 1,
       calories_from_fat: 1,
       calories: 1,
       total_fat: 1,
@@ -34,6 +38,8 @@ RSpec.describe CheckoutProductsExporter do
       :product,
       name: 'Pepitas',
       category: category_2,
+      subcategory: subcategory_2,
+      serving_size: 2,
       calories_from_fat: 2,
       calories: 2,
       total_fat: 2,
@@ -79,9 +85,9 @@ RSpec.describe CheckoutProductsExporter do
   let(:experiment) { instance_double('Experiment') }
   let(:expected_output) do
     <<~CSV
-      Participant,Item1_Quantity,Item1_Name,Item1_Price,Item1_Category,Item1_Calories_from_fat,Item1_Calories,Item1_Total_fat,Item1_Saturated_fat,Item1_Trans_fat,Item1_Poly_fat,Item1_Mono_fat,Item1_Cholesterol,Item1_Sodium,Item1_Potassium,Item1_Carbs,Item1_Fiber,Item1_Sugar,Item1_Protein,Item1_Starpoints,Item2_Quantity,Item2_Name,Item2_Price,Item2_Category,Item2_Calories_from_fat,Item2_Calories,Item2_Total_fat,Item2_Saturated_fat,Item2_Trans_fat,Item2_Poly_fat,Item2_Mono_fat,Item2_Cholesterol,Item2_Sodium,Item2_Potassium,Item2_Carbs,Item2_Fiber,Item2_Sugar,Item2_Protein,Item2_Starpoints,TotalPrice_Pretax,TotalNumItems,Total_Calories_from_fat,Total_Calories,Total_Total_fat,Total_Saturated_fat,Total_Trans_fat,Total_Poly_fat,Total_Mono_fat,Total_Cholesterol,Total_Sodium,Total_Potassium,Total_Carbs,Total_Fiber,Total_Sugar,Total_Protein,Total_Starpoints
-      aaaaa,1,Doritos,1.0,Chips,1,1,1,1,1,1,1,1.0,1,1,1,1,1,1,1,,,,,,,,,,,,,,,,,,,,1.0,1,1,1,1,1,1,1,1,1.0,1,1,1,1,1,1,1
-      bbbbb,1,Doritos,1.0,Chips,1,1,1,1,1,1,1,1.0,1,1,1,1,1,1,1,2,Pepitas,2.0,Nuts and Seeds,2,2,2,2,2,2,2,2.0,2,2,2,2,2,2,2,5.0,3,5,5,5,5,5,5,5,5.0,5,5,5,5,5,5,5
+      Participant,Item1_Quantity,Item1_Name,Item1_Price,Item1_Category,Item1_Subcategory,Item1_Serving_size,Item1_Calories_from_fat,Item1_Calories,Item1_Total_fat,Item1_Saturated_fat,Item1_Trans_fat,Item1_Poly_fat,Item1_Mono_fat,Item1_Cholesterol,Item1_Sodium,Item1_Potassium,Item1_Carbs,Item1_Fiber,Item1_Sugar,Item1_Protein,Item1_Starpoints,Item2_Quantity,Item2_Name,Item2_Price,Item2_Category,Item2_Subcategory,Item2_Serving_size,Item2_Calories_from_fat,Item2_Calories,Item2_Total_fat,Item2_Saturated_fat,Item2_Trans_fat,Item2_Poly_fat,Item2_Mono_fat,Item2_Cholesterol,Item2_Sodium,Item2_Potassium,Item2_Carbs,Item2_Fiber,Item2_Sugar,Item2_Protein,Item2_Starpoints,TotalPrice_Pretax,TotalNumItems,Total_Calories_from_fat,Total_Calories,Total_Total_fat,Total_Saturated_fat,Total_Trans_fat,Total_Poly_fat,Total_Mono_fat,Total_Cholesterol,Total_Sodium,Total_Potassium,Total_Carbs,Total_Fiber,Total_Sugar,Total_Protein,Total_Starpoints
+      aaaaa,1,Doritos,1.0,Chips,Corn Chips,1,1,1,1,1,1,1,1,1.0,1,1,1,1,1,1,1,,,,,,,,,,,,,,,,,,,,,,1.0,1,1,1,1,1,1,1,1,1.0,1,1,1,1,1,1,1
+      bbbbb,1,Doritos,1.0,Chips,Corn Chips,1,1,1,1,1,1,1,1,1.0,1,1,1,1,1,1,1,2,Pepitas,2.0,Nuts and Seeds,Pistachios,2,2,2,2,2,2,2,2,2.0,2,2,2,2,2,2,2,5.0,3,5,5,5,5,5,5,5,5.0,5,5,5,5,5,5,5
     CSV
   end
 
