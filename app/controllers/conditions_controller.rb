@@ -78,6 +78,7 @@ class ConditionsController < ApplicationController
     params.require(:condition).permit(
       :id,
       :name,
+      :qualtrics_code,
       :sort_type,
       :default_sort_field_id,
       :default_sort_order,

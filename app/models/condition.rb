@@ -6,7 +6,7 @@ class Condition < ApplicationRecord
 
   attr_writer :show_food_count, :sort_type, :active_tag_csv, :style_use_type
 
-  validates :name, :uuid, presence: true
+  validates :name, :uuid, :qualtrics_code, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
   validate :unique_label_names
 

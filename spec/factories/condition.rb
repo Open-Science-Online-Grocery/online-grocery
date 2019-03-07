@@ -5,5 +5,6 @@ FactoryBot.define do
     sequence(:name) { |n| "Condition #{n}" }
     experiment
     uuid { SecureRandom.uuid }
+    qualtrics_code { 'ABCDEFG' }
   end
 end
