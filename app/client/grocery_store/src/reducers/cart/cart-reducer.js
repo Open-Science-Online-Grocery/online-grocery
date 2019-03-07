@@ -21,8 +21,7 @@ export default function cartReducer(state = initialCartState, action) {
       return Object.assign({}, state, {
         showPriceTotal: action.showPriceTotal,
         minimumSpend: action.minimumSpend,
-        maximumSpend: action.maximumSpend,
-        qualtricsCode: action.qualtricsCode
+        maximumSpend: action.maximumSpend
       });
     case cartActionTypes.ADD_TO_CART: {
       const itemIndexInCart = getItemIndexInCart(action.product, state.items);
