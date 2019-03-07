@@ -60,6 +60,24 @@ CREATE TABLE `condition_cart_summary_labels` (
   KEY `index_condition_cart_summary_labels_on_cart_summary_label_id` (`cart_summary_label_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `condition_labels`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `condition_labels` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `condition_id` bigint(20) DEFAULT NULL,
+  `label_id` bigint(20) DEFAULT NULL,
+  `position` varchar(255) DEFAULT NULL,
+  `size` int(11) DEFAULT NULL,
+  `equation_tokens` text,
+  `always_show` tinyint(1) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_condition_labels_on_condition_id` (`condition_id`),
+  KEY `index_condition_labels_on_label_id` (`label_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `condition_product_sort_fields`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
@@ -88,24 +106,19 @@ CREATE TABLE `conditions` (
   `default_sort_field_id` bigint(20) DEFAULT NULL,
   `default_sort_order` varchar(255) DEFAULT NULL,
   `sort_equation_tokens` text,
+  `filter_by_custom_categories` tinyint(1) NOT NULL DEFAULT '0',
   `show_price_total` tinyint(1) NOT NULL DEFAULT '1',
   `food_count_format` varchar(255) DEFAULT NULL,
-  `filter_by_custom_categories` tinyint(1) NOT NULL DEFAULT '0',
   `only_add_from_detail_page` tinyint(1) DEFAULT '0',
   `nutrition_equation_tokens` text,
   `minimum_spend` decimal(10,2) DEFAULT NULL,
   `maximum_spend` decimal(10,2) DEFAULT NULL,
   `may_add_to_cart_by_dollar_amount` tinyint(1) DEFAULT '0',
   `show_guiding_stars` tinyint(1) DEFAULT '1',
-  `label_equation_tokens` text,
-  `label_size` int(11) DEFAULT NULL,
-  `label_position` varchar(255) DEFAULT NULL,
-  `label_id` int(11) DEFAULT NULL,
   `qualtrics_code` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_conditions_on_experiment_id` (`experiment_id`),
-  KEY `index_conditions_on_default_sort_field_id` (`default_sort_field_id`),
-  KEY `index_conditions_on_label_id` (`label_id`)
+  KEY `index_conditions_on_default_sort_field_id` (`default_sort_field_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `experiment_results`;
@@ -398,6 +411,9 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20181211164301'),
 ('20181211184522'),
 ('20190221200154'),
-('20190306151626');
+('20190227175452'),
+('20190227180805'),
+('20190306151626'),
+('20190307193245');
 
 

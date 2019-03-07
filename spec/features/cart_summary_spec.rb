@@ -9,6 +9,8 @@ RSpec.describe 'Configuring the cart summary', :feature do
   let!(:cart_summary_label) { create(:cart_summary_label, name: 'Organic', built_in: true) }
 
   before do
+    # needed for fake cart data to work properly
+    create_list(:product, 4)
     sign_in user
     visit edit_experiment_condition_path(experiment, condition)
   end

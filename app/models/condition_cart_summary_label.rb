@@ -26,7 +26,11 @@ class ConditionCartSummaryLabel < ApplicationRecord
   end
 
   def equation
-    @equation ||= Equation.for_type(Equation.types.cart, equation_tokens)
+    @equation ||= Equation.for_type(
+      Equation.types.cart,
+      equation_tokens,
+      condition
+    )
   end
 
   def applies_to_cart?(cart)

@@ -4,6 +4,7 @@ import * as fromApi from '../../utils/api_call';
 import {
   getCursorPosition,
   getEquationType,
+  getConditionId,
   getTokensJson,
   getTokenCount
 } from './store';
@@ -79,7 +80,8 @@ export function testCalculation() {
     const $$state = getState();
     const data = {
       type: getEquationType($$state),
-      tokens: getTokensJson($$state)
+      tokens: getTokensJson($$state),
+      conditionId: getConditionId($$state)
     };
     const route = equationValidation();
     const success = json => dispatch(reportTestResults(json));

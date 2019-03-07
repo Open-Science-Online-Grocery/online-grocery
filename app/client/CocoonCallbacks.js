@@ -2,24 +2,36 @@ import calculator from './calculator/src/index';
 
 export default class CocoonCallbacks {
   initialize() {
-    $('[data-cart-summary-label]').each(
-      (_index, renderedLabel) => {
-        this.initializeCalculator($(renderedLabel));
-      }
+    this.initializeNestedCalculator(
+      '[data-cart-summary-label]',
+      '[data-cart-summary-labels]',
+      'condition[condition_cart_summary_labels_attributes]'
     );
-    $('[data-cart-summary-labels]').on(
-      'cocoon:after-insert',
-      (_event, $insertedItem) => this.initializeCalculator($insertedItem)
-    );
-
-    $('[data-cart-summary-labels]').on(
-      'cocoon:after-remove',
-      this.triggerFormRefresh
+    this.initializeNestedCalculator(
+      '[data-condition-label]',
+      '[data-condition-labels]',
+      'condition[condition_labels_attributes]'
     );
   }
 
-  triggerFormRefresh() {
-    $('[data-cart-summary-labels]').closest('form')
+  initializeNestedCalculator(nestedFieldSelector, sectionSelector, parentAttributes) {
+    $(nestedFieldSelector).each(
+      (_index, renderedLabel) => {
+        this.initializeCalculator($(renderedLabel), parentAttributes);
+      }
+    );
+    $(sectionSelector).on(
+      'cocoon:after-insert',
+      (_event, $insertedItem) => this.initializeCalculator($insertedItem, parentAttributes)
+    );
+    $(sectionSelector).on(
+      'cocoon:after-remove',
+      () => this.triggerFormRefresh(sectionSelector)
+    );
+  }
+
+  triggerFormRefresh(sectionSelector) {
+    $(sectionSelector).closest('form')
       .find('[data-refresh-form]')
       .first()
       .trigger('change');
@@ -30,10 +42,10 @@ export default class CocoonCallbacks {
   // (either by cocoon's JS or on page load) in order to assign it the correct Id
   // corresponding to the random one set by Cocoon. It also then must initialize the
   // calculator to ensure the added attribute gets into React props
-  initializeCalculator($insertedItem) {
+  initializeCalculator($insertedItem, parentAttributes) {
     if ($insertedItem.length === 0) return;
     const cocoonId = this.extractCocoonId($insertedItem.find('input').first());
-    const inputName = `condition[condition_cart_summary_labels_attributes][${cocoonId}][equation_tokens]`;
+    const inputName = `${parentAttributes}[${cocoonId}][equation_tokens]`;
     $insertedItem.find('[data-calculator]').attr('data-input-name', inputName);
     calculator($insertedItem.find('[data-calculator]')[0]);
   }
