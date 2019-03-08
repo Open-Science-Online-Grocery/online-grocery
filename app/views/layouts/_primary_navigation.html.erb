@@ -10,9 +10,17 @@
 
   <div class="navigation-separator item"> </div>
 
+  <%=
+      link_to('Help',
+        tutorials_pages_path,
+        class: 'item',
+        target: '_blank'
+      )
+    %>
+
   <% if current_user %>
     <%=
-      link_to("Sign out",
+      link_to('Sign out',
         destroy_user_session_path,
         method: :delete,
         class: 'item'
@@ -20,7 +28,7 @@
     %>
   <% else %>
     <%=
-      link_to("Log in",
+      link_to('Log in',
         new_user_session_path,
         class: 'item'
       )
