@@ -20,6 +20,11 @@
   }
 }
 
+.page-heading-text {
+  margin-top: 1rem;
+  font-size: 16px;
+}
+
 .page-sub-heading {
   margin-top: 1rem;
   display: flex;
@@ -32,5 +37,35 @@
 
   .heading-buttons {
     margin-left: auto;
+  }
+}
+
+.ui.accordion {
+  .title.bold{
+    font-weight: bold;
+  }
+
+  .title.large {
+    font-size: 1.5rem;
+  }
+
+  .content {
+    margin-left: 2.5rem;
+  }
+
+  .accordion-image {
+    width: 100%;
+    margin-top: 10px;
+    max-width: 400px;
+  }
+}
+
+iframe.youtube {
+  width: 640px;
+  height: 385px;
+
+  &.small {
+    width: 350px;
+    height: 210px;
   }
 }
