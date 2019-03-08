@@ -13,10 +13,17 @@ class DataDownloadsController < ApplicationController
   def create
     respond_to do |format|
       format.csv do
-        send_data(
-          exporter.generate_csv,
-          filename: "experiment_#{params[:export_type]}.csv"
-        )
+        current_exporter = exporter
+        csv_data = current_exporter.generate_csv
+        if current_exporter.errors.blank?
+          send_data(
+            csv_data,
+            filename: "experiment_#{params[:export_type]}.csv"
+          )
+        else
+          flash[:error] = current_exporter.errors.join(', ')
+          redirect_to experiment_data_downloads_path(@experiment)
+        end
       end
     end
   end

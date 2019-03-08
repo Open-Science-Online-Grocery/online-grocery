@@ -78,11 +78,7 @@ class ConditionsController < ApplicationController
     params.require(:condition).permit(
       :id,
       :name,
-      :label_type,
-      :label_id,
-      :label_position,
-      :label_size,
-      :label_equation_tokens,
+      :qualtrics_code,
       :sort_type,
       :default_sort_field_id,
       :default_sort_order,
@@ -102,7 +98,23 @@ class ConditionsController < ApplicationController
       :maximum_spend,
       :show_guiding_stars,
       product_sort_field_ids: [],
-      label_attributes: %i[id image image_cache name built_in],
+      condition_labels_attributes: [
+        :id,
+        :_destroy,
+        :label_id,
+        :label_type,
+        :position,
+        :size,
+        :equation_tokens,
+        :always_show,
+        label_attributes: %i[
+          id
+          image
+          image_cache
+          name
+          built_in
+        ]
+      ],
       condition_cart_summary_labels_attributes: [
         :id,
         :_destroy,

@@ -27,7 +27,7 @@ RSpec.describe CartSettingsSerializer do
   let(:condition) { build(:condition) }
   let(:cart) { instance_double('Cart') }
   let(:cart_summarizer) do
-    instance_double('CartSummarizer', health_label_summary: 'a summary!')
+    instance_double('CartSummarizer', health_label_summaries: ['a summary!'])
   end
 
   subject { described_class.new(condition, []) }
@@ -44,7 +44,7 @@ RSpec.describe CartSettingsSerializer do
     it 'returns the expected data' do
       expect(CartSummarizer).to receive(:new).with(condition, cart)
       expected_results = {
-        health_label_summary: 'a summary!',
+        health_label_summaries: ['a summary!'],
         label_image_urls: ['first/label/url', 'third/label/url']
       }
       expect(subject.serialize).to eq expected_results

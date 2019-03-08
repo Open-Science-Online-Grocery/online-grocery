@@ -3,4 +3,9 @@
     <%= f.label :name %>
     <%= f.text_field :name, data: { validation: 'empty|maxLength[255]' } %>
   </div>
+
+  <div class="required field">
+    <%= f.label :qualtrics_code %>
+    <%= f.text_field :qualtrics_code, data: { validation: 'empty|maxLength[255]' } %>
+  </div>
 </div>

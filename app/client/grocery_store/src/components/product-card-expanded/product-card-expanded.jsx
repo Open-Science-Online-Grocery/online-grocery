@@ -25,12 +25,24 @@ export default class ProductCardExpanded extends React.Component {
     return require('../../images/3howestars.png');
   }
 
-  labelStyles() {
-    if (!this.props.labelImageUrl) return {};
+  productLabels() {
+    return (
+      this.props.labels.map(label => (
+        <div
+          className="product-card-expanded-overlay"
+          style={this.labelStyles(label)}
+          key={label.labelImageUrl}
+        />
+      ))
+    );
+  }
+
+  labelStyles(labelAttributes) {
+    if (!labelAttributes.labelImageUrl) return {};
     return {
-      backgroundImage: `url(${this.props.labelImageUrl})`,
-      backgroundPosition: this.props.labelPosition,
-      backgroundSize: `${this.props.labelSize}%`
+      backgroundImage: `url(${labelAttributes.labelImageUrl})`,
+      backgroundPosition: labelAttributes.labelPosition,
+      backgroundSize: `${labelAttributes.labelSize}%`
     };
   }
 
@@ -60,7 +72,7 @@ export default class ProductCardExpanded extends React.Component {
             </div>
             <div className="product-card-expanded-image-wrapper">
               <img className="product-card-expanded-image" src={this.props.imageSrc} />
-              <div className="product-card-expanded-overlay" style={this.labelStyles()} />
+              {this.productLabels()}
             </div>
             <div className="product-card-expanded-description">{this.props.description}</div>
           </div>
@@ -107,9 +119,14 @@ ProductCardExpanded.propTypes = {
   imageSrc: PropTypes.string.isRequired,
   description: PropTypes.string,
   ingredients: PropTypes.string,
-  labelImageUrl: PropTypes.string,
-  labelPosition: PropTypes.string,
-  labelSize: PropTypes.number,
+  labels: PropTypes.arrayOf(
+    PropTypes.shape({
+      labelName: PropTypes.string,
+      labelImageUrl: PropTypes.string,
+      labelPosition: PropTypes.string,
+      labelSize: PropTypes.number
+    })
+  ),
   servings: PropTypes.string,
   servingSize: PropTypes.string,
   calories: PropTypes.number,
@@ -131,9 +148,7 @@ ProductCardExpanded.propTypes = {
 ProductCardExpanded.defaultProps = {
   starpoints: null,
   ingredients: null,
-  labelImageUrl: null,
-  labelPosition: null,
-  labelSize: null,
+  labels: [],
   description: null,
   servings: null,
   servingSize: null,

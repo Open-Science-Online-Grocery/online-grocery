@@ -4,6 +4,7 @@ import * as fromApi from '../../utils/api_call';
 import {
   getCursorPosition,
   getEquationType,
+  getConditionId,
   getTokensJson,
   getTokenCount
 } from './store';
@@ -12,11 +13,19 @@ export const INSERT_TOKEN = 'INSERT_TOKEN';
 export const MOVE_CURSOR = 'MOVE_CURSOR';
 export const REMOVE_TOKEN = 'REMOVE_TOKEN';
 export const REPORT_TEST_RESULTS = 'REPORT_TEST_RESULTS';
+export const SET_CALCULATOR_FOCUS = 'SET_CALCULATOR_FOCUS';
 
 function insertToken(type, value, position) {
   return {
     type: INSERT_TOKEN,
     payload: { type, value, position }
+  };
+}
+
+export function setCalculatorFocus(calculatorFocus) {
+  return {
+    type: SET_CALCULATOR_FOCUS,
+    payload: { calculatorFocus }
   };
 }
 
@@ -79,7 +88,8 @@ export function testCalculation() {
     const $$state = getState();
     const data = {
       type: getEquationType($$state),
-      tokens: getTokensJson($$state)
+      tokens: getTokensJson($$state),
+      conditionId: getConditionId($$state)
     };
     const route = equationValidation();
     const success = json => dispatch(reportTestResults(json));

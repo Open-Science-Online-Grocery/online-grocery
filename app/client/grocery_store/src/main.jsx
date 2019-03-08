@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import HomePage from './online-grocery-container';
 import ProductViewPage from './product-page';
 import CheckoutPage from './checkout-page';
-import ThankYouPage from './thank-you-page';
+import ThankYouPage from './thank-you-page-container';
 import SessionIDPage from './session-id-container';
 import { persistor, store } from './reducers/createStore';
 import SearchPageContainer from './search-page-container';
