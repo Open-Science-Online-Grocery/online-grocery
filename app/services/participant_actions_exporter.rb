@@ -4,12 +4,20 @@ require 'csv'
 
 # creates a CSV of participant actions for an Experiment
 class ParticipantActionsExporter
+  attr_reader :errors
+
   def initialize(experiment)
     @experiment = experiment
+    @errors = []
   end
 
   def generate_csv
     CSV.generate(headers: true) do |csv|
+      if result_presenters.blank?
+        add_no_data_error
+        break
+      end
+
       csv << experiment_result_attributes.keys
 
       result_presenters.each do |result|
@@ -40,5 +48,9 @@ class ParticipantActionsExporter
     experiment_result_attributes.values.map do |method_symbol|
       result.public_send(method_symbol)
     end
+  end
+
+  private def add_no_data_error
+    @errors << 'There is no participant actions data available for export.'
   end
 end
