@@ -51,12 +51,16 @@
 
   .content {
     margin-left: 2.5rem;
+    font-size: 16px;
   }
 
   .accordion-image {
     width: 100%;
     margin-top: 10px;
-    max-width: 400px;
+
+    &.compact {
+      max-width: 400px;
+    }
   }
 }
 
