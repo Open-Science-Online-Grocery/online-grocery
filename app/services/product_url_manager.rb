@@ -53,11 +53,13 @@ class ProductUrlManager
     Dir.mkdir(@local_tmp_images_path)
     products = Product.order(:id)
 
+    # rubocop:disable Security/Open
     products.find_each do |product|
       open(product_path(product.id), 'wb') do |file|
         file << open(product.image_src).read
       end
     end
+    # rubocop:enable Security/Open
   end
 
   private def upload_and_update
@@ -76,6 +78,7 @@ class ProductUrlManager
     end
   end
 
+  # rubocop:disable Security/Open
   private def upload_product_image(product_id)
     @s3_client.put_object(
       bucket: @bucket_name,
@@ -84,6 +87,7 @@ class ProductUrlManager
       acl: 'public-read'
     )
   end
+  # rubocop:enable Security/Open
 
   private def update_product_record(product, aws_image_url)
     update_success = product.update(aws_image_url: aws_image_url)
@@ -110,6 +114,7 @@ class ProductUrlManager
     Pathname.new("#{@local_tmp_images_path}/#{product_id}")
   end
 
+  # rubocop:disable Rails/Output
   private def product_update_failed_error(product)
     puts product.errors.full_messages.join(', ')
     raise ActiveRecord::Rollback
@@ -119,4 +124,5 @@ class ProductUrlManager
     puts "Tmp directory #{@local_tmp_images_path} is too big, "\
       'please remove it manually.'
   end
+  # rubocop:enable Rails/Output
 end
