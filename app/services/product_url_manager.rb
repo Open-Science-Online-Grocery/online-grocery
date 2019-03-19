@@ -54,7 +54,7 @@ class ProductUrlManager
     products = Product.order(:id)
 
     products.find_each do |product|
-      open(product_path(product.name), 'wb') do |file|
+      open(product_path(product.id), 'wb') do |file|
         file << open(product.image_src).read
       end
     end
@@ -62,27 +62,25 @@ class ProductUrlManager
 
   private def upload_and_update
     ActiveRecord::Base.transaction do
-      Dir.foreach(@local_tmp_images_path) do |file_name|
-        next if %w[. ..].include?(file_name)
+      Dir.foreach(@local_tmp_images_path) do |product_id|
+        next if %w[. ..].include?(product_id)
 
-        original_product_name = unescape_slashes(file_name)
-        product = Product.find_by(name: original_product_name)
-        product_not_found_error(original_product_name) unless product.present?
+        product = Product.find(product_id)
 
-        upload_product_image(file_name)
+        upload_product_image(product_id)
         update_product_record(
           product,
-          @s3_bucket.object(file_name).public_url
+          @s3_bucket.object(product_id).public_url
         )
       end
     end
   end
 
-  private def upload_product_image(product_name)
+  private def upload_product_image(product_id)
     @s3_client.put_object(
       bucket: @bucket_name,
-      key: product_name,
-      body: open(product_path(product_name)),
+      key: product_id,
+      body: open(product_path(product_id)),
       acl: 'public-read'
     )
   end
@@ -108,26 +106,8 @@ class ProductUrlManager
     end
   end
 
-  private def product_path(product_name)
-    escaped_product_name = escape_slashes(product_name)
-    Pathname.new("#{@local_tmp_images_path}/#{escaped_product_name}")
-  end
-
-  # These substitutions are done to avoid MacOS treating `/` characters
-  # in product names as directory entries. We're substituting them for
-  # `$` characters so we can keep track of them and change them back to
-  # find products by name in order to update their `aws_image_url`s
-  private def escape_slashes(string)
-    string.tr('/', '$')
-  end
-
-  private def unescape_slashes(string)
-    string.tr('$', '/')
-  end
-
-  private def product_not_found_error(name)
-    puts "Product #{name} was not found."
-    raise ActiveRecord::Rollback
+  private def product_path(product_id)
+    Pathname.new("#{@local_tmp_images_path}/#{product_id}")
   end
 
   private def product_update_failed_error(product)
