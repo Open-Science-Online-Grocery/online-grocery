@@ -67,7 +67,7 @@ export default class ProductCard extends React.Component {
       <div className="product-card">
         <Link to={{ pathname: '/store/product', state: { product: this.props.product } }}>
           <div className="product-card-image-wrapper">
-            <img className="product-card-image" alt="product" src={this.props.product.imageSrc} />
+            <img className="product-card-image" alt="product" src={this.props.product.awsImageUrl} />
             {this.productLabels()}
           </div>
           <div className="product-card-name">{this.props.product.name}</div>
@@ -90,6 +90,7 @@ ProductCard.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
     imageSrc: PropTypes.string,
+    awsImageUrl: PropTypes.string,
     size: PropTypes.string,
     price: PropTypes.string,
     starpoints: PropTypes.number,

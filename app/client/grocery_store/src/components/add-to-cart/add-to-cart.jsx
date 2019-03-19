@@ -99,6 +99,7 @@ AddToCart.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
     imageSrc: PropTypes.string,
+    awsImageUrl: PropTypes.string,
     size: PropTypes.string,
     price: PropTypes.string,
     starpoints: PropTypes.number,

@@ -53,7 +53,7 @@ export default class OrderSummary extends React.Component {
     const listedItems = this.props.cart.items.map(item => (
       <div key={item.id} className="order-item">
         <div className="order-item-image-wrapper">
-          <img className="order-item-image" src={item.imageSrc} />
+          <img className="order-item-image" src={item.awsImageUrl} />
           {this.productLabels(item)}
         </div>
         <div className="order-item-name">{item.name} </div>
@@ -185,6 +185,7 @@ OrderSummary.propTypes = {
         price: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         imageSrc: PropTypes.string.isRequired,
+        awsImageUrl: PropTypes.string.isRequired,
         labels: PropTypes.arrayOf(
           PropTypes.shape({
             labelName: PropTypes.string,

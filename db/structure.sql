@@ -244,6 +244,7 @@ CREATE TABLE `products` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `subsubcategory_id` bigint(20) DEFAULT NULL,
+  `aws_image_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_products_on_subsubcategory_id` (`subsubcategory_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -414,6 +415,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20190227175452'),
 ('20190227180805'),
 ('20190306151626'),
-('20190307193245');
+('20190307193245'),
+('20190319133936');
 
 
