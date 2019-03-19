@@ -18,7 +18,7 @@
   <div class="content">
     <ul>
       <li>
-        Click “sign up” at the bottom of the
+        Click "sign up" at the bottom of the
         <%= link_to 'log-in page', new_user_session_path %>
         and enter your email and a password
       </li>
@@ -40,7 +40,7 @@
       <li>Check your spam folders</li>
       <li>
         Go to the <%= link_to 'log-in page', new_user_session_path %>
-        and click “Didn’t receive confirmation instructions?” to have
+        and click "Didn’t receive confirmation instructions?" to have
         the email re-sent to you
       </li>
       <li>
@@ -131,7 +131,7 @@
   <div class="title bold large">
     <i class="dropdown icon"></i>
     I would like to use a label that is not based on nutrition
-    information (like “Organic” or “SNAP Eligible”)
+    information (like "Organic" or "SNAP Eligible")
   </div>
   <div class="content">
     <%= unavailable_feature_text %>
@@ -172,16 +172,16 @@
         we scraped them from grocery websites
       </li>
       <li>
-        Under the “sorting” tab, researchers can change how products are ordered
+        Under the "sorting" tab, researchers can change how products are ordered
       </li>
       <li>
         If you would like to sort by a single variable (e.g., price, calories)
-        you can do that by clicking “A specific field” in the sorting tab and
+        you can do that by clicking "A specific field" in the sorting tab and
         inputting the field you would like to sort by
       </li>
       <li>
         If you would like to sort based on a calculation (e.g., Protein/serving
-        + Fiber/serving) you can do that by clicking “The following calculation”
+        + Fiber/serving) you can do that by clicking "The following calculation"
         in the sorting tab and entering your equation
       </li>
       <li>
@@ -217,7 +217,7 @@
     Can I create a custom category other than the ones listed?
   </div>
   <div class="content">
-    Yes! Navigate to the “Categories” tab within an experimental condition.
+    Yes! Navigate to the "Categories" tab within an experimental condition.
     Then do the following steps
 
     <ol>
@@ -229,13 +229,13 @@
         of products within the store
       </li>
       <li>
-        To add a new category, select “Download Product Data” from the “Categories” tab.
-        Add the main menu selection under the “Custom Category 1” column and the
-        subcategory under the “Custom Subcategory 1” column for each product for which
+        To add a new category, select "Download Product Data" from the "Categories" tab.
+        Add the main menu selection under the "Custom Category 1" column and the
+        subcategory under the "Custom Subcategory 1" column for each product for which
         you want to apply the custom category and subcategory. You can use the additional
-        Custom Category and Subcategory columns (i.e. Custom Category 2”,
-        “Custom Subcategory 2”, etc.) to add additional custom categories to products.
-        Then use the “Replace file” option to upload the customized product categories
+        Custom Category and Subcategory columns (i.e. Custom Category 2",
+        "Custom Subcategory 2", etc.) to add additional custom categories to products.
+        Then use the "Replace file" option to upload the customized product categories
         CSV file for the current condition
       </li>
     </ol>
@@ -255,12 +255,12 @@
   </div>
   <div class="content">
     <div>
-      Yes. For example, if you add 1% milk to your “WIC Eligible” category, it
+      Yes. For example, if you add 1% milk to your "WIC Eligible" category, it
       will also still appear in the dairy category.
     </div>
     <div>
       Currently, researchers do not have the ability to turn this category
-      “double dipping” on or off. If that’s a feature you’re interested on
+      "double dipping" on or off. If that’s a feature you’re interested on
       working with us to develop, please email holly.howe@duke.edu
     </div>
   </div>
@@ -282,7 +282,7 @@
       </li>
       <li>
         You can choose whether you want to show participants how healthy their
-        purchases were (e.g., “8/10 purchases you made had a health label”)
+        purchases were (e.g., "8/10 purchases you made had a health label")
       </li>
       <li>
         You can also add a custom image that shows up for all participants, or
@@ -310,7 +310,7 @@
     Can I modify the nutrition facts labels?
   </div>
   <div class="content">
-    Yes. Navigate to the “Nutrition Facts” tab under any condition. Then,
+    Yes. Navigate to the "Nutrition Facts" tab under any condition. Then,
     click the area of the Nutrition Facts label you would like to modify
     and make the relevant changes. Our program currently allows you to change:
 
@@ -346,8 +346,8 @@
     Can I ensure that participants see the nutrition facts labels?
   </div>
   <div class="content">
-    Yes. On the “Nutrition Facts” tab, click “Only allow items to be added
-    to cart from the product detail page.” This forces participants to see
+    Yes. On the "Nutrition Facts" tab, click "Only allow items to be added
+    to cart from the product detail page." This forces participants to see
     the full information about a product (including ingredients and
     nutrition information) before they add it to their cart.
   </div>
@@ -361,8 +361,8 @@
   <div class="content">
     <div>
       Yes. Navigate to the budgeting tab of a specific condition and input
-      values into one or both of the “participants must spend at least” or
-      “participants must not spend more than”.
+      values into one or both of the "participants must spend at least" or
+      "participants must not spend more than".
     </div>
 
     <br>
@@ -394,7 +394,7 @@
   <div class="content">
     <div>
       Yes. Navigate to the budgeting tab of a specific condition and
-      select “Allow participants to add items to cart by dollar amount”
+      select "Allow participants to add items to cart by dollar amount"
     </div>
 
     <div>
@@ -455,9 +455,9 @@
     Can I see the data of people who did not check out?
   </div>
   <div class="content">
-    Participants who did not check out still have their browsing actions
-    recorded. This data is available in the "All participants actions"
-    download.
+    Data from participants who did not check out is stored in the "all
+    participant actions" data set but will not appear in the "products
+    in cart at check out" data summary.
   </div>
 </div>
 
@@ -468,8 +468,8 @@
   </div>
   <div class="content">
     <div>
-      Two data sets are available for download: “All participant actions”
-      and “Products in cart at checkout”
+      Two data sets are available for download: "All participant actions"
+      and "Products in cart at checkout"
     </div>
 
     <%= render 'collected_data_table' %>
@@ -497,13 +497,13 @@
         After logging in, click on the experiment you want data from
       </li>
       <li>
-        From the experimental screen, click “download data” from the top
+        From the experimental screen, click "download data" from the top
         right corner
       </li>
       <li>
-        Select whether you would prefer “All participant actions” or
-        “Products in cart at checkout” (see the FAQ section: “What data
-        is collected from participants?” to know the difference between
+        Select whether you would prefer "All participant actions" or
+        "Products in cart at checkout" (see the FAQ section: "What data
+        is collected from participants?" to know the difference between
         the two)
       </li>
     </ul>
