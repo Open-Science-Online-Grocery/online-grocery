@@ -24,6 +24,7 @@ gem 'webpacker'
 
 group :development, :test do
   gem 'awesome_print'
+  gem 'aws-sdk-s3'
   gem 'bundler-audit'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'factory_bot_rails'
@@ -52,7 +53,6 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'aws-sdk-s3'
   gem 'capybara-screenshot'
   gem 'database_cleaner'
   gem 'headless'

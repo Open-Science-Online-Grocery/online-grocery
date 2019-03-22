@@ -71,7 +71,7 @@ export default class ProductCardExpanded extends React.Component {
               <AddToCartContainer product={this.props} />
             </div>
             <div className="product-card-expanded-image-wrapper">
-              <img className="product-card-expanded-image" src={this.props.imageSrc} />
+              <img className="product-card-expanded-image" src={this.props.awsImageUrl} />
               {this.productLabels()}
             </div>
             <div className="product-card-expanded-description">{this.props.description}</div>
@@ -116,7 +116,7 @@ ProductCardExpanded.propTypes = {
   starpoints: PropTypes.number,
   size: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
-  imageSrc: PropTypes.string.isRequired,
+  awsImageUrl: PropTypes.string.isRequired,
   description: PropTypes.string,
   ingredients: PropTypes.string,
   labels: PropTypes.arrayOf(
