@@ -39,6 +39,7 @@ class ProductExporter
       ['size', product_attribute(product, :size)],
       ['description', product_attribute(product, :description)],
       ['imageSrc', product_attribute(product, :image_src)],
+      ['awsImageUrl', product_attribute(product, :aws_image_url)],
       ['servingSize', product_attribute(product, :serving_size)],
       ['servings', product_attribute(product, :servings)],
       ['caloriesFromFat', product_attribute(product, :calories_from_fat)],
