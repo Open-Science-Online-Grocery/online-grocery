@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.4.2'
 
+gem 'aws-sdk-s3'
 gem 'bootsnap', require: false
 gem 'carrierwave'
 gem 'cocoon'
@@ -24,7 +25,6 @@ gem 'webpacker'
 
 group :development, :test do
   gem 'awesome_print'
-  gem 'aws-sdk-s3'
   gem 'bundler-audit'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'factory_bot_rails'
