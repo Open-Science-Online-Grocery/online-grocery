@@ -5,7 +5,8 @@
 #  rake git:tag:bump_release_candidate
 #  rake git:tag TAG='1.2.3'
 #  rake git:tag TAG='1.2.3.rc-9'
-major: 0
-minor: 4
-revision: 4
-time: 2019-03-22 14:49:25 -0400
+major: 1
+minor: 0
+revision: 0
+release_candidate: 0
+time: 2019-03-28 10:07:33 -0400
