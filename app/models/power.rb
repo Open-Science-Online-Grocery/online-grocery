@@ -16,4 +16,22 @@ class Power
   power :downloadable_products do
     Product.all if @user
   end
+
+  power :downloadable_tag_csv_files do
+    TagCsvFile.joins(:condition).where(
+      conditions: { experiment_id: own_experiments.select(:id) }
+    )
+  end
+
+  power :tag_csv_files do
+    nil
+  end
+
+  power :experiments do
+    nil
+  end
+
+  power :products do
+    nil
+  end
 end

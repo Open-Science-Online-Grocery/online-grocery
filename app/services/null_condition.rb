@@ -32,10 +32,6 @@ class NullCondition
     false
   end
 
-  def label_equation
-    Equation.for_type(Equation.types.label, '[]')
-  end
-
   def style_use_type
     style_use_types.always
   end
@@ -53,6 +49,10 @@ class NullCondition
   end
 
   def condition_cart_summary_labels
+    []
+  end
+
+  def condition_labels
     []
   end
 
@@ -74,5 +74,9 @@ class NullCondition
 
   def show_guiding_stars
     true
+  end
+
+  def qualtrics_code
+    'ABCDEFG'
   end
 end

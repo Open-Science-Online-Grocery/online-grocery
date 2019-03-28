@@ -60,6 +60,7 @@ Metrics/ClassLength:
     - 'app/services/condition_manager.rb'
     - 'app/services/cart.rb'
     - 'app/services/equation.rb'
+    - 'app/services/product_url_manager.rb'
     - '**/db/migrate/**/*'
     - '**/db/seeds/**/*'
 Metrics/CyclomaticComplexity:

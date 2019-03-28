@@ -43,14 +43,20 @@ class ConditionManager
 
   # rubocop:disable Style/GuardClause
   private def clear_unselected_label_fields
-    if @params[:label_type] == Condition.label_types.custom
-      @params.delete(:label_id)
-    else
-      @params.delete(:label_attributes)
-    end
-    if @params[:label_type] == Condition.label_types.none
-      @params[:label_id] = nil
-    end
+    condition_labels_params = @params[:condition_labels_attributes]
+    return unless condition_labels_params.present?
+
+    @params[:condition_labels_attributes] =
+      condition_labels_params.transform_values do |condition_label_attrs|
+        if condition_label_attrs[:label_type] ==
+            ConditionLabel.label_types.custom
+          condition_label_attrs.delete(:label_id)
+        else
+          condition_label_attrs.delete(:label_attributes)
+        end
+
+        condition_label_attrs
+      end
   end
 
   private def clear_unselected_sort_fields

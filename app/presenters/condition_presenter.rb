@@ -6,31 +6,13 @@ class ConditionPresenter < SimpleDelegator
 
   alias condition __getobj__
 
-  def custom_label
-    label.try(:custom?) ? label : Label.new(built_in: false)
-  end
-
-  def label_position_options
-    [
-      'top left',
-      'top center',
-      'top right',
-      'center left',
-      'center',
-      'center right',
-      'bottom left',
-      'bottom center',
-      'bottom right'
-    ]
-  end
-
   def current_tag_csv_file_presenter
-    ResourcePresenter.new(current_tag_csv_file)
+    TagCsvFilePresenter.new(current_tag_csv_file)
   end
 
   def historical_tag_csv_files_presenters
     historical_tag_csv_files.map do |tag_csv_file|
-      ResourcePresenter.new(tag_csv_file)
+      TagCsvFilePresenter.new(tag_csv_file)
     end
   end
 
@@ -51,14 +33,12 @@ class ConditionPresenter < SimpleDelegator
     format_spend(maximum_spend)
   end
 
-  def preview_cart_summary_label
-    fake_cart = OpenStruct.new(
-      total_products: 3,
-      number_of_products_with_label: 2,
-      percent_of_products_with_label: 66
-    )
+  # Due to the random nature of the label selection, the data will be random
+  # each time the page is reloaded, meaning the preview will not be consistent
+  # switching between ratio and percent view
+  def preview_cart_summary_labels
     summarizer = CartSummarizer.new(condition, fake_cart)
-    summarizer.health_label_summary
+    summarizer.health_label_summaries
   end
 
   def preview_cart_image_urls
@@ -72,5 +52,29 @@ class ConditionPresenter < SimpleDelegator
 
   private def format_spend(amount)
     number_with_precision(amount, precision: 2)
+  end
+
+  private def fake_cart
+    fake_cart_data = Product.first(4).pluck(:id).map do |id|
+      OpenStruct.new(
+        id: id.to_s,
+        quantity: '1',
+        has_labels: random_labels
+      )
+    end
+
+    Cart.new(fake_cart_data, condition)
+  end
+
+  private def random_labels
+    return [] unless condition.labels.present?
+
+    condition.labels.map do |label|
+      if rand(0..100) % 4 == 0
+        nil
+      else
+        label.name
+      end
+    end.compact || []
   end
 end

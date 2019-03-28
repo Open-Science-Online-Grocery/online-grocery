@@ -21,12 +21,24 @@ export default class ProductCard extends React.Component {
     return require('../../images/3howestars.png');
   }
 
-  labelStyles() {
-    if (!this.props.product.labelImageUrl) return {};
+  productLabels() {
+    return (
+      this.props.product.labels.map(label => (
+        <div
+          className="product-card-overlay"
+          style={this.labelStyles(label)}
+          key={label.labelImageUrl}
+        />
+      ))
+    );
+  }
+
+  labelStyles(labelAttributes) {
+    if (!labelAttributes.labelImageUrl) return {};
     return {
-      backgroundImage: `url(${this.props.product.labelImageUrl})`,
-      backgroundPosition: this.props.product.labelPosition,
-      backgroundSize: `${this.props.product.labelSize}%`
+      backgroundImage: `url(${labelAttributes.labelImageUrl})`,
+      backgroundPosition: labelAttributes.labelPosition,
+      backgroundSize: `${labelAttributes.labelSize}%`
     };
   }
 
@@ -55,8 +67,8 @@ export default class ProductCard extends React.Component {
       <div className="product-card">
         <Link to={{ pathname: '/store/product', state: { product: this.props.product } }}>
           <div className="product-card-image-wrapper">
-            <img className="product-card-image" alt="product" src={this.props.product.imageSrc} />
-            <div className="product-card-overlay" style={this.labelStyles()} />
+            <img className="product-card-image" alt="product" src={this.props.product.awsImageUrl} />
+            {this.productLabels()}
           </div>
           <div className="product-card-name">{this.props.product.name}</div>
         </Link>
@@ -78,12 +90,18 @@ ProductCard.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
     imageSrc: PropTypes.string,
+    awsImageUrl: PropTypes.string,
     size: PropTypes.string,
     price: PropTypes.string,
     starpoints: PropTypes.number,
-    labelImageUrl: PropTypes.string,
-    labelPosition: PropTypes.string,
-    labelSize: PropTypes.number
+    labels: PropTypes.arrayOf(
+      PropTypes.shape({
+        labelName: PropTypes.string,
+        labelImageUrl: PropTypes.string,
+        labelPosition: PropTypes.string,
+        labelSize: PropTypes.number
+      })
+    )
   }).isRequired,
   showAddToCartButton: PropTypes.bool.isRequired,
   showGuidingStars: PropTypes.bool.isRequired
