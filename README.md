@@ -162,6 +162,8 @@ Note: All of the following commands are run from your local machine. No need to 
 1. Make sure you have all the updates for the branch you are deploying and
 all changes merged in.
 
+1. Make sure the branch you want to deploy is checked out locally.
+
 1. Update the app version. (This is done by using one of the git commands found in the comment of `config/app_version.yml`. Ask your project manager if you're unsure of what the new version should be.)
 
 1. Enable the maintenance page for the application: `bundle exec cap #{environment} maintenance:enable`. If you are deploying to staging environment you would enter
