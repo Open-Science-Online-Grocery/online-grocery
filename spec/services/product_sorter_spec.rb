@@ -43,7 +43,7 @@ RSpec.describe ProductSorter do
         end
       end
 
-      context 'when sorting in ascending order' do
+      context 'when sorting in descending order' do
         let(:manual_sort_order) { 'desc' }
 
         it 'returns the expected results' do
@@ -121,6 +121,44 @@ RSpec.describe ProductSorter do
 
         it 'returns the expected results' do
           expect(subject.sorted_products).to eq [product_3, product_2, product_1]
+        end
+      end
+    end
+
+    context 'when a sorting equation is specified' do
+      let(:manual_sort_field_description) { nil }
+      let(:manual_sort_order) { nil }
+      let(:sort_type) { Condition.sort_types.calculation }
+      let(:condition) do
+        build :condition,
+              sort_type: sort_type,
+              sort_equation_tokens: sort_equation_tokens
+      end
+      let(:sort_equation_tokens) do
+        [
+          { type: 'variable', value: 'total_fat' },
+          { type: 'operator', value: '+' },
+          { type: 'variable', value: 'carbs' }
+        ].to_json
+      end
+
+      context 'when all products have the relevant data' do
+        it 'sorts products according to the calculation' do
+          expect(subject.sorted_products).to eq [product_2, product_1, product_3]
+        end
+      end
+
+      context 'when some products have nil values' do
+        let(:product_3) do
+          { 'total_fat' => nil, 'carbs' => 6 }
+        end
+        # Post changing nil -> 0 for sorting calculations
+        let(:transformed_product_3) do
+          { 'total_fat' => 0, 'carbs' => 6 }
+        end
+
+        it 'sorts products according to the calculation, treating nil as 0' do
+          expect(subject.sorted_products).to eq [transformed_product_3, product_2, product_1]
         end
       end
     end
