@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Experiment model CRUD', :feature do
   before do
     sign_in create(:user)
-    visit root_path
+    visit experiments_path
   end
 
   it 'allows creating, updating, and deleting experiments', :js do

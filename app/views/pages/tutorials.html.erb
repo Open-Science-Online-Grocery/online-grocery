@@ -1,0 +1,513 @@
+<%
+  unavailable_feature_text = 'This function is not currently available in '\
+  'the store, but we would love to work with you to create it. Please email '\
+  'holly.howe@duke.edu with your requested feature to discuss further.'
+%>
+
+<div class="page-heading">
+  <h2>FAQ and Tutorials</h2>
+</div>
+
+<div class="ui divider"></div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    How do I sign up?
+  </div>
+  <div class="content">
+    <ul>
+      <li>
+        Click "sign up" at the bottom of the
+        <%= link_to 'log-in page', new_user_session_path %>
+        and enter your email and a password
+      </li>
+      <li>
+        You should receive an email to your registered account to complete sign up
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    What should I do if I’m not receiving confirmation email after sign up?
+  </div>
+  <div class="content">
+    Please do the following in this order…
+    <ol>
+      <li>Check your spam folders</li>
+      <li>
+        Go to the <%= link_to 'log-in page', new_user_session_path %>
+        and click "Didn’t receive confirmation instructions?" to have
+        the email re-sent to you
+      </li>
+      <li>
+        Try signing up with a different email address. Especially if you are
+        signing up using an institutional email address, your spam filters
+        may block our email
+      </li>
+      <li>
+        If you’re still experiencing problems, please email Holly at
+        holly.howe@duke.edu
+      </li>
+    </ol>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    How do I create an experimental condition?
+  </div>
+  <div class="content">
+    <iframe
+      class="youtube"
+      src="http://www.youtube.com/embed/3cYBfuphkuE"
+      frameborder="0"
+    ></iframe>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Are my participants actually shipped the products they order?
+  </div>
+  <div class="content">
+    No. Participants will not be sent any of the groceries they check out with.
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Is any identifiable information collected from my participants while they’re in the store?
+  </div>
+  <div class="content">
+    No. Howe’s grocery does not collect identifiable information. Howe’s grocery is
+    designed to be linked to Qualtrics or other survey platforms (see below). If
+    you want to collect identifying information, it must be done on those survey platforms.
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Can I add questions for participants to complete after check out?
+  </div>
+  <div class="content">
+    No. Howe’s grocery is designed to be linked to Qualtrics or other survey platforms
+    (see below). Any additional questions should be asked using those platforms.
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    How can I integrate Howe’s grocery into my Qualtrics survey?
+  </div>
+  <div class="content">
+    <iframe
+      class="youtube"
+      src="http://www.youtube.com/embed/3cYBfuphkuE"
+      frameborder="0"
+    ></iframe>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    How can I change the way products are labeled?
+  </div>
+  <div class="content">
+    <%= render 'labeling_table' %>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    I would like to use a label that is not based on nutrition
+    information (like "Organic" or "SNAP Eligible")
+  </div>
+  <div class="content">
+    <%= unavailable_feature_text %>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Can I add more than one label to foods?
+  </div>
+  <div class="content">
+    <div>
+      Yes! The healthy stars label can be combined with any on-image label.
+      Researchers can also add multiple on-image labels. To see how, watch the video below.
+    </div>
+
+    <br>
+
+    <iframe
+      class="youtube"
+      src="http://www.youtube.com/embed/3cYBfuphkuE"
+      frameborder="0"
+    ></iframe>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    How can I change the way products are sorted/ordered?
+  </div>
+  <div class="content">
+    <ul>
+      <li>
+        By default, products are ordered by product ID number.
+        This number is based on how products were ordered when
+        we scraped them from grocery websites
+      </li>
+      <li>
+        Under the "sorting" tab, researchers can change how products are ordered
+      </li>
+      <li>
+        If you would like to sort by a single variable (e.g., price, calories)
+        you can do that by clicking "A specific field" in the sorting tab and
+        inputting the field you would like to sort by
+      </li>
+      <li>
+        If you would like to sort based on a calculation (e.g., Protein/serving
+        + Fiber/serving) you can do that by clicking "The following calculation"
+        in the sorting tab and entering your equation
+      </li>
+      <li>
+        If you would like to allow participants to choose how the store is sorted,
+        you can add options by clicking the dropdown menu on the right side of the
+        sorting page. From there, you can select what features you would like
+        participants to be able to sort by
+      </li>
+    </ul>
+
+    <iframe
+      class="youtube"
+      src="http://www.youtube.com/embed/3cYBfuphkuE"
+      frameborder="0"
+    ></iframe>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    I would like to add my own way of ordering the store (e.g., showing "WIC
+    Eligible" or "Organic" items on top)
+  </div>
+  <div class="content">
+    <%= unavailable_feature_text %>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Can I create a custom category other than the ones listed?
+  </div>
+  <div class="content">
+    Yes! Navigate to the "Categories" tab within an experimental condition.
+    Then do the following steps
+
+    <ol>
+      <li>
+        Download the product data by clicking the button on the top right of the screen
+      </li>
+      <li>
+        In the csv file, you will see the product ID, name, and current categorization
+        of products within the store
+      </li>
+      <li>
+        To add a new category, select "Download Product Data" from the "Categories" tab.
+        Add the main menu selection under the "Custom Category 1" column and the
+        subcategory under the "Custom Subcategory 1" column for each product for which
+        you want to apply the custom category and subcategory. You can use the additional
+        Custom Category and Subcategory columns (i.e. Custom Category 2",
+        "Custom Subcategory 2", etc.) to add additional custom categories to products.
+        Then use the "Replace file" option to upload the customized product categories
+        CSV file for the current condition
+      </li>
+    </ol>
+
+    <iframe
+      class="youtube"
+      src="http://www.youtube.com/embed/3cYBfuphkuE"
+      frameborder="0"
+    ></iframe>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    If an item is in a custom category, does it still appear in its original category?
+  </div>
+  <div class="content">
+    <div>
+      Yes. For example, if you add 1% milk to your "WIC Eligible" category, it
+      will also still appear in the dairy category.
+    </div>
+    <div>
+      Currently, researchers do not have the ability to turn this category
+      "double dipping" on or off. If that’s a feature you’re interested on
+      working with us to develop, please email holly.howe@duke.edu
+    </div>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Can I change what participants see at check out?
+  </div>
+  <div class="content">
+    Yes, there are multiple ways in which you can modify the check out screen to
+    deliver a message to participants
+
+    <ol>
+      <li>
+        You can choose whether you want or do not want participants to see
+        a price total
+      </li>
+      <li>
+        You can choose whether you want to show participants how healthy their
+        purchases were (e.g., "8/10 purchases you made had a health label")
+      </li>
+      <li>
+        You can also add a custom image that shows up for all participants, or
+        participants whose cart met a nutritional threshold.
+      </li>
+    </ol>
+
+    <div>
+      See the video below for more information
+    </div>
+
+    <br>
+
+    <iframe
+      class="youtube"
+      src="http://www.youtube.com/embed/3cYBfuphkuE"
+      frameborder="0"
+    ></iframe>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Can I modify the nutrition facts labels?
+  </div>
+  <div class="content">
+    Yes. Navigate to the "Nutrition Facts" tab under any condition. Then,
+    click the area of the Nutrition Facts label you would like to modify
+    and make the relevant changes. Our program currently allows you to change:
+
+    <ul>
+      <li>Text size</li>
+      <li>Text color</li>
+      <li>Font</li>
+      <li>Background color</li>
+      <li>Style (e.g., bold, underlined, strikethrough)</li>
+    </ul>
+
+    <div>
+      You can modify the labels on every product in the store. Or, you can
+      modify labels that belong only to products that meet certain criteria
+      (e.g., calories < 100).
+    </div>
+
+    <br>
+
+    <div>
+      You cannot currently create multiple nutrition labels that apply in
+      different contexts. For example, you could not say if calories
+      < 100 then Label A, and if 100 < calories < 1000 then Label B, etc.
+      If you are interested in helping us develop this function, please
+      email holly.howe@duke.edu
+    </div>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Can I ensure that participants see the nutrition facts labels?
+  </div>
+  <div class="content">
+    Yes. On the "Nutrition Facts" tab, click "Only allow items to be added
+    to cart from the product detail page." This forces participants to see
+    the full information about a product (including ingredients and
+    nutrition information) before they add it to their cart.
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Can I give participants a budget?
+  </div>
+  <div class="content">
+    <div>
+      Yes. Navigate to the budgeting tab of a specific condition and input
+      values into one or both of the "participants must spend at least" or
+      "participants must not spend more than".
+    </div>
+
+    <br>
+
+    <div>
+      If participants exceed their budget, they will be given a notification
+      and will be prevented from checking out.
+    </div>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Can I give participants multiple budgets (e.g. a SNAP budget and a
+    personal budget)?
+  </div>
+  <div class="content">
+    <%= unavailable_feature_text %>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Can participants add items to their cart based on dollar amount
+    (e.g., $5 worth of bananas)?
+  </div>
+  <div class="content">
+    <div>
+      Yes. Navigate to the budgeting tab of a specific condition and
+      select "Allow participants to add items to cart by dollar amount"
+    </div>
+
+    <div>
+      Participants can now specify that they would like to add $X
+      worth of a product to their cart versus X number of a product.
+      If adding $X results in a fractional amount of a product (e.g.,
+      1/4 a box of crackers) the store will round down.
+    </div>
+
+    <br>
+
+    <div>
+      The participants will see something that looks like this:
+    </div>
+
+    <%= image_tag('add_by_dollar_amount.png', class: 'accordion-image compact')%>
+
+    <div>
+      Note that giving participants the option to add items by price
+      does not remove their ability to also add them by number.
+    </div>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Can I give participants a time limit?
+  </div>
+  <div class="content">
+    <div>
+      You cannot currently give participants a time limit while shopping.
+    </div>
+    <div>
+      You may be able to work-around this limitation by using an iFrame
+      and a timer question in Qualtrics. However, if participants do
+      not check out, their data will only be recorded in the "All participants
+      actions" download.
+    </div>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Do you have the SKUs for the products in the store?
+  </div>
+  <div class="content">
+    We do not currently have a record of the SKUs for products in the
+    store. We would love to work with you to add this data. Please email
+    holly.howe@duke.edu with your requested feature to discuss further.
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Can I see the data of people who did not check out?
+  </div>
+  <div class="content">
+    Data from participants who did not check out is stored in the "all
+    participant actions" data set but will not appear in the "products
+    in cart at check out" data summary.
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    What data is collected from participants?
+  </div>
+  <div class="content">
+    <div>
+      Two data sets are available for download: "All participant actions"
+      and "Products in cart at checkout"
+    </div>
+
+    <%= render 'collected_data_table' %>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Can I know how long participants looked at an item?
+  </div>
+  <div class="content">
+    <%= unavailable_feature_text %>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    How do I download my data?
+  </div>
+  <div class="content">
+    <ul>
+      <li>
+        After logging in, click on the experiment you want data from
+      </li>
+      <li>
+        From the experimental screen, click "download data" from the top
+        right corner
+      </li>
+      <li>
+        Select whether you would prefer "All participant actions" or
+        "Products in cart at checkout" (see the FAQ section: "What data
+        is collected from participants?" to know the difference between
+        the two)
+      </li>
+    </ul>
+  </div>
+</div>
+
+<%= render 'contact_footer' %>

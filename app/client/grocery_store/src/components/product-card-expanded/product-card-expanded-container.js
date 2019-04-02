@@ -9,7 +9,8 @@ const mapStateToProps = (state, ownProps) => {
     css = new CssWriter(JSON.parse(ownProps.nutritionStyleRules)).cssString();
   }
   return {
-    nutritionLabelCss: css
+    nutritionLabelCss: css,
+    showGuidingStars: state.user.showGuidingStars
   };
 };
 

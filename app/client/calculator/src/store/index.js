@@ -4,7 +4,8 @@ import {
   INSERT_TOKEN,
   MOVE_CURSOR,
   REMOVE_TOKEN,
-  REPORT_TEST_RESULTS
+  REPORT_TEST_RESULTS,
+  SET_CALCULATOR_FOCUS
 } from '../actions';
 
 const uuidv1 = require('uuid/v1');
@@ -23,12 +24,20 @@ export function getCursorPosition($$state) {
   return $$state.get('cursorPosition');
 }
 
+export function getCalculatorFocus($$state) {
+  return $$state.get('calculatorFocus');
+}
+
 export function getInputName($$state) {
   return $$state.get('inputName');
 }
 
 export function getEquationType($$state) {
   return $$state.get('equationType');
+}
+
+export function getConditionId($$state) {
+  return $$state.get('conditionId');
 }
 
 export function getValid($$state) {
@@ -100,6 +109,15 @@ export function cursorPosition(state = 0, action) {
   }
 }
 
+export function calculatorFocus(state = false, action) {
+  switch (action.type) {
+    case SET_CALCULATOR_FOCUS:
+      return action.payload.calculatorFocus;
+    default:
+      return state;
+  }
+}
+
 export function tokens($$state = Immutable.List(), action) {
   switch (action.type) {
     case INSERT_TOKEN:
@@ -146,12 +164,14 @@ export function validationMessage(state = null, action) {
 
 const rootReducer = combineReducers({
   cursorPosition,
+  calculatorFocus,
   tokens,
   valid,
   validationMessage,
   variables: noOpReducer(Immutable.Map()),
   inputName: noOpReducer(''),
-  equationType: noOpReducer('')
+  equationType: noOpReducer(''),
+  conditionId: noOpReducer('')
 });
 
 export default rootReducer;

@@ -50,6 +50,18 @@ RSpec.describe 'Showing cart summary information', :feature do
       ].to_json
     )
   end
+  let(:label) { create :label, name: 'Foo' }
+  let!(:condition_label) do
+    create :condition_label,
+           label: label,
+           condition: condition,
+           equation_tokens: [
+             { 'type' => 'variable', 'value' => 'calories' },
+             { 'type' => 'operator', 'value' => '>' },
+             { 'type' => 'digit', 'value' => '1' },
+             { 'type' => 'digit', 'value' => '0' }
+           ].to_json
+  end
 
   let!(:low_cal_product) do
     create(
@@ -92,7 +104,7 @@ RSpec.describe 'Showing cart summary information', :feature do
     force_click(first('.cart-checkout-bar'))
     expect(page).to have_css("img[src*='thumbs-up.png']")
     expect(page).to have_no_css("img[src*='gold-star.png']")
-    expect(page).to have_content('0 out of 1 products have a health label')
+    expect(page).to have_content('0 out of 1 products have the Foo label')
 
     page.go_back
 
@@ -109,6 +121,6 @@ RSpec.describe 'Showing cart summary information', :feature do
     force_click(first('.cart-checkout-bar'))
     expect(page).to have_css("img[src*='thumbs-up.png']")
     expect(page).to have_css("img[src*='gold-star.png']")
-    expect(page).to have_content('0 out of 2 products have a health label')
+    expect(page).to have_content('1 out of 2 products has the Foo label')
   end
 end

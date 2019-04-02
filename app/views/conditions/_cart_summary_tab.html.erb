@@ -44,7 +44,10 @@
 
           <% if condition.show_food_count %>
             <div class="label-summary">
-              <%= condition.preview_cart_summary_label %>
+              <% condition.preview_cart_summary_labels.each do |label| %>
+                <%= label %>
+                <br>
+              <% end %>
             </div>
           <% end %>
 

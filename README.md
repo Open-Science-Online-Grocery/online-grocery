@@ -26,6 +26,7 @@ The pre-existing database tables are:
 * Ensure MySQL is installed locally and running.
 * Copy `config/database.yml.example` to `config/database.yml` and fill in the
   needed mysql password (if the `root` database user needs a password).
+* Copy `howes_grocery.priv.example` to `howes_grocery.priv`.
 * Get the `config/master.key` file from another developer on the project.
   (see "Rails credentials" for more information)
 * Set the local ruby version to the one defined in `.ruby-version` using a ruby version manager like `rbenv`
@@ -160,6 +161,8 @@ Note: All of the following commands are run from your local machine. No need to 
 
 1. Make sure you have all the updates for the branch you are deploying and
 all changes merged in.
+
+1. Make sure the branch you want to deploy is checked out locally.
 
 1. Update the app version. (This is done by using one of the git commands found in the comment of `config/app_version.yml`. Ask your project manager if you're unsure of what the new version should be.)
 

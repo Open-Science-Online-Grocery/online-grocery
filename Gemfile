@@ -3,12 +3,14 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.4.2'
 
+gem 'aws-sdk-s3'
 gem 'bootsnap', require: false
 gem 'carrierwave'
 gem 'cocoon'
 gem 'consul'
 gem 'dentaku'
 gem 'devise'
+gem 'dkim'
 gem 'fog-aws'
 gem 'faraday'
 gem 'jbuilder'
@@ -51,7 +53,6 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'aws-sdk-s3'
   gem 'capybara-screenshot'
   gem 'database_cleaner'
   gem 'headless'

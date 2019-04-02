@@ -25,13 +25,36 @@ export default class ProductCardExpanded extends React.Component {
     return require('../../images/3howestars.png');
   }
 
-  labelStyles() {
-    if (!this.props.labelImageUrl) return {};
+  productLabels() {
+    return (
+      this.props.labels.map(label => (
+        <div
+          className="product-card-expanded-overlay"
+          style={this.labelStyles(label)}
+          key={label.labelImageUrl}
+        />
+      ))
+    );
+  }
+
+  labelStyles(labelAttributes) {
+    if (!labelAttributes.labelImageUrl) return {};
     return {
-      backgroundImage: `url(${this.props.labelImageUrl})`,
-      backgroundPosition: this.props.labelPosition,
-      backgroundSize: `${this.props.labelSize}%`
+      backgroundImage: `url(${labelAttributes.labelImageUrl})`,
+      backgroundPosition: labelAttributes.labelPosition,
+      backgroundSize: `${labelAttributes.labelSize}%`
     };
+  }
+
+  guidingStars() {
+    if (!this.props.showGuidingStars) return null;
+    return (
+      <div className="tooltip--triangle" data-tooltip="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!">
+        <a href="https://guidingstars.com/what-is-guiding-stars/">
+          <img className="product-card-guiding-stars" src={this.starImagePath()} />
+        </a>
+      </div>
+    );
   }
 
   render() {
@@ -48,17 +71,21 @@ export default class ProductCardExpanded extends React.Component {
               <AddToCartContainer product={this.props} />
             </div>
             <div className="product-card-expanded-image-wrapper">
-              <img className="product-card-expanded-image" src={this.props.imageSrc} />
-              <div className="product-card-expanded-overlay" style={this.labelStyles()} />
+              <img className="product-card-expanded-image" src={this.props.awsImageUrl} />
+              {this.productLabels()}
             </div>
             <div className="product-card-expanded-description">{this.props.description}</div>
           </div>
           <div className="product-card-expanded-right-section">
+<<<<<<< HEAD
             <div className="tooltip--triangle" data-tooltip="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!">
               {/* <a href="https://guidingstars.com/what-is-guiding-stars/">
                 <img className="product-card-guiding-stars" src={this.starImagePath()} />
               </a> */}
             </div>
+=======
+            {this.guidingStars()}
+>>>>>>> 6ba2d5f683bb47078b070997ed9c166d0778cad4
             {
               this.props.servingSize
                 && (
@@ -98,12 +125,17 @@ ProductCardExpanded.propTypes = {
   starpoints: PropTypes.number,
   size: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
-  imageSrc: PropTypes.string.isRequired,
+  awsImageUrl: PropTypes.string.isRequired,
   description: PropTypes.string,
   ingredients: PropTypes.string,
-  labelImageUrl: PropTypes.string,
-  labelPosition: PropTypes.string,
-  labelSize: PropTypes.number,
+  labels: PropTypes.arrayOf(
+    PropTypes.shape({
+      labelName: PropTypes.string,
+      labelImageUrl: PropTypes.string,
+      labelPosition: PropTypes.string,
+      labelSize: PropTypes.number
+    })
+  ),
   servings: PropTypes.string,
   servingSize: PropTypes.string,
   calories: PropTypes.number,
@@ -118,15 +150,14 @@ ProductCardExpanded.propTypes = {
   protein: PropTypes.number,
   vitamins: PropTypes.string,
   nutritionLabelCss: PropTypes.string,
-  logParticipantAction: PropTypes.func.isRequired
+  logParticipantAction: PropTypes.func.isRequired,
+  showGuidingStars: PropTypes.bool.isRequired
 };
 
 ProductCardExpanded.defaultProps = {
   starpoints: null,
   ingredients: null,
-  labelImageUrl: null,
-  labelPosition: null,
-  labelSize: null,
+  labels: [],
   description: null,
   servings: null,
   servingSize: null,

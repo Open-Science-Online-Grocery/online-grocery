@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe ConditionManager do
   let(:condition) { Condition.new }
+  let(:condition_label) { build :condition_label, condition: condition }
 
   subject { described_class.new(condition, params) }
 
@@ -42,30 +43,19 @@ RSpec.describe ConditionManager do
   context 'when replacing a built-in label' do
     let(:params) do
       {
-        label_id: 1,
-        label_type: 'custom',
-        label_attributes: { name: 'qqq' }
+        condition_labels_attributes: {
+          '1' => {
+            label_id: 1,
+            label_type: 'custom',
+            label_attributes: { name: 'qqq' }
+          }
+        }
       }
     end
 
     it 'removes the label_id' do
       subject.update_condition
-      expect(condition.label_id).to be_nil
-    end
-  end
-
-  context 'when changing to no label' do
-    let(:params) do
-      {
-        label_id: 1,
-        label_type: 'none',
-        label_attributes: { name: 'qqq' }
-      }
-    end
-
-    it 'removes the label_id' do
-      subject.update_condition
-      expect(condition.label_id).to be_nil
+      expect(condition.condition_labels.first.label_id).to be_nil
     end
   end
 
@@ -73,8 +63,7 @@ RSpec.describe ConditionManager do
     let(:params) do
       {
         default_sort_field_id: 1,
-        default_sort_order: 'desc',
-        label_type: 'calculation'
+        default_sort_order: 'desc'
       }
     end
 
@@ -87,10 +76,7 @@ RSpec.describe ConditionManager do
 
   context 'when replacing a calculation sort' do
     let(:params) do
-      {
-        sort_equation_tokens: 'some tokens',
-        label_type: 'field'
-      }
+      { sort_equation_tokens: 'some tokens' }
     end
 
     it 'removes the equation tokens' do

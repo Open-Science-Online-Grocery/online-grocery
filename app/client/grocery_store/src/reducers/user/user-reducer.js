@@ -4,7 +4,9 @@ const initialUserState = {
   user: null,
   conditionIdentifier: null,
   onlyAddToCartFromDetailPage: false,
-  mayAddToCartByDollarAmount: false
+  mayAddToCartByDollarAmount: false,
+  showGuidingStars: true,
+  qualtricsCode: null
 };
 
 export default function userReducer(state = initialUserState, action) {
@@ -17,7 +19,9 @@ export default function userReducer(state = initialUserState, action) {
     case userActionTypes.SET_CONDITION_DATA:
       return Object.assign({}, state, {
         onlyAddToCartFromDetailPage: action.onlyAddToCartFromDetailPage,
-        mayAddToCartByDollarAmount: action.mayAddToCartByDollarAmount
+        mayAddToCartByDollarAmount: action.mayAddToCartByDollarAmount,
+        showGuidingStars: action.showGuidingStars,
+        qualtricsCode: action.qualtricsCode
       });
     default:
       return state;

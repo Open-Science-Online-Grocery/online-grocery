@@ -29,9 +29,16 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :resource_downloads, only: [:show]
+  resources :tag_csv_files, only: [:show]
+
+  resources :pages, only: [] do
+    collection do
+      get :getting_started
+      get :tutorials
+    end
+  end
 
   get '/store/thank-you', to: 'stores#thank_you'
 
-  root 'experiments#index'
+  root 'pages#getting_started'
 end

@@ -28,12 +28,24 @@ export default class OrderSummary extends React.Component {
     this.props.onSubmit();
   }
 
-  labelStyles(item) {
-    if (!item.labelImageUrl) return {};
+  productLabels(item) {
+    return (
+      item.labels.map(label => (
+        <div
+          className="order-item-overlay"
+          style={this.labelStyles(label)}
+          key={label.labelImageUrl}
+        />
+      ))
+    );
+  }
+
+  labelStyles(labelAttributes) {
+    if (!labelAttributes.labelImageUrl) return {};
     return {
-      backgroundImage: `url(${item.labelImageUrl})`,
-      backgroundPosition: item.labelPosition,
-      backgroundSize: `${item.labelSize}%`
+      backgroundImage: `url(${labelAttributes.labelImageUrl})`,
+      backgroundPosition: labelAttributes.labelPosition,
+      backgroundSize: `${labelAttributes.labelSize}%`
     };
   }
 
@@ -41,8 +53,8 @@ export default class OrderSummary extends React.Component {
     const listedItems = this.props.cart.items.map(item => (
       <div key={item.id} className="order-item">
         <div className="order-item-image-wrapper">
-          <img className="order-item-image" src={item.imageSrc} />
-          <div className="order-item-overlay" style={this.labelStyles(item)} />
+          <img className="order-item-image" src={item.awsImageUrl} />
+          {this.productLabels(item)}
         </div>
         <div className="order-item-name">{item.name} </div>
         <span className="order-item-detail">
@@ -59,23 +71,12 @@ export default class OrderSummary extends React.Component {
     ));
     return listedItems;
   }
-/*
-  SNAPtotal() {
-    var total =0;
-    this.props.cart.items.map(item => (
-      if (item.starpoints > 4){
-        total += quantity*parseFloat(item.price).toFixed(2);
-      }
-    ))
-    return total;
-  }
-*/
+
   cartTotalSection() {
     if (!this.props.cart.showPriceTotal) return null;
     return (
       
       <div className="cart-total-section">
-      
         <div className="order-item bold">Subtotal
           <span className="order-item-detail normal-height">
             <span className="order-item-price bold">
@@ -102,11 +103,14 @@ export default class OrderSummary extends React.Component {
   }
 
   healthLabelsSection() {
-    if (!this.props.cart.healthLabelSummary) return null;
+    const healthLabelSummaries = this.props.cart.healthLabelSummaries;
+    if (healthLabelSummaries === null || healthLabelSummaries.length === 0) return null;
     return (
-      <div className="label-summary">
-        {this.props.cart.healthLabelSummary}
-      </div>
+      this.props.cart.healthLabelSummaries.map(summary => (
+        <div className="label-summary" key={summary}>
+          {summary}
+        </div>
+      ))
     );
   }
 
@@ -174,7 +178,7 @@ OrderSummary.propTypes = {
   cart: PropTypes.shape({
     count: PropTypes.number.isRequired,
     showPriceTotal: PropTypes.bool.isRequired,
-    healthLabelSummary: PropTypes.string,
+    healthLabelSummaries: PropTypes.arrayOf(PropTypes.string),
     labelImageUrls: PropTypes.arrayOf(PropTypes.string),
     items: PropTypes.arrayOf(
       PropTypes.shape({
@@ -183,9 +187,15 @@ OrderSummary.propTypes = {
         name: PropTypes.string.isRequired,
         starpoints: PropTypes.number,
         imageSrc: PropTypes.string.isRequired,
-        labelImageUrl: PropTypes.string,
-        labelPosition: PropTypes.string,
-        labelSize: PropTypes.number
+        awsImageUrl: PropTypes.string.isRequired,
+        labels: PropTypes.arrayOf(
+          PropTypes.shape({
+            labelName: PropTypes.string,
+            labelImageUrl: PropTypes.string,
+            labelPosition: PropTypes.string,
+            labelSize: PropTypes.number
+          })
+        )
       })
     )
   }).isRequired,

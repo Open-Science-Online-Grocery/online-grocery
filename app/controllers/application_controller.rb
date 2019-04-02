@@ -31,6 +31,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  private def after_sign_in_path_for(_resource)
+    experiments_path
+  end
+
   private def set_error_messages(record, record_name = nil, header = nil)
     record_name ||= record.model_name.human.downcase
     header ||= "Unable to #{humanized_action} #{record_name}"

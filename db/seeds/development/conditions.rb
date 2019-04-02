@@ -11,9 +11,9 @@ module Seeds
             Condition.create!(
               experiment: experiment,
               name: Faker::Lorem.sentence,
+              qualtrics_code: 'ABCDEFG',
               uuid: SecureRandom.uuid,
-              nutrition_styles: '{}',
-              label_equation_tokens: '[]'
+              nutrition_styles: '{}'
             )
           end
         end

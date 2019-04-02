@@ -22,6 +22,7 @@ export default class Initializer {
     this.initializeCalculators();
     this.initializeNutritionStylers();
     this.initializeLoadingSpinnerButtons();
+    this.initializeAccordions();
   }
 
   initializeTableRowLinks() {
@@ -100,5 +101,10 @@ export default class Initializer {
     $buttons.each(
       (index, element) => new LoadingSpinnerButton($(element)).init()
     );
+  }
+
+  initializeAccordions() {
+    const $accordions = this.$scope.find('.ui.accordion');
+    $accordions.accordion();
   }
 }
