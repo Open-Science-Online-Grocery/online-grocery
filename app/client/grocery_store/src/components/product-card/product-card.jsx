@@ -52,14 +52,14 @@ export default class ProductCard extends React.Component {
         <div className="product-card-buttons">
           <div className="tooltip--triangle product-card-guiding-stars-wrapper" data-tooltip="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!">
             <a href="https://guidingstars.com/what-is-guiding-stars/">
-              <img
+              {/* <img
                 className="product-card-guiding-stars"
                 src={this.starImagePath()}
                 alt="Guiding Stars"
-              />
+              /> */}
             </a>
           </div>
-          {this.addToCartButtons()}
+          {/* {this.addToCartButtons()} */}
         </div>
       </div>
     );

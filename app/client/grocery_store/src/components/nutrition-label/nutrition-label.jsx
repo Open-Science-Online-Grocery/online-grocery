@@ -55,12 +55,19 @@ export default class NutritionLabel extends React.Component {
   }
 
   render() {
+    let bg;
+    if (this.props.nutritionFacts.stars < 3){
+      bg = "redBg";
+      }
+    else {
+      bg = "greenBg";
+    }
     return (
       <React.Fragment>
         <style>
-          {this.props.css}
+          {this.props.css}       
         </style>
-        <div className="nutrition-facts-label">
+        <div className={["nutrition-facts-label", bg].join(' ')}>
           <div className="nutrition-facts-title">
             Nutrition Facts
           </div>
@@ -114,7 +121,8 @@ NutritionLabel.propTypes = {
     fiber: PropTypes.number,
     sugar: PropTypes.number,
     protein: PropTypes.number,
-    vitamins: PropTypes.string
+    vitamins: PropTypes.string,
+    stars: PropTypes.number  
   }).isRequired,
   css: PropTypes.string
 };

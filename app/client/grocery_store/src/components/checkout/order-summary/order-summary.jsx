@@ -59,11 +59,23 @@ export default class OrderSummary extends React.Component {
     ));
     return listedItems;
   }
-
+/*
+  SNAPtotal() {
+    var total =0;
+    this.props.cart.items.map(item => (
+      if (item.starpoints > 4){
+        total += quantity*parseFloat(item.price).toFixed(2);
+      }
+    ))
+    return total;
+  }
+*/
   cartTotalSection() {
     if (!this.props.cart.showPriceTotal) return null;
     return (
+      
       <div className="cart-total-section">
+      
         <div className="order-item bold">Subtotal
           <span className="order-item-detail normal-height">
             <span className="order-item-price bold">
@@ -169,6 +181,7 @@ OrderSummary.propTypes = {
         quantity: PropTypes.number.isRequired,
         price: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
+        starpoints: PropTypes.number,
         imageSrc: PropTypes.string.isRequired,
         labelImageUrl: PropTypes.string,
         labelPosition: PropTypes.string,
