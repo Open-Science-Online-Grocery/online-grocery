@@ -48,7 +48,7 @@ class ProductSorter
   end
 
   private def calculation_sorted_products
-    @product_hashes.sort_by do |product_hash|
+    modified_product_hashes.sort_by do |product_hash|
       sort_equation.evaluate(product_hash)
     end
   end
@@ -57,5 +57,14 @@ class ProductSorter
     ProductSortField.find_by(
       description: @manual_sort_field_description
     ).try(:name)
+  end
+
+  # Default any nil values in the products data to 0 for sorting purposes
+  private def modified_product_hashes
+    @modified_product_hashes ||= @product_hashes.map do |product_hash|
+      product_hash.transform_values do |value|
+        value.nil? ? 0 : value
+      end
+    end
   end
 end
