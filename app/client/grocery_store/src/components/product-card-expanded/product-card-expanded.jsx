@@ -77,15 +77,7 @@ export default class ProductCardExpanded extends React.Component {
             <div className="product-card-expanded-description">{this.props.description}</div>
           </div>
           <div className="product-card-expanded-right-section">
-<<<<<<< HEAD
-            <div className="tooltip--triangle" data-tooltip="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!">
-              {/* <a href="https://guidingstars.com/what-is-guiding-stars/">
-                <img className="product-card-guiding-stars" src={this.starImagePath()} />
-              </a> */}
-            </div>
-=======
             {this.guidingStars()}
->>>>>>> 6ba2d5f683bb47078b070997ed9c166d0778cad4
             {
               this.props.servingSize
                 && (
