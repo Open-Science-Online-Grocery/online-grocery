@@ -47,7 +47,8 @@ class ProductImporter
     product_attrs['subcategory_id'] = subcategory.id
     product_attrs['subsubcategory_id'] = subsubcategory.try(:id)
 
-    Product.create!(product_attrs)
+    product = Product.find_or_initialize_by(id: row['id'])
+    product.update!(product_attrs)
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 

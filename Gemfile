@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.4.2'
 
 gem 'aws-sdk-s3'
+gem 'bcrypt_pbkdf'
 gem 'bootsnap', require: false
 gem 'carrierwave'
 gem 'cocoon'
@@ -11,6 +12,7 @@ gem 'consul'
 gem 'dentaku'
 gem 'devise'
 gem 'dkim'
+gem 'ed25519'
 gem 'fog-aws'
 gem 'faraday'
 gem 'jbuilder'
