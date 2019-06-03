@@ -13,7 +13,7 @@ export default class ProductCardExpanded extends React.Component {
   // method calls within it. using a literal string works, however.
   starImagePath() {
     const starpoints = this.props.starpoints;
-    if (starpoints < 0) {
+    if (starpoints <= 0) {
       return require('../../images/0howestars.png');
     }
     if (starpoints === 1 || starpoints === 2) {
