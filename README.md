@@ -150,7 +150,7 @@ At present, we have a staging server and a production server.  For any server, i
 
 ### Production
 
-* [Application](https://18.204.34.178/)
+* [Application](https://openscience-onlinegrocery.com/)
 * [Credentials](https://credentials.scimed.local/servers/230)
 * SSH: `ssh deployer@18.204.34.178`
 * Rails environment: `production`
