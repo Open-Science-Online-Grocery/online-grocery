@@ -1,5 +1,7 @@
 import Immutable from 'immutable';
 import { combineReducers } from 'redux-immutable';
+// TODO: resolve below when time permits
+// eslint-disable-next-line import/no-cycle
 import {
   INSERT_TOKEN,
   MOVE_CURSOR,

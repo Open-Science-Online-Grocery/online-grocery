@@ -1,6 +1,8 @@
 import FlashMessage from '../../utils/FlashMessage';
 import { equationValidation } from '../../utils/routes';
 import * as fromApi from '../../utils/api_call';
+// TODO: resolve below when time permits
+// eslint-disable-next-line import/no-cycle
 import {
   getCursorPosition,
   getEquationType,
