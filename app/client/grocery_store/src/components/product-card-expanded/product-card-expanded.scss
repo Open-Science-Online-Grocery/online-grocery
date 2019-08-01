@@ -1,8 +1,9 @@
 @import "../../base/base";
 
-.go-back {
-  color: white;
-  background-color: #333333;
+.navigate-back {
+  color: $price-green;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .product-card-expanded {
