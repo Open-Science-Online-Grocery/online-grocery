@@ -6,6 +6,10 @@
   align-items: center;
   margin-bottom: 1rem;
 
+  &:empty {
+    margin-bottom: 0;
+  }
+
   & > * {
     &:not(:first-child) {
       margin-left: 1rem;
