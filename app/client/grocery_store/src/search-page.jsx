@@ -18,6 +18,9 @@ class SearchPage extends React.Component {
         <div className="search-container">
           <SortLinksContainer />
         </div>
+        <span onClick={this.props.history.goBack} className="navigate-back">
+          {"<"} Back to Browsing
+        </span>
         <div className="title"> Search Results: &quot;{this.props.searchTerm}&quot;</div>
         <ProductGridContainer />
       </div>

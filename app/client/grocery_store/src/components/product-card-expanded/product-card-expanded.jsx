@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import NutritionLabel from '../nutrition-label/nutrition-label';
 import AddToCartContainer from '../add-to-cart/add-to-cart-container';
 import './product-card-expanded.scss';
 
-export default class ProductCardExpanded extends React.Component {
+class ProductCardExpanded extends React.Component {
   componentDidMount() {
     this.props.logParticipantAction('view', this.props.id);
   }
@@ -60,6 +61,9 @@ export default class ProductCardExpanded extends React.Component {
   render() {
     return (
       <div>
+        <span onClick={this.props.history.goBack} className="navigate-back">
+          {"<"} Back to Browsing
+        </span>
         <div className="product-card-expanded">
           <div>
             <div className="product-card-expanded-name">{this.props.name}</div>
@@ -165,3 +169,5 @@ ProductCardExpanded.defaultProps = {
   vitamins: null,
   nutritionLabelCss: null
 };
+
+export default withRouter(ProductCardExpanded);
