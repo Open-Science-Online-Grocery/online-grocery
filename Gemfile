@@ -35,6 +35,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
+  gem 'webdrivers'
 end
 
 group :development do
@@ -44,7 +45,6 @@ group :development do
   gem 'capistrano-passenger'
   gem 'capistrano-rbenv'
   gem 'capistrano-rails'
-  gem 'chromedriver-helper'
   gem 'git_rails_tagger', git: 'https://gitlab.com/scimed-public/git-rails-tagger.git'
   gem 'letter_opener'
   gem 'listen'

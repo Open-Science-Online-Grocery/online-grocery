@@ -17,7 +17,7 @@ require 'database_cleaner'
 require 'factory_bot'
 require 'shoulda-matchers'
 require 'capybara-screenshot/rspec'
-require 'chromedriver-helper' unless ENV['TEST_ENVIRONMENT'] == 'CI'
+require 'webdrivers' unless ENV['TEST_ENVIRONMENT'] == 'CI'
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
