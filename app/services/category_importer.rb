@@ -1,0 +1,47 @@
+require 'csv'
+
+class CategoryImporter
+  def import
+    rows = CSV.read(import_filepath, headers: true)
+    rows_by_category = rows.group_by { |r| r['Category ID'] }
+    rows_by_category.each_value do |category_rows|
+      import_category(category_rows)
+    end
+    Category.where.not(id: rows_by_category.keys).destroy_all
+  end
+
+  # @param rows [Enumerable<CSV::Row>] rows pertaining to a single category
+  private def import_category(rows)
+    category = Category.find_or_initialize_by(id: rows.first['Category ID'])
+    category.update!(rows.first['Category Name'])
+    rows_by_subcategory = rows.group_by { |r| r['Subcategory Order'] }
+    rows_by_subcategory.each_value do |subcategory_rows|
+      import_subcategory(category, subcategory_rows)
+    end
+    category.subcategories.where.not(
+      display_order: rows_by_subcategory.keys
+    ).destroy_all
+  end
+
+  # @param category [Category]
+  # @param rows [Enumerable<CSV::Row>] rows pertaining to a single subcategory
+  private def import_subcategory(category, rows)
+    subcategory = category.subcategories.find_or_initialize_by(
+      display_order: rows.first['Subcategory Order']
+    )
+    subcategory.update!(name: rows.first['Subcategory Name'])
+    rows.each do |row|
+      subsub = subcategory.subsubcategories.find_or_initialize_by(
+        display_order: row['Subsubcategory Order']
+      )
+      subsub.update!(name: row['Subsubcategory Name'])
+    end
+    subcategory.subsubcategories.where.not(
+      display_order: rows.map { |r| r['Subsubcategory Order'] }
+    ).destroy_all
+  end
+
+  private def import_filepath
+    Rails.root.join('db', 'seeds', 'base', 'categories.csv')
+  end
+end
