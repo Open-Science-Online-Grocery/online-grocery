@@ -10,16 +10,6 @@ The client originally hired CS students to build a React app that is a simulated
 online grocery store. The Researcher Portal is a companion Rails app to allow
 researchers to customize the behavior of the React app.
 
-Any changes to the database schema must be coordinated with the
-client's student developers, and they should be included on any merge requests
-that affect the pre-existing database tables or the grocery store React app.
-
-The pre-existing database tables are:
-
-* `categories`
-* `subcategories`
-* `products`
-* `participant_actions` (formerly `users`)
 
 ## Initial setup
 
@@ -27,8 +17,7 @@ The pre-existing database tables are:
 * Copy `config/database.yml.example` to `config/database.yml` and fill in the
   needed mysql password (if the `root` database user needs a password).
 * Copy `howes_grocery.priv.example` to `howes_grocery.priv`.
-* Get the `config/master.key` file from another developer on the project.
-  (see "Rails credentials" for more information)
+* Get the `config/master.key` file from another developer on the project or from [this credential](https://credentials.scimedsolutions.com/credentials/972).
 * Set the local ruby version to the one defined in `.ruby-version` using a ruby version manager like `rbenv`
 * From the root directory of the application, run the following commands:
   * `gem install bundler`
@@ -61,29 +50,11 @@ See `config/storage.yml` for more examples.
 
 ### Start the webpack dev server
 
-Run `./bin/webpack-dev-server` from the root directory of the application.
+In one terminal tab, run `./bin/webpack-dev-server` from the root directory of the application.
 
 ### Start the server
 
-In the usual fashion (e.g., `rails s`)
-
-### (Alternative) Using Foreman
-
-As an alternative to the above three steps you can use
-[Foreman](http://ddollar.github.io/foreman/).
-
-```
-gem install foreman
-foreman start
-```
-
-Note: do not add the foreman gem to the Gemfile, it will not work.
-
-Unfortunately, while this method has more convenient startup, we have not yet
-identified a reliable way to use `pry`. Debugging via RubyMine seems to work
-fine, however.
-
-You can control the rails server's port and other details in the `Procfile`.
+In another terminal tab, start the Rails server with `rails s`
 
 
 ## Visiting the Researcher Portal
@@ -151,13 +122,13 @@ At present, we have a staging server and a production server.  For any server, i
 ### Production
 
 * [Application](https://openscience-onlinegrocery.com/)
-* [Credentials](https://credentials.scimed.local/servers/230)
+* [Credentials](https://credentials.scimed.local/servers/237)
 * SSH: `ssh deployer@18.204.34.178`
 * Rails environment: `production`
 
 ## Deploying
 
-Note: All of the following commands are run from your local machine. No need to ssh into any server.
+Note: All of the following commands are run from your local machine. No need to SSH into any server.
 
 1. Make sure you have all the updates for the branch you are deploying and
 all changes merged in.
@@ -166,14 +137,38 @@ all changes merged in.
 
 1. Update the app version. (This is done by using one of the git commands found in the comment of `config/app_version.yml`. Ask your project manager if you're unsure of what the new version should be.)
 
-1. Enable the maintenance page for the application: `bundle exec cap #{environment} maintenance:enable`. If you are deploying to staging environment you would enter
-`bundle exec cap staging maintenance:enable`
+1. Enable the maintenance page for the application: 
+	* For the staging server, run `bundle exec cap staging maintenance:enable`
+	* For the production server, run `bundle exec cap production maintenance:enable`
 
-1. Deploy the application: `bundle exec cap #{environment} deploy`. If you are
-deploying to the staging environment you would enter `bundle exec cap staging deploy`
+1. Deploy the application: 
+    * For the staging server, run `bundle exec cap staging deploy`
+    * For the production server, run `bundle exec cap production deploy`
 
-1. Disable the maintenance page for the application: `bundle exec cap #{environment}
-maintenance:disable`.
+1. Disable the maintenance page for the application: 
+	* For the staging server, run `bundle exec cap staging maintenance:disable`
+	* For the production server, run `bundle exec cap production maintenance:disable`
 
 1. Check to be sure the site loads and the app version has been updated by logging
 in and hovering over the Howe's Grocery Researcher Portal logo in the upper left corner.
+
+
+## Updating products
+
+To update the products in the store on a server:
+
+1. On your local development machine, replace the file at `db/seeds/base/products.csv` with the updated products file. The new file must be in the same format as the old file. Note that this file must be a CSV file, not an Excel file.
+
+1. Test the new file locally by running this command in a terminal within from the root directory of the application: `bundle exec rake update_products`.  If the output ends with `Success!`, the task has succeeded. Otherwise, there is a problem with the file format.
+
+1. Commit the updated file to git and push the change to GitLab.
+
+1. Follow the instructions under "Deploying" (above) to deploy the updated file to the server.
+
+1. SSH to the server (see "Servers and Credentials" above) and navigate to `/var/www/apps/howes_grocery/current`
+
+1. In this directory on the server, run the command appropriate to the server you are on:
+	*  For the staging server, run `bundle exec rake update_products RAILS_ENV=staging`
+	*  For the production server, run `bundle exec rake update_products RAILS_ENV=production`
+
+Note that we have been aiming to keep the "adjusted_products" tab of the [product spreadsheet on Google Drive](https://docs.google.com/spreadsheets/d/1tL9JlFDYz1M-muNOCGf-qaF2PtuTmy_2xf9RQLNeX00/edit?usp=sharing) and `db/seeds/base/products.csv` synchronized.
