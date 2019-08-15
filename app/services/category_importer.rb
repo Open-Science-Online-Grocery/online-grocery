@@ -2,7 +2,7 @@ require 'csv'
 
 class CategoryImporter
   def import
-    rows = CSV.read(import_filepath, headers: true)
+    rows = CSV.read(import_filepath, headers: true, encoding: 'ISO-8859-1')
     rows_by_category = rows.group_by { |r| r['Category ID'] }
     rows_by_category.each_value do |category_rows|
       import_category(category_rows)
@@ -13,7 +13,7 @@ class CategoryImporter
   # @param rows [Enumerable<CSV::Row>] rows pertaining to a single category
   private def import_category(rows)
     category = Category.find_or_initialize_by(id: rows.first['Category ID'])
-    category.update!(rows.first['Category Name'])
+    category.update!(name: rows.first['Category Name'])
     rows_by_subcategory = rows.group_by { |r| r['Subcategory Order'] }
     rows_by_subcategory.each_value do |subcategory_rows|
       import_subcategory(category, subcategory_rows)
@@ -31,6 +31,7 @@ class CategoryImporter
     )
     subcategory.update!(name: rows.first['Subcategory Name'])
     rows.each do |row|
+      next unless row['Subsubcategory Name'].present?
       subsub = subcategory.subsubcategories.find_or_initialize_by(
         display_order: row['Subsubcategory Order']
       )
