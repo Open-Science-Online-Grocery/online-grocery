@@ -6,9 +6,17 @@
     "test": "jest"
   },
   "dependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
     "@rails/webpacker": "3.5",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-react": "^6.24.1",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-loader": "^8.0.6",
+    "core-js": "3",
     "humps": "^2.0.1",
     "immutable": "^3.8.2",
     "isomorphic-fetch": "^2.2.1",
@@ -35,9 +43,8 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "^23.6.0",
+    "babel-jest": "^23.4.2",
     "eslint": "^5.8.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
