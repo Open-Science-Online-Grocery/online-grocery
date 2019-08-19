@@ -34,7 +34,9 @@ group :development, :test do
   gem 'pry-nav'
   gem 'rspec-rails'
   gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+  gem 'rubocop-performance', require: false
   gem 'webdrivers'
 end
 
