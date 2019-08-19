@@ -28,6 +28,7 @@ before_script:
   - export PATH=$PATH:/usr/local/bin/chrome-linux
   - chromedriver --version
   - chrome --version
+  - bundle install
 
 ci:
   script:
