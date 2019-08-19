@@ -14,9 +14,8 @@ class ProductImporter
   # rubocop:disable Rails/Output
   def import
     ActiveRecord::Base.transaction do
-      csv = Rails.root.join('db', 'seeds', 'base', 'products.csv')
       i = 0
-      CSV.foreach(csv, headers: true) do |row|
+      CSV.foreach(import_filepath, headers: true) do |row|
         i += 1
         import_row(row) if sampled_row?(i)
         puts "imported product #{i}" if i % 1000 == 0
@@ -32,21 +31,20 @@ class ProductImporter
     return unless row['id']
     cleaned_row = clean_row(row)
     product_attrs = cleaned_row.except(
-      'categoryId', # the ID of the product's Category
-      'subcategoryOrder', # the display order of the product's Subcategory
-      'subsubcategoryOrder' # the display order of the product's Subsubcategory
+      'category_id', # the ID of the product's Category
+      'subcategory_order', # the display order of the product's Subcategory
+      'subsubcategory_order' # the display order of the product's Subsubcategory
     )
-    binding.pry
-    category = Category.find_by(id: cleaned_row['categoryId'])
+    category = Category.find_by(id: cleaned_row['category_id'])
     subcategory = category.subcategories.find_by(
-      display_order: cleaned_row['subcategoryOrder']
+      display_order: cleaned_row['subcategory_order']
     )
     subsubcategory = subcategory.subsubcategories.find_by(
-      display_order: cleaned_row['subsubcategoryOrder']
+      display_order: cleaned_row['subsubcategory_order']
     )
     product_attrs.merge!(
-      category_id: category_id,
-      subcategory_id: subcategory_id,
+      category_id: category.id,
+      subcategory_id: subcategory.id,
       subsubcategory_id: subsubcategory.try(:id)
     )
     product = Product.find_or_initialize_by(id: row['id'])
@@ -68,6 +66,10 @@ class ProductImporter
   private def sampled_row?(row_index)
     return true unless @only_random_subset
     @sampled_rows.include?(row_index)
+  end
+
+  private def import_filepath
+    Rails.root.join('db', 'seeds', 'base', 'products.csv')
   end
 
   private def total_count
