@@ -152,14 +152,42 @@ all changes merged in.
 1. Check to be sure the site loads and the app version has been updated by logging
 in and hovering over the Howe's Grocery Researcher Portal logo in the upper left corner.
 
+## Updating categories
+
+To update the categories, subcategories, and subsubcategories in the store on a server:
+
+1. On your local development machine, replace the file at `db/seeds/base/categories.csv` with the updated categories file. 
+  * The new file must be in the same format as the old file. 
+  * This file must be a CSV file, not an Excel file.
+
+1. Test the new file locally by running this command in a terminal within from the root directory of the application: `bundle exec rake update_categories`.  If the output ends with `Success!`, the task has succeeded. Otherwise, there is a problem with the file format.
+
+1. Commit the updated file to git and push the change to GitLab.
+
+1. Follow the instructions under "Deploying" (above) to deploy the updated file to the server.
+
+1. SSH to the server (see "Servers and Credentials" above) and navigate to `/var/www/apps/howes_grocery/current`
+
+1. In this directory on the server, run the command appropriate to the server you are on:
+	*  For the staging server, run `bundle exec rake update_categories RAILS_ENV=staging`
+	*  For the production server, run `bundle exec rake update_categories RAILS_ENV=production`
+
+Note that we have been aiming to keep the "newsubcategories_view" tab of the [product spreadsheet on Google Drive](https://docs.google.com/spreadsheets/d/1tL9JlFDYz1M-muNOCGf-qaF2PtuTmy_2xf9RQLNeX00/edit?usp=sharing) and `db/seeds/base/categories.csv` synchronized.
+
 
 ## Updating products
 
 To update the products in the store on a server:
 
-1. On your local development machine, replace the file at `db/seeds/base/products.csv` with the updated products file. The new file must be in the same format as the old file. Note that this file must be a CSV file, not an Excel file.
+1. On your local development machine, replace the file at `db/seeds/base/products.csv` with the updated products file. 
+  * The new file must be in the same format as the old file. 
+  * This file must be a CSV file, not an Excel file.
+  * If you are adding new products to the CSV, you do not need to fill in the "awsImageUrl" column for them - that will be filled in for you.  You *should* fill in the "imageScr" column, though.
+  * If the CSV refers to new categories, be sure to update the catgories before updating the products.
 
 1. Test the new file locally by running this command in a terminal within from the root directory of the application: `bundle exec rake update_products`.  If the output ends with `Success!`, the task has succeeded. Otherwise, there is a problem with the file format.
+
+  Note that if you have added new products, the CSV will be updated with the AWS image URL. You should commit these changes.
 
 1. Commit the updated file to git and push the change to GitLab.
 
