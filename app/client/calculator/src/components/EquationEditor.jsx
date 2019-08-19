@@ -37,7 +37,7 @@ export default class EquationEditor extends PureComponent {
 
   tokensWithCursor() {
     const tokens = this.props.tokens.map(
-      token => (
+      (token) => (
         <div key={token.id} className={`token ${token.type}`}>
           {token.name || token.value}
         </div>

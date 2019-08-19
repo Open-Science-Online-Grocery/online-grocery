@@ -54,7 +54,7 @@ export default class Initializer {
         $tab.addClass('active');
         $(`.tab.segment[data-tab="${currentTab}"]`).addClass('active');
       }
-      $tab.tab({ onVisible: tab => currentTabInput.val(tab) });
+      $tab.tab({ onVisible: (tab) => currentTabInput.val(tab) });
     });
   }
 

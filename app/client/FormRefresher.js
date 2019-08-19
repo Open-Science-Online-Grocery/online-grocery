@@ -36,7 +36,7 @@ export default class FormRefresher {
         data: formData,
         processData: false,
         contentType: false,
-        success: data => this.replaceContent(data)
+        success: (data) => this.replaceContent(data)
       });
     });
   }

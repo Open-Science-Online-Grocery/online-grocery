@@ -57,10 +57,10 @@ export default class CssToRulesConverter {
       let styles = {};
       if (this.element.classList.contains(hoverClassName)) {
         this.element.classList.remove(hoverClassName);
-        styles = Object.assign({}, window.getComputedStyle(this.element));
+        styles = { ...window.getComputedStyle(this.element) };
         this.element.classList.add(hoverClassName);
       } else {
-        styles = Object.assign({}, window.getComputedStyle(this.element));
+        styles = { ...window.getComputedStyle(this.element) };
       }
       return styles;
     }

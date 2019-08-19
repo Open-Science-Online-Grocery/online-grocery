@@ -17,7 +17,7 @@ export default class WarningMessage extends PureComponent {
             <ul>
               {
                 this.props.incompleteDataVariables.map(
-                  variableName => <li key={variableName}>{variableName}</li>
+                  (variableName) => <li key={variableName}>{variableName}</li>
                 )
               }
             </ul>

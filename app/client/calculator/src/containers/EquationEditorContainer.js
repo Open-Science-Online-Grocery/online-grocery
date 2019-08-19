@@ -3,7 +3,7 @@ import EquationEditor from '../components/EquationEditor';
 import { getTokensWithName, getCursorPosition, getCalculatorFocus } from '../store';
 import { arrowKeyPressed, deletePreviousToken } from '../actions';
 
-const mapStateToProps = $$state => (
+const mapStateToProps = ($$state) => (
   {
     tokens: getTokensWithName($$state),
     cursorPosition: getCursorPosition($$state),
@@ -11,9 +11,9 @@ const mapStateToProps = $$state => (
   }
 );
 
-const mapDispatchToProps = dispatch => (
+const mapDispatchToProps = (dispatch) => (
   {
-    arrowKeyPressed: shouldMoveForwards => dispatch(
+    arrowKeyPressed: (shouldMoveForwards) => dispatch(
       arrowKeyPressed(shouldMoveForwards)
     ),
     deletePreviousToken: () => dispatch(deletePreviousToken())

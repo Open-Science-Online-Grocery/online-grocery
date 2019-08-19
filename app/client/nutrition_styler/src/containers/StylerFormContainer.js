@@ -24,7 +24,7 @@ const mapStateToProps = ($$state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => (
+const mapDispatchToProps = (dispatch) => (
   {
     setStyle: (activeSelector, property, value) => {
       dispatch(setStyle(activeSelector, property, value));
