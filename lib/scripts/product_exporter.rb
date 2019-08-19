@@ -11,7 +11,7 @@ require 'csv'
 # ProductExporter.new.run
 class ProductExporter
   # rubocop:disable Metrics/AbcSize
-  def run
+  def run(export_filepath = default_export_filepath)
     first_product_row = product_row(products.first)
     CSV.open(export_filepath, 'w') do |csv|
       csv << first_product_row.map(&:first)
@@ -77,7 +77,7 @@ class ProductExporter
     attribute.in?(Product.nutrition_fields) ? 'NULL' : nil
   end
 
-  private def export_filepath
+  private def default_export_filepath
     Rails.root.join('lib', 'scripts', 'exported_products.csv')
   end
 end
