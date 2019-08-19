@@ -7,15 +7,15 @@
 # Instructions are here: https://gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal/container_registry
 
 # docker login registry.gitlab.com
-# docker build -t registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.2 .
-# docker push registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.2
+# docker build -t registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.3 .
+# docker push registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.3
 
 # If you would like to make a different version of this image when you're working on new features
 # You could build an image with a name that includes your branch name in it. e.g.
 # registry.gitlab.com/adam.stasio/basf_midas/my-branch-name or
 # registry.gitlab.com/adam.stasio/basf_midas/my-branch-name:tag
 
-FROM ruby:2.4.2
+FROM ruby:2.6.3
 MAINTAINER adam.stasio@scimedsolutions.com
 
 ## Install apt based dependencies required to run Rails as
@@ -31,11 +31,11 @@ RUN apt-get update && \
 
 # Chrome / Chromedriver dependencies
 RUN apt-get update && \
-    apt-get install -yq --no-install-recommends \ 
-      libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \ 
-      libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \ 
-      libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 \ 
-      libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \ 
+    apt-get install -yq --no-install-recommends \
+      libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
+      libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \
+      libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 \
+      libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \
       libnss3 \
       libxcomposite1 ca-certificates fonts-liberation libappindicator1 lsb-release xdg-utils \
       && rm -rf /var/lib/apt/lists/*
@@ -56,7 +56,7 @@ RUN wget -O /tmp/chrome-linux.zip https://s3.amazonaws.com/com-scimed-public/chr
 
 # Install Chromedriver
 # We are now using a fixed version of chromedriver by keeping a snapshot on S3. If you want the latest version
-# you can get it here: 
+# you can get it here:
 # RUN LATEST_CHROMEDRIVER=$(curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE) && \
 #     wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER/chromedriver_linux64.zip
 RUN wget -O /tmp/chromedriver.zip https://s3.amazonaws.com/com-scimed-public/chrome/chromedriver_linux64_v2.42.zip && \
@@ -64,11 +64,11 @@ RUN wget -O /tmp/chromedriver.zip https://s3.amazonaws.com/com-scimed-public/chr
 
 # Postgres client latest
 RUN apt-get update && \
-    apt-get install -y --force-yes mysql-client && \
+    apt-get install -y --force-yes default-mysql-client && \
     rm -rf /var/lib/apt/lists/*
 
 RUN npm install -g yarn
-RUN gem install bundler --no-ri --no-rdoc
+RUN gem install bundler
 
 ## Avoid "Host key verification failed." when bundling
 # RUN mkdir -p ~/.ssh/ && \
