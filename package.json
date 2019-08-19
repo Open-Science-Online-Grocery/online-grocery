@@ -38,7 +38,7 @@
     "rgb-to-hex": "^0.0.0",
     "sass-loader": "^7.1.0",
     "semantic-ui-css": "^2.4.0",
-    "semantic-ui-react": "^0.83.0",
+    "semantic-ui-react": "^0.87.3",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
@@ -52,7 +52,7 @@
     "eslint-plugin-react": "^7.11.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
-    "regenerator-runtime": "^0.12.1",
+    "regenerator-runtime": "^0.13.3",
     "webpack-dev-server": "2.11.2"
   },
   "version": "1.0.0",
