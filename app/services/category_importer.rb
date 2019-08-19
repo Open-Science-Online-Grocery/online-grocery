@@ -6,12 +6,15 @@ require 'csv'
 # from a CSV file.
 class CategoryImporter
   def import
-    rows = CSV.read(import_filepath, headers: true, encoding: 'ISO-8859-1')
-    rows_by_category = rows.group_by { |r| r['Category ID'] }
-    rows_by_category.each_value do |category_rows|
-      import_category(category_rows)
+    ActiveRecord::Base.transaction do
+      rows = CSV.read(import_filepath, headers: true, encoding: 'ISO-8859-1')
+      rows_by_category = rows.group_by { |r| r['Category ID'] }
+      rows_by_category.each_value do |category_rows|
+        import_category(category_rows)
+      end
+      Category.where.not(id: rows_by_category.keys).destroy_all
+      puts 'Success!'
     end
-    Category.where.not(id: rows_by_category.keys).destroy_all
   end
 
   # @param rows [Enumerable<CSV::Row>] rows pertaining to a single category

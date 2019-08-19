@@ -2,7 +2,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
- SET NAMES utf8 ;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -11,7 +11,7 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 DROP TABLE IF EXISTS `ar_internal_metadata`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ar_internal_metadata` (
   `key` varchar(255) NOT NULL,
   `value` varchar(255) DEFAULT NULL,
@@ -22,12 +22,12 @@ CREATE TABLE `ar_internal_metadata` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `cart_summary_labels`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cart_summary_labels` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `built_in` tinyint(1) DEFAULT '0',
+  `built_in` tinyint(1) DEFAULT 0,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -35,7 +35,7 @@ CREATE TABLE `cart_summary_labels` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `categories` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -46,15 +46,15 @@ CREATE TABLE `categories` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `condition_cart_summary_labels`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `condition_cart_summary_labels` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `condition_id` bigint(20) DEFAULT NULL,
   `cart_summary_label_id` bigint(20) DEFAULT NULL,
-  `equation_tokens` text,
+  `equation_tokens` text DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `always_show` tinyint(1) DEFAULT '1',
+  `always_show` tinyint(1) DEFAULT 1,
   PRIMARY KEY (`id`),
   KEY `index_condition_cart_summary_labels_on_condition_id` (`condition_id`),
   KEY `index_condition_cart_summary_labels_on_cart_summary_label_id` (`cart_summary_label_id`)
@@ -62,14 +62,14 @@ CREATE TABLE `condition_cart_summary_labels` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `condition_labels`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `condition_labels` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `condition_id` bigint(20) DEFAULT NULL,
   `label_id` bigint(20) DEFAULT NULL,
   `position` varchar(255) DEFAULT NULL,
   `size` int(11) DEFAULT NULL,
-  `equation_tokens` text,
+  `equation_tokens` text DEFAULT NULL,
   `always_show` tinyint(1) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE `condition_labels` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `condition_product_sort_fields`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `condition_product_sort_fields` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `condition_id` bigint(20) DEFAULT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE `condition_product_sort_fields` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `conditions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `conditions` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -102,19 +102,19 @@ CREATE TABLE `conditions` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `uuid` varchar(255) NOT NULL,
-  `nutrition_styles` text,
+  `nutrition_styles` text DEFAULT NULL,
   `default_sort_field_id` bigint(20) DEFAULT NULL,
   `default_sort_order` varchar(255) DEFAULT NULL,
-  `sort_equation_tokens` text,
-  `filter_by_custom_categories` tinyint(1) NOT NULL DEFAULT '0',
-  `show_price_total` tinyint(1) NOT NULL DEFAULT '1',
+  `sort_equation_tokens` text DEFAULT NULL,
+  `filter_by_custom_categories` tinyint(1) NOT NULL DEFAULT 0,
+  `show_price_total` tinyint(1) NOT NULL DEFAULT 1,
   `food_count_format` varchar(255) DEFAULT NULL,
-  `only_add_from_detail_page` tinyint(1) DEFAULT '0',
-  `nutrition_equation_tokens` text,
+  `only_add_from_detail_page` tinyint(1) DEFAULT 0,
+  `nutrition_equation_tokens` text DEFAULT NULL,
   `minimum_spend` decimal(10,2) DEFAULT NULL,
   `maximum_spend` decimal(10,2) DEFAULT NULL,
-  `may_add_to_cart_by_dollar_amount` tinyint(1) DEFAULT '0',
-  `show_guiding_stars` tinyint(1) DEFAULT '1',
+  `may_add_to_cart_by_dollar_amount` tinyint(1) DEFAULT 0,
+  `show_guiding_stars` tinyint(1) DEFAULT 1,
   `qualtrics_code` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_conditions_on_experiment_id` (`experiment_id`),
@@ -124,21 +124,22 @@ CREATE TABLE `conditions` (
 DROP TABLE IF EXISTS `experiment_results`;
 /*!50001 DROP VIEW IF EXISTS `experiment_results`*/;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8mb4;
-/*!50001 CREATE VIEW `experiment_results` AS SELECT 
- 1 AS `experiment_id`,
- 1 AS `experiment_name`,
- 1 AS `condition_name`,
- 1 AS `session_identifier`,
- 1 AS `action_type`,
- 1 AS `product_id`,
- 1 AS `product_name`,
- 1 AS `quantity`,
- 1 AS `created_at`*/;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `experiment_results` (
+  `experiment_id` tinyint NOT NULL,
+  `experiment_name` tinyint NOT NULL,
+  `condition_name` tinyint NOT NULL,
+  `session_identifier` tinyint NOT NULL,
+  `action_type` tinyint NOT NULL,
+  `product_id` tinyint NOT NULL,
+  `product_name` tinyint NOT NULL,
+  `quantity` tinyint NOT NULL,
+  `created_at` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 DROP TABLE IF EXISTS `experiments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `experiments` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -151,11 +152,11 @@ CREATE TABLE `experiments` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `labels`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `labels` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `built_in` tinyint(1) DEFAULT '0',
+  `built_in` tinyint(1) DEFAULT 0,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `image` varchar(255) DEFAULT NULL,
@@ -164,7 +165,7 @@ CREATE TABLE `labels` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `participant_actions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `participant_actions` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `session_identifier` varchar(255) DEFAULT NULL,
@@ -181,7 +182,7 @@ CREATE TABLE `participant_actions` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `product_sort_fields`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `product_sort_fields` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -193,7 +194,7 @@ CREATE TABLE `product_sort_fields` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `product_tags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `product_tags` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `product_id` bigint(20) NOT NULL,
@@ -211,12 +212,12 @@ CREATE TABLE `product_tags` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `products` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `size` varchar(255) DEFAULT NULL,
-  `description` text,
+  `description` text DEFAULT NULL,
   `image_src` varchar(255) DEFAULT NULL,
   `serving_size` varchar(255) DEFAULT NULL,
   `servings` varchar(255) DEFAULT NULL,
@@ -234,9 +235,9 @@ CREATE TABLE `products` (
   `fiber` int(11) DEFAULT NULL,
   `sugar` int(11) DEFAULT NULL,
   `protein` int(11) DEFAULT NULL,
-  `vitamins` text,
-  `ingredients` text,
-  `allergens` text,
+  `vitamins` text DEFAULT NULL,
+  `ingredients` text DEFAULT NULL,
+  `allergens` text DEFAULT NULL,
   `price` decimal(64,12) DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
   `subcategory_id` int(11) DEFAULT NULL,
@@ -251,7 +252,7 @@ CREATE TABLE `products` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `schema_migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) NOT NULL,
   PRIMARY KEY (`version`)
@@ -259,7 +260,7 @@ CREATE TABLE `schema_migrations` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `subcategories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `subcategories` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `category_id` int(11) DEFAULT NULL,
@@ -272,7 +273,7 @@ CREATE TABLE `subcategories` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `subsubcategories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `subsubcategories` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `subcategory_id` bigint(20) DEFAULT NULL,
@@ -286,7 +287,7 @@ CREATE TABLE `subsubcategories` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `subtags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `subtags` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `tag_id` bigint(20) NOT NULL,
@@ -299,12 +300,12 @@ CREATE TABLE `subtags` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `tag_csv_files`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tag_csv_files` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `csv_file` varchar(255) DEFAULT NULL,
   `condition_id` bigint(20) DEFAULT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `active` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -313,7 +314,7 @@ CREATE TABLE `tag_csv_files` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `tags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tags` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -324,7 +325,7 @@ CREATE TABLE `tags` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL DEFAULT '',
@@ -332,7 +333,7 @@ CREATE TABLE `users` (
   `reset_password_token` varchar(255) DEFAULT NULL,
   `reset_password_sent_at` datetime DEFAULT NULL,
   `remember_created_at` datetime DEFAULT NULL,
-  `sign_in_count` int(11) NOT NULL DEFAULT '0',
+  `sign_in_count` int(11) NOT NULL DEFAULT 0,
   `current_sign_in_at` datetime DEFAULT NULL,
   `last_sign_in_at` datetime DEFAULT NULL,
   `current_sign_in_ip` varchar(255) DEFAULT NULL,
@@ -341,7 +342,7 @@ CREATE TABLE `users` (
   `confirmed_at` datetime DEFAULT NULL,
   `confirmation_sent_at` datetime DEFAULT NULL,
   `unconfirmed_email` varchar(255) DEFAULT NULL,
-  `failed_attempts` int(11) NOT NULL DEFAULT '0',
+  `failed_attempts` int(11) NOT NULL DEFAULT 0,
   `unlock_token` varchar(255) DEFAULT NULL,
   `locked_at` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL,
@@ -354,6 +355,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `index_users_on_confirmation_token` (`confirmation_token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!50001 DROP TABLE IF EXISTS `experiment_results`*/;
 /*!50001 DROP VIEW IF EXISTS `experiment_results`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -363,7 +365,7 @@ CREATE TABLE `users` (
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `experiment_results` AS select `experiments`.`id` AS `experiment_id`,`experiments`.`name` AS `experiment_name`,`conditions`.`name` AS `condition_name`,`participant_actions`.`session_identifier` AS `session_identifier`,`participant_actions`.`action_type` AS `action_type`,`participant_actions`.`product_id` AS `product_id`,`products`.`name` AS `product_name`,`participant_actions`.`quantity` AS `quantity`,`participant_actions`.`created_at` AS `created_at` from (((`experiments` join `conditions` on((`conditions`.`experiment_id` = `experiments`.`id`))) join `participant_actions` on((`participant_actions`.`condition_id` = `conditions`.`id`))) left join `products` on((`participant_actions`.`product_id` = `products`.`id`))) */;
+/*!50001 VIEW `experiment_results` AS select `experiments`.`id` AS `experiment_id`,`experiments`.`name` AS `experiment_name`,`conditions`.`name` AS `condition_name`,`participant_actions`.`session_identifier` AS `session_identifier`,`participant_actions`.`action_type` AS `action_type`,`participant_actions`.`product_id` AS `product_id`,`products`.`name` AS `product_name`,`participant_actions`.`quantity` AS `quantity`,`participant_actions`.`created_at` AS `created_at` from (((`experiments` join `conditions` on(`conditions`.`experiment_id` = `experiments`.`id`)) join `participant_actions` on(`participant_actions`.`condition_id` = `conditions`.`id`)) left join `products` on(`participant_actions`.`product_id` = `products`.`id`)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
