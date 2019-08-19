@@ -1,12 +1,5 @@
 const config = {
-  module: {
-    loaders: [
-      {
-        test: /\.scss$/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader']
-      }
-    ]
-  }
+// custom config can go here
 };
 
 module.exports = config;
