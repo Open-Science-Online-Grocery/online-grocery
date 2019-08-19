@@ -25,6 +25,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'uglifier'
 gem 'webpacker'
 
+# this is an indirect dependency. specifying here to avoid a security issue
+# with certain versions.
+gem 'rails-html-sanitizer', '~> 1.0.3'
+
 group :development, :test do
   gem 'awesome_print'
   gem 'bundler-audit'
