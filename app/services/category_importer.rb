@@ -13,7 +13,6 @@ class CategoryImporter
         import_category(category_rows)
       end
       Category.where.not(id: rows_by_category.keys).destroy_all
-      puts 'Success!'
     end
   end
 

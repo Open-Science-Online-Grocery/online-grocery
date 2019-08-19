@@ -21,7 +21,6 @@ class ProductImporter
         puts "imported product #{i}" if i % 1000 == 0
       end
       Product.where.not(id: @imported_ids).destroy_all
-      puts 'Success!'
     end
   end
   # rubocop:enable Rails/Output
