@@ -80,6 +80,8 @@ RUN gem install bundler
 RUN mkdir -p /app
 WORKDIR /app
 
+RUN echo 'test'
+
 ## Expose port 3000 to the Docker host, so we can access it
 ## from the outside.
 EXPOSE 3000
