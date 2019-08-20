@@ -7,8 +7,8 @@
 # Instructions are here: https://gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal/container_registry
 
 # docker login registry.gitlab.com
-# docker build -t registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.9 .
-# docker push registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.9
+# docker build -t registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.10 .
+# docker push registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.10
 
 # If you would like to make a different version of this image when you're working on new features
 # You could build an image with a name that includes your branch name in it. e.g.
@@ -30,15 +30,15 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 # Chrome / Chromedriver dependencies
-RUN apt-get update && \
-    apt-get install -yq \
-      libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
-      libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \
-      libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 \
-      libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \
-      libnss3 \
-      libxcomposite1 ca-certificates fonts-liberation libappindicator1 lsb-release xdg-utils \
-      && rm -rf /var/lib/apt/lists/*
+  # RUN apt-get update && \
+  #     apt-get install -yq \
+  #       libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
+  #       libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \
+  #       libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 \
+  #       libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \
+  #       libnss3 \
+  #       libxcomposite1 ca-certificates fonts-liberation libappindicator1 lsb-release xdg-utils \
+  #       && rm -rf /var/lib/apt/lists/*
 
 # Install Chromium
 # It seems that the zip folder has an executable and also other files that are needed
@@ -48,19 +48,19 @@ RUN apt-get update && \
 # and then adding the whole folder to the PATH
 # We are now using a fixed version of Chromium by keeping a snapshot on S3. If you want the latest version
 # You can get it here: https://download-chromium.appspot.com/dl/Linux_x64?type=snapshots
-RUN wget -O /tmp/chrome-linux.zip https://s3.amazonaws.com/com-scimed-public/chrome/chromium_linux64_v71.0.3558.0.zip && \
-    unzip /tmp/chrome-linux.zip -d /usr/local/bin/ && \
-    chown root:root /usr/local/bin/chrome-linux/chrome && \
-    chmod 4755 /usr/local/bin/chrome-linux/chrome && \
-    export PATH=$PATH:/usr/local/bin/chrome-linux
+  # RUN wget -O /tmp/chrome-linux.zip https://s3.amazonaws.com/com-scimed-public/chrome/chromium_linux64_v71.0.3558.0.zip && \
+  #     unzip /tmp/chrome-linux.zip -d /usr/local/bin/ && \
+  #     chown root:root /usr/local/bin/chrome-linux/chrome && \
+  #     chmod 4755 /usr/local/bin/chrome-linux/chrome && \
+  #     export PATH=$PATH:/usr/local/bin/chrome-linux
 
 # Install Chromedriver
 # We are now using a fixed version of chromedriver by keeping a snapshot on S3. If you want the latest version
 # you can get it here:
 # RUN LATEST_CHROMEDRIVER=$(curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE) && \
 #     wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER/chromedriver_linux64.zip
-RUN wget -O /tmp/chromedriver.zip https://s3.amazonaws.com/com-scimed-public/chrome/chromedriver_linux64_v2.42.zip && \
-    unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
+  # RUN wget -O /tmp/chromedriver.zip https://s3.amazonaws.com/com-scimed-public/chrome/chromedriver_linux64_v2.42.zip && \
+  #     unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 
 # MySQL client
 RUN apt-get update && \
