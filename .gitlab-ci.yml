@@ -22,7 +22,6 @@ cache:
 
 before_script:
   - mysql --version
-  - mysqld --version
   - echo '127.0.0.1 mysql' >> /etc/hosts # So that we can use the same database hostname with Kubernetes
   - eval $(ssh-agent -s)
   - mkdir -p ~/.ssh
