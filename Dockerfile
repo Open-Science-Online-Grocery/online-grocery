@@ -31,7 +31,7 @@ RUN apt-get update && \
 
 # Chrome / Chromedriver dependencies
 RUN apt-get update && \
-    apt-get install -yq --no-install-recommends \
+    apt-get install -yq \
       libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
       libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \
       libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 \
@@ -64,7 +64,7 @@ RUN wget -O /tmp/chromedriver.zip https://s3.amazonaws.com/com-scimed-public/chr
 
 # Postgres client latest
 RUN apt-get update && \
-    apt-get install -y --force-yes mariadb-client libmariadbclient-dev && \
+    apt-get install -y --force-yes default-mysql-client && \
     rm -rf /var/lib/apt/lists/*
 
 RUN npm install -g yarn
