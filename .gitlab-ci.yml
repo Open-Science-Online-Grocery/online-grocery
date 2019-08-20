@@ -28,9 +28,6 @@ before_script:
   - eval $(ssh-agent -s)
   - mkdir -p ~/.ssh
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-  - export PATH=$PATH:/usr/local/bin/chrome-linux
-  - chromedriver --version
-  - chrome --version
   - bundle install
 
 ci:
