@@ -1,7 +1,7 @@
 # If you have gitlab-runner installed you can run this locally by doing:
 # `gitlab-runner exec docker --docker-pull-policy="if-not-present" ci`
 
-image: registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.8
+image: registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.9
 
 services:
   - mariadb/server:10.3

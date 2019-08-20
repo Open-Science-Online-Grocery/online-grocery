@@ -7,8 +7,8 @@
 # Instructions are here: https://gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal/container_registry
 
 # docker login registry.gitlab.com
-# docker build -t registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.3 .
-# docker push registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.3
+# docker build -t registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.9 .
+# docker push registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.9
 
 # If you would like to make a different version of this image when you're working on new features
 # You could build an image with a name that includes your branch name in it. e.g.
@@ -79,6 +79,9 @@ RUN gem install bundler
 ## commands.
 RUN mkdir -p /app
 WORKDIR /app
+COPY Gemfile /app
+COPY Gemfile.lock /app
+RUN bundle install
 
 RUN echo 'test'
 
