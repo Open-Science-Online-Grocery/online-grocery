@@ -4,7 +4,8 @@
 image: registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.9
 
 services:
-  - mariadb/server:10.3
+  - name: mariadb/server:10.3
+    alias: mysql
 
 variables:
   # POSTGRES_DB: midas_test
@@ -12,6 +13,7 @@ variables:
   RAILS_ENV: test
   DATABASE_URL: 'mysql2://root@mysql/howes_grocery_test?encoding=utf8&collation=utf8_general_ci'
   TZ: "America/New_York"
+  MYSQL_ALLOW_EMPTY_PASSWORD: '1'
   MARIADB_ALLOW_EMPTY_PASSWORD: '1'
   DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: 'true'
   BUNDLER_VERSION: '2.0.1'
