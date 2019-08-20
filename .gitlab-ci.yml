@@ -1,7 +1,7 @@
 # If you have gitlab-runner installed you can run this locally by doing:
 # `gitlab-runner exec docker --docker-pull-policy="if-not-present" ci`
 
-image: registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.11
+image: registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.12
 
 services:
   - name: mariadb/server:10.3
@@ -28,6 +28,8 @@ before_script:
   - eval $(ssh-agent -s)
   - mkdir -p ~/.ssh
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  - export PATH=$PATH:/usr/local/bin/chrome-linux
+  - export WD_CHROME_PATH=/usr/local/bin/chrome-linux
   - bundle install
 
 ci:

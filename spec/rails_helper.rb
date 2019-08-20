@@ -20,7 +20,6 @@ require 'capybara-screenshot/rspec'
 require 'webdrivers'
 
 Webdrivers.cache_time = 1
-Webdrivers::Chromedriver.required_version = '2.46'
 Webdrivers.logger.level = :DEBUG
 
 Shoulda::Matchers.configure do |config|
