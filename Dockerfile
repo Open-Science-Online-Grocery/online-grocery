@@ -62,7 +62,7 @@ RUN wget -O /tmp/chrome-linux.zip https://s3.amazonaws.com/com-scimed-public/chr
 RUN wget -O /tmp/chromedriver.zip https://s3.amazonaws.com/com-scimed-public/chrome/chromedriver_linux64_v2.42.zip && \
     unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 
-# Postgres client latest
+# MySQL client
 RUN apt-get update && \
     apt-get install -y --force-yes default-mysql-client && \
     rm -rf /var/lib/apt/lists/*

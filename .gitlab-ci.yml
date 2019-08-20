@@ -4,7 +4,7 @@
 image: registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.8
 
 services:
-  - mysql:5.7
+  - mariadb/server:10.3
 
 variables:
   # POSTGRES_DB: midas_test
