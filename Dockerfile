@@ -64,7 +64,7 @@ RUN wget -O /tmp/chromedriver.zip https://s3.amazonaws.com/com-scimed-public/chr
 
 # Postgres client latest
 RUN apt-get update && \
-    apt-get install -y --force-yes default-mysql-client && \
+    apt-get install -y --force-yes mariadb-client libmariadbclient-dev && \
     rm -rf /var/lib/apt/lists/*
 
 RUN npm install -g yarn
