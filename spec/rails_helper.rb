@@ -21,7 +21,6 @@ require 'webdrivers'
 
 Webdrivers.cache_time = 1
 Webdrivers::Chromedriver.required_version = '2.42'
-Webdrivers.logger.level = :DEBUG
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
