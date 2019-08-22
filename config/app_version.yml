@@ -6,7 +6,7 @@
 #  rake git:tag TAG='1.2.3'
 #  rake git:tag TAG='1.2.3.rc-9'
 major: 1
-minor: 3
+minor: 4
 revision: 0
-release_candidate: 0
-time: 2019-08-01 10:25:00 -0400
+release_candidate: 2
+time: 2019-08-22 11:04:34 -0400
