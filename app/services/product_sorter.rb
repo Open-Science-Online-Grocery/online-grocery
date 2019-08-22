@@ -28,6 +28,8 @@ class ProductSorter
     case @condition.sort_type
       when Condition.sort_types.none
         @product_hashes
+      when Condition.sort_types.random
+        @product_hashes.shuffle
       when Condition.sort_types.field
         field_sorted_products(default_sort_field_name, default_sort_order)
       when Condition.sort_types.calculation

@@ -116,6 +116,7 @@ CREATE TABLE `conditions` (
   `may_add_to_cart_by_dollar_amount` tinyint(1) DEFAULT 0,
   `show_guiding_stars` tinyint(1) DEFAULT 1,
   `qualtrics_code` varchar(255) DEFAULT NULL,
+  `sort_type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_conditions_on_experiment_id` (`experiment_id`),
   KEY `index_conditions_on_default_sort_field_id` (`default_sort_field_id`)
@@ -418,6 +419,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20190227180805'),
 ('20190306151626'),
 ('20190307193245'),
-('20190319133936');
+('20190319133936'),
+('20190822140435'),
+('20190822140828');
 
 

@@ -13,7 +13,8 @@ module Seeds
               name: Faker::Lorem.sentence,
               qualtrics_code: 'ABCDEFG',
               uuid: SecureRandom.uuid,
-              nutrition_styles: '{}'
+              nutrition_styles: '{}',
+              sort_type: Condition.sort_types.none
             )
           end
         end
