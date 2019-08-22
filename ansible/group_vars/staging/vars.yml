@@ -22,8 +22,8 @@ run_rbenv_installation: True
 rbenv_user: deployer
 rbenv_group: deployer
 rbenv_ruby_versions:
-  - 2.4.2
-rbenv_global_version: 2.4.2
+  - 2.6.3
+rbenv_global_version: 2.6.3
 
 # Capistrano folders
 run_capistrano_checks: True
@@ -44,7 +44,7 @@ apache_vhosts:
     app_admin: info@scimedsolutions.com
     app_environment: staging
     passenger_app_apache_module_enabled: True
-    passenger_app_ruby_bin: /home/deployer/.rbenv/versions/2.4.2/bin/ruby
+    passenger_app_ruby_bin: /home/deployer/.rbenv/versions/2.6.3/bin/ruby
     passenger_app_additional_settings: |2
           # No additional Passenger settings
     document_root: "/var/www/apps/{{ app_name }}"

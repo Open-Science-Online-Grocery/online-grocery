@@ -57,7 +57,7 @@ function callApi(route, data) {
 export function jsonApiCall(route, data, successFunc, failureFunc) {
   const underscoredData = humps.decamelizeKeys(data);
   callApi(route, underscoredData)
-    .then(response => checkResponse(response))
-    .then(json => successFunc(humps.camelizeKeys(json)))
-    .catch(response => handleFailure(response, failureFunc));
+    .then((response) => checkResponse(response))
+    .then((json) => successFunc(humps.camelizeKeys(json)))
+    .catch((response) => handleFailure(response, failureFunc));
 }

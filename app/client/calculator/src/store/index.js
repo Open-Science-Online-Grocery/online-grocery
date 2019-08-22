@@ -19,7 +19,7 @@ export function getVariables($$state) {
 }
 
 function getVariable($$state, token) {
-  return getVariables($$state).find(variable => variable.token === token.value);
+  return getVariables($$state).find((variable) => variable.token === token.value);
 }
 
 export function getCursorPosition($$state) {
@@ -66,7 +66,7 @@ function getTokenName($$state, token) {
 export function getTokensWithName($$state) {
   const tokensArray = getTokens($$state);
   return tokensArray.map(
-    token => Object.assign(token, { name: getTokenName($$state, token) })
+    (token) => Object.assign(token, { name: getTokenName($$state, token) })
   );
 }
 
@@ -76,13 +76,13 @@ export function getTokensJson($$state) {
 
 export function getIncompleteDataVariables($$state) {
   const variableTokens = getTokens($$state).filter(
-    token => token.type === 'variable'
+    (token) => token.type === 'variable'
   );
-  const variables = variableTokens.map(token => getVariable($$state, token));
+  const variables = variableTokens.map((token) => getVariable($$state, token));
   const uniqueVariables = Array.from(new Set(variables));
   return uniqueVariables
-    .filter(variable => variable.incompleteData)
-    .map(variable => variable.description);
+    .filter((variable) => variable.incompleteData)
+    .map((variable) => variable.description);
 }
 
 /* ******************************* reducers ********************************* */

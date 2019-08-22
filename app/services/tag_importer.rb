@@ -89,8 +89,8 @@ class TagImporter
         tag_name: tag_name,
         subtag_name: subtag_name
       )
-    rescue ActiveRecord::RecordNotFound, ActiveRecord::RecordInvalid => error
-      standard_error(error.message, row_number)
+    rescue ActiveRecord::RecordNotFound, ActiveRecord::RecordInvalid => e
+      standard_error(e.message, row_number)
     end
   end
 

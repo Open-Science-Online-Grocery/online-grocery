@@ -80,7 +80,7 @@ function reportTestResults(testResults) {
     type: REPORT_TEST_RESULTS,
     payload: {
       valid: testResults.data.valid,
-      validationMessage: testResults.errors.map(e => e.title).join(', ')
+      validationMessage: testResults.errors.map((e) => e.title).join(', ')
     }
   };
 }
@@ -94,7 +94,7 @@ export function testCalculation() {
       conditionId: getConditionId($$state)
     };
     const route = equationValidation();
-    const success = json => dispatch(reportTestResults(json));
+    const success = (json) => dispatch(reportTestResults(json));
     return fromApi.jsonApiCall(route, data, success, testCalculationFailure);
   };
 }

@@ -51,6 +51,6 @@ export default class CssSelectorWriter {
   }
 
   camelCaseToHyphen(key) {
-    return key.replace(/([a-z][A-Z])/g, g => `${g[0]}-${g[1].toLowerCase()}`);
+    return key.replace(/([a-z][A-Z])/g, (g) => `${g[0]}-${g[1].toLowerCase()}`);
   }
 }

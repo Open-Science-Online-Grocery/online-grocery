@@ -1,10 +1,11 @@
 # If you have gitlab-runner installed you can run this locally by doing:
 # `gitlab-runner exec docker --docker-pull-policy="if-not-present" ci`
 
-image: registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.2
+image: registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.12
 
 services:
-  - mysql:5.7
+  - name: mariadb/server:10.3
+    alias: mysql
 
 variables:
   # POSTGRES_DB: midas_test
@@ -13,6 +14,7 @@ variables:
   DATABASE_URL: 'mysql2://root@mysql/howes_grocery_test?encoding=utf8&collation=utf8_general_ci'
   TZ: "America/New_York"
   MYSQL_ALLOW_EMPTY_PASSWORD: '1'
+  MARIADB_ALLOW_EMPTY_PASSWORD: '1'
   DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: 'true'
   BUNDLER_VERSION: '2.0.1'
 
@@ -21,18 +23,18 @@ cache:
     - vendor/ruby
 
 before_script:
+  - mysql --version
   - echo '127.0.0.1 mysql' >> /etc/hosts # So that we can use the same database hostname with Kubernetes
   - eval $(ssh-agent -s)
   - mkdir -p ~/.ssh
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   - export PATH=$PATH:/usr/local/bin/chrome-linux
-  - chromedriver --version
-  - chrome --version
+  - export WD_CHROME_PATH=/usr/local/bin/chrome-linux/chrome
+  - bundle install
 
 ci:
   script:
-    - grep -q '2\.4\.2' .ruby-version # If the Ruby version used by the project changes then a new Docker image needs to be created and used with the correct version.
-    - bundle install -j $(nproc) --path vendor/ruby --without development
+    - grep -q '2\.6\.3' .ruby-version # If the Ruby version used by the project changes then a new Docker image needs to be created and used with the correct version.    - bundle install -j $(nproc) --path vendor/ruby --without development
     - NODE_ENV=development yarn
     - bundle exec rake db:create
     - bundle exec rake db:migrate

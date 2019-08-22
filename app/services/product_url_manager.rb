@@ -150,7 +150,9 @@ class ProductUrlManager
   private def products_greater_than(product_id)
     product_table = Product.arel_table
     Product.where(
-      product_table[:id].gteq(product_id)
+      product_table[:aws_image_url].eq(nil).and(
+        product_table[:id].gteq(product_id)
+      )
     )
   end
 
