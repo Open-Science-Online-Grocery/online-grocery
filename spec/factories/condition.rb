@@ -6,5 +6,6 @@ FactoryBot.define do
     experiment
     uuid { SecureRandom.uuid }
     qualtrics_code { 'ABCDEFG' }
+    sort_type { 'none' }
   end
 end
