@@ -41,7 +41,6 @@ group :development, :test do
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'rubocop-performance', require: false
-  gem 'webdrivers'
 end
 
 group :development do
@@ -67,5 +66,6 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
+  gem 'webdrivers'
 end
 
