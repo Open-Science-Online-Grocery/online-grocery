@@ -137,15 +137,15 @@ all changes merged in.
 
 1. Update the app version. (This is done by using one of the git commands found in the comment of `config/app_version.yml`. Ask your project manager if you're unsure of what the new version should be.)
 
-1. Enable the maintenance page for the application: 
+1. Enable the maintenance page for the application:
 	* For the staging server, run `bundle exec cap staging maintenance:enable`
 	* For the production server, run `bundle exec cap production maintenance:enable`
 
-1. Deploy the application: 
+1. Deploy the application:
     * For the staging server, run `bundle exec cap staging deploy`
     * For the production server, run `bundle exec cap production deploy`
 
-1. Disable the maintenance page for the application: 
+1. Disable the maintenance page for the application:
 	* For the staging server, run `bundle exec cap staging maintenance:disable`
 	* For the production server, run `bundle exec cap production maintenance:disable`
 
@@ -156,8 +156,8 @@ in and hovering over the Howe's Grocery Researcher Portal logo in the upper left
 
 To update the categories, subcategories, and subsubcategories in the store on a server:
 
-1. On your local development machine, replace the file at `db/seeds/base/categories.csv` with the updated categories file. 
-  * The new file must be in the same format as the old file. 
+1. On your local development machine, replace the file at `db/seeds/base/categories.csv` with the updated categories file.
+  * The new file must be in the same format as the old file.
   * This file must be a CSV file, not an Excel file.
 
 1. Test the new file locally by running this command in a terminal within from the root directory of the application: `bundle exec rake update_categories`.  If the output ends with `Success!`, the task has succeeded. Otherwise, there is a problem with the file format.
@@ -179,8 +179,8 @@ Note that we have been aiming to keep the "newsubcategories_view" tab of the [pr
 
 To update the products in the store on a server:
 
-1. On your local development machine, replace the file at `db/seeds/base/products.csv` with the updated products file. 
-  * The new file must be in the same format as the old file. 
+1. On your local development machine, replace the file at `db/seeds/base/products.csv` with the updated products file.
+  * The new file must be in the same format as the old file.
   * This file must be a CSV file, not an Excel file.
   * If you are adding new products to the CSV, you do not need to fill in the "awsImageUrl" column for them - that will be filled in for you.  You *should* fill in the "imageScr" column, though.
   * If the CSV refers to new categories, be sure to update the catgories before updating the products.

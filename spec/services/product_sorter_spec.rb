@@ -28,6 +28,7 @@ RSpec.describe ProductSorter do
   end
 
   before do
+    allow(product_hashes).to receive(:shuffle) { [product_2, product_3, product_1] }
     allow(ProductSortField).to receive(:find_by) { product_sort_field }
   end
 
@@ -71,6 +72,14 @@ RSpec.describe ProductSorter do
 
         it 'returns the product hashes in the original order' do
           expect(subject.sorted_products).to eq product_hashes
+        end
+      end
+
+      context 'when sorting randomly' do
+        let(:sort_type) { Condition.sort_types.random }
+
+        it 'returns the product hashes in a shuffled order' do
+          expect(subject.sorted_products).to eq [product_2, product_3, product_1]
         end
       end
 

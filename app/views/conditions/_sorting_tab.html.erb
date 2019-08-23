@@ -11,6 +11,12 @@
         </div>
         <div class="field">
           <div class="ui radio checkbox">
+            <%= f.radio_button :sort_type, Condition.sort_types.random, data: { refresh_form: true } %>
+            <label>Random order</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui radio checkbox">
             <%= f.radio_button :sort_type, Condition.sort_types.field, data: { refresh_form: true } %>
             <label>A specified field</label>
           </div>
