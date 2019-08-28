@@ -68,7 +68,9 @@ class ConditionsController < ApplicationController
     if params[:id].present?
       condition = Condition.find(params[:id])
     else
-      condition = @experiment.conditions.build
+      condition = @experiment.conditions.build(
+        sort_type: Condition.sort_types.none
+      )
     end
     @condition = ConditionPresenter.new(condition)
   end

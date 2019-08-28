@@ -1,0 +1,112 @@
+Category ID,Category Name,Subcategory Order,Subcategory Name,Subsubcategory Order,Subsubcategory Name
+1,Produce,1,Fresh Fruit,"",""
+1,Produce,2,Fresh Vegetables,"",""
+1,Produce,3,Packaged Produce,1,Packaged Fruit
+1,Produce,3,Packaged Produce,2,Packaged Veg
+1,Produce,3,Packaged Produce,3,Dips and Spreads
+1,Produce,3,Packaged Produce,4,Fruit Juice & Smoothie
+1,Produce,4,Fresh Herbs,"",""
+1,Produce,5,Tofu & Meat Alternatives,"",""
+2,"Meat, Dairy & Eggs",1,Dairy & Eggs,1,Cheese
+2,"Meat, Dairy & Eggs",1,Dairy & Eggs,2,Yogurt
+2,"Meat, Dairy & Eggs",1,Dairy & Eggs,3,Milk
+2,"Meat, Dairy & Eggs",1,Dairy & Eggs,4,Cream
+2,"Meat, Dairy & Eggs",1,Dairy & Eggs,6,Eggs
+2,"Meat, Dairy & Eggs",1,Dairy & Eggs,7,Butter
+2,"Meat, Dairy & Eggs",1,Dairy & Eggs,8,Spreads
+2,"Meat, Dairy & Eggs",1,Dairy & Eggs,9,Vegan and Lactose-Free
+2,"Meat, Dairy & Eggs",1,Dairy & Eggs,10,Dessert
+2,"Meat, Dairy & Eggs",2,Meat,1,Prepared
+2,"Meat, Dairy & Eggs",2,Meat,2,Cured (Deli & Sausage)
+2,"Meat, Dairy & Eggs",2,Meat,3,Fresh Seafood
+2,"Meat, Dairy & Eggs",2,Meat,4,Fresh Poultry
+2,"Meat, Dairy & Eggs",2,Meat,5,Red Meat
+3,"Bakery, Pasta & Grains",1,Bakery,1,Bread
+3,"Bakery, Pasta & Grains",1,Bakery,2,Tortillas & Flatbread
+3,"Bakery, Pasta & Grains",1,Bakery,3,Buns & Rolls
+3,"Bakery, Pasta & Grains",1,Bakery,4,Breakfast Bakery
+3,"Bakery, Pasta & Grains",1,Bakery,5,Desserts
+3,"Bakery, Pasta & Grains",2,Pasta and Grains,1,Pasta
+3,"Bakery, Pasta & Grains",2,Pasta and Grains,2,Rice
+3,"Bakery, Pasta & Grains",2,Pasta and Grains,3,Other Grains
+4,"Dry Goods, Breakfast & Spices",1,"Coffee, Tea & Creamers","",""
+4,"Dry Goods, Breakfast & Spices",2,Breakfast Items,1,Cereal
+4,"Dry Goods, Breakfast & Spices",2,Breakfast Items,2,Hot Cereal
+4,"Dry Goods, Breakfast & Spices",2,Breakfast Items,3,Pancakes
+4,"Dry Goods, Breakfast & Spices",2,Breakfast Items,4,Bars & Pastry
+4,"Dry Goods, Breakfast & Spices",3,Spices,"",""
+4,"Dry Goods, Breakfast & Spices",4,Dried Beans,"",""
+4,"Dry Goods, Breakfast & Spices",5,Ice Cream Cones & Topping,"",""
+4,"Dry Goods, Breakfast & Spices",6,Instant Foods,"",""
+4,"Dry Goods, Breakfast & Spices",7,Baking,1,"Cake, Muffin Mixes & Frosting"
+4,"Dry Goods, Breakfast & Spices",7,Baking,2,Cake Decorations
+4,"Dry Goods, Breakfast & Spices",7,Baking,3,Brownie & Cookie Mixes
+4,"Dry Goods, Breakfast & Spices",7,Baking,4,"Chips, Morsels & Nuts"
+4,"Dry Goods, Breakfast & Spices",7,Baking,5,"Flour, Meal & Coatings"
+4,"Dry Goods, Breakfast & Spices",7,Baking,6,Gelatins & Puddings
+4,"Dry Goods, Breakfast & Spices",7,Baking,7,Pie Filling and Crust
+4,"Dry Goods, Breakfast & Spices",7,Baking,8,Sugar & Sugar Substitutes
+5,Pantry,1,Condiments & Spreads,1,"Honey, Syrup & Nectar"
+5,Pantry,1,Condiments & Spreads,2,Ketchups & BBQ Sauce
+5,Pantry,1,Condiments & Spreads,3,Non-dairy Spreads
+5,Pantry,1,Condiments & Spreads,4,Mustard & Mayo
+5,Pantry,2,Salad Dressing,"",""
+5,Pantry,3,Pickled Goods & Olives,"",""
+5,Pantry,4,International,1,Asian
+5,Pantry,4,International,2,British
+5,Pantry,4,International,3,Kosher
+5,Pantry,4,International,4,Mexican
+5,Pantry,4,International,5,South Asian
+5,Pantry,5,Marinades & Sauces,1,Pasta Sauce
+5,Pantry,5,Marinades & Sauces,2,Specialty Sauce
+5,Pantry,5,Marinades & Sauces,3,Marinades
+5,Pantry,6,Oils & Vinegar,"",""
+5,Pantry,7,Condensed Milk,"",""
+6,Canned,1,Canned Meats,"",""
+6,Canned,2,Canned Vegetables,1,Beans
+6,Canned,2,Canned Vegetables,2,Tomatoes
+6,Canned,2,Canned Vegetables,3,Vegetables
+6,Canned,3,Soups & Pastas,1,"Broth, Bouillon, & Sauces"
+6,Canned,3,Soups & Pastas,2,Condensed Soup
+6,Canned,3,Soups & Pastas,3,Instant Soup Mix
+6,Canned,3,Soups & Pastas,4,Ready to Eat Soup
+6,Canned,4,Canned Fruits & Apple Sauce,"",""
+7,Snacks,1,Crackers,"",""
+7,Snacks,2,"Candy, Gum & Mints","",""
+7,Snacks,3,Cookies,"",""
+7,Snacks,4,"Chips, Pretzels & Rice Cakes",1,Rice Cakes
+7,Snacks,4,"Chips, Pretzels & Rice Cakes",2,Pretzels
+7,Snacks,4,"Chips, Pretzels & Rice Cakes",3,"Chips, Curls, & Puffs"
+7,Snacks,5,Dried Fruit & Nuts,"",""
+7,Snacks,6,Popcorn,"",""
+7,Snacks,7,Salsa & Dips,"",""
+8,Beverages,1,Bottled Tea,"",""
+8,Beverages,2,Energy Drinks,"",""
+8,Beverages,3,Flavored & Sparkling Water,"",""
+8,Beverages,4,Juice & Nectar,"",""
+8,Beverages,5,Powdered Drinks,"",""
+8,Beverages,6,Soda,"",""
+8,Beverages,7,Sport Drinks,"",""
+8,Beverages,8,Water,"",""
+9,Frozen Foods,1,Frozen Bread,1,Biscuits & Bagels
+9,Frozen Foods,1,Frozen Bread,2,Buns & Rolls
+9,Frozen Foods,1,Frozen Bread,3,Garlic Bread
+9,Frozen Foods,2,Breakfast,"",""
+9,Frozen Foods,3,Seafood,"",""
+9,Frozen Foods,4,Entrées,1,Asian Entrées
+9,Frozen Foods,4,Entrées,2,Hispanic
+9,Frozen Foods,4,Entrées,3,Kosher Entrées
+9,Frozen Foods,4,Entrées,4,Frozen Dinner
+9,Frozen Foods,4,Entrées,5,Pot Pie
+9,Frozen Foods,4,Entrées,6,Meatless
+9,Frozen Foods,4,Entrées,7,Frozen Pastas
+9,Frozen Foods,4,Entrées,8,Frozen Pizza
+9,Frozen Foods,5,Juice & Beverage,"",""
+9,Frozen Foods,6,Fruit,"",""
+9,Frozen Foods,7,Vegetables,1,Potatoes
+9,Frozen Foods,7,Vegetables,2,Other Veggies
+9,Frozen Foods,8,Snacks,"",""
+9,Frozen Foods,9,Dessert,1,"Cakes, Pies & Desserts"
+9,Frozen Foods,9,Dessert,2,Toppings
+9,Frozen Foods,9,Dessert,3,Ice Cream
+9,Frozen Foods,9,Dessert,4,Frozen Novelties

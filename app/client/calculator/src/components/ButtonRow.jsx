@@ -8,7 +8,7 @@ export default class ButtonRow extends PureComponent {
       <Button.Group className={this.props.className}>
         {
           this.props.values.map(
-            value => (
+            (value) => (
               <Button
                 key={value}
                 type="button"

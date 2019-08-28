@@ -23,7 +23,7 @@ export default class VariableSelector extends PureComponent {
     const sortedVariables = this.props.variables
       .sort((a, b) => a.description.localeCompare(b.description));
     const variables = sortedVariables.map(
-      variable => ({ value: variable.token, text: variable.description })
+      (variable) => ({ value: variable.token, text: variable.description })
     );
     return [{ value: '', text: '' }].concat(variables);
   }

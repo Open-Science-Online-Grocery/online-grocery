@@ -4,9 +4,9 @@
 class Condition < ApplicationRecord
   include Rails.application.routes.url_helpers
 
-  attr_writer :show_food_count, :sort_type, :active_tag_csv, :style_use_type
+  attr_writer :show_food_count, :active_tag_csv, :style_use_type
 
-  validates :name, :uuid, :qualtrics_code, presence: true
+  validates :name, :uuid, :qualtrics_code, :sort_type, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
   validate :unique_label_names
 
@@ -36,7 +36,12 @@ class Condition < ApplicationRecord
                                 allow_destroy: true
 
   def self.sort_types
-    OpenStruct.new(none: 'none', field: 'field', calculation: 'calculation')
+    OpenStruct.new(
+      none: 'none',
+      field: 'field',
+      calculation: 'calculation',
+      random: 'random'
+    )
   end
 
   def self.style_use_types
@@ -51,13 +56,6 @@ class Condition < ApplicationRecord
   # access the store
   def url
     store_url(condId: uuid)
-  end
-
-  def sort_type
-    return @sort_type if @sort_type
-    return sort_types.field if default_sort_field
-    return sort_types.calculation if sort_equation_tokens
-    sort_types.none
   end
 
   def style_use_type

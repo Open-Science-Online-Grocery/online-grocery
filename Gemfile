@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.4.2'
+ruby '2.6.3'
 
 gem 'aws-sdk-s3'
 gem 'bcrypt_pbkdf'
@@ -25,6 +25,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'uglifier'
 gem 'webpacker'
 
+# this is an indirect dependency. specifying here to avoid a security issue
+# with certain versions.
+gem 'rails-html-sanitizer', '~> 1.0.3'
+
 group :development, :test do
   gem 'awesome_print'
   gem 'bundler-audit'
@@ -34,7 +38,9 @@ group :development, :test do
   gem 'pry-nav'
   gem 'rspec-rails'
   gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+  gem 'rubocop-performance', require: false
 end
 
 group :development do
@@ -44,7 +50,6 @@ group :development do
   gem 'capistrano-passenger'
   gem 'capistrano-rbenv'
   gem 'capistrano-rails'
-  gem 'chromedriver-helper'
   gem 'git_rails_tagger', git: 'https://gitlab.com/scimed-public/git-rails-tagger.git'
   gem 'letter_opener'
   gem 'listen'
@@ -61,5 +66,6 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
+  gem 'webdrivers'
 end
 

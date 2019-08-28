@@ -1,5 +1,7 @@
-# rubocop version: 0.57.2
-require: rubocop-rspec
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-performance
 
 AllCops:
   Exclude:
@@ -15,7 +17,7 @@ AllCops:
     - '**/Vagrantfile'
     - '**/db/schema.rb'
     - 'vendor/**/*'
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.6.3
   TargetRailsVersion: 5.2
 
 Layout/ClassStructure:

@@ -13,6 +13,7 @@ RSpec.describe 'Sorting products in grocery store', :feature do
     create(
       :condition,
       experiment: experiment,
+      sort_type: 'field',
       default_sort_field: sort_field_1,
       default_sort_order: 'desc',
       product_sort_field_ids: [sort_field_2.id]

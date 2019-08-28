@@ -3,7 +3,7 @@ import Calculator from '../components/Calculator';
 import { getInputName, getTokensJson, getTokenCount } from '../store';
 import { testCalculation, setCalculatorFocus } from '../actions';
 
-const mapStateToProps = $$state => (
+const mapStateToProps = ($$state) => (
   {
     inputName: getInputName($$state),
     tokensJson: getTokensJson($$state),
@@ -11,10 +11,10 @@ const mapStateToProps = $$state => (
   }
 );
 
-const mapDispatchToProps = dispatch => (
+const mapDispatchToProps = (dispatch) => (
   {
     testCalculation: () => dispatch(testCalculation()),
-    setCalculatorFocus: calculatorFocus => dispatch(
+    setCalculatorFocus: (calculatorFocus) => dispatch(
       setCalculatorFocus(calculatorFocus)
     )
   }

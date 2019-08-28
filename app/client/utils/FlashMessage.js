@@ -37,7 +37,7 @@ export default class FlashMessage {
   }
 
   listItems() {
-    return this.messages.map(message => `<li>${message}</li>`);
+    return this.messages.map((message) => `<li>${message}</li>`);
   }
 
   clearFlash() {

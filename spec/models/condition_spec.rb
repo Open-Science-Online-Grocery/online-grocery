@@ -9,6 +9,7 @@ RSpec.describe Condition, type: :model do
     it { is_expected.to validate_presence_of :name }
     it { is_expected.to validate_presence_of :uuid }
     it { is_expected.to validate_presence_of :qualtrics_code }
+    it { is_expected.to validate_presence_of :sort_type }
     it do
       expect(subject).to validate_uniqueness_of(:name)
         .scoped_to(:experiment_id)

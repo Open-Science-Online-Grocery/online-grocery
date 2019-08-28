@@ -45,7 +45,7 @@ export default class NutritionLabelPreview extends PureComponent {
   handleClick(event) {
     if (event.target.closest('.styler-form')) return;
     document.querySelectorAll(`.${selectedClassName}`).forEach(
-      element => element.classList.remove(selectedClassName)
+      (element) => element.classList.remove(selectedClassName)
     );
     if (this.node.contains(event.target)) {
       this.props.setActiveSelector(this.getActiveSelector(event.target));

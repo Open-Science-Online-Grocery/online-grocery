@@ -48,7 +48,7 @@ export default class StylerForm extends PureComponent {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <p className={this.props.disabled ? '' : 'disabled'}>
           To change nutrition label styling, click part of the label to the left.
         </p>
@@ -133,7 +133,7 @@ export default class StylerForm extends PureComponent {
             Entire Label
           </Button>
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }
