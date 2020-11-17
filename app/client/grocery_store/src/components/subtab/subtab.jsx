@@ -18,7 +18,9 @@ export default class Subtab extends React.Component {
   }
 
   buildSubsubcategories() {
-    return this.props.subsubcats.map(subsubcat => (
+    if (this.props.categoryType === 'tag') return null;
+
+    return this.props.subsubcats.map((subsubcat) => (
       <div
         key={subsubcat.id}
         className="tab-subsubcat"
