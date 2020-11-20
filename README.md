@@ -183,7 +183,7 @@ To update the products in the store on a server:
   * The new file must be in the same format as the old file.
   * This file must be a CSV file, not an Excel file.
   * If you are adding new products to the CSV, you do not need to fill in the "awsImageUrl" column for them - that will be filled in for you.  You *should* fill in the "imageScr" column, though.
-  * If the CSV refers to new categories, be sure to update the catgories before updating the products.
+  * If the CSV refers to new categories, be sure to update the categories before updating the products.
 
 1. Test the new file locally by running this command in a terminal within from the root directory of the application: `bundle exec rake update_products`.  If the output ends with `Success!`, the task has succeeded. Otherwise, there is a problem with the file format.
 
