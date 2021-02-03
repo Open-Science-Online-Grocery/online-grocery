@@ -19,7 +19,7 @@ class ConditionPresenter < SimpleDelegator
   # Returns an array of all the unique Tag/Subtag combinations
   # present on a condition
   def unique_tag_combinations
-    tag_combinations = product_tags.map do |product_tag|
+    tag_combinations = product_tags.includes(:tag, :subtag).map do |product_tag|
       [product_tag.tag, product_tag.subtag]
     end
     tag_combinations.uniq

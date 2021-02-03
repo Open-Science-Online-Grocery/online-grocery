@@ -110,19 +110,19 @@ Then, to fetch the screenshots, run the following from the root directory of thi
 
 ## Servers and Credentials
 
-At present, we have a staging server and a production server.  For any server, if you are unable to ssh in without a password, ask another developer with ssh access to add your public key to the authorized keys file.
+At present, we have a staging server and a production server.
 
 ### Staging
 
 * [Application](https://howes-grocery.scimed-test.com/)
-* [Credentials](https://credentials.scimed.local/servers/229)
+* [Credentials](https://credentials.scimedsolutions.com/servers/229)
 * SSH: `ssh deployer@howes-grocery.scimed-test.com`
 * Rails environment: `staging`
 
 ### Production
 
 * [Application](https://openscience-onlinegrocery.com/)
-* [Credentials](https://credentials.scimed.local/servers/237)
+* [Credentials](https://credentials.scimedsolutions.com/servers/237)
 * SSH: `ssh deployer@18.204.34.178`
 * Rails environment: `production`
 
