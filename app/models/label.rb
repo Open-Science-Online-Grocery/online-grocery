@@ -4,7 +4,7 @@
 class Label < ApplicationRecord
   validates :name, presence: true
 
-  mount_uploader :image, LabelImageUploader
+  mount_uploader :image, FileUploader
 
   scope :built_in, -> { where(built_in: true) }
 
