@@ -2,6 +2,7 @@
 
 #:nodoc:
 class ConditionPresenter < SimpleDelegator
+  extend Memoist
   include ActionView::Helpers::NumberHelper
 
   alias condition __getobj__
@@ -11,10 +12,11 @@ class ConditionPresenter < SimpleDelegator
   end
 
   def historical_tag_csv_files_presenters
-    historical_tag_csv_files.map do |tag_csv_file|
+    tag_csv_files.historical.map do |tag_csv_file|
       TagCsvFilePresenter.new(tag_csv_file)
     end
   end
+  memoize :historical_tag_csv_files_presenters
 
   # Returns an array of all the unique Tag/Subtag combinations
   # present on a condition

@@ -4,7 +4,8 @@
 class Condition < ApplicationRecord
   include Rails.application.routes.url_helpers
 
-  attr_writer :show_food_count, :active_tag_csv, :style_use_type
+  attr_writer :show_food_count, :active_tag_csv, :style_use_type,
+              :active_suggestion_csv
 
   validates :name, :uuid, :qualtrics_code, :sort_type, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
@@ -21,6 +22,7 @@ class Condition < ApplicationRecord
   has_many :condition_product_sort_fields, dependent: :destroy
   has_many :product_sort_fields, through: :condition_product_sort_fields
   has_many :tag_csv_files, dependent: :destroy
+  has_many :suggestion_csv_files, dependent: :destroy
   has_many :product_tags, dependent: :destroy
   has_many :tags, through: :product_tags
   has_many :subtags, through: :product_tags
@@ -33,6 +35,7 @@ class Condition < ApplicationRecord
   accepts_nested_attributes_for :condition_cart_summary_labels,
                                 :condition_labels,
                                 :tag_csv_files,
+                                :suggestion_csv_files,
                                 allow_destroy: true
 
   def self.sort_types
@@ -52,8 +55,6 @@ class Condition < ApplicationRecord
     OpenStruct.new(ratio: 'ratio', percent: 'percent')
   end
 
-  # TODO: update if needed - depending on client's preferences on URL used to
-  # access the store
   def url
     store_url(condId: uuid)
   end
@@ -76,26 +77,26 @@ class Condition < ApplicationRecord
   end
 
   def current_tag_csv_file
-    tag_csv_files
-      .order(created_at: :desc)
-      .select(&:active)
-      .first
-  end
-
-  def historical_tag_csv_files
-    tag_csv_files
-      .order(created_at: :desc)
-      .reject(&:active)
-  end
-
-  def show_food_count
-    return food_count_format.present? if @show_food_count.nil?
-    @show_food_count
+    tag_csv_files.current.first
   end
 
   def active_tag_csv
     return @active_tag_csv unless @active_tag_csv.nil?
     current_tag_csv_file.present?
+  end
+
+  def current_suggestion_csv_file
+    suggestion_csv_files.current.first
+  end
+
+  def active_suggestion_csv
+    return @active_suggestion_csv unless @active_suggestion_csv.nil?
+    current_suggestion_csv_file.present?
+  end
+
+  def show_food_count
+    return food_count_format.present? if @show_food_count.nil?
+    @show_food_count
   end
 
   def nutrition_equation
