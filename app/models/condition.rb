@@ -4,8 +4,7 @@
 class Condition < ApplicationRecord
   include Rails.application.routes.url_helpers
 
-  attr_writer :show_food_count, :active_tag_csv, :style_use_type,
-              :active_suggestion_csv
+  attr_writer :show_food_count, :style_use_type
 
   validates :name, :uuid, :qualtrics_code, :sort_type, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
@@ -31,11 +30,14 @@ class Condition < ApplicationRecord
   has_many :condition_labels, dependent: :destroy
   has_many :labels, through: :condition_labels
 
+  has_one :current_tag_csv_file, -> { current }, class_name: 'TagCsvFile'
+
   accepts_nested_attributes_for :product_sort_fields
   accepts_nested_attributes_for :condition_cart_summary_labels,
                                 :condition_labels,
                                 :tag_csv_files,
                                 :suggestion_csv_files,
+                                :current_tag_csv_file,
                                 allow_destroy: true
 
   def self.sort_types
@@ -76,22 +78,8 @@ class Condition < ApplicationRecord
     )
   end
 
-  def current_tag_csv_file
-    tag_csv_files.current.first
-  end
-
-  def active_tag_csv
-    return @active_tag_csv unless @active_tag_csv.nil?
-    current_tag_csv_file.present?
-  end
-
   def current_suggestion_csv_file
     suggestion_csv_files.current.first
-  end
-
-  def active_suggestion_csv
-    return @active_suggestion_csv unless @active_suggestion_csv.nil?
-    current_suggestion_csv_file.present?
   end
 
   def show_food_count

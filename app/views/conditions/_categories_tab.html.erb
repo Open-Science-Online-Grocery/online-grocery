@@ -32,26 +32,25 @@
   <div class="two fields">
     <div class="field" data-current-csv>
       <label>Current file</label>
-      <% if condition.active_tag_csv %>
+      <% if condition.current_tag_csv_file %>
         <%= condition.current_tag_csv_file_presenter.download_link %>
-        <div class="ui checkbox">
-          <%=
-            f.check_box(
-              :active_tag_csv,
-              value: true,
-              data: { refresh_form: true }
-            )
-          %>
-        </div>
+
+        <%= f.fields_for :current_tag_csv_file do |tag_csv_fields| %>
+          <div class="ui checkbox">
+            <%= tag_csv_fields.check_box(:active) %>
+          </div>
+        <% end %>
       <% else %>
         None
       <% end %>
     </div>
 
-    <div class="field">
-      <%= f.label :csv_file, 'Replace file' %>
-      <%= f.file_field :csv_file %>
-    </div>
+     <%= f.fields_for :tag_csv_files, TagCsvFile.new do |new_tag_csv_fields| %>
+      <div class="field">
+        <%= new_tag_csv_fields.label :csv_file, 'Replace file' %>
+        <%= new_tag_csv_fields.file_field :csv_file %>
+      </div>
+    <% end %>
   </div>
 
   <div class="ui hidden divider"></div>

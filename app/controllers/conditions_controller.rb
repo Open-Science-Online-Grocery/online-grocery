@@ -99,6 +99,8 @@ class ConditionsController < ApplicationController
       :minimum_spend,
       :maximum_spend,
       :show_guiding_stars,
+      current_tag_csv_file_attributes: %i[id active],
+      tag_csv_files_attributes: %i[csv_file],
       product_sort_field_ids: [],
       condition_labels_attributes: [
         :id,

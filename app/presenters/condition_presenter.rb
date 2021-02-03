@@ -10,6 +10,7 @@ class ConditionPresenter < SimpleDelegator
   def current_tag_csv_file_presenter
     TagCsvFilePresenter.new(current_tag_csv_file)
   end
+  memoize :current_tag_csv_file_presenter
 
   def historical_tag_csv_files_presenters
     tag_csv_files.historical.map do |tag_csv_file|
