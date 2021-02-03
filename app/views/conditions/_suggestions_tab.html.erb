@@ -5,7 +5,7 @@
     <div class="heading-buttons">
       <%=
         link_to(
-          '#',
+          suggestions_product_download_path,
           class: 'ui right floated button',
           data: { loading_spinner: true, remote: true }
         ) do
@@ -14,5 +14,46 @@
       <% end %>
     </div>
   </div>
+
+  <div class="page-sub-heading">
+    <strong>Instructions: </strong>
+  </div>
+  <div>
+    To add suggested add-on items, download the product data using the button
+    above. For each row, you may add the ID of a product to suggest as an
+    add-on. Once you have done this, re-upload the file below and save. The
+    current file will appear on the left with a check box next to it. To remove
+    the current file, uncheck the box and click "Save". To replace the file,
+    upload a new file ("Replace file") and click "Save". Removed and replaced
+    files will appear below.
+  </div>
+
+  <div class="ui hidden divider"></div>
+
+  <div class="two fields">
+    <div class="field" data-current-csv>
+      <label>Current file</label>
+      <% if condition.active_tag_csv %>
+        <%= condition.current_tag_csv_file_presenter.download_link %>
+        <div class="ui checkbox">
+          <%=
+            f.check_box(
+              :active_tag_csv,
+              value: true,
+              data: { refresh_form: true }
+            )
+          %>
+        </div>
+      <% else %>
+        None
+      <% end %>
+    </div>
+
+    <div class="field">
+      <%= f.label :csv_file, 'Replace file' %>
+      <%= f.file_field :csv_file %>
+    </div>
+  </div>
+
 
 </div>
