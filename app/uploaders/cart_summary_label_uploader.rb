@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Carrierwave uploader to add a file
-class FileUploader < CarrierWave::Uploader::Base
+# Carrierwave uploader to add images to CartSummaryLabel objects
+class CartSummaryLabelUploader < CarrierWave::Uploader::Base
   storage :file
 
   def store_dir
