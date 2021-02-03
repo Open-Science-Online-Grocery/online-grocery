@@ -31,6 +31,9 @@ class Condition < ApplicationRecord
   has_many :labels, through: :condition_labels
 
   has_one :current_tag_csv_file, -> { current }, class_name: 'TagCsvFile'
+  has_one :current_suggestion_csv_file,
+          -> { current },
+          class_name: 'SuggestionCsvFile'
 
   accepts_nested_attributes_for :product_sort_fields
   accepts_nested_attributes_for :condition_cart_summary_labels,
@@ -38,6 +41,7 @@ class Condition < ApplicationRecord
                                 :tag_csv_files,
                                 :suggestion_csv_files,
                                 :current_tag_csv_file,
+                                :current_suggestion_csv_file,
                                 allow_destroy: true
 
   def self.sort_types

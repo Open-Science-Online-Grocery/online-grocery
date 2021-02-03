@@ -31,29 +31,26 @@
   <div class="ui hidden divider"></div>
 
   <div class="two fields">
-    <div class="field" data-current-csv>
+    <div class="field">
       <label>Current file</label>
-      <% if condition.active_suggestion_csv %>
+      <% if condition.current_suggestion_csv_file %>
         <%= condition.current_suggestion_csv_file_presenter.download_link %>
-        <div class="ui checkbox">
-          <%=
-            f.check_box(
-              :active_suggestion_csv,
-              value: true,
-              data: { refresh_form: true }
-            )
-          %>
-        </div>
+
+        <%= f.fields_for :current_suggestion_csv_file do |suggestion_csv_fields| %>
+          <div class="ui checkbox">
+            <%= suggestion_csv_fields.check_box(:active) %>
+          </div>
+        <% end %>
       <% else %>
         None
       <% end %>
     </div>
 
-    <div class="field">
-      <%= f.label :csv_file, 'Replace file' %>
-      <%= f.file_field :csv_file %>
-    </div>
+     <%= f.fields_for :suggestion_csv_files, SuggestionCsvFile.new do |new_suggestion_csv_fields| %>
+      <div class="field">
+        <%= new_suggestion_csv_fields.label :csv_file, 'Replace file' %>
+        <%= new_suggestion_csv_fields.file_field :csv_file %>
+      </div>
+    <% end %>
   </div>
-
-
 </div>

@@ -30,14 +30,16 @@
   <div class="ui hidden divider"></div>
 
   <div class="two fields">
-    <div class="field" data-current-csv>
+    <div class="field">
       <label>Current file</label>
       <% if condition.current_tag_csv_file %>
-        <%= condition.current_tag_csv_file_presenter.download_link %>
 
         <%= f.fields_for :current_tag_csv_file do |tag_csv_fields| %>
-          <div class="ui checkbox">
+          <div class="ui inline checkbox field">
             <%= tag_csv_fields.check_box(:active) %>
+            <%= tag_csv_fields.label(:active) do %>
+              <%= condition.current_tag_csv_file_presenter.download_link %>
+            <% end %>
           </div>
         <% end %>
       <% else %>
