@@ -13,7 +13,7 @@ class ConditionManager
   end
 
   def assign_params
-    handle_new_tag_file
+    handle_new_config_files
     add_uuid_to_new_record
     clear_unselected_label_fields
     show_food_count_fields
@@ -34,9 +34,12 @@ class ConditionManager
     @errors.none?
   end
 
-  # don't let the current tag file mark itself `active` if the user is
-  # submitting a new tag file.
-  private def handle_new_tag_file
+  # don't let the current file mark itself `active` if the user is
+  # submitting a new file.
+  private def handle_new_config_files
+    if @params[:new_suggestion_csv_file]
+      @params.delete(:suggestion_csv_files_attributes)
+    end
     @params.delete(:tag_csv_files_attributes) if @params[:new_tag_csv_file]
   end
 

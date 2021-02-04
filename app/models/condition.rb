@@ -61,7 +61,7 @@ class Condition < ApplicationRecord
   end
 
   def current_tag_csv_file
-    tag_csv_files.select(&:active).sort_by(&:created_at).last
+    tag_csv_files.select(&:active).max_by(&:created_at)
   end
 
   def new_suggestion_csv_file=(value)
@@ -71,7 +71,7 @@ class Condition < ApplicationRecord
   end
 
   def current_suggestion_csv_file
-    suggestion_csv_files.select(&:active).sort_by(&:created_at).last
+    suggestion_csv_files.select(&:active).max_by(&:created_at)
   end
 
   def url
