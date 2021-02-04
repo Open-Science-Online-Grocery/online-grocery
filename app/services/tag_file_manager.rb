@@ -10,9 +10,8 @@ class TagFileManager
   end
 
   def use_new_tag_file
-    deactivate_other_tag_files
-    @condition.product_tags.destroy_all
-    import_new_tags
+    @condition.tags.destroy_all
+    import_new_tags if @new_tag_file
     @errors.none?
   end
 
@@ -25,7 +24,5 @@ class TagFileManager
   private def import_new_tags
     tag_importer = TagImporter.new(file: @new_tag_file.csv_file, condition: @condition)
     @errors += tag_importer.errors unless tag_importer.import
-  rescue => e
-    binding.pry
   end
 end
