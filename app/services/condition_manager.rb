@@ -41,10 +41,12 @@ class ConditionManager
   end
 
   private def handle_tag_file_change
-    new_tag_file = @condition.current_tag_csv_file
-    return if new_tag_file == @active_tag_file
-    manager = TagFileManager.new(@condition, new_tag_file)
-    manager.use_new_tag_file || @errors += manager.errors
+    return if @condition.current_tag_csv_file == @active_tag_file
+    importer = TagImporter.new(
+      file: @params[:new_tag_csv_file],
+      condition: @condition
+    )
+    importer.import || @errors += importer.errors
   end
 
   private def add_uuid_to_new_record

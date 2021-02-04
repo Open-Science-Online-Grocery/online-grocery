@@ -20,6 +20,8 @@ class TagImporter
   end
 
   def import
+    @condition.tags.destroy_all
+    return true unless @file
     validate_file_type
     create_data_from_import if @errors.blank?
     @errors.uniq!
