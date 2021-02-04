@@ -47,7 +47,6 @@ describe('reducers', () => {
       expect(fromSubject.cursorPosition(state, action)).toEqual(7);
     });
 
-
     it('returns one lower if cursor should move backward', () => {
       const action = {
         type: actions.MOVE_CURSOR,

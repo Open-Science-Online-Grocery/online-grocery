@@ -11,27 +11,12 @@ export default class NutritionLabelPreview extends PureComponent {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener('click', this.handleClick, false);
   }
 
   componentWillUnmount() {
     document.removeEventListener('click', this.handleClick, false);
-  }
-
-  getActiveSelector(element) {
-    const classes = Array.from(element.classList);
-    // we remove the hover and selected class names because they are temporary
-    // and won't help us identify the target element later.
-    if (element.classList.contains(hoverClassName)) {
-      classes.splice(classes.indexOf(hoverClassName), 1);
-    }
-    if (element.classList.contains(selectedClassName)) {
-      classes.splice(classes.indexOf(selectedClassName), 1);
-    }
-    if (classes.length === 0) { return null; }
-
-    return `.${classes.join('.')}`;
   }
 
   handleMouseOver(event) {
@@ -53,6 +38,21 @@ export default class NutritionLabelPreview extends PureComponent {
     } else {
       this.props.setActiveSelector(null);
     }
+  }
+
+  getActiveSelector(element) {
+    const classes = Array.from(element.classList);
+    // we remove the hover and selected class names because they are temporary
+    // and won't help us identify the target element later.
+    if (element.classList.contains(hoverClassName)) {
+      classes.splice(classes.indexOf(hoverClassName), 1);
+    }
+    if (element.classList.contains(selectedClassName)) {
+      classes.splice(classes.indexOf(selectedClassName), 1);
+    }
+    if (classes.length === 0) { return null; }
+
+    return `.${classes.join('.')}`;
   }
 
   fakeProductData() {
