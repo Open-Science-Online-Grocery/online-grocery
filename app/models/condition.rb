@@ -30,18 +30,11 @@ class Condition < ApplicationRecord
   has_many :condition_labels, dependent: :destroy
   has_many :labels, through: :condition_labels
 
-  has_one :current_tag_csv_file, -> { current }, class_name: 'TagCsvFile'
-  has_one :current_suggestion_csv_file,
-          -> { current },
-          class_name: 'SuggestionCsvFile'
-
   accepts_nested_attributes_for :product_sort_fields
   accepts_nested_attributes_for :condition_cart_summary_labels,
                                 :condition_labels,
                                 :tag_csv_files,
                                 :suggestion_csv_files,
-                                :current_tag_csv_file,
-                                :current_suggestion_csv_file,
                                 allow_destroy: true
 
   def self.sort_types
@@ -59,6 +52,20 @@ class Condition < ApplicationRecord
 
   def self.food_count_formats
     OpenStruct.new(ratio: 'ratio', percent: 'percent')
+  end
+
+  def new_tag_csv_file=(value)
+    return unless value
+    tag_csv_files.each { |tag_csv_file| tag_csv_file.active = false }
+    tag_csv_files.build(csv_file: value)
+  end
+
+  def current_tag_csv_file
+    tag_csv_files.select(&:active).sort_by(&:created_at).last
+  end
+
+  def current_suggestion_csv_file
+    suggestion_csv_files.select(&:active).sort_by(&:created_at).last
   end
 
   def url
@@ -80,10 +87,6 @@ class Condition < ApplicationRecord
       Equation.types.sort,
       sort_equation_tokens
     )
-  end
-
-  def current_suggestion_csv_file
-    suggestion_csv_files.current.first
   end
 
   def show_food_count

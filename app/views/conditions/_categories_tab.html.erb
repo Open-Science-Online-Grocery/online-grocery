@@ -34,7 +34,7 @@
       <label>Current file</label>
       <% if condition.current_tag_csv_file %>
 
-        <%= f.fields_for :current_tag_csv_file do |tag_csv_fields| %>
+        <%= f.fields_for :tag_csv_files, @condition.current_tag_csv_file do |tag_csv_fields| %>
           <div class="ui inline checkbox field">
             <%= tag_csv_fields.check_box(:active) %>
             <%= tag_csv_fields.label(:active) do %>
@@ -47,12 +47,10 @@
       <% end %>
     </div>
 
-     <%= f.fields_for :tag_csv_files, TagCsvFile.new do |new_tag_csv_fields| %>
-      <div class="field">
-        <%= new_tag_csv_fields.label :csv_file, 'Replace file' %>
-        <%= new_tag_csv_fields.file_field :csv_file %>
-      </div>
-    <% end %>
+    <div class="field">
+      <%= f.label :new_tag_csv_file, 'Replace file' %>
+      <%= f.file_field :new_tag_csv_file %>
+    </div>
   </div>
 
   <div class="ui hidden divider"></div>
