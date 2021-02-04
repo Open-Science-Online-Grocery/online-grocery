@@ -2,7 +2,6 @@
 
 #:nodoc:
 class ConditionPresenter < SimpleDelegator
-  extend Memoist
   include ActionView::Helpers::NumberHelper
 
   alias condition __getobj__
