@@ -6,10 +6,10 @@ module.exports = function (api) {
       [
         "@babel/preset-env",
         {
+          "forceAllTransforms": true,
           "modules": false,
           "targets": {
-            "browsers": "> 1%",
-            "uglify": true
+            "browsers": "> 1%"
           },
           "useBuiltIns": 'entry',
           "corejs": 3
