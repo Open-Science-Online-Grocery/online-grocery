@@ -50,6 +50,6 @@ class CategoryExporter
   end
 
   private def export_filepath
-    Rails.root.join('lib', 'scripts', 'exported_categories.csv')
+    Rails.root.join('lib/scripts/exported_categories.csv')
   end
 end

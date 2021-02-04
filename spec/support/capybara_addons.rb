@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# handy functions for capybara feature specs
 module CapybaraAddons
   def parent_of(element)
     element.first(:xpath, './/..')

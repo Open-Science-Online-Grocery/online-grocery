@@ -23,6 +23,14 @@ class ProductDownloadsController < ApplicationController
     )
   end
 
+  def show
+    send_file(
+      params[:filepath],
+      disposition: 'attachment',
+      filename: params[:filename]
+    )
+  end
+
   private def redirect_to_download(csv_generator_class, filename)
     tempfile = Tempfile.new(filename)
     tempfile.write(csv_generator_class.generate_csv)
@@ -32,13 +40,5 @@ class ProductDownloadsController < ApplicationController
         render js: "window.location.href = \"#{url}\";"
       end
     end
-  end
-
-  def show
-    send_file(
-      params[:filepath],
-      disposition: 'attachment',
-      filename: params[:filename]
-    )
   end
 end

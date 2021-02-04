@@ -7,7 +7,7 @@ class ConditionSerializer
     @condition = condition
   end
 
-  # rubocop:disable Metrics/LineLength, Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:disable Layout/LineLength, Metrics/AbcSize, Metrics/MethodLength
   def serialize
     {
       sort_fields: @condition.product_sort_fields.map(&:description),
@@ -26,5 +26,5 @@ class ConditionSerializer
       qualtrics_code: @condition.qualtrics_code
     }
   end
-  # rubocop:enable Metrics/LineLength, Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:enable Layout/LineLength, Metrics/AbcSize, Metrics/MethodLength
 end

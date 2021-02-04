@@ -56,14 +56,14 @@ class ProductFetcher
 
   private def products_from_category
     case @params[:selected_category_type]
-    when category_type
-      products_scoped_by_category
-    when tag_type
-      Product.joins(:product_tags).where(
-        product_tags: { subtag_id: @params[:selected_subcategory_id] }
-      )
-    else
-      Product.none
+      when category_type
+        products_scoped_by_category
+      when tag_type
+        Product.joins(:product_tags).where(
+          product_tags: { subtag_id: @params[:selected_subcategory_id] }
+        )
+      else
+        Product.none
     end
   end
 

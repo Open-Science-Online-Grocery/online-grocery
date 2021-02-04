@@ -16,6 +16,7 @@ AllCops:
     - '**/Rakefile'
     - '**/Vagrantfile'
     - '**/db/schema.rb'
+    - '**/lib/scripts/**/*'
   TargetRubyVersion: 2.6
   TargetRailsVersion: 5.2
 
@@ -39,8 +40,6 @@ Layout/LineLength:
     - '**/spec/**/*'
   Max: 80
 Layout/MultilineHashKeyLineBreaks:
-  Enabled: true
-Layout/MultilineMethodArgumentLineBreaks:
   Enabled: true
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
@@ -77,15 +76,25 @@ Metrics/BlockLength:
   Exclude:
     - '**/config/**/*'
     - '**/helpers/**/*'
+    - '**/db/**/*'
+    - '**/spec/**/*'
+    - '**/lib/**/*'
+Metrics/ClassLength:
+  Exclude:
+    - 'app/controllers/conditions_controller.rb'
+    - 'app/models/condition.rb'
+    - 'app/services/condition_manager.rb'
+    - 'app/services/cart.rb'
+    - 'app/services/equation.rb'
+    - 'app/services/product_url_manager.rb'
     - '**/db/migrate/**/*'
     - '**/db/seeds/**/*'
-    - '**/spec/**/*'
 Metrics/CyclomaticComplexity:
   Max: 5
 Metrics/MethodLength:
   Max: 15
   Exclude:
-    - '**/db/migrate/**/*'
+    - '**/db/**/*'
 Metrics/ModuleLength:
   Exclude:
     - '**/db/seeds/**/*'
@@ -252,6 +261,7 @@ Style/DateTime:
 Style/Documentation:
   Exclude:
     - '**/controllers/**/*'
+    - '**/db/**/*'
     - '**/app/helpers/application_helper.rb'
     - '**/app/mailers/application_mailer.rb'
     - '**/app/models/application_record.rb'
@@ -301,22 +311,36 @@ Style/StringMethods:
   Enabled: true
 
 # Defaults; may make sense to change for specific projects
-Layout/EmptyLineAfterGuardClause:
-  Enabled: true
-
 Rails/SaveBang:
   Enabled: true
 Rails/UniqueValidationWithoutIndex:
   Enabled: false
 
-Style/DocumentationMethod:
-  Enabled: true
-  Exclude:
-    - '**/config/**/*'
-    - '**/controllers/**/*'
-    - '**/db/**/*'
-    - '**/spec/**/*'
 Style/RedundantBegin:
   Enabled: true
 Style/ZeroLengthPredicate:
   Enabled: true
+
+# project-specific changes:
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+Layout/MultilineMethodArgumentLineBreaks:
+  Enabled: false
+Lint/NumberConversion:
+  Enabled: false
+Naming/VariableNumber:
+  Enabled: false
+Rails/BulkChangeTable:
+  Enabled: false
+Rails/UnknownEnv:
+  Environments:
+    - development
+    - test
+    - staging
+    - production
+RSpec/MessageSpies:
+  Enabled: false
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+Style/DocumentationMethod:
+  Enabled: false

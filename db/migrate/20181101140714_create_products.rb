@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# note: this migration is meant to create tables locally that already exist in
+# NOTE: this migration is meant to create tables locally that already exist in
 # the client's database - we have no control over the column names or types.
 class CreateProducts < ActiveRecord::Migration[5.2]
   def change

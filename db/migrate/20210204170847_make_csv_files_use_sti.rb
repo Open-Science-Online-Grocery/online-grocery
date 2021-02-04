@@ -2,6 +2,7 @@
 
 class ConfigFile < ApplicationRecord
 end
+
 class TagCsvFile < ConfigFile
 end
 

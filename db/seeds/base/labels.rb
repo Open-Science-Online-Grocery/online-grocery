@@ -4,7 +4,7 @@ module Seeds
   module Base
     module Labels
       def self.seed_labels
-        image_dir = Rails.root.join('db', 'seeds', 'base', 'labels')
+        image_dir = Rails.root.join('db/seeds/base/labels')
         names_to_images = {
           '0 Howe Stars' => '0howestars.png',
           '1 Howe Stars' => '1howestars.png',

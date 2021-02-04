@@ -99,7 +99,7 @@ RSpec.describe ProductSorter do
           end
         end
 
-        context 'when sorting in ascending order' do
+        context 'when sorting in descending order' do
           let(:sort_order) { 'desc' }
 
           it 'returns the expected results' do

@@ -58,13 +58,8 @@ class ConditionPresenter < SimpleDelegator
 
   private def random_labels
     return [] unless condition.labels.present?
-
     condition.labels.map do |label|
-      if rand(0..100) % 4 == 0
-        nil
-      else
-        label.name
-      end
+      label.name if rand(0..100) % 4 == 0
     end.compact || []
   end
 end

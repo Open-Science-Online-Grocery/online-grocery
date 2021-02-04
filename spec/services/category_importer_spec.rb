@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe CategoryImporter do
   let(:fixture_filepath) do
-    Rails.root.join('spec', 'fixtures', 'files', 'category_importer', 'categories.csv')
+    Rails.root.join('spec/fixtures/files/category_importer/categories.csv')
   end
 
   # rubocop:disable RSpec/LetSetup

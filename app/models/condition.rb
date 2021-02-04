@@ -111,6 +111,7 @@ class Condition < ApplicationRecord
     food_count_format == food_count_formats.ratio
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def unique_label_names
     # The names of all the non-destroyed labels, this allows deletion of
     # a label with a conflicting name
@@ -127,4 +128,5 @@ class Condition < ApplicationRecord
       errors.add(:base, "Label name '#{dup_name}' is already in use.")
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 end
