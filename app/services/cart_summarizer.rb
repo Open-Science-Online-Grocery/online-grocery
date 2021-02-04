@@ -27,7 +27,7 @@ class CartSummarizer
   private def ratio_label_prefix(label)
     product_count = number_of_products_with_each_label
       .fetch(label.name, 0)
-    prefix = "#{product_count} out of #{total_products} "
+    prefix = "#{product_count} out of #{total_products}"
     return "#{prefix} products has" if product_count == 1
     "#{prefix} products have"
   end

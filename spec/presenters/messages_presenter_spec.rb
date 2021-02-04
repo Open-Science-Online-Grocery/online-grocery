@@ -4,11 +4,10 @@ require 'rails_helper'
 
 RSpec.describe MessagesPresenter do
   describe '#show_messages' do
-    let(:template) { ActionView::Base.new }
     let(:flash) { { error: 'Error' } }
     let(:messages) { {} }
 
-    subject { described_class.new(flash.with_indifferent_access, messages, template) }
+    subject { described_class.new(flash.with_indifferent_access, messages) }
 
     context 'when @messages is empty' do
       context 'when the flash key is in the expected list' do
