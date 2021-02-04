@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :tag_csv_files, only: [:show]
+  resources :config_files, only: [:show]
 
   resources :pages, only: [] do
     collection do

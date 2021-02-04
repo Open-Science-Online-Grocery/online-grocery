@@ -56,12 +56,18 @@ class Condition < ApplicationRecord
 
   def new_tag_csv_file=(value)
     return unless value
-    tag_csv_files.each { |tag_csv_file| tag_csv_file.active = false }
-    tag_csv_files.build(csv_file: value)
+    tag_csv_files.each { |t| t.active = false }
+    tag_csv_files.build(file: value)
   end
 
   def current_tag_csv_file
     tag_csv_files.select(&:active).sort_by(&:created_at).last
+  end
+
+  def new_suggestion_csv_file=(value)
+    return unless value
+    suggestion_csv_files.each { |s| s.active = false }
+    suggestion_csv_files.build(file: value)
   end
 
   def current_suggestion_csv_file

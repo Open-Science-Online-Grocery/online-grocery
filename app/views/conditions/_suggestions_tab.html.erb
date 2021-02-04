@@ -34,23 +34,21 @@
     <div class="field">
       <label>Current file</label>
       <% if condition.current_suggestion_csv_file %>
-        <%= condition.current_suggestion_csv_file_presenter.download_link %>
-
-        <%= f.fields_for :current_suggestion_csv_file do |suggestion_csv_fields| %>
-          <div class="ui checkbox">
+        <%= f.fields_for :suggestion_csv_files, @condition.current_suggestion_csv_file do |suggestion_csv_fields| %>
+          <div class="ui inline checkbox field">
             <%= suggestion_csv_fields.check_box(:active) %>
+            <%= suggestion_csv_fields.label(:active) do %>
+              <%= ConfigFilePresenter.download_link(@condition.current_suggestion_csv_file) %>
+            <% end %>
           </div>
         <% end %>
       <% else %>
         None
       <% end %>
     </div>
-
-     <%= f.fields_for :suggestion_csv_files, SuggestionCsvFile.new do |new_suggestion_csv_fields| %>
-      <div class="field">
-        <%= new_suggestion_csv_fields.label :csv_file, 'Replace file' %>
-        <%= new_suggestion_csv_fields.file_field :csv_file %>
-      </div>
-    <% end %>
+    <div class="field">
+      <%= f.label :new_suggestion_csv_file, 'Replace file' %>
+      <%= f.file_field :new_suggestion_csv_file %>
+    </div>
   </div>
 </div>

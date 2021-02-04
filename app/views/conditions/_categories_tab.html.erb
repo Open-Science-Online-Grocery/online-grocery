@@ -33,12 +33,11 @@
     <div class="field">
       <label>Current file</label>
       <% if condition.current_tag_csv_file %>
-
         <%= f.fields_for :tag_csv_files, @condition.current_tag_csv_file do |tag_csv_fields| %>
           <div class="ui inline checkbox field">
             <%= tag_csv_fields.check_box(:active) %>
             <%= tag_csv_fields.label(:active) do %>
-              <%= condition.current_tag_csv_file_presenter.download_link %>
+              <%= ConfigFilePresenter.download_link(@condition.current_tag_csv_file) %>
             <% end %>
           </div>
         <% end %>
@@ -101,14 +100,14 @@
         </thead>
 
         <tbody>
-          <% if condition.historical_tag_csv_files_presenters.any? %>
-            <% condition.historical_tag_csv_files_presenters.each do |file| %>
+          <% if condition.tag_csv_files.historical.any? %>
+            <% condition.tag_csv_files.historical.each do |file| %>
               <tr>
                 <td>
-                  <%= file.download_link %>
+                  <%= ConfigFilePresenter.download_link(file) %>
                 </td>
                 <td>
-                  <%= l(file.created_at.to_date) %>
+                  <%= localize(file.created_at.to_date) %>
                 </td>
               </tr>
             <% end %>
