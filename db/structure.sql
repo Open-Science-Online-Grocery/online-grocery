@@ -137,6 +137,22 @@ CREATE TABLE `config_files` (
   KEY `index_config_files_on_condition_id` (`condition_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `experiment_results`;
+/*!50001 DROP VIEW IF EXISTS `experiment_results`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `experiment_results` (
+  `experiment_id` tinyint NOT NULL,
+  `experiment_name` tinyint NOT NULL,
+  `condition_name` tinyint NOT NULL,
+  `session_identifier` tinyint NOT NULL,
+  `action_type` tinyint NOT NULL,
+  `product_id` tinyint NOT NULL,
+  `product_name` tinyint NOT NULL,
+  `quantity` tinyint NOT NULL,
+  `created_at` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
 DROP TABLE IF EXISTS `experiments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -341,6 +357,20 @@ CREATE TABLE `users` (
   UNIQUE KEY `index_users_on_confirmation_token` (`confirmation_token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!50001 DROP TABLE IF EXISTS `experiment_results`*/;
+/*!50001 DROP VIEW IF EXISTS `experiment_results`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `experiment_results` AS select `experiments`.`id` AS `experiment_id`,`experiments`.`name` AS `experiment_name`,`conditions`.`name` AS `condition_name`,`participant_actions`.`session_identifier` AS `session_identifier`,`participant_actions`.`action_type` AS `action_type`,`participant_actions`.`product_id` AS `product_id`,`products`.`name` AS `product_name`,`participant_actions`.`quantity` AS `quantity`,`participant_actions`.`created_at` AS `created_at` from (((`experiments` join `conditions` on(`conditions`.`experiment_id` = `experiments`.`id`)) join `participant_actions` on(`participant_actions`.`condition_id` = `conditions`.`id`)) left join `products` on(`participant_actions`.`product_id` = `products`.`id`)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
