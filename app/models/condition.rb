@@ -25,6 +25,7 @@ class Condition < ApplicationRecord
   has_many :product_tags, dependent: :destroy
   has_many :tags, through: :product_tags
   has_many :subtags, through: :product_tags
+  has_many :product_suggestions, dependent: :destroy
   has_many :condition_cart_summary_labels, dependent: :destroy
   has_many :cart_summary_labels, through: :condition_cart_summary_labels
   has_many :condition_labels, dependent: :destroy
