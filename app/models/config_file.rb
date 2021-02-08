@@ -7,7 +7,7 @@ class ConfigFile < ApplicationRecord
 
   belongs_to :condition
 
-  delegate :url, to: :file
+  delegate :url, :current_path, to: :file
   alias path url
 
   scope :active, -> { where(active: true) }

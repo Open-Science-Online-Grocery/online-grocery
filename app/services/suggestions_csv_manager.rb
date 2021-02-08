@@ -2,6 +2,8 @@
 
 # responsible for generating and importing suggestion csv files
 class SuggestionsCsvManager
+  require 'csv'
+
   attr_reader :errors
 
   delegate :headers, to: :class
@@ -33,7 +35,7 @@ class SuggestionsCsvManager
 
   def import
     destroy_obsolete_suggestions
-    return true if suggestions_previously_loaded?
+    return true if suggestions_previously_loaded? || @current_file.nil?
     validate_file_type
     import_new_suggestions if @errors.none?
     @errors.none?
@@ -46,9 +48,7 @@ class SuggestionsCsvManager
   end
 
   private def suggestions_previously_loaded?
-    @condition.product_suggestions.where(
-      suggestion_csv_file: @current_file
-    ).exists?
+    @condition.product_suggestions.exists?(suggestion_csv_file: @current_file)
   end
 
   private def validate_file_type
@@ -57,14 +57,18 @@ class SuggestionsCsvManager
   end
 
   private def import_new_suggestions
-    CSV.foreach(@file.path, headers: true).with_index do |row, row_number|
+    CSV.foreach(
+      @current_file.current_path,
+      headers: true
+    ).with_index(1) do |row, row_number|
       process_row(row, row_number)
     end
   end
 
   private def process_row(row, row_number)
-    product = find_product(headers.first)
-    add_on = find_product(headers.last, add_on: true)
+    add_on = find_product(row_number, row[headers.last], add_on: true)
+    return unless add_on
+    product = find_product(row_number, row[headers.first])
     create_product_suggestion(product, add_on) if product && add_on
   end
 
@@ -72,7 +76,7 @@ class SuggestionsCsvManager
     return if add_on && id.blank? # we don't require an add-on for every row
     product = Product.find_by(id: id)
     return product if product
-    @errors << "Row #{row_number}: Can't find #{add_on ? 'add-on' : 'product'}"/
+    @errors << "Row #{row_number}: Can't find #{add_on ? 'add-on' : 'product'}"\
       " with Id #{id}"
     nil
   end
@@ -81,7 +85,7 @@ class SuggestionsCsvManager
     product_suggestion = @condition.product_suggestions.build(
       suggestion_csv_file: @current_file,
       product: product,
-      add_on: add_on
+      add_on_product: add_on
     )
     return if product_suggestion.save
     @errors += product_suggestion.errors.full_messages

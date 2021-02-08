@@ -29,6 +29,7 @@ class ConditionManager
       validate_cart_summary_label_params
       @errors += @condition.errors.full_messages unless @condition.save
       handle_tag_file_change if @errors.none?
+      update_suggestions if @errors.none?
       raise ActiveRecord::Rollback if @errors.any?
     end
     @errors.none?
@@ -41,6 +42,11 @@ class ConditionManager
       @params.delete(:suggestion_csv_files_attributes)
     end
     @params.delete(:tag_csv_files_attributes) if @params[:new_tag_csv_file]
+  end
+
+  private def update_suggestions
+    manager = SuggestionsCsvManager.new(@condition)
+    manager.import || @errors += manager.errors
   end
 
   private def handle_tag_file_change

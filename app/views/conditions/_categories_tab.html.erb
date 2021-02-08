@@ -33,11 +33,11 @@
     <div class="field">
       <label>Current file</label>
       <% if condition.current_tag_csv_file %>
-        <%= f.fields_for :tag_csv_files, @condition.current_tag_csv_file do |tag_csv_fields| %>
+        <%= f.fields_for :tag_csv_files, condition.current_tag_csv_file do |tag_csv_fields| %>
           <div class="ui inline checkbox field">
             <%= tag_csv_fields.check_box(:active) %>
             <%= tag_csv_fields.label(:active) do %>
-              <%= ConfigFilePresenter.download_link(@condition.current_tag_csv_file) %>
+              <%= ConfigFilePresenter.download_link(condition.current_tag_csv_file) %>
             <% end %>
           </div>
         <% end %>

@@ -34,11 +34,11 @@
     <div class="field">
       <label>Current file</label>
       <% if condition.current_suggestion_csv_file %>
-        <%= f.fields_for :suggestion_csv_files, @condition.current_suggestion_csv_file do |suggestion_csv_fields| %>
+        <%= f.fields_for :suggestion_csv_files, condition.current_suggestion_csv_file do |suggestion_csv_fields| %>
           <div class="ui inline checkbox field">
             <%= suggestion_csv_fields.check_box(:active) %>
             <%= suggestion_csv_fields.label(:active) do %>
-              <%= ConfigFilePresenter.download_link(@condition.current_suggestion_csv_file) %>
+              <%= ConfigFilePresenter.download_link(condition.current_suggestion_csv_file) %>
             <% end %>
           </div>
         <% end %>
