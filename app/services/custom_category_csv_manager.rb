@@ -2,7 +2,7 @@
 
 # responsible for generating a csv of all product and category data with blanks
 # for users to input custom categories
-class ProductDataCsvManager
+class CustomCategoryCsvManager
   require 'csv'
 
   def self.product_data_csv_attributes

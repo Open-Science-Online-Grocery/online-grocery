@@ -18,7 +18,12 @@ Rails.application.routes.draw do
     resources :data_downloads, only: [:index, :create]
   end
 
-  resource :product_download, only: [:new, :show]
+  resource :product_download, only: [:show] do
+    collection do
+      get :custom_categories
+      get :suggestions
+    end
+  end
 
   resource :store, only: [:show] do
     collection do
@@ -29,7 +34,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :tag_csv_files, only: [:show]
+  resources :config_files, only: [:show]
 
   resources :pages, only: [] do
     collection do

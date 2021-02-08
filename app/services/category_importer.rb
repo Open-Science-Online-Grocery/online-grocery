@@ -63,6 +63,6 @@ class CategoryImporter
   end
 
   private def import_filepath
-    Rails.root.join('db', 'seeds', 'base', 'categories.csv')
+    Rails.root.join('db/seeds/base/categories.csv')
   end
 end

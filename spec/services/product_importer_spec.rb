@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe ProductImporter do
   # rubocop:disable RSpec/LetSetup
   let(:fixture_filepath) do
-    Rails.root.join('spec', 'fixtures', 'files', 'product_importer', 'products.csv')
+    Rails.root.join('spec/fixtures/files/product_importer/products.csv')
   end
   let!(:category) { Category.find_or_create_by!(id: 7, name: 'Snacks') }
   let!(:subcategory_1) do

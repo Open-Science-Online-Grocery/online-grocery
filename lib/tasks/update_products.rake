@@ -7,7 +7,7 @@ task update_products: :environment do
   if Product.where(aws_image_url: nil).any?
     ProductUrlManager.new.convert_to_s3
     ProductExporter.new.run(
-      Rails.root.join('db', 'seeds', 'base', 'products.csv')
+      Rails.root.join('db/seeds/base/products.csv')
     )
   end
 

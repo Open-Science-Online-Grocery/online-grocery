@@ -18,16 +18,12 @@ gem 'faraday'
 gem 'jbuilder'
 gem 'mysql2'
 gem 'puma'
-gem 'rails'
+gem 'rails', '~> 5.2.4.3'
 gem 'rake'
-gem 'sass-rails'
+gem 'sassc-rails'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'uglifier'
 gem 'webpacker'
-
-# this is an indirect dependency. specifying here to avoid a security issue
-# with certain versions.
-gem 'rails-html-sanitizer', '~> 1.0.3'
 
 group :development, :test do
   gem 'awesome_print'
@@ -44,6 +40,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'bullet'
   gem 'capistrano'
   gem 'capistrano-bundler'
   gem 'capistrano-maintenance', require: false

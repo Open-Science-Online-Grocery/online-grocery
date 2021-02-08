@@ -66,7 +66,6 @@ export function deletePreviousToken() {
   };
 }
 
-
 function testCalculationFailure(error) {
   new FlashMessage(
     'error',

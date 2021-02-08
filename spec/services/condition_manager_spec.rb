@@ -98,4 +98,146 @@ RSpec.describe ConditionManager do
       expect(condition.nutrition_equation_tokens).to be_nil
     end
   end
+
+  describe '#assign_params' do
+    context 'when replacing a tag csv file' do
+      let(:params) do
+        {
+          new_tag_csv_file: fixture_file_upload(
+            file_fixture(
+              'product_data_csv_files/product_data_default_scope.csv'
+            )
+          ),
+          tag_csv_files_attributes: { '0' => { id: '27', active: '1' } }
+        }
+      end
+
+      it 'does not update the existing tag file' do
+        expect(condition).to receive(:new_tag_csv_file=)
+        expect(condition).not_to receive(:tag_csv_files_attributes=)
+        subject.assign_params
+      end
+    end
+
+    context 'when not replacing a tag csv file' do
+      let(:params) do
+        {
+          tag_csv_files_attributes: { '0' => { id: '27', active: '1' } }
+        }
+      end
+
+      it 'updates the existing tag file' do
+        expect(condition).to receive(:tag_csv_files_attributes=)
+        subject.assign_params
+      end
+    end
+
+    context 'when replacing a suggestion csv file' do
+      let(:params) do
+        {
+          new_suggestion_csv_file: fixture_file_upload(
+            file_fixture(
+              'product_data_csv_files/product_data_default_scope.csv'
+            )
+          ),
+          suggestion_csv_files_attributes: { '0' => { id: '27', active: '1' } }
+        }
+      end
+
+      it 'does not update the existing suggestion file' do
+        expect(condition).to receive(:new_suggestion_csv_file=)
+        expect(condition).not_to receive(:suggestion_csv_files_attributes=)
+        subject.assign_params
+      end
+    end
+
+    context 'when not replacing a suggestion csv file' do
+      let(:params) do
+        {
+          suggestion_csv_files_attributes: { '0' => { id: '27', active: '1' } }
+        }
+      end
+
+      it 'updates the existing suggestion file' do
+        expect(condition).to receive(:suggestion_csv_files_attributes=)
+        subject.assign_params
+      end
+    end
+  end
+
+  describe '#update_condition' do
+    describe 'tag file handling' do
+      let(:condition) { create(:condition) }
+      let(:current_tag_file) { condition.tag_csv_files.create }
+      let(:tag_importer) { instance_double 'TagImporter', import: true }
+
+      before do
+        allow(condition).to receive(:save) { true }
+        allow(TagImporter).to receive(:new) { tag_importer }
+      end
+
+      context 'when current tag file does not change' do
+        let(:params) { {} }
+
+        it 'does not call the TagImporter' do
+          expect(subject.update_condition).to eq true
+          expect(subject.errors).to be_empty
+          expect(TagImporter).not_to have_received(:new)
+        end
+      end
+
+      context 'when current tag file is removed' do
+        let(:params) do
+          {
+            tag_csv_files_attributes: { '0' => { id: current_tag_file.id, active: '0' } }
+          }
+        end
+
+        it 'calls the TagImporter' do
+          expect(subject.update_condition).to eq true
+          expect(subject.errors).to be_empty
+          expect(TagImporter).to have_received(:new).with(
+            file: nil,
+            condition: condition
+          )
+          expect(tag_importer).to have_received(:import)
+        end
+      end
+
+      context 'when current tag file changes' do
+        let(:new_tag_file) do
+          fixture_file_upload(
+            file_fixture(
+              'product_data_csv_files/product_data_default_scope.csv'
+            )
+          )
+        end
+
+        let(:params) do
+          { new_tag_csv_file: new_tag_file }
+        end
+
+        it 'calls the TagImporter' do
+          expect(subject.update_condition).to eq true
+          expect(subject.errors).to be_empty
+          expect(TagImporter).to have_received(:new).with(
+            file: new_tag_file,
+            condition: condition
+          )
+          expect(tag_importer).to have_received(:import)
+        end
+
+        context 'when tag import fails' do
+          let(:tag_importer) do
+            instance_double 'TagImporter', import: false, errors: ['boom']
+          end
+
+          it 'returns false and has errors' do
+            expect(subject.update_condition).to eq false
+            expect(subject.errors).to include 'boom'
+          end
+        end
+      end
+    end
+  end
 end

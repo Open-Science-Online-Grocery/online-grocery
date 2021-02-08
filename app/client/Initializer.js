@@ -59,7 +59,7 @@ export default class Initializer {
   }
 
   initializeDropdowns() {
-    const $dropdowns = this.$scope.find('.ui.dropdown');
+    const $dropdowns = this.$scope.find('.ui.dropdown:not(.react-managed)');
     $dropdowns.dropdown({ placeholder: false });
     this.$scope.find('.ui.search.dropdown').on('click', (event) => {
       if (!$(event.target).parent('.menu').length) {

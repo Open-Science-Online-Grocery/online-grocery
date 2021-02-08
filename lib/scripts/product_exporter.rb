@@ -76,6 +76,6 @@ class ProductExporter
   end
 
   private def default_export_filepath
-    Rails.root.join('lib', 'scripts', 'exported_products.csv')
+    Rails.root.join('lib/scripts/exported_products.csv')
   end
 end

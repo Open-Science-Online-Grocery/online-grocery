@@ -122,6 +122,21 @@ CREATE TABLE `conditions` (
   KEY `index_conditions_on_default_sort_field_id` (`default_sort_field_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `config_files`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `config_files` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `file` varchar(255) DEFAULT NULL,
+  `condition_id` bigint(20) DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_config_files_on_condition_id` (`condition_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `experiment_results`;
 /*!50001 DROP VIEW IF EXISTS `experiment_results`*/;
 SET @saved_cs_client     = @@character_set_client;
@@ -299,20 +314,6 @@ CREATE TABLE `subtags` (
   KEY `index_subtags_on_tag_id` (`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `tag_csv_files`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tag_csv_files` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `csv_file` varchar(255) DEFAULT NULL,
-  `condition_id` bigint(20) DEFAULT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT 1,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_tag_csv_files_on_condition_id` (`condition_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `tags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -421,6 +422,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20190307193245'),
 ('20190319133936'),
 ('20190822140435'),
-('20190822140828');
+('20190822140828'),
+('20210204170847');
 
 

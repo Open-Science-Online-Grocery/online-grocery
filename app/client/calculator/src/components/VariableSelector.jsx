@@ -36,6 +36,7 @@ export default class VariableSelector extends PureComponent {
           value={this.state.selectedToken}
           onChange={this.handleSelectChange}
           placeholder="Select a field"
+          className="react-managed"
         />
         <Button className="insert" type="button" onClick={this.onButtonClick}>
           <Icon name="plus" />

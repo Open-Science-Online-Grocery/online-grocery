@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Carrierwave uploader to add tag csv files to Condition objects
-class ConditionTagCsvUploader < CarrierWave::Uploader::Base
+# Carrierwave uploader to add files stored outside of the public folder
+class PrivateFileUploader < CarrierWave::Uploader::Base
   storage :file
 
   def store_dir

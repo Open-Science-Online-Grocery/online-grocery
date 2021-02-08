@@ -17,13 +17,13 @@ class Power
     Product.all if @user
   end
 
-  power :downloadable_tag_csv_files do
-    TagCsvFile.joins(:condition).where(
+  power :downloadable_config_files do
+    ConfigFile.joins(:condition).where(
       conditions: { experiment_id: own_experiments.select(:id) }
     )
   end
 
-  power :tag_csv_files do
+  power :config_files do
     nil
   end
 

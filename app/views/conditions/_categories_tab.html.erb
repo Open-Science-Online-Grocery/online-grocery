@@ -5,7 +5,7 @@
     <div class="heading-buttons">
       <%=
         link_to(
-          new_product_download_path,
+          custom_categories_product_download_path,
           class: 'ui right floated button',
           data: { loading_spinner: true, remote: true }
         ) do
@@ -30,27 +30,25 @@
   <div class="ui hidden divider"></div>
 
   <div class="two fields">
-    <div class="field" data-current-csv>
+    <div class="field">
       <label>Current file</label>
-      <% if condition.active_tag_csv %>
-        <%= condition.current_tag_csv_file_presenter.download_link %>
-        <div class="ui checkbox">
-          <%=
-            f.check_box(
-              :active_tag_csv,
-              value: true,
-              data: { refresh_form: true }
-            )
-          %>
-        </div>
+      <% if condition.current_tag_csv_file %>
+        <%= f.fields_for :tag_csv_files, @condition.current_tag_csv_file do |tag_csv_fields| %>
+          <div class="ui inline checkbox field">
+            <%= tag_csv_fields.check_box(:active) %>
+            <%= tag_csv_fields.label(:active) do %>
+              <%= ConfigFilePresenter.download_link(@condition.current_tag_csv_file) %>
+            <% end %>
+          </div>
+        <% end %>
       <% else %>
         None
       <% end %>
     </div>
 
     <div class="field">
-      <%= f.label :csv_file, 'Replace file' %>
-      <%= f.file_field :csv_file %>
+      <%= f.label :new_tag_csv_file, 'Replace file' %>
+      <%= f.file_field :new_tag_csv_file %>
     </div>
   </div>
 
@@ -93,7 +91,7 @@
 
     <div class="eight wide column">
       <h4>Previously uploaded files</h4>
-      <table class="ui celled table" data-historical-csvs>
+      <table class="ui celled table">
         <thead>
           <tr>
             <th class="ten wide">File</th>
@@ -102,14 +100,14 @@
         </thead>
 
         <tbody>
-          <% if condition.historical_tag_csv_files.any? %>
-            <% condition.historical_tag_csv_files_presenters.each do |file| %>
+          <% if condition.tag_csv_files.historical.any? %>
+            <% condition.tag_csv_files.historical.each do |file| %>
               <tr>
                 <td>
-                  <%= file.download_link %>
+                  <%= ConfigFilePresenter.download_link(file) %>
                 </td>
                 <td>
-                  <%= l(file.created_at.to_date) %>
+                  <%= localize(file.created_at.to_date) %>
                 </td>
               </tr>
             <% end %>

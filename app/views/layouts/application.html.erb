@@ -20,7 +20,7 @@
     <main>
       <div id="main" class="content ui container segment" >
         <div id="page-content">
-          <%= MessagesPresenter.new(flash, @messages, self).show_messages %>
+          <%= MessagesPresenter.new(flash, @messages).show_messages %>
           <%= yield %>
         </div>
       </div>
