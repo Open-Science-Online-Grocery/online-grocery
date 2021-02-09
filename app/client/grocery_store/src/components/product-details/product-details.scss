@@ -1,0 +1,154 @@
+@import "../../base/base";
+
+.product-details {
+  display: flex;
+  justify-content: flex-start;
+
+  .product-details-image-wrapper {
+    max-width: 60%;
+    margin: auto;
+    position: relative;
+
+    .product-details-image {
+      width: auto;
+      max-width: 100%;
+    }
+
+    .product-details-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .product-details-name {
+    padding-top: 50px;
+    font-size: 40px;
+    display: inline-block;
+    padding-right: 7px;
+    margin: 5px 0;
+    text-transform: capitalize;
+  }
+
+  .product-details-ingredients {
+    font-size: 14px;
+    padding-right: 7px;
+  }
+
+  .product-details-size {
+    display: inline-block;
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+
+  .product-details-price {
+    color: $price-green;
+    display: inline-block;
+    margin-left: 10px;
+  }
+
+  .product-details-buttons {
+    padding: 0.5rem 0;
+  }
+
+  .product-details-right-section {
+    width: 60%;
+    padding: 50px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .product-details-description {
+    font-size: 14px;
+    display: inline-block;
+    padding-right: 7px;
+    margin: 5px 0;
+  }
+
+  .product-card-guiding-stars {
+    width: auto;
+    height: 40px;
+    padding: 1px 5px;
+    margin: 7px 5px 0 0;
+    z-index: 1;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  //ToolTip Styling
+  [class^="tooltip"] {
+    position: relative;
+    &:after {
+      opacity: 0;
+      visibility: hidden;
+      position: absolute;
+      content: attr(data-tooltip);
+      padding: 6px 10px;
+      top: 1.4em;
+      left: 50%;
+      transform: translateX(-50%) translateY(-2px);
+      background: $cart-color;
+      color: white;
+      white-space: pre-wrap;
+      z-index: 2;
+      border-radius: 2px;
+      width:200px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    &:hover {
+      &:after {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+  }
+
+  .tooltip--right {
+    &:after {
+      top: -4px;
+      left: 100%;
+      transform: translateX(12%) translateY(0);
+    }
+    &:hover {
+      &:after {
+        transform: translateX(10%) translateY(0);
+      }
+    }
+  }
+
+  .tooltip--triangle {
+    &:before {
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: solid 5px transparent;
+      border-right: solid 5px transparent;
+      border-bottom: solid 5px $cart-color;
+      opacity: 0;
+      visibility: hidden;
+      position: absolute;
+      transform: translateX(-50%) translateY(-2px);
+      top: 1.1em;
+      left: 50%;
+      transition: opacity 0.2s, transform 0.2s;
+      z-index: 3;
+    }
+    &:hover {
+      &:before {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+  }
+}

@@ -29,7 +29,7 @@ export default class SuggestionPopup extends React.Component {
 }
 
 SuggestionPopup.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   visible: PropTypes.bool,
   handleDismiss: PropTypes.func.isRequired,
   product: PropTypes.shape({
@@ -51,5 +51,6 @@ SuggestionPopup.propTypes = {
 };
 
 SuggestionPopup.defaultProps = {
-  visible: false
+  visible: false,
+  title: null
 };
