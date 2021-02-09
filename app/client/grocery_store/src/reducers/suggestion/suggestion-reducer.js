@@ -1,4 +1,4 @@
-// import { alertActionTypes } from './alert-actions';
+import { suggestionActionTypes } from './suggestion-actions';
 
 const initialSuggestionState = {
   visible: false,
@@ -6,15 +6,16 @@ const initialSuggestionState = {
   product: null
 };
 
-export default function alertReducer(state = initialSuggestionState, action) {
+export default function suggestionReducer(state = initialSuggestionState, action) {
   switch (action.type) {
-    // case alertActionTypes.SHOW_ALERT:
-    //   return {
-    //     visible: true,
-    //     message: action.message
-    //   };
-    // case alertActionTypes.DISMISS_ALERT:
-    //   return initialAlertState;
+    case suggestionActionTypes.SHOW_SUGGESTION:
+      return {
+        visible: true,
+        title: action.title,
+        product: action.product
+      };
+    case suggestionActionTypes.DISMISS_SUGGESTION:
+      return initialSuggestionState;
     default:
       return state;
   }
