@@ -8,10 +8,11 @@ class ProductSerializer
     @condition = condition
   end
 
-  def serialize
-    @product.attributes
+  def serialize(include_add_on: true)
+    attrs = @product.attributes
       .merge(product_labels)
       .merge(nutrition_information)
+    include_add_on ? attrs.merge(add_on_info) : attrs
   end
 
   private def product_labels
@@ -35,6 +36,13 @@ class ProductSerializer
   private def nutrition_information
     return {} unless gets_custom_nutrition_styling?
     { 'nutrition_style_rules' => @condition.nutrition_styles }
+  end
+
+  private def add_on_info
+    return {} unless @product.add_on_product
+    add_on_attrs = ProductSerializer.new(@product.add_on_product, @condition)
+      .serialize(include_add_on: false) # avoid recursive add-on suggestions!
+    { 'add_on' => add_on_attrs }
   end
 
   private def gets_label?(condition_label)
