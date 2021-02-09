@@ -17,7 +17,7 @@
       background-color: white;
       z-index: 101;
       position: fixed;
-      width: 500px;
+      width: 80vw;
 
       .header {
         padding: 1rem;
@@ -40,8 +40,10 @@
       }
     }
 
-    .message {
+    .body {
       padding: 1rem;
+      height: 80vh;
+      overflow-y: auto;
     }
   }
 }

@@ -13,6 +13,7 @@ import SessionIDPage from './session-id-container';
 import { persistor, store } from './reducers/createStore';
 import SearchPageContainer from './search-page-container';
 import AlertContainer from './components/alert/alert-container';
+import SuggestionPopupContainer from './components/suggestion-popup/suggestion-popup-container';
 
 export default function initialize(wrapperElement) {
   render(
@@ -20,6 +21,7 @@ export default function initialize(wrapperElement) {
       <PersistGate loading={null} persistor={persistor}>
         <AlertContainer />
         <Router>
+          <SuggestionPopupContainer />
           <Switch>
             <Route exact path="/store" component={SessionIDPage} />
             <Route path="/store/home" component={HomePage} />

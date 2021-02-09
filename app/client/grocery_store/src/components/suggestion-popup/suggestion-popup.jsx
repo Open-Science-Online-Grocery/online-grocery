@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ProductCardExpandedContainer from '../product-card-expanded/product-card-expanded-container';
 import './suggestion-popup.scss';
 
 export default class SuggestionPopup extends React.Component {

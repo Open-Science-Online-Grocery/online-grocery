@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import SuggestionPopup from './suggestion-popup';
-// import { alertActionCreators } from '../../reducers/alert/alert-actions';
+import { suggestionActionCreators } from '../../reducers/suggestion/suggestion-actions';
 
 const mapStateToProps = state => (
   {
@@ -13,7 +13,7 @@ const mapStateToProps = state => (
 const mapDispatchToProps = dispatch => (
   {
     handleDismiss: () => {
-      // dispatch(alertActionCreators.dismissAlert());
+      dispatch(suggestionActionCreators.dismissSuggestion());
     }
   }
 );
