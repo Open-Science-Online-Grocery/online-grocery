@@ -6,7 +6,7 @@ import CartDropdownContainer from './components/cart-dropdown/cart-dropdown-cont
 import './online-grocery.scss';
 
 class HomePage extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.updateSearchType();
   }
 
