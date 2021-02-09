@@ -26,13 +26,15 @@ RSpec.describe ProductFetcher do
   let(:product_sorter) do
     instance_double('ProductSorter', sorted_products: 'the sorted products!')
   end
+  let(:product_relation) { instance_double 'Product::ActiveRecord_Relation' }
 
   subject { described_class.new(condition, params) }
 
   before do
-    allow(Product).to receive(:name_matches) { [product_1, product_2] }
-    allow(Product).to receive(:where) { [product_3, product_4] }
-    allow(Product).to receive_message_chain(:joins, :where) { [product_3, product_4] }
+    allow(Product).to receive(:includes) { product_relation }
+    allow(product_relation).to receive(:name_matches) { [product_1, product_2] }
+    allow(product_relation).to receive(:where) { [product_3, product_4] }
+    allow(product_relation).to receive_message_chain(:joins, :where) { [product_3, product_4] }
     allow(ProductSerializer).to receive(:new) { product_serializer }
     allow(product_serializer).to receive(:serialize).and_return(
       'first serialized product',
@@ -45,7 +47,7 @@ RSpec.describe ProductFetcher do
     let(:search_type) { 'term' }
 
     it 'calls classes with the expected args' do
-      expect(Product).to receive(:name_matches).with('zip')
+      expect(product_relation).to receive(:name_matches).with('zip')
       expect(ProductSerializer).to receive(:new).with(product_1, condition)
       expect(ProductSerializer).to receive(:new).with(product_2, condition)
       expect(ProductSorter).to receive(:new).with(
@@ -65,7 +67,7 @@ RSpec.describe ProductFetcher do
       let(:category_type) { 'category' }
 
       it 'calls classes with the expected args' do
-        expect(Product).to receive(:where).with(subcategory_id: 5)
+        expect(product_relation).to receive(:where).with(subcategory_id: 5)
         expect(ProductSerializer).to receive(:new).with(product_3, condition)
         expect(ProductSerializer).to receive(:new).with(product_4, condition)
         expect(ProductSorter).to receive(:new).with(
@@ -78,12 +80,19 @@ RSpec.describe ProductFetcher do
       end
 
       context 'when there is also a subsubcategory' do
+        let(:other_product_relation) do
+          instance_double 'Product::ActiveRecord_Relation'
+        end
+
         before do
+          allow(product_relation).to receive(:where) { other_product_relation }
+          allow(other_product_relation).to receive(:where) { [product_3, product_4] }
           params[:selected_subsubcategory_id] = 99
         end
 
         it 'calls classes with the expected args' do
-          expect(Product).to receive(:where).with(subcategory_id: 5, subsubcategory_id: 99)
+          expect(product_relation).to receive(:where).with(subcategory_id: 5)
+          expect(other_product_relation).to receive(:where).with(subsubcategory_id: 99)
           expect(ProductSerializer).to receive(:new).with(product_3, condition)
           expect(ProductSerializer).to receive(:new).with(product_4, condition)
           expect(ProductSorter).to receive(:new).with(
@@ -101,7 +110,7 @@ RSpec.describe ProductFetcher do
       let(:category_type) { 'tag' }
 
       it 'calls classes with the expected args' do
-        expect(Product.joins(:product_tags)).to receive(:where).with(
+        expect(product_relation.joins(:product_tags)).to receive(:where).with(
           product_tags: { subtag_id: 5 }
         )
         expect(ProductSerializer).to receive(:new).with(product_3, condition)
