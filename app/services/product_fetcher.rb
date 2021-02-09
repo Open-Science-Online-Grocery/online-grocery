@@ -75,11 +75,10 @@ class ProductFetcher
     @product_relation = @product_relation.where(
       subcategory_id: @params[:selected_subcategory_id]
     )
-    if @params[:selected_subsubcategory_id].present?
-      @product_relation = @product_relation.where(
-        subsubcategory_id: @params[:selected_subsubcategory_id]
-      )
-    end
+    return unless @params[:selected_subsubcategory_id].present?
+    @product_relation = @product_relation.where(
+      subsubcategory_id: @params[:selected_subsubcategory_id]
+    )
   end
 
   private def filtered_products

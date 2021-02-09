@@ -20,8 +20,8 @@ export default function initialize(wrapperElement) {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <AlertContainer />
+        <SuggestionPopupContainer />
         <Router>
-          <SuggestionPopupContainer />
           <Switch>
             <Route exact path="/store" component={SessionIDPage} />
             <Route path="/store/home" component={HomePage} />

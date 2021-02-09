@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ProductCardExpandedContainer from '../product-card-expanded/product-card-expanded-container';
+import ProductDetailsContainer from '../product-details/product-details-container';
 import './suggestion-popup.scss';
 
 export default class SuggestionPopup extends React.Component {
@@ -19,7 +19,7 @@ export default class SuggestionPopup extends React.Component {
             </div>
 
             <div className="body">
-              <ProductCardExpandedContainer {...this.props.product} />
+              <ProductDetailsContainer {...this.props.product} />
             </div>
           </div>
         </div>
