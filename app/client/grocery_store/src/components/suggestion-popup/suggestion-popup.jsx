@@ -10,14 +10,12 @@ export default class SuggestionPopup extends React.Component {
       <div className="suggestion-popup">
         <div className="modal-background">
           <div className="modal-window">
-
             <div className="header">
               <button type="button" onClick={this.props.handleDismiss}>
                 &times;
               </button>
               <div className="title">{this.props.title}</div>
             </div>
-
             <div className="body">
               <ProductDetailsContainer {...this.props.product} />
             </div>

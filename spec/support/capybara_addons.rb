@@ -2,6 +2,17 @@
 
 # handy functions for capybara feature specs
 module CapybaraAddons
+  def add_to_cart(product_name)
+    product_div = parent_of(
+      parent_of(
+        find('.product-card-name', text: product_name, exact_text: true)
+      )
+    )
+    within(product_div) do
+      force_click(find('.add-to-cart .submit'))
+    end
+  end
+
   def parent_of(element)
     element.first(:xpath, './/..')
   end

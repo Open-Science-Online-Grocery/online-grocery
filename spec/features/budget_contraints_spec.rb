@@ -69,15 +69,4 @@ RSpec.describe 'Using budget constraints in grocery store', :feature do
     expect(page).to have_content 'In order to check out, you must spend more than $4.00.'
     expect(page).to have_css '.checkout-button.disabled'
   end
-
-  def add_to_cart(product_name)
-    product_div = parent_of(
-      parent_of(
-        find('.product-card-name', text: product_name, exact_text: true)
-      )
-    )
-    within(product_div) do
-      force_click(find('.add-to-cart .submit'))
-    end
-  end
 end
