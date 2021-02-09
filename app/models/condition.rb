@@ -25,6 +25,7 @@ class Condition < ApplicationRecord
   has_many :product_tags, dependent: :destroy
   has_many :tags, through: :product_tags
   has_many :subtags, through: :product_tags
+  has_many :product_suggestions, dependent: :destroy
   has_many :condition_cart_summary_labels, dependent: :destroy
   has_many :cart_summary_labels, through: :condition_cart_summary_labels
   has_many :condition_labels, dependent: :destroy
@@ -61,7 +62,7 @@ class Condition < ApplicationRecord
   end
 
   def current_tag_csv_file
-    tag_csv_files.select(&:active).max_by(&:created_at)
+    tag_csv_files.select { |f| f.active? && f.persisted? }.max_by(&:created_at)
   end
 
   def new_suggestion_csv_file=(value)
@@ -71,7 +72,9 @@ class Condition < ApplicationRecord
   end
 
   def current_suggestion_csv_file
-    suggestion_csv_files.select(&:active).max_by(&:created_at)
+    suggestion_csv_files
+      .select { |f| f.active? && f.persisted? }
+      .max_by(&:created_at)
   end
 
   def url

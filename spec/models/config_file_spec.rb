@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe ConfigFile, type: :model do
   describe 'delegations' do
     it { is_expected.to delegate_method(:url).to(:file) }
+    it { is_expected.to delegate_method(:current_path).to(:file) }
   end
 
   describe 'associations' do

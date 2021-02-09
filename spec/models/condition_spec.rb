@@ -38,6 +38,7 @@ RSpec.describe Condition, type: :model do
     it { is_expected.to have_many(:product_tags) }
     it { is_expected.to have_many(:tags).through(:product_tags) }
     it { is_expected.to have_many(:subtags).through(:product_tags) }
+    it { is_expected.to have_many(:product_suggestions) }
     it { is_expected.to have_many(:condition_cart_summary_labels) }
     it { is_expected.to have_many(:cart_summary_labels) }
     it { is_expected.to have_many(:condition_labels) }

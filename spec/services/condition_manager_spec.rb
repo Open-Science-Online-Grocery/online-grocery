@@ -167,13 +167,18 @@ RSpec.describe ConditionManager do
 
   describe '#update_condition' do
     describe 'tag file handling' do
-      let(:condition) { create(:condition) }
-      let(:current_tag_file) { condition.tag_csv_files.create }
+      let!(:condition) { create(:condition) }
+      let!(:current_tag_file) { condition.tag_csv_files.create }
       let(:tag_importer) { instance_double 'TagImporter', import: true }
+      let(:suggestion_manager) do
+        instance_double 'SuggestionsCsvManager', import: true
+      end
+
+      subject { described_class.new(condition.reload, params) }
 
       before do
-        allow(condition).to receive(:save) { true }
         allow(TagImporter).to receive(:new) { tag_importer }
+        allow(SuggestionsCsvManager).to receive(:new) { suggestion_manager }
       end
 
       context 'when current tag file does not change' do
@@ -212,7 +217,6 @@ RSpec.describe ConditionManager do
             )
           )
         end
-
         let(:params) do
           { new_tag_csv_file: new_tag_file }
         end
@@ -236,6 +240,22 @@ RSpec.describe ConditionManager do
             expect(subject.update_condition).to eq false
             expect(subject.errors).to include 'boom'
           end
+        end
+      end
+
+      context 'when updating suggestions fails' do
+        let(:params) { {} }
+        let(:suggestion_manager) do
+          instance_double(
+            'SuggestionsCsvManager',
+            import: false,
+            errors: ['kapow']
+          )
+        end
+
+        it 'returns false and has errors' do
+          expect(subject.update_condition).to eq false
+          expect(subject.errors).to include 'kapow'
         end
       end
     end

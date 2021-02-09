@@ -29,7 +29,22 @@ if Rails.env.test? || Rails.env.development?
     sh 'bundle audit'
   end
 
-  task default: [:spec, :js_tests, :rubocop, :eslint, :bundler_audit]
+  # from https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#linting-factories
+  desc 'Verify that all FactoryBot factories are valid'
+  task factory_bot_lint: :environment do
+    if Rails.env.test?
+      conn = ActiveRecord::Base.connection
+      conn.transaction do
+        FactoryBot.lint
+        raise ActiveRecord::Rollback
+      end
+    else
+      system("bundle exec rake factory_bot_lint RAILS_ENV='test'")
+      fail if $?.exitstatus.nonzero?
+    end
+  end
+
+  task default: [:spec, :js_tests, :rubocop, :eslint, :factory_bot_lint, :bundler_audit]
   task ci:      [:default]
 end
 
