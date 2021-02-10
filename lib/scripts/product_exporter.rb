@@ -61,9 +61,9 @@ class ProductExporter
       ['allergens', product_attribute(product, :allergens)],
       ['price', product_attribute(product, :price)],
       ['starpoints', product_attribute(product, :starpoints)],
-      ['newcategory', product_attribute(product, :category_id)],
-      ['newsubcategory', product.subcategory.display_order],
-      ['newsubsubid', product.subsubcategory.try(:display_order) || 'NULL'],
+      ['categoryId', product_attribute(product, :category_id)],
+      ['subcategoryOrder', product.subcategory.display_order],
+      ['subsubcategoryOrder', product.subsubcategory.try(:display_order) || 'NULL'],
       ['name', product_attribute(product, :name)]
     ]
   end
