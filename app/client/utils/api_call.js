@@ -1,5 +1,4 @@
 import humps from 'humps';
-import fetch from 'isomorphic-fetch';
 import UnauthorizedRequestHandler from './UnauthorizedRequestHandler';
 
 function jsonPost(route, data) {
