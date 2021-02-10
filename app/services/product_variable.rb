@@ -23,6 +23,11 @@ class ProductVariable < Variable
   def self.nutrition
     @nutrition ||= [
       {
+        token_name: 'serving_size_grams',
+        description: 'Serving size (g)',
+        attribute: :serving_size_grams
+      },
+      {
         token_name: 'calories_from_fat',
         description: 'Calories from fat per serving',
         attribute: :calories_from_fat
@@ -31,6 +36,11 @@ class ProductVariable < Variable
         token_name: 'calories',
         description: 'Calories per serving',
         attribute: :calories
+      },
+      {
+        token_name: 'caloric_density',
+        description: 'Caloric density',
+        attribute: :caloric_density
       },
       {
         token_name: 'total_fat',
