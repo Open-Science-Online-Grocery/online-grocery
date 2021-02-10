@@ -6,7 +6,7 @@ import './product-card-expanded.scss';
 
 class ProductCardExpanded extends React.Component {
   componentDidMount() {
-    this.props.logParticipantAction('view', this.props.id);
+    this.props.logParticipantAction('view', this.props.product.id);
   }
 
   render() {

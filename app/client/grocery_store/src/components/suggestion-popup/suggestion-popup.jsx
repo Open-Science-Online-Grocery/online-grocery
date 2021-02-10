@@ -6,6 +6,10 @@ import './suggestion-popup.scss';
 export default class SuggestionPopup extends React.Component {
   render() {
     if (!this.props.visible) return null;
+    this.props.logParticipantAction(
+      'suggested add-on shown',
+      this.props.product.id
+    );
     return (
       <div className="suggestion-popup">
         <div className="modal-background">
@@ -31,6 +35,7 @@ SuggestionPopup.propTypes = {
   visible: PropTypes.bool,
   handleDismiss: PropTypes.func.isRequired,
   product: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     name: PropTypes.string,
     imageSrc: PropTypes.string,
     awsImageUrl: PropTypes.string,
@@ -45,7 +50,8 @@ SuggestionPopup.propTypes = {
         labelSize: PropTypes.number
       })
     )
-  })
+  }),
+  logParticipantAction: PropTypes.func.isRequired
 };
 
 SuggestionPopup.defaultProps = {
