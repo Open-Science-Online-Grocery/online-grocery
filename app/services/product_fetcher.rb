@@ -51,7 +51,7 @@ class ProductFetcher
     else
       scope_by_membership
     end
-    filtered_products
+    filtered_products.uniq
   end
 
   private def scope_by_name
