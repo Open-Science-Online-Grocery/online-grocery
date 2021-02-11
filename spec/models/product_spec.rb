@@ -15,8 +15,10 @@ RSpec.describe Product, type: :model do
   describe '.nutrition_fields' do
     it 'returns the expected fields' do
       expected_results = %i[
+        serving_size_grams
         calories_from_fat
         calories
+        caloric_density
         total_fat
         saturated_fat
         trans_fat
