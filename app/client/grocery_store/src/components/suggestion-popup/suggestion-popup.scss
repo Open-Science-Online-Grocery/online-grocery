@@ -1,0 +1,50 @@
+@import "../../base/base";
+
+.suggestion-popup {
+  .modal-background {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .modal-window {
+      background-color: white;
+      z-index: 101;
+      position: fixed;
+      width: 80vw;
+
+      .header {
+        padding: 1rem;
+        background-color: $price-green;
+
+        .title {
+          color: white;
+          text-align: center;
+          font-size: 1.5rem;
+        }
+
+        button {
+          float: right;
+          border: none;
+          background-color: $price-green;
+          color: white;
+          font-size: 1.5rem;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .body {
+      padding: 1rem;
+      padding-left: 2rem;
+      height: 80vh;
+      overflow-y: auto;
+    }
+  }
+}

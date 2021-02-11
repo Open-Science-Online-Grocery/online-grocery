@@ -26,7 +26,7 @@ if Rails.env.test? || Rails.env.development?
   end
 
   task :bundler_audit do
-    sh 'bundle audit'
+    sh 'bundle audit --update'
   end
 
   # from https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#linting-factories

@@ -280,6 +280,8 @@ CREATE TABLE `products` (
   `updated_at` datetime NOT NULL,
   `subsubcategory_id` bigint(20) DEFAULT NULL,
   `aws_image_url` varchar(255) DEFAULT NULL,
+  `serving_size_grams` decimal(6,1) DEFAULT NULL,
+  `caloric_density` decimal(6,1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_products_on_subsubcategory_id` (`subsubcategory_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -442,6 +444,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20190822140435'),
 ('20190822140828'),
 ('20210204170847'),
-('20210208152732');
+('20210208152732'),
+('20210210181943');
 
 
