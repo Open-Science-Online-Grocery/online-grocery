@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe ProductImporter do
   # rubocop:disable RSpec/LetSetup
   let(:fixture_filepath) do
-    Rails.root.join('spec', 'fixtures', 'files', 'product_importer', 'products.csv')
+    Rails.root.join('spec/fixtures/files/product_importer/products.csv')
   end
   let!(:category) { Category.find_or_create_by!(id: 7, name: 'Snacks') }
   let!(:subcategory_1) do
@@ -31,9 +31,11 @@ RSpec.describe ProductImporter do
       'description' => nil,
       'image_src' => 'http://www.publix.com/images/products/300000/300550-600x600-A.jpg',
       'serving_size' => '5 Cracker(s) (16g)',
+      'serving_size_grams' => 100.0,
       'servings' => '28',
       'calories_from_fat' => 15,
       'calories' => 70,
+      'caloric_density' => 11.1,
       'total_fat' => 2,
       'saturated_fat' => 0,
       'trans_fat' => 0,
@@ -63,9 +65,11 @@ RSpec.describe ProductImporter do
       'description' => "The rice one. The Goods: no artificial colors; no artificial flavors; no cholesterol; no partially hydrogenated oils; no high fructose corn syrup. Per 18 Pieces: 130 calories; 0 g sat fat (0% DV); 85 mg sodium (4% DV); 0 g sugars. We're gluten free. Open for good thins! The wonderful Simply Salt so confident with nothing to hide. Taste this crisp baked sensation in its delicious simplicity. SmartLabel. Please recycle carton. This package is sold by weight, not by volume. If it does not appear full when opened, it is because contents have settled during shipping and handling. Questions or comments? Call weekdays: 1-800-622-4726. Please have package available.Show Lessll when opened, it is because contents have settled during shipping and handling. Questions or comments? Call weekdays: 1-800-622-4726. Please have package available.",
       'image_src' => 'http://www.publix.com/images/products/310000/314740-600x600-A.jpg',
       'serving_size' => '18 Piece(s) (31g)',
+      'serving_size_grams' => 200.0,
       'servings' => '3',
       'calories_from_fat' => 15,
       'calories' => 130,
+      'caloric_density' => 22.2,
       'total_fat' => 2,
       'saturated_fat' => 0,
       'trans_fat' => 0,

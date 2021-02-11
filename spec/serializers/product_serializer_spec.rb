@@ -4,7 +4,11 @@ require 'rails_helper'
 
 RSpec.describe ProductSerializer do
   let(:product) do
-    instance_double('Product', attributes: { 'foo' => 'bar' })
+    instance_double(
+      'Product',
+      attributes: { 'foo' => 'bar' },
+      add_on_product: false
+    )
   end
   let(:condition_label_1) do
     instance_double(
@@ -142,6 +146,58 @@ RSpec.describe ProductSerializer do
             labels: []
           }
           expect(subject.serialize).to eq expected_output
+        end
+      end
+    end
+  end
+
+  describe 'add-on attributes' do
+    let(:condition) { NullCondition.new }
+
+    context 'with no add-on product' do
+      it 'does not include it in the hash' do
+        expected_output = {
+          'foo' => 'bar',
+          'nutrition_style_rules' => '{}',
+          labels: []
+        }
+        expect(subject.serialize).to eq expected_output
+      end
+    end
+
+    context 'with an add-on product' do
+      let(:add_on_product) do
+        instance_double('Product', attributes: { 'baz' => 'qux' })
+      end
+
+      before do
+        allow(product).to receive(:add_on_product) { add_on_product }
+      end
+
+      context 'when add-on info should be included' do
+        it 'includes it in the hash' do
+          expected_output = {
+            'foo' => 'bar',
+            'nutrition_style_rules' => '{}',
+            labels: [],
+            'add_on' => {
+              'baz' => 'qux',
+              'nutrition_style_rules' => '{}',
+              labels: []
+            }
+          }
+          expect(subject.serialize).to eq expected_output
+        end
+      end
+
+      context 'when add-on info should not be included' do
+        it 'does not include it in the hash' do
+          expected_output = {
+            'foo' => 'bar',
+            'nutrition_style_rules' => '{}',
+            labels: []
+          }
+          expect(subject.serialize(include_add_on: false)).to eq expected_output
         end
       end
     end

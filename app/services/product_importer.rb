@@ -5,7 +5,7 @@ require 'csv'
 # responsible for importing product data from a spreadsheet. change the value
 # returned by #total_count if the number of products in the spreadsheet changes.
 class ProductImporter
-  def initialize(only_random_subset = false)
+  def initialize(only_random_subset: false)
     @only_random_subset = only_random_subset
     @sampled_rows = (1..total_count).to_a.sample(1000)
     @imported_ids = []
@@ -68,7 +68,7 @@ class ProductImporter
   end
 
   private def import_filepath
-    Rails.root.join('db', 'seeds', 'base', 'products.csv')
+    Rails.root.join('db/seeds/base/products.csv')
   end
 
   private def total_count

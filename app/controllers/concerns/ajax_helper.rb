@@ -3,12 +3,12 @@
 module Concerns
   module AjaxHelper
     private def in_cancelable_modal(partial_name, modal_selector = nil)
-      in_modal(partial_name, true, modal_selector)
+      in_modal(partial_name, cancelable: true, modal_selector: modal_selector)
     end
 
     # A "cancelable" modal has some UI element (like an "X" or a cancel button)
     # that will close the modal without taking any other action.
-    private def in_modal(partial_name, cancelable = false, modal_selector = nil)
+    private def in_modal(partial_name, cancelable: false, modal_selector: nil)
       render(
         '/shared/show_in_modal',
         locals: {

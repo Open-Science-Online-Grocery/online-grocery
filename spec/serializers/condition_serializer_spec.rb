@@ -56,8 +56,8 @@ RSpec.describe ConditionSerializer do
         filter_by_tags: true,
         only_add_to_cart_from_detail_page: true,
         show_price_total: true,
-        minimum_spend: BigDecimal(10),
-        maximum_spend: BigDecimal(50),
+        minimum_spend: BigDecimal('10'),
+        maximum_spend: BigDecimal('50'),
         may_add_to_cart_by_dollar_amount: false,
         show_guiding_stars: true,
         qualtrics_code: 'FOOBAR'

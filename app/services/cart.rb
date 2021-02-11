@@ -109,7 +109,7 @@ class Cart
     total(field) / total_products.to_f
   end
 
-  # note that this is intentionally calculating the total *per serving* in
+  # NOTE: this is intentionally calculating the total *per serving* in
   # the cart, not the total in the cart as a whole. see the descriptions of
   # these fields in Equation.cart_variables
   private def total(field)

@@ -8,15 +8,14 @@ class ConditionManager
   def initialize(condition, params)
     @condition = condition
     @params = params
-    @csv_file = nil
+    @active_tag_file = @condition.current_tag_csv_file
     @errors = []
   end
 
   def assign_params
+    handle_new_config_files
     add_uuid_to_new_record
     clear_unselected_label_fields
-    deactivate_current_csv
-    save_csv_file
     show_food_count_fields
     clear_cart_summary_label_fields
     clear_unselected_sort_fields
@@ -27,13 +26,36 @@ class ConditionManager
   def update_condition
     ActiveRecord::Base.transaction do
       assign_params
-      destroy_deactivated_tags
-      import_tags
       validate_cart_summary_label_params
       @errors += @condition.errors.full_messages unless @condition.save
+      handle_tag_file_change if @errors.none?
+      update_suggestions if @errors.none?
       raise ActiveRecord::Rollback if @errors.any?
     end
     @errors.none?
+  end
+
+  # don't let the current file mark itself `active` if the user is
+  # submitting a new file.
+  private def handle_new_config_files
+    if @params[:new_suggestion_csv_file]
+      @params.delete(:suggestion_csv_files_attributes)
+    end
+    @params.delete(:tag_csv_files_attributes) if @params[:new_tag_csv_file]
+  end
+
+  private def update_suggestions
+    manager = SuggestionsCsvManager.new(@condition)
+    manager.import || @errors += manager.errors
+  end
+
+  private def handle_tag_file_change
+    return if @condition.current_tag_csv_file == @active_tag_file
+    importer = TagImporter.new(
+      file: @params[:new_tag_csv_file],
+      condition: @condition
+    )
+    importer.import || @errors += importer.errors
   end
 
   private def add_uuid_to_new_record
@@ -67,38 +89,6 @@ class ConditionManager
     if @params[:sort_type] != Condition.sort_types.calculation
       @params[:sort_equation_tokens] = nil
     end
-  end
-
-  private def deactivate_current_csv
-    active = @params.delete(:active_tag_csv) == '1'
-    @condition.active_tag_csv = active
-  end
-
-  private def destroy_deactivated_tags
-    # coerce to boolean, false is converted to null by ajax form refresh
-    active = @condition.active_tag_csv
-    current_csv_file = @condition.current_tag_csv_file
-    if current_csv_file
-      current_csv_file.update!(active: active)
-      @condition.product_tags.destroy_all unless active
-    end
-  end
-
-  private def save_csv_file
-    @csv_file = @params[:csv_file]
-    return unless @csv_file
-    @condition.tag_csv_files.each { |file| file.active = false }
-    @condition.tag_csv_files.build(csv_file: @csv_file)
-    @params.delete(:csv_file)
-  end
-
-  private def import_tags
-    # users can only upload one file at a time
-    return unless @csv_file.present?
-
-    tag_importer = TagImporter.new(file: @csv_file, condition: @condition)
-    @condition.product_tags.destroy_all
-    @errors += tag_importer.errors unless tag_importer.import
   end
 
   private def clear_cart_summary_label_fields

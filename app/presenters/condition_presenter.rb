@@ -6,20 +6,10 @@ class ConditionPresenter < SimpleDelegator
 
   alias condition __getobj__
 
-  def current_tag_csv_file_presenter
-    TagCsvFilePresenter.new(current_tag_csv_file)
-  end
-
-  def historical_tag_csv_files_presenters
-    historical_tag_csv_files.map do |tag_csv_file|
-      TagCsvFilePresenter.new(tag_csv_file)
-    end
-  end
-
   # Returns an array of all the unique Tag/Subtag combinations
   # present on a condition
   def unique_tag_combinations
-    tag_combinations = product_tags.map do |product_tag|
+    tag_combinations = product_tags.includes(:tag, :subtag).map do |product_tag|
       [product_tag.tag, product_tag.subtag]
     end
     tag_combinations.uniq
@@ -68,13 +58,8 @@ class ConditionPresenter < SimpleDelegator
 
   private def random_labels
     return [] unless condition.labels.present?
-
     condition.labels.map do |label|
-      if rand(0..100) % 4 == 0
-        nil
-      else
-        label.name
-      end
+      label.name if rand(0..100) % 4 == 0
     end.compact || []
   end
 end

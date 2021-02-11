@@ -33,6 +33,7 @@
 /public/packs
 /public/packs-test
 /node_modules
+/yarn-error.log
 yarn-debug.log*
 .yarn-integrity
 
@@ -59,3 +60,5 @@ spec/examples.txt
 
 howes_grocery.priv
 howes_grocery.pub
+
+.tool-versions

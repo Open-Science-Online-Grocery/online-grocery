@@ -7,6 +7,8 @@ class Product < ApplicationRecord
   belongs_to :subsubcategory, optional: true
 
   has_many :product_tags, dependent: :destroy
+  has_one :product_suggestion, dependent: :destroy
+  has_one :add_on_product, through: :product_suggestion
 
   scope :name_matches, ->(string) {
     where(arel_table[:name].matches("%#{string}%"))

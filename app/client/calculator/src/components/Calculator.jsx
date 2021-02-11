@@ -19,7 +19,7 @@ export default class Calculator extends PureComponent {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener('click', this.handleClick, false);
   }
 

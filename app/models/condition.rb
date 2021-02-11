@@ -4,7 +4,7 @@
 class Condition < ApplicationRecord
   include Rails.application.routes.url_helpers
 
-  attr_writer :show_food_count, :active_tag_csv, :style_use_type
+  attr_writer :show_food_count, :style_use_type
 
   validates :name, :uuid, :qualtrics_code, :sort_type, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
@@ -21,9 +21,11 @@ class Condition < ApplicationRecord
   has_many :condition_product_sort_fields, dependent: :destroy
   has_many :product_sort_fields, through: :condition_product_sort_fields
   has_many :tag_csv_files, dependent: :destroy
+  has_many :suggestion_csv_files, dependent: :destroy
   has_many :product_tags, dependent: :destroy
   has_many :tags, through: :product_tags
   has_many :subtags, through: :product_tags
+  has_many :product_suggestions, dependent: :destroy
   has_many :condition_cart_summary_labels, dependent: :destroy
   has_many :cart_summary_labels, through: :condition_cart_summary_labels
   has_many :condition_labels, dependent: :destroy
@@ -33,6 +35,7 @@ class Condition < ApplicationRecord
   accepts_nested_attributes_for :condition_cart_summary_labels,
                                 :condition_labels,
                                 :tag_csv_files,
+                                :suggestion_csv_files,
                                 allow_destroy: true
 
   def self.sort_types
@@ -52,8 +55,28 @@ class Condition < ApplicationRecord
     OpenStruct.new(ratio: 'ratio', percent: 'percent')
   end
 
-  # TODO: update if needed - depending on client's preferences on URL used to
-  # access the store
+  def new_tag_csv_file=(value)
+    return unless value
+    tag_csv_files.each { |t| t.active = false }
+    tag_csv_files.build(file: value)
+  end
+
+  def current_tag_csv_file
+    tag_csv_files.select { |f| f.active? && f.persisted? }.max_by(&:created_at)
+  end
+
+  def new_suggestion_csv_file=(value)
+    return unless value
+    suggestion_csv_files.each { |s| s.active = false }
+    suggestion_csv_files.build(file: value)
+  end
+
+  def current_suggestion_csv_file
+    suggestion_csv_files
+      .select { |f| f.active? && f.persisted? }
+      .max_by(&:created_at)
+  end
+
   def url
     store_url(condId: uuid)
   end
@@ -75,27 +98,9 @@ class Condition < ApplicationRecord
     )
   end
 
-  def current_tag_csv_file
-    tag_csv_files
-      .order(created_at: :desc)
-      .select(&:active)
-      .first
-  end
-
-  def historical_tag_csv_files
-    tag_csv_files
-      .order(created_at: :desc)
-      .reject(&:active)
-  end
-
   def show_food_count
     return food_count_format.present? if @show_food_count.nil?
     @show_food_count
-  end
-
-  def active_tag_csv
-    return @active_tag_csv unless @active_tag_csv.nil?
-    current_tag_csv_file.present?
   end
 
   def nutrition_equation
@@ -109,6 +114,7 @@ class Condition < ApplicationRecord
     food_count_format == food_count_formats.ratio
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def unique_label_names
     # The names of all the non-destroyed labels, this allows deletion of
     # a label with a conflicting name
@@ -125,4 +131,5 @@ class Condition < ApplicationRecord
       errors.add(:base, "Label name '#{dup_name}' is already in use.")
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 end

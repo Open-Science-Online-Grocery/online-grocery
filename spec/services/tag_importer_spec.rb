@@ -4,11 +4,12 @@ require 'rails_helper'
 
 RSpec.describe TagImporter do
   describe '#import' do
+    let(:condition) { create(:condition) }
     let(:uploaded_file) { File.new(file_fixture(file_with_path)) }
     let(:file_with_path) { "tag_imports/#{file_name}" }
-    let(:condition) { ConditionPresenter.new(create(:condition)) }
+    let(:condition_presenter) { ConditionPresenter.new(condition) }
 
-    subject { described_class.new(file: uploaded_file, condition: condition) }
+    subject { described_class.new(file: uploaded_file, condition: condition_presenter) }
 
     context 'when the file is a csv' do
       # rubocop:disable RSpec/BeforeAfterAll
@@ -123,6 +124,7 @@ RSpec.describe TagImporter do
         let(:file_name) { 'custom_categories_valid.csv' }
 
         it 'returns true and does not add any errors' do
+          expect(condition).to receive_message_chain(:tags, :destroy_all)
           expect(subject.import).to be_truthy
           expect(subject.errors).to be_empty
         end
@@ -147,6 +149,16 @@ RSpec.describe TagImporter do
         expect { subject.import }.to change { Tag.count }.by(0)
           .and change { Subtag.count }.by(0)
           .and change { ProductTag.count }.by(0)
+      end
+    end
+
+    context 'with no file' do
+      let(:uploaded_file) { nil }
+
+      it 'returns true and does not add any errors' do
+        expect(condition).to receive_message_chain(:tags, :destroy_all)
+        expect(subject.import).to be_truthy
+        expect(subject.errors).to be_empty
       end
     end
   end

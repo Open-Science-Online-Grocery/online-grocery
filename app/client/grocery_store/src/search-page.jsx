@@ -6,7 +6,7 @@ import SortLinksContainer from './components/sort-links/sort-links-container';
 import './search-page.scss';
 
 class SearchPage extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.updateSearchType();
   }
 

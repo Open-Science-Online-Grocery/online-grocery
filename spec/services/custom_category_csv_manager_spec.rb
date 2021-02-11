@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ProductDataCsvManager do
+RSpec.describe CustomCategoryCsvManager do
   describe '.product_data_csv_attributes' do
     it 'returns a combined list of the built-in and custom category attributes' do
       expect(described_class.product_data_csv_attributes).to eql(

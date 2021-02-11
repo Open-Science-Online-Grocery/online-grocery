@@ -122,6 +122,21 @@ CREATE TABLE `conditions` (
   KEY `index_conditions_on_default_sort_field_id` (`default_sort_field_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `config_files`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `config_files` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `file` varchar(255) DEFAULT NULL,
+  `condition_id` bigint(20) DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_config_files_on_condition_id` (`condition_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `experiment_results`;
 /*!50001 DROP VIEW IF EXISTS `experiment_results`*/;
 SET @saved_cs_client     = @@character_set_client;
@@ -193,6 +208,24 @@ CREATE TABLE `product_sort_fields` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `product_suggestions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product_suggestions` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `product_id` bigint(20) DEFAULT NULL,
+  `add_on_product_id` bigint(20) DEFAULT NULL,
+  `suggestion_csv_file_id` bigint(20) DEFAULT NULL,
+  `condition_id` bigint(20) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_product_suggestions_on_product_id` (`product_id`),
+  KEY `index_product_suggestions_on_add_on_product_id` (`add_on_product_id`),
+  KEY `index_product_suggestions_on_suggestion_csv_file_id` (`suggestion_csv_file_id`),
+  KEY `index_product_suggestions_on_condition_id` (`condition_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `product_tags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -247,6 +280,8 @@ CREATE TABLE `products` (
   `updated_at` datetime NOT NULL,
   `subsubcategory_id` bigint(20) DEFAULT NULL,
   `aws_image_url` varchar(255) DEFAULT NULL,
+  `serving_size_grams` decimal(6,1) DEFAULT NULL,
+  `caloric_density` decimal(6,1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_products_on_subsubcategory_id` (`subsubcategory_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -297,20 +332,6 @@ CREATE TABLE `subtags` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_subtags_on_tag_id` (`tag_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `tag_csv_files`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tag_csv_files` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `csv_file` varchar(255) DEFAULT NULL,
-  `condition_id` bigint(20) DEFAULT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT 1,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_tag_csv_files_on_condition_id` (`condition_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `tags`;
@@ -421,6 +442,9 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20190307193245'),
 ('20190319133936'),
 ('20190822140435'),
-('20190822140828');
+('20190822140828'),
+('20210204170847'),
+('20210208152732'),
+('20210210181943');
 
 
