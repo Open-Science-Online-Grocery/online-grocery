@@ -47,7 +47,8 @@ class ConditionLabel < ApplicationRecord
       'center right',
       'bottom left',
       'bottom center',
-      'bottom right'
+      'bottom right',
+      'below add-to-cart button'
     ]
   end
 end

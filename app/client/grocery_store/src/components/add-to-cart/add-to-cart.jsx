@@ -84,7 +84,11 @@ export default class AddToCart extends React.Component {
           </div>
           <div className="count">
             <button className="decrement" type="button" onClick={this.subtractAmount}>-</button>
-            <span className="amount">{this.state.addByDollar && '$'}{this.state.amount}</span>
+            <div className="amount">
+              <span>
+                {this.state.addByDollar && '$'}{this.state.amount}
+              </span>
+            </div>
             <button className="increment" type="button" onClick={this.addAmount}>+</button>
           </div>
           <div onClick={this.handleAddToCart} className="submit">✓</div>
