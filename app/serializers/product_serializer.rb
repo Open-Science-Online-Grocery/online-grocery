@@ -29,7 +29,9 @@ class ProductSerializer
       'label_name' => condition_label.name,
       'label_image_url' => condition_label.image_url,
       'label_position' => condition_label.position,
-      'label_size' => condition_label.size
+      'label_size' => condition_label.size,
+      'label_tooltip' => condition_label.tooltip_text,
+      'label_below_button' => condition_label.below_button?
     }
   end
 

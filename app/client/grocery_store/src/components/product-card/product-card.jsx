@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Popup } from 'semantic-ui-react'
 import AddToCartContainer from '../add-to-cart/add-to-cart-container';
 import './product-card.scss';
 
@@ -21,19 +22,32 @@ export default class ProductCard extends React.Component {
     return require('../../images/3howestars.png');
   }
 
-  productLabels() {
+  withTooltip(element, tooltip, key) {
     return (
-      this.props.product.labels.map(label => (
-        <div
-          className="product-card-overlay"
-          style={this.labelStyles(label)}
-          key={label.labelImageUrl}
-        />
-      ))
+      <Popup key={key} content={tooltip} trigger={element} />
     );
   }
 
-  labelStyles(labelAttributes) {
+  overlayLabels() {
+    const labels = this.props.product.labels.filter(
+      label => !label.labelBelowButton
+    );
+    return (labels.map(label => this.overlayLabel(label)));
+  }
+
+  overlayLabel(label) {
+    const element = (
+      <div
+        className="product-card-overlay"
+        style={this.overlayLabelStyles(label)}
+        key={label.labelImageUrl}
+      />
+    );
+    if (!label.labelTooltip.length) return element;
+    return this.withTooltip(element, label.labelTooltip, label.labelImageUrl);
+  }
+
+  overlayLabelStyles(labelAttributes) {
     if (!labelAttributes.labelImageUrl) return {};
     return {
       backgroundImage: `url(${labelAttributes.labelImageUrl})`,
@@ -68,7 +82,7 @@ export default class ProductCard extends React.Component {
         <Link to={{ pathname: '/store/product', state: { product: this.props.product } }}>
           <div className="product-card-image-wrapper">
             <img className="product-card-image" alt="product" src={this.props.product.awsImageUrl} />
-            {this.productLabels()}
+            {this.overlayLabels()}
           </div>
           <div className="product-card-name">{this.props.product.name}</div>
         </Link>
@@ -99,7 +113,9 @@ ProductCard.propTypes = {
         labelName: PropTypes.string,
         labelImageUrl: PropTypes.string,
         labelPosition: PropTypes.string,
-        labelSize: PropTypes.number
+        labelSize: PropTypes.number,
+        labelTooltip: PropTypes.string,
+        labelBelowButton: PropTypes.bool
       })
     )
   }).isRequired,
