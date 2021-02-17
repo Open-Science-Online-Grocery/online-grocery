@@ -15,13 +15,6 @@ class ConditionLabel < ApplicationRecord
 
   accepts_nested_attributes_for :label, allow_destroy: true
 
-  scope :overlay, -> {
-    where.not(position: below_button_position)
-  }
-  scope :below_button, -> {
-    where(position: below_button_position)
-  }
-
   def self.label_types
     OpenStruct.new(provided: 'provided', custom: 'custom')
   end
@@ -61,5 +54,13 @@ class ConditionLabel < ApplicationRecord
       'bottom right',
       below_button_position
     ]
+  end
+
+  def below_button?
+    position == below_button_position
+  end
+
+  def overlay?
+    !below_button?
   end
 end
