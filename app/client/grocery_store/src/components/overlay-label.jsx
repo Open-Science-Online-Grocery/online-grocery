@@ -18,7 +18,6 @@ export default class OverlayLabel extends React.Component {
       <div
         className="product-card-overlay"
         style={this.styles()}
-        key={this.props.labelImageUrl}
       />
     );
   }
@@ -27,7 +26,6 @@ export default class OverlayLabel extends React.Component {
     const { labelImageUrl, labelTooltip } = this.props;
     return (
       <Popup
-        key={labelImageUrl}
         content={labelTooltip}
         trigger={this.labelElement()}
       />

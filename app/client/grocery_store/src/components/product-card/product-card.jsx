@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Popup } from 'semantic-ui-react'
 import AddToCartContainer from '../add-to-cart/add-to-cart-container';
+import OverlayLabel from '../overlay-label';
 import './product-card.scss';
 
 export default class ProductCard extends React.Component {
@@ -22,38 +22,13 @@ export default class ProductCard extends React.Component {
     return require('../../images/3howestars.png');
   }
 
-  withTooltip(element, tooltip, key) {
-    return (
-      <Popup key={key} content={tooltip} trigger={element} />
-    );
-  }
-
   overlayLabels() {
     const labels = this.props.product.labels.filter(
       label => !label.labelBelowButton
     );
-    return (labels.map(label => this.overlayLabel(label)));
-  }
-
-  overlayLabel(label) {
-    const element = (
-      <div
-        className="product-card-overlay"
-        style={this.overlayLabelStyles(label)}
-        key={label.labelImageUrl}
-      />
+    return labels.map(
+      label => <OverlayLabel {...label} key={label.labelImageUrl}/>
     );
-    if (!label.labelTooltip.length) return element;
-    return this.withTooltip(element, label.labelTooltip, label.labelImageUrl);
-  }
-
-  overlayLabelStyles(labelAttributes) {
-    if (!labelAttributes.labelImageUrl) return {};
-    return {
-      backgroundImage: `url(${labelAttributes.labelImageUrl})`,
-      backgroundPosition: labelAttributes.labelPosition,
-      backgroundSize: `${labelAttributes.labelSize}%`
-    };
   }
 
   addToCartButtons() {
