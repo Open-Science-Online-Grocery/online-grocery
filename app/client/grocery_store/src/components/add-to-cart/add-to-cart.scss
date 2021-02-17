@@ -24,6 +24,8 @@
       color: white;
       padding: 0.2rem 0.5rem;
       position: relative;
+      display: flex;
+      align-items: center;
 
       &.active {
         cursor: pointer;
@@ -61,7 +63,7 @@
         cursor: pointer;
 
         &.decrement, &.increment {
-          padding: 0.2rem;
+          padding: 0.2rem 0.4rem;
         }
       }
 

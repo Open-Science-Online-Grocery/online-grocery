@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css'
+import './main.scss';
 import HomePage from './online-grocery-container';
 import ProductViewPage from './product-page';
 import CheckoutPage from './checkout-page';
