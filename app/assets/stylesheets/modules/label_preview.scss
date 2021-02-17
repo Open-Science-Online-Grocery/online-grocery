@@ -33,5 +33,21 @@
         margin: 1rem;
       }
     }
+
+    // the intent is to make the tooltips look like
+    // the ones in the grocery store
+    .ui.popup, .ui.popup::before {
+      color: white;
+      background-color: $cart-button-color;
+      box-shadow: none;
+    }
+
+    .ui.popup {
+      border-radius: 0;
+      font-family: "Century Gothic", sans-serif;
+      border: none;
+      font-size: 16px;
+      padding: 6px 10px;
+    }
   }
 }

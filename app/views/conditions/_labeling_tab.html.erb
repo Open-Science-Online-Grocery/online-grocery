@@ -33,13 +33,19 @@
         <div class="ui segment">
           <%= image_tag 'apple.png', class: 'product' %>
           <% condition.condition_labels.select(&:overlay?).each do |condition_label| %>
-            <div class="overlay overlay-<%= condition_label.object_id %>"></div>
+            <div class="overlay overlay-<%= condition_label.object_id %>" data-content="<%= condition_label.tooltip_text %>"></div>
           <% end %>
           <div class="add-to-cart-container">
             <%= image_tag 'add_to_cart.png', class: 'add-to-cart' %>
             <% condition.condition_labels.select(&:below_button?).each do |condition_label| %>
               <div class="below-button-container">
-                <%= image_tag condition_label.image_url, class: "below-button-#{condition_label.object_id}" %>
+                <%=
+                  image_tag(
+                    condition_label.image_url,
+                    class: "below-button-#{condition_label.object_id}",
+                    data: { content: condition_label.tooltip_text }
+                  )
+                %>
               </div>
             <% end %>
           </div>
