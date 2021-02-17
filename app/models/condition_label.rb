@@ -7,7 +7,7 @@ class ConditionLabel < ApplicationRecord
   delegate :built_in, :name, :image, :image_url, :image?,
            to: :label
   delegate :image_url, to: :label, prefix: true, allow_nil: true
-  delegate :label_types, to: :class
+  delegate :label_types, :below_button_position, to: :class
   delegate :variables, to: :equation, prefix: true
 
   belongs_to :condition
@@ -15,8 +15,19 @@ class ConditionLabel < ApplicationRecord
 
   accepts_nested_attributes_for :label, allow_destroy: true
 
+  scope :overlay, -> {
+    where.not(position: below_button_position)
+  }
+  scope :below_button, -> {
+    where(position: below_button_position)
+  }
+
   def self.label_types
     OpenStruct.new(provided: 'provided', custom: 'custom')
+  end
+
+  def self.below_button_position
+    'below add-to-cart button'
   end
 
   def label_type
@@ -48,7 +59,7 @@ class ConditionLabel < ApplicationRecord
       'bottom left',
       'bottom center',
       'bottom right',
-      'below add-to-cart button'
+      below_button_position
     ]
   end
 end
