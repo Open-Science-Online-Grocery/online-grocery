@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Popup } from 'semantic-ui-react'
+import './overlay-label.scss';
 
 export default class OverlayLabel extends React.Component {
   styles() {
@@ -16,7 +17,7 @@ export default class OverlayLabel extends React.Component {
   labelElement() {
     return (
       <div
-        className="product-card-overlay"
+        className="overlay-label"
         style={this.styles()}
       />
     );

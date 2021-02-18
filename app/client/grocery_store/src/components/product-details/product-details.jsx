@@ -2,30 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NutritionLabel from '../nutrition-label/nutrition-label';
 import AddToCartContainer from '../add-to-cart/add-to-cart-container';
+import OverlayLabel from '../overlay-label/overlay-label';
 import './product-details.scss';
 
 export default class ProductDetails extends React.Component {
-  productLabels() {
-    return (
-      this.props.labels.map(label => (
-        <div
-          className="product-details-overlay"
-          style={this.labelStyles(label)}
-          key={label.labelImageUrl}
-        />
-      ))
-    );
-  }
-
-  labelStyles(labelAttributes) {
-    if (!labelAttributes.labelImageUrl) return {};
-    return {
-      backgroundImage: `url(${labelAttributes.labelImageUrl})`,
-      backgroundPosition: labelAttributes.labelPosition,
-      backgroundSize: `${labelAttributes.labelSize}%`
-    };
-  }
-
   // webpack's `require` seems to have problems with interpolated strings and
   // method calls within it. using a literal string works, however.
   starImagePath() {
@@ -53,6 +33,15 @@ export default class ProductDetails extends React.Component {
     );
   }
 
+  overlayLabels() {
+    const labels = this.props.labels.filter(
+      label => !label.labelBelowButton
+    );
+    return labels.map(
+      label => <OverlayLabel {...label} key={label.labelImageUrl}/>
+    );
+  }
+
   render() {
     return (
       <div className="product-details">
@@ -67,7 +56,7 @@ export default class ProductDetails extends React.Component {
           </div>
           <div className="product-details-image-wrapper">
             <img className="product-details-image" src={this.props.awsImageUrl} />
-            {this.productLabels()}
+            {this.overlayLabels()}
           </div>
           <div className="product-details-description">{this.props.description}</div>
         </div>
@@ -118,7 +107,9 @@ ProductDetails.propTypes = {
       labelName: PropTypes.string,
       labelImageUrl: PropTypes.string,
       labelPosition: PropTypes.string,
-      labelSize: PropTypes.number
+      labelSize: PropTypes.number,
+      labelTooltip: PropTypes.string,
+      labelBelowButton: PropTypes.bool
     })
   ),
   servings: PropTypes.string,

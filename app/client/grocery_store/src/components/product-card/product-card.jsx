@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AddToCartContainer from '../add-to-cart/add-to-cart-container';
-import OverlayLabel from '../overlay-label';
+import OverlayLabel from '../overlay-label/overlay-label';
 import './product-card.scss';
 
 export default class ProductCard extends React.Component {
