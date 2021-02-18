@@ -3,25 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AddToCartContainer from '../add-to-cart/add-to-cart-container';
 import OverlayLabel from '../overlay-label/overlay-label';
+import GuidingStars from '../guiding-stars/guiding-stars';
 import './product-card.scss';
 
 export default class ProductCard extends React.Component {
-  // webpack's `require` seems to have problems with interpolated strings and
-  // method calls within it. using a literal string works, however.
-  starImagePath() {
-    const starpoints = this.props.product.starpoints;
-    if (starpoints < 0) {
-      return require('../../images/0howestars.png');
-    }
-    if (starpoints === 1 || starpoints === 2) {
-      return require('../../images/1howestar.png');
-    }
-    if (starpoints === 3 || starpoints === 4) {
-      return require('../../images/2howestars.png');
-    }
-    return require('../../images/3howestars.png');
-  }
-
   overlayLabels() {
     const labels = this.props.product.labels.filter(
       label => !label.labelBelowButton
@@ -37,16 +22,12 @@ export default class ProductCard extends React.Component {
   }
 
   guidingStars() {
-    if (!this.props.showGuidingStars) return <div className="product-card-guiding-stars-wrapper" />;
     return (
-      <div className="tooltip--triangle product-card-guiding-stars-wrapper" data-tooltip="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!">
-        <a href="https://guidingstars.com/what-is-guiding-stars/">
-          <img
-            className="product-card-guiding-stars"
-            src={this.starImagePath()}
-            alt="Guiding Stars"
-          />
-        </a>
+      <div className="product-card-guiding-stars-wrapper">
+        {
+          this.props.showGuidingStars &&
+            <GuidingStars starpoints={this.props.product.starpoints} />
+        }
       </div>
     );
   }
