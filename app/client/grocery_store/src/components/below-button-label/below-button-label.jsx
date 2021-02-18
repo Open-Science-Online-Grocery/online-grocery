@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Popup } from 'semantic-ui-react'
+import './below-button-label.scss';
+
 
 export default class BelowButtonLabel extends React.Component {
   styles() {
@@ -11,7 +13,7 @@ export default class BelowButtonLabel extends React.Component {
 
   labelElement() {
     return (
-      <img scr={`url(${this.props.labelImageUrl})`} style={this.styles()} />
+      <img src={this.props.labelImageUrl} style={this.styles()} />
     );
   }
 

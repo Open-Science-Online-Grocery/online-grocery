@@ -59,8 +59,8 @@ export default class ProductCard extends React.Component {
         <div className="product-card-buttons">
           {this.guidingStars()}
           {this.addToCartButtons()}
-          {this.belowButtonLabels()}
         </div>
+        {this.belowButtonLabels()}
       </div>
     );
   }
