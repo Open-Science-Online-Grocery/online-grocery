@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AddToCartContainer from '../add-to-cart/add-to-cart-container';
 import OverlayLabel from '../overlay-label/overlay-label';
+import BelowButtonLabel from '../below-button-label/below-button-label';
 import GuidingStars from '../guiding-stars/guiding-stars';
 import './product-card.scss';
 
@@ -13,6 +14,15 @@ export default class ProductCard extends React.Component {
     );
     return labels.map(
       label => <OverlayLabel {...label} key={label.labelImageUrl}/>
+    );
+  }
+
+  belowButtonLabels() {
+    const labels = this.props.product.labels.filter(
+      label => label.labelBelowButton
+    );
+    return labels.map(
+      label => <BelowButtonLabel {...label} key={label.labelImageUrl}/>
     );
   }
 
@@ -49,6 +59,7 @@ export default class ProductCard extends React.Component {
         <div className="product-card-buttons">
           {this.guidingStars()}
           {this.addToCartButtons()}
+          {this.belowButtonLabels()}
         </div>
       </div>
     );

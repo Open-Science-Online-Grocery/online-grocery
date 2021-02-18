@@ -1,25 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Popup } from 'semantic-ui-react'
-import './overlay-label.scss';
 
-export default class OverlayLabel extends React.Component {
+export default class BelowButtonLabel extends React.Component {
   styles() {
-    const { labelImageUrl, labelPosition, labelSize } = this.props;
+    const { labelImageUrl, labelSize } = this.props;
     if (!labelImageUrl) return {};
-    return {
-      backgroundImage: `url(${labelImageUrl})`,
-      backgroundPosition: labelPosition,
-      backgroundSize: `${labelSize}%`
-    };
+    return { width: `${labelSize}%` };
   }
 
   labelElement() {
     return (
-      <div
-        className="overlay-label"
-        style={this.styles()}
-      />
+      <img scr={`url(${this.props.labelImageUrl})`} style={this.styles()} />
     );
   }
 
@@ -35,14 +27,15 @@ export default class OverlayLabel extends React.Component {
 
   render() {
     return (
-      this.props.labelTooltip.length ? this.tooltipLabel() : this.labelElement()
+      <div className="below-button-container">
+        { this.props.labelTooltip.length ? this.tooltipLabel() : this.labelElement() }
+      </div>
     );
   }
 }
 
-OverlayLabel.propTypes = {
+BelowButtonLabel.propTypes = {
   labelImageUrl: PropTypes.string,
-  labelPosition: PropTypes.string,
   labelSize: PropTypes.number,
   labelTooltip: PropTypes.string
 };
