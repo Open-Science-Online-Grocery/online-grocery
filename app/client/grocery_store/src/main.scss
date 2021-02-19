@@ -1,3 +1,5 @@
+@import "./base/base";
+
 body, html {
   font-size: 16px;
   line-height: 1;
@@ -5,4 +7,18 @@ body, html {
 
 body {
   margin: 0.5rem;
+}
+
+.store-tooltip {
+  &.ui.popup, &.ui.popup::before {
+    color: white;
+    background-color: $cart-color;
+    box-shadow: none;
+  }
+
+  &.ui.popup {
+    border-radius: 0;
+    border: none;
+    padding: 6px 10px;
+  }
 }

@@ -24,6 +24,7 @@ export default class GuidingStars extends React.Component {
       <Popup
         hoverable
         wide="very"
+        className="store-tooltip"
         content="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!"
         trigger={
           <a href="https://guidingstars.com/what-is-guiding-stars/">
