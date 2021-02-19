@@ -38,10 +38,12 @@ export default class ProductDetails extends React.Component {
           <div className="product-details-price bold">
             ${parseFloat(Math.round(this.props.price * 100) / 100).toFixed(2)}
           </div>
-          <div className="product-details-buttons">
-            <AddToCartContainer product={this.props} />
-            <div className="below-button-labels">
-              {this.belowButtonLabels()}
+          <div className="product-details-buttons-wrapper">
+            <div className="product-details-buttons">
+              <AddToCartContainer product={this.props} />
+              <div className="below-button-labels">
+                {this.belowButtonLabels()}
+              </div>
             </div>
           </div>
           <div className="product-details-image-wrapper">
