@@ -110,6 +110,6 @@ export default class Initializer {
   }
 
   initializeTooltipPopups() {
-    this.$scope.find('[data-content]').popup({ inline: true});
+    this.$scope.find('[data-content]').popup({ inline: true });
   }
 }

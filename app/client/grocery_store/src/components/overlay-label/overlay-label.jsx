@@ -36,9 +36,11 @@ export default class OverlayLabel extends React.Component {
   }
 
   render() {
-    return (
-      this.props.labelTooltip.length ? this.tooltipLabel() : this.labelElement()
-    );
+    if (this.props.labelTooltip && this.props.labelTooltip.length) {
+      return this.tooltipLabel();
+    } else {
+      return this.labelElement();
+    }
   }
 }
 

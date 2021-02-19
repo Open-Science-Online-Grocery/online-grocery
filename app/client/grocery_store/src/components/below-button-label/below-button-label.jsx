@@ -29,10 +29,18 @@ export default class BelowButtonLabel extends React.Component {
     );
   }
 
+  element() {
+    if (this.props.labelTooltip && this.props.labelTooltip.length) {
+      return this.tooltipLabel();
+    } else {
+      return this.labelElement();
+    }
+  }
+
   render() {
     return (
       <div className="below-button-container">
-        { this.props.labelTooltip.length ? this.tooltipLabel() : this.labelElement() }
+        {this.element()}
       </div>
     );
   }

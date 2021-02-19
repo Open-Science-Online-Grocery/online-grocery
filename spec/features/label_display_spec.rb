@@ -73,7 +73,7 @@ RSpec.describe 'Showing labels in grocery store', :feature do
       find('.product-card-name', text: 'labeled product', exact_text: true)
     )
     within(labeled_product_div) do
-      overlays = find_all('.product-card-overlay')
+      overlays = find_all('.overlay-label')
       overlay_1 = overlays[0]
       overlay_2 = overlays[1]
       expect(overlay_1[:style]).to match(/background-size: 20%/)
@@ -85,6 +85,6 @@ RSpec.describe 'Showing labels in grocery store', :feature do
     )
 
     # unlabeled products do not have any overlays rendered
-    expect(unlabeled_product_div).not_to have_selector '.product-card-overlay'
+    expect(unlabeled_product_div).not_to have_selector '.overlay-label'
   end
 end
