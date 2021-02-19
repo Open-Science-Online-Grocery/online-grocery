@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import NutritionLabel from '../nutrition-label/nutrition-label';
 import AddToCartContainer from '../add-to-cart/add-to-cart-container';
 import OverlayLabel from '../overlay-label/overlay-label';
+import BelowButtonLabel from '../below-button-label/below-button-label';
 import GuidingStars from '../guiding-stars/guiding-stars';
 import './product-details.scss';
 
@@ -15,11 +16,16 @@ export default class ProductDetails extends React.Component {
   }
 
   overlayLabels() {
-    const labels = this.props.labels.filter(
-      label => !label.labelBelowButton
-    );
+    const labels = this.props.labels.filter(label => !label.labelBelowButton);
     return labels.map(
       label => <OverlayLabel {...label} key={label.labelImageUrl}/>
+    );
+  }
+
+  belowButtonLabels() {
+    const labels = this.props.labels.filter(label => label.labelBelowButton);
+    return labels.map(
+      label => <BelowButtonLabel {...label} key={label.labelImageUrl}/>
     );
   }
 
@@ -34,6 +40,9 @@ export default class ProductDetails extends React.Component {
           </div>
           <div className="product-details-buttons">
             <AddToCartContainer product={this.props} />
+            <div className="below-button-labels">
+              {this.belowButtonLabels()}
+            </div>
           </div>
           <div className="product-details-image-wrapper">
             <img className="product-details-image" src={this.props.awsImageUrl} />

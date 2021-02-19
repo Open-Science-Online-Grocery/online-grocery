@@ -60,7 +60,9 @@ export default class ProductCard extends React.Component {
           {this.guidingStars()}
           {this.addToCartButtons()}
         </div>
-        {this.belowButtonLabels()}
+        <div className="below-button-labels">
+          {this.belowButtonLabels()}
+        </div>
       </div>
     );
   }
