@@ -5,7 +5,7 @@ class ConditionLabel < ApplicationRecord
   attr_writer :label_type
 
   delegate :built_in, :name, :image, :image_url, :image?,
-           to: :label
+           to: :label, allow_nil: true
   delegate :image_url, to: :label, prefix: true, allow_nil: true
   delegate :label_types, :below_button_position, to: :class
   delegate :variables, to: :equation, prefix: true
