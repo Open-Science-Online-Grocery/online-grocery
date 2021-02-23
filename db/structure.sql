@@ -253,7 +253,7 @@ CREATE TABLE `products` (
   `name` varchar(255) DEFAULT NULL,
   `size` varchar(255) DEFAULT NULL,
   `description` text DEFAULT NULL,
-  `image_src` varchar(255) DEFAULT NULL,
+  `image_src` text DEFAULT NULL,
   `serving_size` varchar(255) DEFAULT NULL,
   `servings` varchar(255) DEFAULT NULL,
   `calories_from_fat` int(11) DEFAULT NULL,
@@ -447,6 +447,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20210204170847'),
 ('20210208152732'),
 ('20210210181943'),
-('20210217174649');
+('20210217174649'),
+('20210223151548');
 
 
