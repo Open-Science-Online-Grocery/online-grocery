@@ -38,7 +38,9 @@ ProductCardExpanded.propTypes = {
         labelName: PropTypes.string,
         labelImageUrl: PropTypes.string,
         labelPosition: PropTypes.string,
-        labelSize: PropTypes.number
+        labelSize: PropTypes.number,
+        labelTooltip: PropTypes.string,
+        labelBelowButton: PropTypes.bool
       })
     ),
     servings: PropTypes.string,

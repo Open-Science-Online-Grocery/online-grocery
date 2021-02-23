@@ -23,6 +23,7 @@ export default class Initializer {
     this.initializeNutritionStylers();
     this.initializeLoadingSpinnerButtons();
     this.initializeAccordions();
+    this.initializeTooltipPopups();
   }
 
   initializeTableRowLinks() {
@@ -106,5 +107,9 @@ export default class Initializer {
   initializeAccordions() {
     const $accordions = this.$scope.find('.ui.accordion');
     $accordions.accordion();
+  }
+
+  initializeTooltipPopups() {
+    this.$scope.find('[data-content]').popup({ inline: true });
   }
 }

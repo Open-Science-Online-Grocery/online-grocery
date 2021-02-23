@@ -1,11 +1,14 @@
 .label-preview {
-  padding-left: 20%;
+  width: 22.5vw;
+  max-width: 22.5vw;
+  margin-left: auto !important;
 
   .ui.segment {
-    height: 300px;
-    width: 300px;
-    position: relative;
     padding: 0;
+
+    .product-image-container {
+      position: relative;
+    }
 
     .overlay {
       position: absolute;
@@ -16,9 +19,39 @@
       background-repeat: no-repeat;
     }
 
+    .below-button-container {
+      margin-right: 1rem;
+    }
+
+    .add-to-cart-container {
+      text-align: right;
+    }
+
     img {
-      height: 100%;
-      width: 100%;
+      &.product {
+        width: 100%;
+      }
+
+      &.add-to-cart {
+        height: 2rem;
+        margin: 1rem 1rem 0 1rem;
+      }
+    }
+
+    // the intent is to make the tooltips look like
+    // the ones in the grocery store
+    .ui.popup, .ui.popup::before {
+      color: white;
+      background-color: $cart-button-color;
+      box-shadow: none;
+    }
+
+    .ui.popup {
+      border-radius: 0;
+      font-family: "Century Gothic", sans-serif;
+      border: none;
+      font-size: 16px;
+      padding: 6px 10px;
     }
   }
 }

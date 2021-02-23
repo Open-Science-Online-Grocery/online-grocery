@@ -1,15 +1,21 @@
 <div class="ui bottom attached tab segment" data-tab="labeling">
-  <% condition.condition_labels.each do |condition_label| %>
-    <% if condition_label.try(:label).try(:image) %>
-      <style>
-        .overlay-<%= condition_label.object_id %> {
-          background-image: url('<%= condition_label.image_url %>');
-          background-position: <%= condition_label.position %>;
-          background-size: <%= condition_label.size %>%;
-        }
-      </style>
+  <style>
+    <% condition.condition_labels.each do |condition_label| %>
+      <% if condition_label.try(:label).try(:image) %>
+        <% if condition_label.below_button? %>
+          .below-button-<%= condition_label.object_id %> {
+            width: <%= condition_label.size %>%;
+          }
+        <% else %>
+          .overlay-<%= condition_label.object_id %> {
+            background-image: url('<%= condition_label.image_url %>');
+            background-position: <%= condition_label.position %>;
+            background-size: <%= condition_label.size %>%;
+          }
+        <% end %>
+      <% end %>
     <% end %>
-  <% end %>
+  </style>
 
   <div class="ui grid">
     <div class="eight wide column">
@@ -25,10 +31,26 @@
       <div class="field label-preview">
         <label>Preview</label>
         <div class="ui segment">
-          <%= image_tag 'apple.png' %>
-          <% condition.condition_labels.each do |condition_label| %>
-            <div class="overlay overlay-<%= condition_label.object_id %>"></div>
-          <% end %>
+          <div class="product-image-container">
+            <%= image_tag 'apple.png', class: 'product' %>
+            <% condition.condition_labels.select(&:overlay?).each do |condition_label| %>
+              <div class="overlay overlay-<%= condition_label.object_id %>" data-content="<%= condition_label.tooltip_text %>"></div>
+            <% end %>
+          </div>
+          <div class="add-to-cart-container">
+            <%= image_tag 'add_to_cart.png', class: 'add-to-cart' %>
+            <% condition.condition_labels.select(&:below_button?).each do |condition_label| %>
+              <div class="below-button-container">
+                <%=
+                  image_tag(
+                    condition_label.image_url,
+                    class: "below-button-#{condition_label.object_id}",
+                    data: { content: condition_label.tooltip_text }
+                  )
+                %>
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>

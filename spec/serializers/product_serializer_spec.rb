@@ -17,7 +17,9 @@ RSpec.describe ProductSerializer do
       size: 20,
       equation: label_equation_1,
       image_url: 'foo.jpg',
-      name: 'foo label'
+      name: 'foo label',
+      tooltip_text: 'hello',
+      below_button?: true
     )
   end
   let(:condition_label_2) do
@@ -27,7 +29,9 @@ RSpec.describe ProductSerializer do
       size: 25,
       equation: label_equation_2,
       image_url: 'bar.jpg',
-      name: 'bar label'
+      name: 'bar label',
+      tooltip_text: 'goodbye',
+      below_button?: false
     )
   end
   let(:condition) do
@@ -79,7 +83,9 @@ RSpec.describe ProductSerializer do
               'label_name' => 'foo label',
               'label_image_url' => 'foo.jpg',
               'label_position' => 'bottom right',
-              'label_size' => 20
+              'label_size' => 20,
+              'label_tooltip' => 'hello',
+              'label_below_button' => true
             }
           ]
         }
@@ -96,13 +102,17 @@ RSpec.describe ProductSerializer do
               'label_name' => 'foo label',
               'label_image_url' => 'foo.jpg',
               'label_position' => 'bottom right',
-              'label_size' => 20
+              'label_size' => 20,
+              'label_tooltip' => 'hello',
+              'label_below_button' => true
             },
             {
               'label_name' => 'bar label',
               'label_image_url' => 'bar.jpg',
               'label_position' => 'top left',
-              'label_size' => 25
+              'label_size' => 25,
+              'label_tooltip' => 'goodbye',
+              'label_below_button' => false
             }
           ]
         }

@@ -109,6 +109,7 @@ class ConditionsController < ApplicationController
         :label_type,
         :position,
         :size,
+        :tooltip_text,
         :equation_tokens,
         :always_show,
         label_attributes: %i[id image image_cache name built_in]

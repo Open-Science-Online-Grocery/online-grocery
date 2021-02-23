@@ -73,6 +73,7 @@ CREATE TABLE `condition_labels` (
   `always_show` tinyint(1) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
+  `tooltip_text` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_condition_labels_on_condition_id` (`condition_id`),
   KEY `index_condition_labels_on_label_id` (`label_id`)
@@ -445,6 +446,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20190822140828'),
 ('20210204170847'),
 ('20210208152732'),
-('20210210181943');
+('20210210181943'),
+('20210217174649');
 
 
