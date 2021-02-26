@@ -14,6 +14,8 @@
   height: 347px;
   max-height: 347px;
   position: relative;
+  padding: 1rem;
+  border-bottom: 1px solid $light-shadow;
 
   @include small-only {
     width: 100%;
