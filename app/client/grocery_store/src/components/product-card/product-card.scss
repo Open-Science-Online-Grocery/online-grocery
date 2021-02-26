@@ -6,17 +6,23 @@
   text-transform: capitalize;
   border-bottom: 1px solid $light-shadow;
   position: relative;
+  max-height: 100%;
+  max-width: 100%;
 
   .product-card-image-wrapper {
     max-width: 75%;
+    max-height: 100%;
     margin: auto;
     position: relative;
 
     .product-card-image {
       width: auto;
-      max-width: 100%;
+      max-width: 315px;
       display: block;
       cursor: pointer;
+      height: 237px;
+      margin-right: auto;
+      margin-left: auto;
     }
   }
 

@@ -11,6 +11,9 @@
   width: 25%;
   max-width: 25%;
   min-width: 340px;
+  height: 347px;
+  max-height: 347px;
+  position: relative;
 
   @include small-only {
     width: 100%;
