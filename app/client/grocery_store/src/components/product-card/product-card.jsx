@@ -52,16 +52,18 @@ export default class ProductCard extends React.Component {
           </div>
           <div className="product-card-name">{this.props.product.name}</div>
         </Link>
-        <div className="product-card-size">{this.props.product.size}</div>
-        <div className="product-card-price bold">
-          ${parseFloat(Math.round(this.props.product.price * 100) / 100).toFixed(2)}
-        </div>
-        <div className="product-card-buttons">
-          {this.guidingStars()}
-          {this.addToCartButtons()}
-        </div>
-        <div className="below-button-labels">
-          {this.belowButtonLabels()}
+        <div>
+          <div className="product-card-size">{this.props.product.size}</div>
+          <div className="product-card-price bold">
+            ${parseFloat(Math.round(this.props.product.price * 100) / 100).toFixed(2)}
+          </div>
+          <div className="product-card-buttons">
+            {this.guidingStars()}
+            {this.addToCartButtons()}
+          </div>
+          <div className="below-button-labels">
+            {this.belowButtonLabels()}
+          </div>
         </div>
       </div>
     );
