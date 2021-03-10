@@ -258,11 +258,11 @@ CREATE TABLE `products` (
   `servings` varchar(255) DEFAULT NULL,
   `calories_from_fat` int(11) DEFAULT NULL,
   `calories` int(11) DEFAULT NULL,
-  `total_fat` int(11) DEFAULT NULL,
-  `saturated_fat` int(11) DEFAULT NULL,
-  `trans_fat` int(11) DEFAULT NULL,
-  `poly_fat` int(11) DEFAULT NULL,
-  `mono_fat` int(11) DEFAULT NULL,
+  `total_fat` decimal(10,1) DEFAULT NULL,
+  `saturated_fat` decimal(10,1) DEFAULT NULL,
+  `trans_fat` decimal(10,1) DEFAULT NULL,
+  `poly_fat` decimal(10,1) DEFAULT NULL,
+  `mono_fat` decimal(10,1) DEFAULT NULL,
   `cholesterol` decimal(6,2) DEFAULT NULL,
   `sodium` int(11) DEFAULT NULL,
   `potassium` int(11) DEFAULT NULL,
@@ -448,6 +448,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20210208152732'),
 ('20210210181943'),
 ('20210217174649'),
-('20210223151548');
+('20210223151548'),
+('20210310181245');
 
 
