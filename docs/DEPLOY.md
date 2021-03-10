@@ -1,6 +1,7 @@
 ## Servers and Credentials
 
-At present, we have a staging server and a production server.
+At present, we have a staging server and a production server. These are hosted
+under Holly Howe's AWS account; credentials are [here](https://credentials.scimedsolutions.com/credentials/1062)
 
 ### Staging
 

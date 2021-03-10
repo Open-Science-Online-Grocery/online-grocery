@@ -30,7 +30,7 @@ class ProductFetcher
   def initialize(condition, params)
     @condition = condition
     @params = params
-    @product_relation = Product.includes(:add_on_product)
+    @product_relation = Product.includes(:product_suggestions)
   end
 
   def fetch_products
