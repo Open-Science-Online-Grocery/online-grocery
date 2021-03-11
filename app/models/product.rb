@@ -26,6 +26,8 @@ class Product < ApplicationRecord
   end
 
   def add_on_product(condition)
-    product_suggestions.find_by(condition: condition).try(:add_on_product)
+    product_suggestions.find do |suggestion|
+      suggestion.condition_id == condition.id
+    end.try(:add_on_product)
   end
 end
