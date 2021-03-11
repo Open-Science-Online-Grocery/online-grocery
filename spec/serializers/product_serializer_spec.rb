@@ -197,6 +197,7 @@ RSpec.describe ProductSerializer do
             }
           }
           expect(subject.serialize).to eq expected_output
+          expect(product).to have_received(:add_on_product).with(condition)
         end
       end
 

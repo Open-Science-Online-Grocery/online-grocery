@@ -7,8 +7,7 @@ class Product < ApplicationRecord
   belongs_to :subsubcategory, optional: true
 
   has_many :product_tags, dependent: :destroy
-  has_one :product_suggestion, dependent: :destroy
-  has_one :add_on_product, through: :product_suggestion
+  has_many :product_suggestions, dependent: :destroy
 
   scope :name_matches, ->(string) {
     where(arel_table[:name].matches("%#{string}%"))
@@ -24,5 +23,11 @@ class Product < ApplicationRecord
 
   def self.nutrition_fields
     ProductVariable.nutrition.map(&:attribute)
+  end
+
+  def add_on_product(condition)
+    product_suggestions.find do |suggestion|
+      suggestion.condition_id == condition.id
+    end.try(:add_on_product)
   end
 end

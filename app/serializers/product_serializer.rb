@@ -41,8 +41,9 @@ class ProductSerializer
   end
 
   private def add_on_info
-    return {} unless @product.add_on_product
-    add_on_attrs = ProductSerializer.new(@product.add_on_product, @condition)
+    add_on = @product.add_on_product(@condition)
+    return {} unless add_on
+    add_on_attrs = ProductSerializer.new(add_on, @condition)
       .serialize(include_add_on: false) # avoid recursive add-on suggestions!
     { 'add_on' => add_on_attrs }
   end

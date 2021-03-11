@@ -8,8 +8,7 @@ RSpec.describe Product, type: :model do
     it { is_expected.to belong_to(:subcategory) }
     it { is_expected.to belong_to(:subsubcategory).optional }
     it { is_expected.to have_many(:product_tags) }
-    it { is_expected.to have_one(:product_suggestion) }
-    it { is_expected.to have_one(:add_on_product) }
+    it { is_expected.to have_many(:product_suggestions) }
   end
 
   describe '.nutrition_fields' do

@@ -133,8 +133,6 @@ To update the categories, subcategories, and subsubcategories in the store on a 
 	*  For the staging server, run `bundle exec rake update_categories RAILS_ENV=staging`
 	*  For the production server, run `bundle exec rake update_categories RAILS_ENV=production`
 
-Note that we have been aiming to keep the "newsubcategories_view" tab of the [product spreadsheet on Google Drive](https://docs.google.com/spreadsheets/d/1tL9JlFDYz1M-muNOCGf-qaF2PtuTmy_2xf9RQLNeX00/edit?usp=sharing) and `db/seeds/base/categories.csv` synchronized.
-
 
 ## Updating products
 
