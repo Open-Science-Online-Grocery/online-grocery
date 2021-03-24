@@ -25,6 +25,11 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'uglifier'
 gem 'webpacker'
 
+# we need to pin to this version (at least until alternative approaches become
+# available) because of the events discussed here:
+# https://github.com/minad/mimemagic/issues/98
+gem 'mimemagic', '0.3.6'
+
 group :development, :test do
   gem 'awesome_print'
   gem 'bundler-audit'
