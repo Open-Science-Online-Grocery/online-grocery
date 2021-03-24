@@ -9,7 +9,13 @@
   flex-grow: 1;
   display: inline-block;
   width: 25%;
+  max-width: 25%;
   min-width: 340px;
+  height: 347px;
+  max-height: 347px;
+  position: relative;
+  padding: 1rem;
+  border-bottom: 1px solid $light-shadow;
 
   @include small-only {
     width: 100%;

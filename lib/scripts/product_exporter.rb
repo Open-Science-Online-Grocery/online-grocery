@@ -39,9 +39,11 @@ class ProductExporter
       ['imageSrc', product_attribute(product, :image_src)],
       ['awsImageUrl', product_attribute(product, :aws_image_url)],
       ['servingSize', product_attribute(product, :serving_size)],
+      ['servingSizeGrams', product_attribute(product, :serving_size_grams)],
       ['servings', product_attribute(product, :servings)],
       ['caloriesFromFat', product_attribute(product, :calories_from_fat)],
       ['calories', product_attribute(product, :calories)],
+      ['caloricDensity', product_attribute(product, :caloric_density)],
       ['totalFat', product_attribute(product, :total_fat)],
       ['saturatedFat', product_attribute(product, :saturated_fat)],
       ['transFat', product_attribute(product, :trans_fat)],
@@ -59,9 +61,9 @@ class ProductExporter
       ['allergens', product_attribute(product, :allergens)],
       ['price', product_attribute(product, :price)],
       ['starpoints', product_attribute(product, :starpoints)],
-      ['newcategory', product_attribute(product, :category_id)],
-      ['newsubcategory', product.subcategory.display_order],
-      ['newsubsubid', product.subsubcategory.try(:display_order) || 'NULL'],
+      ['categoryId', product_attribute(product, :category_id)],
+      ['subcategoryOrder', product.subcategory.display_order],
+      ['subsubcategoryOrder', product.subsubcategory.try(:display_order) || 'NULL'],
       ['name', product_attribute(product, :name)]
     ]
   end
@@ -76,6 +78,6 @@ class ProductExporter
   end
 
   private def default_export_filepath
-    Rails.root.join('lib', 'scripts', 'exported_products.csv')
+    Rails.root.join('lib/scripts/exported_products.csv')
   end
 end

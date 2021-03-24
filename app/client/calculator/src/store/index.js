@@ -1,5 +1,6 @@
 import Immutable from 'immutable';
 import { combineReducers } from 'redux-immutable';
+import { v1 as uuidv1 } from 'uuid';
 // TODO: resolve below when time permits
 // eslint-disable-next-line import/no-cycle
 import {
@@ -9,8 +10,6 @@ import {
   REPORT_TEST_RESULTS,
   SET_CALCULATOR_FOCUS
 } from '../actions';
-
-const uuidv1 = require('uuid/v1');
 
 /* ****************************** selectors ********************************* */
 

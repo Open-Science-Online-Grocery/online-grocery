@@ -9,7 +9,7 @@
 #
 class StructureFixer
   def self.run
-    structure_path = Rails.root.join('db', 'structure.sql')
+    structure_path = Rails.root.join('db/structure.sql')
     structure = File.read(structure_path)
     fixed_structure = structure.gsub(
       /\) ENGINE=InnoDB AUTO_INCREMENT=\d+ DEFAULT CHARSET=/,

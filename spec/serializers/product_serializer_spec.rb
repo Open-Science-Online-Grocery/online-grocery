@@ -4,7 +4,11 @@ require 'rails_helper'
 
 RSpec.describe ProductSerializer do
   let(:product) do
-    instance_double('Product', attributes: { 'foo' => 'bar' })
+    instance_double(
+      'Product',
+      attributes: { 'foo' => 'bar' },
+      add_on_product: false
+    )
   end
   let(:condition_label_1) do
     instance_double(
@@ -13,7 +17,9 @@ RSpec.describe ProductSerializer do
       size: 20,
       equation: label_equation_1,
       image_url: 'foo.jpg',
-      name: 'foo label'
+      name: 'foo label',
+      tooltip_text: 'hello',
+      below_button?: true
     )
   end
   let(:condition_label_2) do
@@ -23,7 +29,9 @@ RSpec.describe ProductSerializer do
       size: 25,
       equation: label_equation_2,
       image_url: 'bar.jpg',
-      name: 'bar label'
+      name: 'bar label',
+      tooltip_text: 'goodbye',
+      below_button?: false
     )
   end
   let(:condition) do
@@ -75,7 +83,9 @@ RSpec.describe ProductSerializer do
               'label_name' => 'foo label',
               'label_image_url' => 'foo.jpg',
               'label_position' => 'bottom right',
-              'label_size' => 20
+              'label_size' => 20,
+              'label_tooltip' => 'hello',
+              'label_below_button' => true
             }
           ]
         }
@@ -92,13 +102,17 @@ RSpec.describe ProductSerializer do
               'label_name' => 'foo label',
               'label_image_url' => 'foo.jpg',
               'label_position' => 'bottom right',
-              'label_size' => 20
+              'label_size' => 20,
+              'label_tooltip' => 'hello',
+              'label_below_button' => true
             },
             {
               'label_name' => 'bar label',
               'label_image_url' => 'bar.jpg',
               'label_position' => 'top left',
-              'label_size' => 25
+              'label_size' => 25,
+              'label_tooltip' => 'goodbye',
+              'label_below_button' => false
             }
           ]
         }
@@ -142,6 +156,59 @@ RSpec.describe ProductSerializer do
             labels: []
           }
           expect(subject.serialize).to eq expected_output
+        end
+      end
+    end
+  end
+
+  describe 'add-on attributes' do
+    let(:condition) { NullCondition.new }
+
+    context 'with no add-on product' do
+      it 'does not include it in the hash' do
+        expected_output = {
+          'foo' => 'bar',
+          'nutrition_style_rules' => '{}',
+          labels: []
+        }
+        expect(subject.serialize).to eq expected_output
+      end
+    end
+
+    context 'with an add-on product' do
+      let(:add_on_product) do
+        instance_double('Product', attributes: { 'baz' => 'qux' })
+      end
+
+      before do
+        allow(product).to receive(:add_on_product) { add_on_product }
+      end
+
+      context 'when add-on info should be included' do
+        it 'includes it in the hash' do
+          expected_output = {
+            'foo' => 'bar',
+            'nutrition_style_rules' => '{}',
+            labels: [],
+            'add_on' => {
+              'baz' => 'qux',
+              'nutrition_style_rules' => '{}',
+              labels: []
+            }
+          }
+          expect(subject.serialize).to eq expected_output
+          expect(product).to have_received(:add_on_product).with(condition)
+        end
+      end
+
+      context 'when add-on info should not be included' do
+        it 'does not include it in the hash' do
+          expected_output = {
+            'foo' => 'bar',
+            'nutrition_style_rules' => '{}',
+            labels: []
+          }
+          expect(subject.serialize(include_add_on: false)).to eq expected_output
         end
       end
     end

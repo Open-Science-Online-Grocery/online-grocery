@@ -8,10 +8,11 @@ class ProductSerializer
     @condition = condition
   end
 
-  def serialize
-    @product.attributes
+  def serialize(include_add_on: true)
+    attrs = @product.attributes
       .merge(product_labels)
       .merge(nutrition_information)
+    include_add_on ? attrs.merge(add_on_info) : attrs
   end
 
   private def product_labels
@@ -28,13 +29,23 @@ class ProductSerializer
       'label_name' => condition_label.name,
       'label_image_url' => condition_label.image_url,
       'label_position' => condition_label.position,
-      'label_size' => condition_label.size
+      'label_size' => condition_label.size,
+      'label_tooltip' => condition_label.tooltip_text,
+      'label_below_button' => condition_label.below_button?
     }
   end
 
   private def nutrition_information
     return {} unless gets_custom_nutrition_styling?
     { 'nutrition_style_rules' => @condition.nutrition_styles }
+  end
+
+  private def add_on_info
+    add_on = @product.add_on_product(@condition)
+    return {} unless add_on
+    add_on_attrs = ProductSerializer.new(add_on, @condition)
+      .serialize(include_add_on: false) # avoid recursive add-on suggestions!
+    { 'add_on' => add_on_attrs }
   end
 
   private def gets_label?(condition_label)

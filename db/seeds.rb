@@ -11,8 +11,8 @@ module Seeds
   end
 
   def self.require_seed_modules
-    seed_dir = Rails.root.join('db', 'seeds')
-    Dir[seed_dir.join('**/*.rb')].each { |s| require s }
+    seed_dir = Rails.root.join('db/seeds')
+    Dir[seed_dir.join('**/*.rb')].sort.each { |s| require s }
   end
 
   def self.load_seeds(type)

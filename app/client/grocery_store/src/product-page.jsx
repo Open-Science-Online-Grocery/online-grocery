@@ -10,7 +10,7 @@ export default class ProductViewPage extends React.Component {
       <div>
         <CartDropdownContainer />
         <img className="logo-style" src={require('./images/howesgrocerybanner.png')} />
-        <ProductCardExpandedContainer {...product} />
+        <ProductCardExpandedContainer product={product} />
       </div>
     );
   }

@@ -108,49 +108,10 @@ Then, to fetch the screenshots, run the following from the root directory of thi
 `aws s3 cp --recursive s3://com-scimed-gitlab-ci-screenshots/howes_grocery_researcher_portal/ ./ci_failures/`
 
 
-## Servers and Credentials
+## Servers, Credentials, and Deploying
 
-At present, we have a staging server and a production server.  For any server, if you are unable to ssh in without a password, ask another developer with ssh access to add your public key to the authorized keys file.
+See [docs/DEPLOY.md](docs/DEPLOY.md)
 
-### Staging
-
-* [Application](https://howes-grocery.scimed-test.com/)
-* [Credentials](https://credentials.scimed.local/servers/229)
-* SSH: `ssh deployer@howes-grocery.scimed-test.com`
-* Rails environment: `staging`
-
-### Production
-
-* [Application](https://openscience-onlinegrocery.com/)
-* [Credentials](https://credentials.scimed.local/servers/237)
-* SSH: `ssh deployer@18.204.34.178`
-* Rails environment: `production`
-
-## Deploying
-
-Note: All of the following commands are run from your local machine. No need to SSH into any server.
-
-1. Make sure you have all the updates for the branch you are deploying and
-all changes merged in.
-
-1. Make sure the branch you want to deploy is checked out locally.
-
-1. Update the app version. (This is done by using one of the git commands found in the comment of `config/app_version.yml`. Ask your project manager if you're unsure of what the new version should be.)
-
-1. Enable the maintenance page for the application:
-	* For the staging server, run `bundle exec cap staging maintenance:enable`
-	* For the production server, run `bundle exec cap production maintenance:enable`
-
-1. Deploy the application:
-    * For the staging server, run `bundle exec cap staging deploy`
-    * For the production server, run `bundle exec cap production deploy`
-
-1. Disable the maintenance page for the application:
-	* For the staging server, run `bundle exec cap staging maintenance:disable`
-	* For the production server, run `bundle exec cap production maintenance:disable`
-
-1. Check to be sure the site loads and the app version has been updated by logging
-in and hovering over the Howe's Grocery Researcher Portal logo in the upper left corner.
 
 ## Updating categories
 
@@ -171,8 +132,6 @@ To update the categories, subcategories, and subsubcategories in the store on a 
 1. In this directory on the server, run the command appropriate to the server you are on:
 	*  For the staging server, run `bundle exec rake update_categories RAILS_ENV=staging`
 	*  For the production server, run `bundle exec rake update_categories RAILS_ENV=production`
-
-Note that we have been aiming to keep the "newsubcategories_view" tab of the [product spreadsheet on Google Drive](https://docs.google.com/spreadsheets/d/1tL9JlFDYz1M-muNOCGf-qaF2PtuTmy_2xf9RQLNeX00/edit?usp=sharing) and `db/seeds/base/categories.csv` synchronized.
 
 
 ## Updating products

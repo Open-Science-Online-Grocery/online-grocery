@@ -24,6 +24,8 @@
       color: white;
       padding: 0.2rem 0.5rem;
       position: relative;
+      display: flex;
+      align-items: center;
 
       &.active {
         cursor: pointer;
@@ -49,8 +51,9 @@
     }
 
     .count {
-      padding: 0 0.2rem;
       font-weight: bold;
+      display: flex;
+      align-items: stretch;
 
       button {
         border: none;
@@ -59,13 +62,15 @@
         outline: none;
         cursor: pointer;
 
-        &.decrement {
-          padding: 0 4px 0 0;
+        &.decrement, &.increment {
+          padding: 0.2rem 0.4rem;
         }
+      }
 
-        &.increment {
-          padding: 0 0 0 4px;
-        }
+      .amount {
+        padding: 0.2rem;
+        display: flex;
+        align-items: center;
       }
     }
 

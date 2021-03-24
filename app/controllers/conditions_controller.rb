@@ -87,8 +87,6 @@ class ConditionsController < ApplicationController
       :sort_equation_tokens,
       :only_add_from_detail_page,
       :nutrition_styles,
-      :csv_file,
-      :active_tag_csv,
       :filter_by_custom_categories,
       :show_food_count,
       :show_price_total,
@@ -99,6 +97,10 @@ class ConditionsController < ApplicationController
       :minimum_spend,
       :maximum_spend,
       :show_guiding_stars,
+      :new_tag_csv_file,
+      :new_suggestion_csv_file,
+      tag_csv_files_attributes: %i[id active],
+      suggestion_csv_files_attributes: %i[id active],
       product_sort_field_ids: [],
       condition_labels_attributes: [
         :id,
@@ -107,15 +109,10 @@ class ConditionsController < ApplicationController
         :label_type,
         :position,
         :size,
+        :tooltip_text,
         :equation_tokens,
         :always_show,
-        label_attributes: %i[
-          id
-          image
-          image_cache
-          name
-          built_in
-        ]
+        label_attributes: %i[id image image_cache name built_in]
       ],
       condition_cart_summary_labels_attributes: [
         :id,
@@ -124,13 +121,7 @@ class ConditionsController < ApplicationController
         :label_type,
         :equation_tokens,
         :always_show,
-        cart_summary_label_attributes: %i[
-          id
-          image
-          image_cache
-          name
-          built_in
-        ]
+        cart_summary_label_attributes: %i[id image image_cache name built_in]
       ]
     )
   end

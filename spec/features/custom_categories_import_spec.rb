@@ -56,12 +56,11 @@ RSpec.describe 'Importing custom categories for a condition', :feature do
 
   it 'allows files to be uploaded, imported, re-uploaded, and removed', :js do
     # upload csv
-    attach_file 'condition_csv_file', full_file_path
+    attach_file 'condition_new_tag_csv_file', full_file_path
     force_click_on 'Save'
 
     expect(page).to have_content 'Condition successfully updated'
-
-    within('[data-current-csv]') do
+    within parent_of(find('[data-tab="categories"] label', text: 'Current file')) do
       expect(page).to have_content file_name
     end
 
@@ -79,7 +78,7 @@ RSpec.describe 'Importing custom categories for a condition', :feature do
 
     expect(page).to have_content 'Condition successfully updated'
 
-    within('[data-current-csv]') do
+    within parent_of(find('[data-tab="categories"] label', text: 'Current file')) do
       expect(page).to have_content file_name
     end
 
@@ -93,16 +92,16 @@ RSpec.describe 'Importing custom categories for a condition', :feature do
     expect(page).to have_content 'Custom Subcategory 2B'
 
     # reupload a new csv
-    attach_file 'condition_csv_file', full_file_path_2
+    attach_file 'condition_new_tag_csv_file', full_file_path_2
     force_click_on 'Save'
 
     expect(page).to have_content 'Condition successfully updated'
 
-    within('[data-current-csv]') do
+    within parent_of(find('[data-tab="categories"] label', text: 'Current file')) do
       expect(page).to have_content file_name_2
     end
 
-    within('[data-historical-csvs]') do
+    within parent_of(find('[data-tab="categories"] h4', text: 'Previously uploaded files')) do
       expect(page).to have_content file_name
     end
 
@@ -116,17 +115,17 @@ RSpec.describe 'Importing custom categories for a condition', :feature do
     expect(page).to have_content 'Custom Subcategory 2D'
 
     # remove csv
-    force_click(find('#condition_active_tag_csv'))
+    force_click(find('#condition_tag_csv_files_attributes_0_active'))
     force_click_on 'Save'
 
     expect(page).to have_content 'Condition successfully updated'
 
-    within('[data-current-csv]') do
+    within parent_of(find('[data-tab="categories"] label', text: 'Current file')) do
       expect(page).to have_no_content file_name
       expect(page).to have_no_content file_name_2
     end
 
-    within('[data-historical-csvs]') do
+    within parent_of(find('[data-tab="categories"] h4', text: 'Previously uploaded files')) do
       expect(page).to have_content file_name
       expect(page).to have_content file_name_2
     end

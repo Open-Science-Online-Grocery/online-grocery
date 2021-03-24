@@ -2,44 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AddToCartContainer from '../add-to-cart/add-to-cart-container';
+import OverlayLabel from '../overlay-label/overlay-label';
+import BelowButtonLabel from '../below-button-label/below-button-label';
+import GuidingStars from '../guiding-stars/guiding-stars';
 import './product-card.scss';
 
 export default class ProductCard extends React.Component {
-  // webpack's `require` seems to have problems with interpolated strings and
-  // method calls within it. using a literal string works, however.
-  starImagePath() {
-    const starpoints = this.props.product.starpoints;
-    if (starpoints < 0) {
-      return require('../../images/0howestars.png');
-    }
-    if (starpoints === 1 || starpoints === 2) {
-      return require('../../images/1howestar.png');
-    }
-    if (starpoints === 3 || starpoints === 4) {
-      return require('../../images/2howestars.png');
-    }
-    return require('../../images/3howestars.png');
-  }
-
-  productLabels() {
-    return (
-      this.props.product.labels.map(label => (
-        <div
-          className="product-card-overlay"
-          style={this.labelStyles(label)}
-          key={label.labelImageUrl}
-        />
-      ))
+  overlayLabels() {
+    const labels = this.props.product.labels.filter(
+      label => !label.labelBelowButton
+    );
+    return labels.map(
+      label => <OverlayLabel {...label} key={label.labelImageUrl}/>
     );
   }
 
-  labelStyles(labelAttributes) {
-    if (!labelAttributes.labelImageUrl) return {};
-    return {
-      backgroundImage: `url(${labelAttributes.labelImageUrl})`,
-      backgroundPosition: labelAttributes.labelPosition,
-      backgroundSize: `${labelAttributes.labelSize}%`
-    };
+  belowButtonLabels() {
+    const labels = this.props.product.labels.filter(
+      label => label.labelBelowButton
+    );
+    return labels.map(
+      label => <BelowButtonLabel {...label} key={label.labelImageUrl}/>
+    );
   }
 
   addToCartButtons() {
@@ -48,16 +32,12 @@ export default class ProductCard extends React.Component {
   }
 
   guidingStars() {
-    if (!this.props.showGuidingStars) return <div className="product-card-guiding-stars-wrapper" />;
     return (
-      <div className="tooltip--triangle product-card-guiding-stars-wrapper" data-tooltip="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!">
-        <a href="https://guidingstars.com/what-is-guiding-stars/">
-          <img
-            className="product-card-guiding-stars"
-            src={this.starImagePath()}
-            alt="Guiding Stars"
-          />
-        </a>
+      <div className="product-card-guiding-stars-wrapper">
+        {
+          this.props.showGuidingStars &&
+            <GuidingStars starpoints={this.props.product.starpoints} />
+        }
       </div>
     );
   }
@@ -68,17 +48,22 @@ export default class ProductCard extends React.Component {
         <Link to={{ pathname: '/store/product', state: { product: this.props.product } }}>
           <div className="product-card-image-wrapper">
             <img className="product-card-image" alt="product" src={this.props.product.awsImageUrl} />
-            {this.productLabels()}
+            {this.overlayLabels()}
           </div>
           <div className="product-card-name">{this.props.product.name}</div>
         </Link>
-        <div className="product-card-size">{this.props.product.size}</div>
-        <div className="product-card-price bold">
-          ${parseFloat(Math.round(this.props.product.price * 100) / 100).toFixed(2)}
-        </div>
-        <div className="product-card-buttons">
-          {this.guidingStars()}
-          {this.addToCartButtons()}
+        <div>
+          <div className="product-card-size">{this.props.product.size}</div>
+          <div className="product-card-price bold">
+            ${parseFloat(Math.round(this.props.product.price * 100) / 100).toFixed(2)}
+          </div>
+          <div className="product-card-buttons">
+            {this.guidingStars()}
+            {this.addToCartButtons()}
+          </div>
+          <div className="below-button-labels">
+            {this.belowButtonLabels()}
+          </div>
         </div>
       </div>
     );
@@ -99,7 +84,9 @@ ProductCard.propTypes = {
         labelName: PropTypes.string,
         labelImageUrl: PropTypes.string,
         labelPosition: PropTypes.string,
-        labelSize: PropTypes.number
+        labelSize: PropTypes.number,
+        labelTooltip: PropTypes.string,
+        labelBelowButton: PropTypes.bool
       })
     )
   }).isRequired,

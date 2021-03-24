@@ -7,7 +7,9 @@ module Seeds
     module Products
       def self.seed_products
         return if Product.any?
-        importer = ProductImporter.new(ENV['SHORT_SEED'] == '1')
+        importer = ProductImporter.new(
+          only_random_subset: ENV['SHORT_SEED'] == '1'
+        )
         importer.import
       end
     end

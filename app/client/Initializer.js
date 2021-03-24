@@ -23,6 +23,7 @@ export default class Initializer {
     this.initializeNutritionStylers();
     this.initializeLoadingSpinnerButtons();
     this.initializeAccordions();
+    this.initializeTooltipPopups();
   }
 
   initializeTableRowLinks() {
@@ -59,7 +60,7 @@ export default class Initializer {
   }
 
   initializeDropdowns() {
-    const $dropdowns = this.$scope.find('.ui.dropdown');
+    const $dropdowns = this.$scope.find('.ui.dropdown:not(.react-managed)');
     $dropdowns.dropdown({ placeholder: false });
     this.$scope.find('.ui.search.dropdown').on('click', (event) => {
       if (!$(event.target).parent('.menu').length) {
@@ -106,5 +107,9 @@ export default class Initializer {
   initializeAccordions() {
     const $accordions = this.$scope.find('.ui.accordion');
     $accordions.accordion();
+  }
+
+  initializeTooltipPopups() {
+    this.$scope.find('[data-content]').popup({ inline: true });
   }
 }

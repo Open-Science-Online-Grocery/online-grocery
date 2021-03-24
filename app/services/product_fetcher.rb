@@ -30,6 +30,7 @@ class ProductFetcher
   def initialize(condition, params)
     @condition = condition
     @params = params
+    @product_relation = Product.includes(product_suggestions: :add_on_product)
   end
 
   def fetch_products
@@ -45,48 +46,50 @@ class ProductFetcher
   end
 
   private def products
-    products = Product.none
     if @params[:search_type] == term_search_type
-      products = Product.name_matches(@params[:search_term])
+      scope_by_name
     else
-      products = products_from_category
+      scope_by_membership
     end
-    filtered_products(products)
+    filtered_products.uniq
   end
 
-  private def products_from_category
+  private def scope_by_name
+    @product_relation = @product_relation.name_matches(@params[:search_term])
+  end
+
+  private def scope_by_membership
     case @params[:selected_category_type]
-    when category_type
-      products_scoped_by_category
-    when tag_type
-      Product.joins(:product_tags).where(
-        product_tags: { subtag_id: @params[:selected_subcategory_id] }
-      )
-    else
-      Product.none
+      when category_type
+        scope_by_category
+      when tag_type
+        @product_relation = @product_relation.joins(:product_tags).where(
+          product_tags: { subtag_id: @params[:selected_subcategory_id] }
+        )
+      else
+        @product_relation = @product_relation.none
     end
   end
 
-  private def products_scoped_by_category
-    if @params[:selected_subsubcategory_id].present?
-      Product.where(
-        subcategory_id: @params[:selected_subcategory_id],
-        subsubcategory_id: @params[:selected_subsubcategory_id]
-      )
-    else
-      Product.where(subcategory_id: @params[:selected_subcategory_id])
-    end
+  private def scope_by_category
+    @product_relation = @product_relation.where(
+      subcategory_id: @params[:selected_subcategory_id]
+    )
+    return unless @params[:selected_subsubcategory_id].present?
+    @product_relation = @product_relation.where(
+      subsubcategory_id: @params[:selected_subsubcategory_id]
+    )
   end
 
-  private def filtered_products(products)
+  private def filtered_products
     # `tag_id` could actually be a Subtag's id - the `selected_filter_type`
     # param indicates if it is a tag or subtag id
     tag_id = @params[:selected_filter_id]
-    return products unless tag_id.present?
+    return @product_relation unless tag_id.present?
     if @params[:selected_filter_type] == subtag_type
-      return products.with_subtag(tag_id)
+      return @product_relation.with_subtag(tag_id)
     end
-    products.with_tag(tag_id)
+    @product_relation.with_tag(tag_id)
   end
 
   private def term_search_type

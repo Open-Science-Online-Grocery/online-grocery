@@ -15,11 +15,6 @@ export default class EquationEditor extends PureComponent {
     document.removeEventListener('keydown', this.handleKeydown.bind(this), false);
   }
 
-  setStyle(focus) {
-    if (!focus) { return null; }
-    return { border: FOCUS_BORDER_STYLING };
-  }
-
   handleKeydown(event) {
     // Ignore key presses for calculators without the current focus
     if (!this.props.calculatorFocus) { return; }
@@ -27,6 +22,11 @@ export default class EquationEditor extends PureComponent {
     if (event.keyCode === RIGHT) this.props.arrowKeyPressed(true);
     if (event.keyCode === LEFT) this.props.arrowKeyPressed(false);
     if (event.keyCode === BACKSPACE) this.props.deletePreviousToken();
+  }
+
+  setStyle(focus) {
+    if (!focus) { return null; }
+    return { border: FOCUS_BORDER_STYLING };
   }
 
   cursor() {

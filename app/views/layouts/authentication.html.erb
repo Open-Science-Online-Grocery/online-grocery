@@ -16,7 +16,7 @@
     <div class="ui centered grid container" id="authentication-main">
       <div class="doubling two column row">
         <div class="column">
-          <%= MessagesPresenter.new(flash, @messages, self).show_messages %>
+          <%= MessagesPresenter.new(flash, @messages).show_messages %>
           <div id="authentication-header">
             <%= image_tag('logo_green.png') %>
           </div>

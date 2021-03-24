@@ -1,6 +1,7 @@
 import * as routes from '../../../../utils/routes';
 import * as fromApi from '../../../../utils/api_call';
 import { alertActionCreators } from '../alert/alert-actions';
+import { suggestionActionCreators } from '../suggestion/suggestion-actions';
 import { userActionCreators } from '../user/user-actions';
 import BudgetManager from '../../utils/BudgetManager';
 
@@ -53,6 +54,11 @@ function addToCart(product, amount, addByDollar) {
     if (!overMaxSpendBefore && overMaxSpendAfter) {
       dispatch(alertActionCreators.showAlert(
         'Your cart is now over your maximum budget.'
+      ));
+    } else if (product.addOn) {
+      dispatch(suggestionActionCreators.showSuggestion(
+        'Would you consider adding this product to your order?',
+        product.addOn
       ));
     }
   };

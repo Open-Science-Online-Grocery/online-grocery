@@ -34,9 +34,11 @@ RSpec.describe Condition, type: :model do
         .through(:condition_product_sort_fields)
     end
     it { is_expected.to have_many(:tag_csv_files) }
+    it { is_expected.to have_many(:suggestion_csv_files) }
     it { is_expected.to have_many(:product_tags) }
     it { is_expected.to have_many(:tags).through(:product_tags) }
     it { is_expected.to have_many(:subtags).through(:product_tags) }
+    it { is_expected.to have_many(:product_suggestions) }
     it { is_expected.to have_many(:condition_cart_summary_labels) }
     it { is_expected.to have_many(:cart_summary_labels) }
     it { is_expected.to have_many(:condition_labels) }
@@ -48,5 +50,6 @@ RSpec.describe Condition, type: :model do
     it { is_expected.to accept_nested_attributes_for(:condition_cart_summary_labels) }
     it { is_expected.to accept_nested_attributes_for(:condition_labels) }
     it { is_expected.to accept_nested_attributes_for(:tag_csv_files) }
+    it { is_expected.to accept_nested_attributes_for(:suggestion_csv_files) }
   end
 end
