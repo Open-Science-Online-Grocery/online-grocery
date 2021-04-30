@@ -3,13 +3,11 @@
 This application gives researchers the ability to control the behavior of a
 simulated online grocery store used to run experiments.
 
-
 ## Background
 
-The client originally hired CS students to build a React app that is a simulated
-online grocery store. The Researcher Portal is a companion Rails app to allow
-researchers to customize the behavior of the React app.
-
+The application originally consisted of a React app (built by students) that is
+a simulated online grocery store. The Researcher Portal is a companion Rails app
+to allow researchers to customize the behavior of the React app.
 
 ## Initial setup
 
@@ -17,7 +15,7 @@ researchers to customize the behavior of the React app.
 * Copy `config/database.yml.example` to `config/database.yml` and fill in the
   needed mysql password (if the `root` database user needs a password).
 * Copy `howes_grocery.priv.example` to `howes_grocery.priv`.
-* Get the `config/master.key` file from another developer on the project or from [this credential](https://credentials.scimedsolutions.com/credentials/972).
+* Get the `config/master.key` file from another developer on the project or (SciMed Solutions developers only) from [this credential](https://credentials.scimedsolutions.com/credentials/972).
 * Set the local ruby version to the one defined in `.ruby-version` using a ruby version manager like `rbenv`
 * From the root directory of the application, run the following commands:
   * `gem install bundler`
@@ -44,7 +42,6 @@ foo: bar
 ```
 can be accessed with `Rails.application.credentials.foo`, which will return `bar`.
 
-See `config/storage.yml` for more examples.
 
 ## Starting your local development server
 
@@ -74,9 +71,6 @@ enter any text as your session ID to continue.  No other login is needed.
 All rspec tests, JS tests, rubocop, and eslint can be run with the default rake
 task (`bundle exec rake`)
 
-If feature specs are not running correctly, try updating the chromedriver
-version from the command line: `chromedriver-update <version number>`.
-
 Currently all feature tests run in a headless chrome browser. To troubleshoot feature
 tests you can view them running in a Chrome browser. To do this add the `BROWSER` environment
 variable to your rspec command:
@@ -94,18 +88,8 @@ To fix, run `RAILS_ENV=test ./bin/webpack`
 
 ## CI
 
-To fetch screenshots of feature specs that fail on CI, complete this one-time setup:
-
-* Install the `aws` command line client
-* Log in to AWS via the `aws` command line client:
-  * the "alias" to use is `scimed`.
-  * ask Adam for your AWS username and password if you do not already have an account.
-  * ask Adam to give you the following permission: `iam:CreateAccessKey`
-  * Follow the instructions [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-quick-configuration) to configure your AWS client.
-
-Then, to fetch the screenshots, run the following from the root directory of this project:
-
-`aws s3 cp --recursive s3://com-scimed-gitlab-ci-screenshots/howes_grocery_researcher_portal/ ./ci_failures/`
+For details about CI (only pertains to developers at SciMed Solutions), see
+[docs/scimed/ci.md](docs/scimed/ci.md)
 
 
 ## Servers, Credentials, and Deploying
@@ -157,5 +141,3 @@ To update the products in the store on a server:
 1. In this directory on the server, run the command appropriate to the server you are on:
 	*  For the staging server, run `bundle exec rake update_products RAILS_ENV=staging`
 	*  For the production server, run `bundle exec rake update_products RAILS_ENV=production`
-
-Note that we have been aiming to keep the "adjusted_products" tab of the [product spreadsheet on Google Drive](https://docs.google.com/spreadsheets/d/1tL9JlFDYz1M-muNOCGf-qaF2PtuTmy_2xf9RQLNeX00/edit?usp=sharing) and `db/seeds/base/products.csv` synchronized.
