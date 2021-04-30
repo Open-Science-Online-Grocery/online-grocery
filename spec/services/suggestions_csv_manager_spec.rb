@@ -22,7 +22,7 @@ RSpec.describe SuggestionsCsvManager do
   let(:csv) do
     ActionDispatch::Http::UploadedFile.new(
       tempfile: File.open(
-        File.expand_path("../../fixtures/files/suggestions/good_1.csv", __FILE__)
+        File.expand_path('../fixtures/files/suggestions/good_1.csv', __dir__)
       ),
       filename: 'good_1.csv'
     )
