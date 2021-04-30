@@ -44,7 +44,7 @@ if Rails.env.test? || Rails.env.development?
     end
   end
 
-  task default: [:spec, :js_tests, :rubocop, :eslint, :factory_bot_lint, :bundler_audit]
+  task default: [:spec, :js_tests, :rubocop, :eslint, :factory_bot_lint, :bundler_audit, :npm_audit]
   task ci:      [:default]
 end
 
