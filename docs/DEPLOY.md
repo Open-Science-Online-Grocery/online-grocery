@@ -24,6 +24,9 @@ For other contributors, contact Holly Howe.
 
 ## Deploying
 
+**Important**: For SciMed developers, ensure the latest code is pushed to the
+public GitHub repository upon each production deploy.  See details [here](docs/scimed/github.md).
+
 Note: All of the following commands are run from your local machine. No need to
 SSH into any server.
 
