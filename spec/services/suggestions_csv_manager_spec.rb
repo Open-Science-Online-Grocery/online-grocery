@@ -20,7 +20,12 @@ RSpec.describe SuggestionsCsvManager do
     )
   end
   let(:csv) do
-    fixture_file_upload(file_fixture('suggestions/good_1.csv'))
+    ActionDispatch::Http::UploadedFile.new(
+      tempfile: File.open(
+        File.expand_path("../../fixtures/files/suggestions/good_1.csv", __FILE__)
+      ),
+      filename: 'good_1.csv'
+    )
   end
   let(:suggestion_file) do
     build(:suggestion_csv_file, file: csv)
