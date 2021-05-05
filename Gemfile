@@ -24,6 +24,7 @@ gem 'sassc-rails'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'uglifier'
 gem 'webpacker'
+gem 'whenever', require: false
 
 group :development, :test do
   gem 'awesome_print'
