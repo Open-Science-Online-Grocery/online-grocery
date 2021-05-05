@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.3'
 
 gem 'aws-sdk-s3'
+gem 'aws-sdk-rds'
 gem 'bcrypt_pbkdf'
 gem 'bootsnap', require: false
 gem 'carrierwave'
