@@ -21,6 +21,13 @@
 
 every :weekday, at: '8pm' do
   runner 'DowntimeSetter.turn_off_application'
+  runner 'DowntimeSetter.turn_off_database'
+end
+
+# the database takes several minutes to start up, so we kick this off before
+# turning the application back on.
+every :weekday, at: '5:50am' do
+  runner 'DowntimeSetter.turn_on_database'
 end
 
 every :weekday, at: '6am' do

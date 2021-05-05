@@ -12,11 +12,28 @@
 # an IAM Role has been attached to the EC2 instance. that role has a policy
 # set that allows it to (only) start and stop its specific RDS instance.
 class DowntimeSetter
+  def self.turn_off_database
+    log.info('Starting to turn off database.')
+    status = stop_database
+    log.info("New database status: #{status}")
+  rescue StandardError => e
+    log.error("Error encountered: #{e.inspect}")
+    log.error(e.backtrace.join("\n"))
+  end
+
   def self.turn_off_application
     log.info('Starting to put app into downtime.')
     show_downtime_message
-    status = stop_database
-    log.info("Application put into downtime: #{status}")
+    log.info('Application put into downtime.')
+  rescue StandardError => e
+    log.error("Error encountered: #{e.inspect}")
+    log.error(e.backtrace.join("\n"))
+  end
+
+  def self.turn_on_database
+    log.info('Starting to turn on database.')
+    status = start_database
+    log.info("New database status: #{status}")
   rescue StandardError => e
     log.error("Error encountered: #{e.inspect}")
     log.error(e.backtrace.join("\n"))
@@ -25,8 +42,7 @@ class DowntimeSetter
   def self.turn_on_application
     log.info('Starting to bring app back from downtime.')
     remove_downtime_message
-    status = start_database
-    log.info("Application brought back from downtime: #{status}")
+    log.info('Application brought back from downtime.')
   rescue StandardError => e
     log.error("Error encountered: #{e.inspect}")
     log.error(e.backtrace.join("\n"))
