@@ -3,7 +3,7 @@
 class DowntimeSetter
   def self.turn_off_application
     FileUtils.cp(
-      Rails.root.join('public/system/application_unavailable.html'),
+      Rails.root.join('public/application_unavailable.html'),
       Rails.root.join('public/system/maintenance.html'),
     )
     # TODO: turn off db via rds api
