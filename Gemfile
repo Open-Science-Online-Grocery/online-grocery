@@ -19,7 +19,7 @@ gem 'faraday'
 gem 'jbuilder'
 gem 'mysql2'
 gem 'puma'
-gem 'rails', '~> 5.2.4.3'
+gem 'rails', '~> 5.2'
 gem 'rake'
 gem 'sassc-rails'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
