@@ -20,6 +20,14 @@
     <main>
       <div id="main" class="content ui container segment" >
         <div id="page-content">
+          <div class="ui info message">
+            <p>
+              <strong>Reminder:</strong> The Open Science Online Grocery
+              researcher portal and store are only available Monday through
+              Friday from 6:00 AM to 8:00 PM Eastern Time.
+            </p>
+          </div>
+          <div class="ui short hidden divider"></div>
           <%= MessagesPresenter.new(flash, @messages).show_messages %>
           <%= yield %>
         </div>
