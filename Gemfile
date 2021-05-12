@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.3'
 
 gem 'aws-sdk-s3'
+gem 'aws-sdk-rds'
 gem 'bcrypt_pbkdf'
 gem 'bootsnap', require: false
 gem 'carrierwave'
@@ -18,12 +19,13 @@ gem 'faraday'
 gem 'jbuilder'
 gem 'mysql2'
 gem 'puma'
-gem 'rails', '~> 5.2.4.3'
+gem 'rails', '~> 5.2'
 gem 'rake'
 gem 'sassc-rails'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'uglifier'
 gem 'webpacker'
+gem 'whenever', require: false
 
 group :development, :test do
   gem 'awesome_print'
