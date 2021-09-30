@@ -192,6 +192,7 @@ CREATE TABLE `participant_actions` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `product_id` bigint(20) DEFAULT NULL,
+  `serial_position` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_participant_actions_on_condition_id` (`condition_id`),
   KEY `index_participant_actions_on_product_id` (`product_id`)
@@ -449,6 +450,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20210210181943'),
 ('20210217174649'),
 ('20210223151548'),
-('20210310181245');
+('20210310181245'),
+('20210930175208');
 
 

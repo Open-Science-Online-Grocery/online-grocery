@@ -16,7 +16,8 @@ module Api
         condition_id: condition.id,
         action_type: params[:action_type],
         product_id: params[:product_id],
-        quantity: params[:quantity]
+        quantity: params[:quantity],
+        serial_position: params[:serial_position]
       )
       json = {
         data: { success: action.valid? },
