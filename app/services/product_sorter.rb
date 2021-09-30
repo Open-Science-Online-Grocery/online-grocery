@@ -16,8 +16,12 @@ class ProductSorter
   end
 
   def sorted_products
-    return manually_sorted_products if @manual_sort_field_description.present?
-    default_sorted_products
+    if @manual_sort_field_description.present?
+      result = manually_sorted_products
+    else
+      result = default_sorted_products
+    end
+    add_serial_position(result)
   end
 
   private def manually_sorted_products
@@ -34,6 +38,13 @@ class ProductSorter
         field_sorted_products(default_sort_field_name, default_sort_order)
       when Condition.sort_types.calculation
         calculation_sorted_products
+    end
+  end
+
+  private def add_serial_position(sorted_product_hashes)
+    sorted_product_hashes.map.with_index(1) do |product_hash, idx|
+      product_hash[:serial_position] = idx
+      product_hash
     end
   end
 
