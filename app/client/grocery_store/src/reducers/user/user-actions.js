@@ -71,13 +71,14 @@ function sessionIdSubmitted(sessionId) {
 
 // `actionType` here is a string representing the action the participant has
 // taken, such as 'view', 'add', 'delete', 'checkout'
-function logParticipantAction(actionType, productId, quantity) {
+function logParticipantAction(actionType, product, quantity) {
   return (dispatch, getState) => {
     const state = getState();
     const params = {
       actionType,
-      productId,
       quantity,
+      productId: product.id,
+      serialPosition: product.serialPosition,
       sessionId: state.user.sessionId,
       conditionIdentifier: state.user.conditionIdentifier
     };

@@ -42,11 +42,7 @@ function addToCart(product, amount, addByDollar) {
     const newProduct = Object.assign({}, product, { quantity });
     dispatch({ type: cartActionTypes.ADD_TO_CART, product: newProduct });
     dispatch(
-      userActionCreators.logParticipantAction(
-        'add',
-        newProduct.id,
-        quantity
-      )
+      userActionCreators.logParticipantAction('add', newProduct, quantity)
     );
 
     const overMaxSpendAfter = overMaxSpend(getState());

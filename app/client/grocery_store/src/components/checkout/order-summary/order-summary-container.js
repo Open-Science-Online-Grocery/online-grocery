@@ -30,9 +30,9 @@ const mapDispatchToProps = dispatch => (
     getCartSettings: () => {
       dispatch(cartActionCreators.getCartSettings());
     },
-    logParticipantAction: (actionType, productId, quantity) => {
+    logParticipantAction: (actionType, product, quantity) => {
       dispatch(
-        userActionCreators.logParticipantAction(actionType, productId, quantity)
+        userActionCreators.logParticipantAction(actionType, product, quantity)
       );
     }
   }
