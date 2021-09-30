@@ -83,7 +83,7 @@ export default class NutritionLabel extends React.Component {
           {this.factDiv('protein', this.props.nutritionFacts.protein, 'Protein', 'g', 50)}
           <div className="nutrition-facts-vitamins-top-divider divider" />
           <div className="nutrition-facts-vitamins">
-            {this.props.nutritionFacts.vitamins.replace(/% /, '%\t')}
+            {(this.props.nutritionFacts.vitamins || '').replace(/% /, '%\t')}
           </div>
           <div className="nutrition-facts-vitamins-bottom-divider divider" />
           <div className="nutrition-facts-daily-value">

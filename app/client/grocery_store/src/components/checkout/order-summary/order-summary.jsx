@@ -23,7 +23,7 @@ export default class OrderSummary extends React.Component {
   clearCart() {
     this.props.handleClearCart();
     this.props.cart.items.forEach((item) => {
-      this.props.logParticipantAction('checkout', item.id, item.quantity);
+      this.props.logParticipantAction('checkout', item, item.quantity);
     });
     this.props.onSubmit();
   }
