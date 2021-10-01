@@ -8,7 +8,7 @@ module Api
     skip_before_action :authenticate_user!
     skip_before_action :verify_authenticity_token
 
-    # rubocop:disable Rails/SaveBang
+    # rubocop:disable Rails/SaveBang, Metrics/AbcSize
     def create
       condition = condition_from_uuid
       action = ParticipantAction.create(
@@ -25,6 +25,6 @@ module Api
       }
       render json: json
     end
-    # rubocop:enable Rails/SaveBang
+    # rubocop:enable Rails/SaveBang, Metrics/AbcSize
   end
 end

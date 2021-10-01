@@ -13,7 +13,8 @@ RSpec.describe ParticipantActionsExporter do
       action_type: 'view',
       product_name: 'Daves Killer Bread Bread, Organic, 21 Whole Grains and Seeds',
       quantity: nil,
-      created_at: Time.zone.parse('2018-11-15 14:00:00')
+      created_at: Time.zone.parse('2018-11-15 14:00:00'),
+      serial_position: 123
     )
   end
   let(:result_2) do
@@ -26,7 +27,8 @@ RSpec.describe ParticipantActionsExporter do
       action_type: 'add',
       product_name: 'Daves Killer Bread Bread, Organic, 21 Whole Grains and Seeds',
       quantity: 3,
-      created_at: Time.zone.parse('2018-11-15 14:01:00')
+      created_at: Time.zone.parse('2018-11-15 14:01:00'),
+      serial_position: 123
     )
   end
   let(:experiment) do
@@ -37,9 +39,9 @@ RSpec.describe ParticipantActionsExporter do
   end
   let(:expected_output) do
     <<~CSV
-      Experiment Name,Condition Name,Session Identifier,Participant Action Type,Product Name,Quantity,Participant Action Date/Time
-      The Best Experiment,Control Condition,asdf,view,"Daves Killer Bread Bread, Organic, 21 Whole Grains and Seeds",,11/15/2018 2:00 PM EST
-      The Best Experiment,Control Condition,asdf,add,"Daves Killer Bread Bread, Organic, 21 Whole Grains and Seeds",3,11/15/2018 2:01 PM EST
+      Experiment Name,Condition Name,Session Identifier,Participant Action Type,Product Name,Quantity,Serial Position,Participant Action Date/Time
+      The Best Experiment,Control Condition,asdf,view,"Daves Killer Bread Bread, Organic, 21 Whole Grains and Seeds",,123,11/15/2018 2:00 PM EST
+      The Best Experiment,Control Condition,asdf,add,"Daves Killer Bread Bread, Organic, 21 Whole Grains and Seeds",3,123,11/15/2018 2:01 PM EST
     CSV
   end
 
