@@ -27,6 +27,7 @@ class ConditionManager
     ActiveRecord::Base.transaction do
       assign_params
       validate_cart_summary_label_params
+      set_excluded_subcategories
       @errors += @condition.errors.full_messages unless @condition.save
       handle_tag_file_change if @errors.none?
       update_suggestions if @errors.none?
@@ -125,6 +126,15 @@ class ConditionManager
     params_to_validate.each do |_, label_attrs|
       cart_summary_label_missing_error unless cart_image_exists?(label_attrs)
     end
+  end
+
+  # this is an unusual implementation: it is more convenient to save only
+  # excluded subcategories, but it is more natural for the user to choose
+  # *included* subcategories. here we flip 'em.
+  private def set_excluded_subcategories
+    @condition.excluded_subcategory_ids = Subcategory.where.not(
+      id: @condition.included_subcategory_ids
+    ).pluck(:id)
   end
 
   private def cart_image_exists?(cart_label_attrs)

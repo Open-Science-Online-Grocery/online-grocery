@@ -4,9 +4,8 @@
 class Condition < ApplicationRecord
   include Rails.application.routes.url_helpers
 
-  attr_accessor :excluded_category_ids
-
-  attr_writer :show_food_count, :style_use_type
+  attr_writer :show_food_count, :style_use_type, :included_category_ids,
+              :included_subcategory_ids
 
   validates :name, :uuid, :qualtrics_code, :sort_type, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
@@ -32,7 +31,7 @@ class Condition < ApplicationRecord
   has_many :cart_summary_labels, through: :condition_cart_summary_labels
   has_many :condition_labels, dependent: :destroy
   has_many :labels, through: :condition_labels
-  has_many :subcategory_exclusions
+  has_many :subcategory_exclusions, dependent: :destroy
   has_many :excluded_subcategories,
            through: :subcategory_exclusions,
            source: :subcategory
@@ -138,4 +137,17 @@ class Condition < ApplicationRecord
     end
   end
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
+  def included_category_ids
+    @included_category_ids&.map(&:to_i) ||
+      included_subcategories.pluck(:category_id).uniq
+  end
+
+  def included_subcategory_ids
+    @included_subcategory_ids&.map(&:to_i) || included_subcategories.pluck(:id)
+  end
+
+  private def included_subcategories
+    Subcategory.where.not(id: excluded_subcategory_ids)
+  end
 end
