@@ -140,22 +140,21 @@
 
   <table class="ui invisible collapsing table">
     <tbody>
-      <% Category.sorted.each do |category| %>
+      <%= f.collection_check_boxes(:excluded_category_ids, Category.sorted, :id, :to_s) do |excluded_category_fields| %>
         <tr>
-          <td><%= category %></td>
+          <td><%= excluded_category_fields.label %></td>
           <td>
             <div class="ui fitted toggle checkbox">
-              <input type="checkbox"> <label></label>
+              <%= excluded_category_fields.check_box %>
             </div>
           </td>
         </tr>
-
-        <% category.subcategories.each do |subcategory| %>
+        <%= f.collection_check_boxes(:excluded_subcategory_ids, excluded_category_fields.object.subcategories, :id, :to_s) do |excluded_subcategory_fields| %>
           <tr>
-            <td class="indented"><%= subcategory %></td>
+            <td class="indented"><%= excluded_subcategory_fields.label %></td>
             <td>
               <div class="ui fitted toggle checkbox">
-                <input type="checkbox"> <label></label>
+                <%= excluded_subcategory_fields.check_box %>
               </div>
             </td>
           </tr>

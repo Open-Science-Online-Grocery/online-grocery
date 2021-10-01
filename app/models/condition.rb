@@ -4,6 +4,8 @@
 class Condition < ApplicationRecord
   include Rails.application.routes.url_helpers
 
+  attr_accessor :excluded_category_ids
+
   attr_writer :show_food_count, :style_use_type
 
   validates :name, :uuid, :qualtrics_code, :sort_type, presence: true
