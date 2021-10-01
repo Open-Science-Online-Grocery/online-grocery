@@ -29,6 +29,10 @@
   margin-top: 1rem;
   display: flex;
 
+  &:first-child {
+    margin-top: 0;
+  }
+
   h3 {
     align-self: center;
     margin-bottom: 0;

@@ -1,6 +1,6 @@
 <div class="ui bottom attached tab segment" data-tab="categories">
-  <div class="page-heading">
-    <h2>Custom Categories</h2>
+  <div class="page-sub-heading">
+    <h3>Custom Categories</h3>
 
     <div class="heading-buttons">
       <%=
@@ -131,4 +131,36 @@
       <%= f.label :filter_by_custom_categories, 'Allow users to filter store-wide by custom categories'%>
     </div>
   </div>
+
+  <div class="ui tall divider"></div>
+
+  <div class="page-sub-heading">
+    <h3>Show/hide Categories and Subcategories</h3>
+  </div>
+
+  <table class="ui invisible collapsing table">
+    <tbody>
+      <% Category.all.each do |category| %>
+        <tr>
+          <td><%= category %></td>
+          <td>
+            <div class="ui fitted toggle checkbox">
+              <input type="checkbox"> <label></label>
+            </div>
+          </td>
+        </tr>
+
+        <% category.subcategories.each do |subcategory| %>
+          <tr>
+            <td class="indented"><%= subcategory %></td>
+            <td>
+              <div class="ui fitted toggle checkbox">
+                <input type="checkbox"> <label></label>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
 </div>
