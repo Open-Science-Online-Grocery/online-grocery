@@ -30,6 +30,10 @@ class Condition < ApplicationRecord
   has_many :cart_summary_labels, through: :condition_cart_summary_labels
   has_many :condition_labels, dependent: :destroy
   has_many :labels, through: :condition_labels
+  has_many :subcategory_exclusions
+  has_many :excluded_subcategories,
+           through: :subcategory_exclusions,
+           source: :subcategory
 
   accepts_nested_attributes_for :product_sort_fields
   accepts_nested_attributes_for :condition_cart_summary_labels,
