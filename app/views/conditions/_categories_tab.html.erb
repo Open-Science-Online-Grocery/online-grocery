@@ -140,7 +140,7 @@
 
   <table class="ui invisible collapsing table">
     <tbody>
-      <% Category.all.each do |category| %>
+      <% Category.sorted.each do |category| %>
         <tr>
           <td><%= category %></td>
           <td>

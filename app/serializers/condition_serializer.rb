@@ -11,9 +11,9 @@ class ConditionSerializer
   def serialize
     {
       sort_fields: @condition.product_sort_fields.map(&:description),
-      categories: Category.order(:id),
-      subcategories: Subcategory.order(:category_id, :display_order),
-      subsubcategories: Subsubcategory.order(:subcategory_id, :display_order),
+      categories: Category.sorted,
+      subcategories: Subcategory.sorted,
+      subsubcategories: Subsubcategory.sorted,
       tags: @condition.tags.order(:id).uniq,
       subtags: @condition.subtags.order(:tag_id).uniq,
       filter_by_tags: @condition.filter_by_custom_categories,
