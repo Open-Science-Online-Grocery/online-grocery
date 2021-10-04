@@ -150,7 +150,6 @@ RSpec.describe ConditionParamsAdjuster do
       end
     end
 
-
     context 'when replacing a suggestion csv file' do
       let(:params) do
         {

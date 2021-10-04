@@ -14,7 +14,7 @@ RSpec.describe ConditionManager do
   let(:params_adjuster) do
     instance_double(
       'ConditionParamsAdjuster',
-      adjusted_params:  adjusted_params
+      adjusted_params: adjusted_params
     )
   end
   let(:suggestion_manager) do
@@ -118,6 +118,11 @@ RSpec.describe ConditionManager do
             }
           }
         end
+
+        it 'returns true and has no errors' do
+          expect(subject.update_condition).to be_truthy
+          expect(subject.errors).to be_empty
+        end
       end
     end
 
@@ -138,7 +143,7 @@ RSpec.describe ConditionManager do
         end
       end
 
-      context 'when excluding some subcategories' do
+      context 'when excluding no subcategories' do
         before do
           allow(condition).to receive(:included_subcategory_ids) { [1, 2, 3] }
           allow(Subcategory).to receive_message_chain(:where, :not).with(

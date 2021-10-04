@@ -53,6 +53,7 @@ class ConditionParamsAdjuster
     end
   end
 
+  # rubocop:disable Style/GuardClause
   private def clear_unselected_sort_fields
     if @params[:sort_type] != Condition.sort_types.field
       @params[:default_sort_field_id] = nil
@@ -68,6 +69,7 @@ class ConditionParamsAdjuster
       @params[:nutrition_equation_tokens] = nil
     end
   end
+  # rubocop:enable Style/GuardClause
 
   private def adjust_selected_subcategories
     ids = @params.fetch(:included_subcategory_ids, []).map(&:to_i)
