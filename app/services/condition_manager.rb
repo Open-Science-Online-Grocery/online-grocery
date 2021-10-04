@@ -113,9 +113,9 @@ class ConditionManager
   # rubocop:enable Style/GuardClause
 
   private def adjust_selected_subcategories
-    ids = @params[:included_subcategory_ids].map(&:to_i)
+    ids = @params.fetch(:included_subcategory_ids, []).map(&:to_i)
     @params[:included_subcategory_ids] = ids - Subcategory.where.not(
-      category_id: @params[:included_category_ids].select(&:present?)
+      category_id: @params.fetch(:included_category_ids, []).select(&:present?)
     ).pluck(:id)
   end
 

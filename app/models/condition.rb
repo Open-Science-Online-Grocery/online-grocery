@@ -138,10 +138,12 @@ class Condition < ApplicationRecord
   end
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
+  # rubocop:disable Rails/UniqBeforePluck
   def included_category_ids
     @included_category_ids&.map(&:to_i) ||
       included_subcategories.pluck(:category_id).uniq
   end
+  # rubocop:enable Rails/UniqBeforePluck
 
   def included_subcategory_ids
     @included_subcategory_ids&.map(&:to_i) || included_subcategories.pluck(:id)
