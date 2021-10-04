@@ -64,7 +64,7 @@ class ConditionParamsAdjuster
   end
 
   private def clear_unselected_nutrition_fields
-    if @params[:style_use_type] == Condition.style_use_types.always
+    if @params[:style_use_type] != Condition.style_use_types.calculation
       @params[:nutrition_equation_tokens] = nil
     end
   end
