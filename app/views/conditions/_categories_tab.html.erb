@@ -140,13 +140,12 @@
 
   <table class="ui invisible collapsing table">
     <tbody>
-
       <%= f.collection_check_boxes(:included_category_ids, Category.sorted, :id, :to_s) do |included_category_fields| %>
         <tr>
           <td><%= included_category_fields.label %></td>
           <td>
             <div class="ui fitted toggle checkbox">
-              <%= included_category_fields.check_box %>
+              <%= included_category_fields.check_box(data: { refresh_form: true }) %>
             </div>
           </td>
         </tr>
