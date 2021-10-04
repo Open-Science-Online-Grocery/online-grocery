@@ -147,7 +147,7 @@ class Condition < ApplicationRecord
     @included_subcategory_ids&.map(&:to_i) || included_subcategories.pluck(:id)
   end
 
-  private def included_subcategories
-    Subcategory.where.not(id: excluded_subcategory_ids)
+  def included_subcategories
+    Subcategory.sorted.where.not(id: excluded_subcategory_ids)
   end
 end

@@ -149,8 +149,15 @@
             </div>
           </td>
         </tr>
-        <%= f.collection_check_boxes(:included_subcategory_ids, included_category_fields.object.subcategories, :id, :to_s) do |included_subcategory_fields| %>
-          <tr>
+        <%=
+          f.collection_check_boxes(
+            :included_subcategory_ids,
+            included_category_fields.object.subcategories,
+            :id,
+            :to_s
+          ) do |included_subcategory_fields|
+        %>
+          <tr class="<%= 'disabled' if condition.included_category_ids.exclude?(included_subcategory_fields.object.category_id) %>">
             <td class="indented"><%= included_subcategory_fields.label %></td>
             <td>
               <div class="ui fitted toggle checkbox">
@@ -160,7 +167,6 @@
           </tr>
         <% end %>
       <% end %>
-
     </tbody>
   </table>
 </div>
