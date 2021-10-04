@@ -17,12 +17,18 @@ RSpec.describe ConditionManager do
       adjusted_params:  adjusted_params
     )
   end
+  let(:suggestion_manager) do
+    instance_double 'SuggestionsCsvManager', import: true
+  end
+  let(:tag_importer) { instance_double 'TagImporter', import: true }
 
   subject { described_class.new(condition, orig_params) }
 
   before do
     allow(condition).to receive(:save) { true }
     allow(ConditionParamsAdjuster).to receive(:new) { params_adjuster }
+    allow(TagImporter).to receive(:new) { tag_importer }
+    allow(SuggestionsCsvManager).to receive(:new) { suggestion_manager }
   end
 
   describe '#assign_params' do
@@ -58,20 +64,100 @@ RSpec.describe ConditionManager do
       end
     end
 
+    describe 'cart summary label attributes' do
+      context 'when provided label has no id' do
+        let(:adjusted_params) do
+          {
+            condition_cart_summary_labels_attributes: {
+              '0' => {
+                label_type: CartSummaryLabel.types.provided,
+                cart_summary_label_id: nil
+              }
+            }
+          }
+        end
+
+        it 'returns false and has errors' do
+          expect(subject.update_condition).to be_falsy
+          expect(subject.errors.join(' ')).to include 'image must be uploaded'
+        end
+      end
+
+      context 'when custom image is missing' do
+        let(:adjusted_params) do
+          {
+            condition_cart_summary_labels_attributes: {
+              '0' => {
+                cart_summary_label_attributes: {
+                  image_cache: nil
+                }
+              }
+            }
+          }
+        end
+
+        it 'returns false and has errors' do
+          expect(subject.update_condition).to be_falsy
+          expect(subject.errors.join(' ')).to include 'image must be uploaded'
+        end
+      end
+
+      context 'when required cart image data is present' do
+        let(:adjusted_params) do
+          {
+            condition_cart_summary_labels_attributes: {
+              '0' => {
+                label_type: CartSummaryLabel.types.provided,
+                cart_summary_label_id: 123
+              },
+              '1' => {
+                cart_summary_label_attributes: {
+                  image_cache: 'some image'
+                }
+              }
+            }
+          }
+        end
+      end
+    end
+
+    describe 'setting excluded subcategories' do
+      context 'when excluding some subcategories' do
+        before do
+          allow(condition).to receive(:included_subcategory_ids) { [1, 2, 3] }
+          allow(Subcategory).to receive_message_chain(:where, :not).with(
+            id: [1, 2, 3]
+          ).and_return(
+            [{ id: 4 }, { id: 5 }]
+          )
+        end
+
+        it 'sets the expected excluded_subcategory_ids' do
+          expect(condition).to receive(:excluded_subcategory_ids=).with([4, 5])
+          subject.update_condition
+        end
+      end
+
+      context 'when excluding some subcategories' do
+        before do
+          allow(condition).to receive(:included_subcategory_ids) { [1, 2, 3] }
+          allow(Subcategory).to receive_message_chain(:where, :not).with(
+            id: [1, 2, 3]
+          ).and_return([])
+        end
+
+        it 'sets the expected excluded_subcategory_ids' do
+          expect(condition).to receive(:excluded_subcategory_ids=).with([])
+          subject.update_condition
+        end
+      end
+    end
+
     describe 'tag file handling' do
       let!(:condition) { create(:condition) }
       let!(:current_tag_file) { condition.tag_csv_files.create }
-      let(:tag_importer) { instance_double 'TagImporter', import: true }
-      let(:suggestion_manager) do
-        instance_double 'SuggestionsCsvManager', import: true
-      end
 
       subject { described_class.new(condition.reload, orig_params) }
-
-      before do
-        allow(TagImporter).to receive(:new) { tag_importer }
-        allow(SuggestionsCsvManager).to receive(:new) { suggestion_manager }
-      end
 
       context 'when current tag file does not change' do
         it 'does not call the TagImporter' do
@@ -132,20 +218,20 @@ RSpec.describe ConditionManager do
           end
         end
       end
+    end
 
-      context 'when updating suggestions fails' do
-        let(:suggestion_manager) do
-          instance_double(
-            'SuggestionsCsvManager',
-            import: false,
-            errors: ['kapow']
-          )
-        end
+    context 'when updating suggestions fails' do
+      let(:suggestion_manager) do
+        instance_double(
+          'SuggestionsCsvManager',
+          import: false,
+          errors: ['kapow']
+        )
+      end
 
-        it 'returns false and has errors' do
-          expect(subject.update_condition).to eq false
-          expect(subject.errors).to include 'kapow'
-        end
+      it 'returns false and has errors' do
+        expect(subject.update_condition).to eq false
+        expect(subject.errors).to include 'kapow'
       end
     end
   end
