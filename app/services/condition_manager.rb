@@ -20,6 +20,7 @@ class ConditionManager
     clear_cart_summary_label_fields
     clear_unselected_sort_fields
     clear_unselected_nutrition_fields
+    adjust_selected_subcategories
     @condition.attributes = @params
   end
 
@@ -110,6 +111,13 @@ class ConditionManager
     end
   end
   # rubocop:enable Style/GuardClause
+
+  private def adjust_selected_subcategories
+    ids = @params[:included_subcategory_ids].map(&:to_i)
+    @params[:included_subcategory_ids] = ids - Subcategory.where.not(
+      category_id: @params[:included_category_ids].select(&:present?)
+    ).pluck(:id)
+  end
 
   private def show_food_count_fields
     @condition.show_food_count = @params.delete(:show_food_count) == '1'

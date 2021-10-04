@@ -67,4 +67,3 @@ group :test do
   gem 'simplecov', require: false
   gem 'webdrivers'
 end
-

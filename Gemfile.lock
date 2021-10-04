@@ -54,7 +54,7 @@ GEM
       sshkit (>= 1.6.1, != 1.7.0)
     arel (9.0.0)
     ast (2.4.2)
-    awesome_print (1.8.0)
+    awesome_print (1.9.2)
     aws-eventstream (1.1.0)
     aws-partitions (1.426.0)
     aws-sdk-core (3.112.0)
