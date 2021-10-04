@@ -138,6 +138,10 @@ class Condition < ApplicationRecord
   end
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
+  def included_subcategories
+    Subcategory.sorted.where.not(id: excluded_subcategory_ids)
+  end
+
   # rubocop:disable Rails/UniqBeforePluck
   def included_category_ids
     @included_category_ids&.map(&:to_i) ||
@@ -147,9 +151,5 @@ class Condition < ApplicationRecord
 
   def included_subcategory_ids
     @included_subcategory_ids&.map(&:to_i) || included_subcategories.pluck(:id)
-  end
-
-  def included_subcategories
-    Subcategory.sorted.where.not(id: excluded_subcategory_ids)
   end
 end
