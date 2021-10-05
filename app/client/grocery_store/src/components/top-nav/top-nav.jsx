@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Tab from '../tab/tab';
+import TabContainer from '../tab/tab-container';
 import SearchContainer from '../search/search-container';
 import './top-nav.scss';
 
@@ -10,7 +10,6 @@ export default class TopNav extends React.Component {
     super(props);
     this.categoryTabs = this.categoryTabs.bind(this);
     this.tagTab = this.tagTab.bind(this);
-    this.categoryTitle = this.categoryTitle.bind(this);
   }
 
   // this determines which side the sub-sub-category flyout menus should
@@ -25,25 +24,14 @@ export default class TopNav extends React.Component {
   }
 
   categoryTabs() {
-    const {
-      selectedCategoryId,
-      selectedCategoryType,
-      categories,
-      subcategories
-    } = this.props;
+    const { categories } = this.props;
     return categories.map((tabCategory, index) => {
-      const tabSubcats = subcategories.filter(subcat => (
-        subcat.categoryId === tabCategory.id
-      ));
       return (
-        <Tab
+        <TabContainer
           tabName={tabCategory.name}
           key={`category-${tabCategory.id}`}
           categoryId={tabCategory.id}
           categoryType="category"
-          subcats={tabSubcats}
-          selectedCategoryId={selectedCategoryId}
-          selectedCategoryType={selectedCategoryType}
           flyoutDirection={this.flyoutDirection(index)}
         />
       );
@@ -51,26 +39,14 @@ export default class TopNav extends React.Component {
   }
 
   tagTab() {
-    const {
-      selectedCategoryId,
-      selectedCategoryType,
-      displayedTag,
-      subtags
-    } = this.props;
-
+    const { displayedTag } = this.props;
     if (displayedTag) {
-      const subtagsForTab = subtags.filter(subtag => (
-        subtag.name && subtag.tagId === displayedTag.id
-      ));
       return (
-        <Tab
+        <TabContainer
           tabName={displayedTag.name}
           key={`tag-${displayedTag.id}`}
           categoryId={displayedTag.id}
           categoryType="tag"
-          subcats={subtagsForTab}
-          selectedCategoryId={selectedCategoryId}
-          selectedCategoryType={selectedCategoryType}
           flyoutDirection="left" // always flyout left since it's the rightmost tab on the screen
         />
       );
@@ -78,24 +54,8 @@ export default class TopNav extends React.Component {
     return null;
   }
 
-  categoryTitle() {
-    const {
-      selectedCategoryId,
-      selectedCategoryType,
-      categories,
-      tags
-    } = this.props;
-    switch (selectedCategoryType) {
-      case 'tag':
-        return tags.find(tag => tag.id === selectedCategoryId).name;
-      case 'category':
-        return categories.find(category => category.id === selectedCategoryId).name;
-      default:
-        return null;
-    }
-  }
-
   render() {
+    const { categoryTitle } = this.props;
     return (
       <div>
         <div className="top-nav">
@@ -104,7 +64,7 @@ export default class TopNav extends React.Component {
         </div>
         <SearchContainer />
         <div className="title">
-          {this.categoryTitle()}
+          {categoryTitle}
         </div>
       </div>
     );
@@ -112,8 +72,6 @@ export default class TopNav extends React.Component {
 }
 
 TopNav.propTypes = {
-  selectedCategoryId: PropTypes.number,
-  selectedCategoryType: PropTypes.string,
   displayedTag: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string
@@ -124,17 +82,7 @@ TopNav.propTypes = {
       id: PropTypes.number
     })
   ).isRequired,
-  subcategories: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string
-    })
-  ).isRequired,
   tags: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string
-    })
-  ).isRequired,
-  subtags: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string
     })
@@ -142,7 +90,5 @@ TopNav.propTypes = {
 };
 
 TopNav.defaultProps = {
-  selectedCategoryId: null,
-  selectedCategoryType: null,
   displayedTag: null
 };

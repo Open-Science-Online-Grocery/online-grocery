@@ -14,6 +14,18 @@ const initialCategoryState = {
   subtags: []
 };
 
+export function getCategoryTitle(state) {
+  const { selectedCategoryId, selectedCategoryType, tags, categories } = state;
+  switch (selectedCategoryType) {
+    case 'tag':
+      return tags.find(tag => tag.id === selectedCategoryId).name;
+    case 'category':
+      return categories.find(category => category.id === selectedCategoryId).name;
+    default:
+      return null;
+  }
+}
+
 export default function categoryReducer(state = initialCategoryState, action) {
   const {
     categories, subcategories, subsubcategories, products, selectedCategoryId,
