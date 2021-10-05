@@ -64,9 +64,7 @@ class ProductFetcher
       when category_type
         scope_by_category
       when tag_type
-        @product_relation = @product_relation.joins(:product_tags).where(
-          product_tags: { subtag_id: @params[:selected_subcategory_id] }
-        )
+        scope_by_tag
       else
         @product_relation = @product_relation.none
     end
@@ -81,6 +79,18 @@ class ProductFetcher
       criteria = { subcategory_id: @params[:selected_subcategory_id] }
     end
     @product_relation = @product_relation.where(criteria)
+  end
+
+  private def scope_by_tag
+    if !@condition.show_products_by_subcategory
+      @product_relation = @product_relation.joins(:product_tags).where(
+        product_tags: { tag_id: @params[:selected_category_id] }
+      )
+    else
+      @product_relation = @product_relation.joins(:product_tags).where(
+        product_tags: { subtag_id: @params[:selected_subcategory_id] }
+      )
+    end
   end
 
   private def filtered_products
