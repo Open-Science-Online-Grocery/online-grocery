@@ -310,6 +310,20 @@ CREATE TABLE `subcategories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `subcategory_exclusions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `subcategory_exclusions` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `condition_id` bigint(20) DEFAULT NULL,
+  `subcategory_id` bigint(20) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_subcategory_exclusions_on_condition_id` (`condition_id`),
+  KEY `index_subcategory_exclusions_on_subcategory_id` (`subcategory_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `subsubcategories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -452,6 +466,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20210217174649'),
 ('20210223151548'),
 ('20210310181245'),
-('20210930175208');
+('20210930175208'),
+('20211001155043');
 
 

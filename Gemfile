@@ -17,6 +17,7 @@ gem 'ed25519'
 gem 'fog-aws'
 gem 'faraday'
 gem 'jbuilder'
+gem 'memoist'
 gem 'mysql2'
 gem 'puma'
 gem 'rails', '~> 5.2'
@@ -67,4 +68,3 @@ group :test do
   gem 'simplecov', require: false
   gem 'webdrivers'
 end
-

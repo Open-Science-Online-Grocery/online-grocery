@@ -102,6 +102,8 @@ class ConditionsController < ApplicationController
       tag_csv_files_attributes: %i[id active],
       suggestion_csv_files_attributes: %i[id active],
       product_sort_field_ids: [],
+      included_category_ids: [],
+      included_subcategory_ids: [],
       condition_labels_attributes: [
         :id,
         :_destroy,

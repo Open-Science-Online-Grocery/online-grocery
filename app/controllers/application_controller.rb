@@ -31,8 +31,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  private def after_sign_in_path_for(_resource)
-    experiments_path
+  private def after_sign_in_path_for(user)
+    stored_location_for(user) || experiments_path
   end
 
   private def set_error_messages(record, record_name = nil, header = nil)

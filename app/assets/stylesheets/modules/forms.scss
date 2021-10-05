@@ -45,4 +45,8 @@
       }
     }
   }
+
+  .ui.toggle.checkbox input:checked ~ label::before {
+    background-color: $dark-theme-color !important;
+  }
 }
