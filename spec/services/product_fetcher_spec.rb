@@ -4,10 +4,12 @@ require 'rails_helper'
 
 # due to the amount of query logic in this class, this spec functions more like
 # an integration test (doing actual db lookups) rather than a unit test.
+# rubocop:disable RSpec/InstanceVariable, RSpec/BeforeAfterAll
 RSpec.describe ProductFetcher do
   let(:condition) do
     instance_double('Condition', excluded_subcategory_ids: [])
   end
+
   subject { described_class.new(condition, params) }
 
   before(:all) do
@@ -40,7 +42,7 @@ RSpec.describe ProductFetcher do
     @orange_juice = create(
       :product,
       name: 'Orange Juice',
-      category: @beverages,
+      category: @beverages
     )
     @soda_pop = create(
       :product,
@@ -169,7 +171,6 @@ RSpec.describe ProductFetcher do
             expect(subject.fetch_products).to match_array [@orange_juice, @ginger_ale]
           end
         end
-
       end
 
       context 'when searching by subcategory' do
@@ -274,3 +275,4 @@ RSpec.describe ProductFetcher do
     end
   end
 end
+# rubocop:enable RSpec/InstanceVariable, RSpec/BeforeAfterAll
