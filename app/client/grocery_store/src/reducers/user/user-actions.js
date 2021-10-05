@@ -42,7 +42,7 @@ function resetAll() {
 }
 
 function setInitialCategory(data) {
-  const subcategoryId = null;
+  let subcategoryId = null;
   if (data.subcategories.length) subcategoryId = data.subcategories[0].id;
   return categoryActionCreators.updateCategory(
     data.categories[0].id,

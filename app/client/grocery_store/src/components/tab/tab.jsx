@@ -19,6 +19,23 @@ export default class Tab extends React.Component {
     this.setState({ open: false });
   }
 
+  tabBody() {
+    const { tabName, clickable, handleSetCategory } = this.props;
+    if (clickable) {
+      return (
+        <div className="clickable tab" onClick={handleSetCategory}>
+          <div>{tabName}</div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="tab">
+          <div>{tabName}</div>
+        </div>
+      );
+    }
+  }
+
   buildSubcategories() {
     return this.props.subcats.map(subcat => (
       <SubtabContainer
@@ -32,17 +49,17 @@ export default class Tab extends React.Component {
   }
 
   render() {
+    const { isSelected, subcats } = this.props;
     return (
       <div
-        className={this.props.isSelected ? 'tab-container selected' : 'tab-container'}
+        className={isSelected ? 'tab-container selected' : 'tab-container'}
         onMouseEnter={this.openDropdown}
         onMouseLeave={this.closeDropdown}
       >
-        <div className="tab">
-          <div>{this.props.tabName}</div>
-        </div>
+        {this.tabBody()}
         {
-          this.state.open
+          subcats.length
+            && this.state.open
             && (
               <div className="tab-dropdown">
                 {this.buildSubcategories()}
@@ -66,5 +83,7 @@ Tab.propTypes = {
     })
   ).isRequired,
   isSelected: PropTypes.bool.isRequired,
-  flyoutDirection: PropTypes.string.isRequired
+  clickable: PropTypes.bool.isRequired,
+  flyoutDirection: PropTypes.string.isRequired,
+  handleSetCategory: PropTypes.func.isRequired
 };

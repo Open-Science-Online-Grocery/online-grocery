@@ -28,6 +28,10 @@ export function tabIsSelected(state, categoryType, categoryId) {
   return fromCategory.tabIsSelected(state.category, categoryType, categoryId);
 }
 
+export function subtabs(state, categoryType, categoryId) {
+  return fromCategory.subtabs(state.category, categoryType, categoryId);
+}
+
 // reset approach adapted from https://stackoverflow.com/a/35641992/10410128
 const rootReducer = (state, action) => {
   if (action.type === userActionTypes.RESET_ALL) {
