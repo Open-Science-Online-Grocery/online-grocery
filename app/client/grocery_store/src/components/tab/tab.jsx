@@ -27,13 +27,12 @@ export default class Tab extends React.Component {
           <div>{tabName}</div>
         </div>
       );
-    } else {
-      return (
-        <div className="tab">
-          <div>{tabName}</div>
-        </div>
-      );
     }
+    return (
+      <div className="tab">
+        <div>{tabName}</div>
+      </div>
+    );
   }
 
   buildSubcategories() {
