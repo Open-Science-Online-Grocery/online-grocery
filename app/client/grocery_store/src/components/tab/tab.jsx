@@ -34,11 +34,7 @@ export default class Tab extends React.Component {
   render() {
     return (
       <div
-        className={
-          this.props.categoryId === this.props.selectedCategoryId
-          && this.props.categoryType === this.props.selectedCategoryType
-            ? 'tab-container selected' : 'tab-container'
-        }
+        className={this.props.isSelected ? 'tab-container selected' : 'tab-container'}
         onMouseEnter={this.openDropdown}
         onMouseLeave={this.closeDropdown}
       >
@@ -69,12 +65,6 @@ Tab.propTypes = {
       categoryId: PropTypes.number
     })
   ).isRequired,
-  selectedCategoryId: PropTypes.number,
-  selectedCategoryType: PropTypes.string, // should be 'category' or 'tag'
+  isSelected: PropTypes.bool.isRequired,
   flyoutDirection: PropTypes.string.isRequired
-};
-
-Tab.defaultProps = {
-  selectedCategoryId: null,
-  selectedCategoryType: null
 };

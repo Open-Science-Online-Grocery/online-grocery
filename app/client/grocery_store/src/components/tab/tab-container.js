@@ -1,10 +1,13 @@
 import { connect } from 'react-redux';
+import { tabIsSelected } from '../../reducers/reducer';
 import Tab from './tab';
 
 const mapStateToProps = (state, ownProps) => {
   // TODO: subcats
   return {
-    showSubtabs: state.user.showProductsBySubcategory
+    subcats: [],
+    showSubtabs: state.user.showProductsBySubcategory,
+    isSelected: tabIsSelected(state, ownProps.categoryType, ownProps.categoryId)
   };
 };
 

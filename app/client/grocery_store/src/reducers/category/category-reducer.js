@@ -26,6 +26,12 @@ export function getCategoryTitle(state) {
   }
 }
 
+export function tabIsSelected(state, categoryType, categoryId) {
+  const { selectedCategoryType, selectedCategoryId  } = state;
+  return categoryType === selectedCategoryType &&
+    categoryId == selectedCategoryId;
+}
+
 export default function categoryReducer(state = initialCategoryState, action) {
   const {
     categories, subcategories, subsubcategories, products, selectedCategoryId,
