@@ -41,6 +41,17 @@ function resetAll() {
   return { type: userActionTypes.RESET_ALL };
 }
 
+function setInitialCategory(data) {
+  const subcategoryId = null;
+  if (data.subcategories.length) subcategoryId = data.subcategories[0].id;
+  return categoryActionCreators.updateCategory(
+    data.categories[0].id,
+    subcategoryId,
+    null,
+    'category'
+  )
+}
+
 function sessionIdSubmitted(sessionId) {
   return (dispatch) => {
     dispatch(resetAll());
@@ -50,14 +61,7 @@ function sessionIdSubmitted(sessionId) {
 
     const onSuccess = (data) => {
       dispatch(setConditionData(data));
-      dispatch(
-        categoryActionCreators.updateCategory(
-          data.categories[0].id,
-          data.subcategories[0].id,
-          null,
-          'category'
-        )
-      );
+      dispatch(setInitialCategory(data));
     };
 
     return fromApi.jsonApiCall(

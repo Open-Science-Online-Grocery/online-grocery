@@ -13,11 +13,12 @@ class ConditionSerializer
   def serialize
     {
       sort_fields: @condition.product_sort_fields.map(&:description),
+      show_products_by_subcategory: @condition.show_products_by_subcategory,
       categories: categories,
       subcategories: subcategories,
       subsubcategories: subsubcategories,
       tags: @condition.tags.order(:id).uniq,
-      subtags: @condition.subtags.order(:tag_id).uniq,
+      subtags: subtags,
       filter_by_tags: @condition.filter_by_custom_categories,
       only_add_to_cart_from_detail_page: @condition.only_add_from_detail_page,
       show_price_total: @condition.show_price_total,
@@ -31,15 +32,27 @@ class ConditionSerializer
   # rubocop:enable Layout/LineLength, Metrics/AbcSize, Metrics/MethodLength
 
   private def subcategories
-    @condition.included_subcategories.sorted
+    @condition.show_products_by_subcategory ? applicable_subcategories : []
   end
-  memoize :subcategories
 
   private def categories
-    Category.sorted.where(id: subcategories.map(&:category_id))
+    Category.sorted.where(id: applicable_subcategories.map(&:category_id))
   end
 
   private def subsubcategories
-    subcategories.flat_map { |subcategory| subcategory.subsubcategories.sorted }
+    return [] unless @condition.show_products_by_subcategory
+    applicable_subcategories.flat_map do |subcategory|
+      subcategory.subsubcategories.sorted
+    end
   end
+
+  private def subtags
+    return [] unless @condition.show_products_by_subcategory
+    @condition.subtags.order(:tag_id).uniq
+  end
+
+  private def applicable_subcategories
+    @condition.included_subcategories.sorted
+  end
+  memoize :applicable_subcategories
 end
