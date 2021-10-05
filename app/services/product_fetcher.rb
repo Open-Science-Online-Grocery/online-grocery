@@ -52,7 +52,8 @@ class ProductFetcher
     else
       scope_by_membership
     end
-    filtered_products.uniq
+    filter_products
+    @product_relation.uniq
   end
 
   private def scope_by_name
@@ -83,28 +84,38 @@ class ProductFetcher
 
   private def scope_by_tag
     if !@condition.show_products_by_subcategory
-      @product_relation = @product_relation.joins(:product_tags).where(
-        product_tags: { tag_id: @params[:selected_category_id] }
+      @product_relation = @product_relation.with_tag(
+        @params[:selected_category_id]
       )
     else
-      @product_relation = @product_relation.joins(:product_tags).where(
-        product_tags: { subtag_id: @params[:selected_subcategory_id] }
+      @product_relation = @product_relation.with_subtag(
+        @params[:selected_subcategory_id]
       )
     end
   end
 
-  private def filtered_products
+  private def filter_products
+    filter_by_excluded_subcategories
+    filter_by_tag
+  end
+
+  private def filter_by_excluded_subcategories
     @product_relation = @product_relation.where.not(
       subcategory_id: @condition.excluded_subcategory_ids
     )
+  end
+
+  private def filter_by_tag
     # `tag_id` could actually be a Subtag's id - the `selected_filter_type`
     # param indicates if it is a tag or subtag id
     tag_id = @params[:selected_filter_id]
-    return @product_relation unless tag_id.present?
+    return if tag_id.blank?
+
     if @params[:selected_filter_type] == subtag_type
-      return @product_relation.with_subtag(tag_id)
+      @product_relation = @product_relation.with_subtag(tag_id)
+    else
+      @product_relation = @product_relation.with_tag(tag_id)
     end
-    @product_relation.with_tag(tag_id)
   end
 
   private def term_search_type
