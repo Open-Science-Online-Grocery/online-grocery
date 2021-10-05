@@ -27,7 +27,8 @@ RSpec.describe ConditionSerializer do
       minimum_spend: 10,
       maximum_spend: 50,
       may_add_to_cart_by_dollar_amount: false,
-      qualtrics_code: 'FOOBAR'
+      qualtrics_code: 'FOOBAR',
+      show_products_by_subcategory: true
     )
   end
 
@@ -52,6 +53,7 @@ RSpec.describe ConditionSerializer do
     it 'returns the expected data' do
       expected_data = {
         sort_fields: ['first sort field', 'second sort field'],
+        show_products_by_subcategory: true,
         categories: [category_1, category_2],
         subcategories: [subcategory_1, subcategory_2],
         subsubcategories: [subsubcategory_1, subsubcategory_2, subsubcategory_3],
@@ -67,6 +69,33 @@ RSpec.describe ConditionSerializer do
         qualtrics_code: 'FOOBAR'
       }
       expect(subject.serialize).to eq expected_data
+    end
+
+    context 'when not showing products by subcategory' do
+      before do
+        allow(condition).to receive(:show_products_by_subcategory) { false }
+      end
+
+      it 'returns the expected data' do
+        expected_data = {
+          sort_fields: ['first sort field', 'second sort field'],
+          show_products_by_subcategory: false,
+          categories: [category_1, category_2],
+          subcategories: [],
+          subsubcategories: [],
+          tags: [tag_1, tag_2],
+          subtags: [],
+          filter_by_tags: true,
+          only_add_to_cart_from_detail_page: true,
+          show_price_total: true,
+          minimum_spend: BigDecimal('10'),
+          maximum_spend: BigDecimal('50'),
+          may_add_to_cart_by_dollar_amount: false,
+          show_guiding_stars: true,
+          qualtrics_code: 'FOOBAR'
+        }
+        expect(subject.serialize).to eq expected_data
+      end
     end
   end
 end

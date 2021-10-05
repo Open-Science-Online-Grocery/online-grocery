@@ -73,13 +73,12 @@ class ProductFetcher
   end
 
   private def scope_by_category
-    if @condition.show_products_by_subcategory
-      criteria = { subcategory_id: @params[:selected_subcategory_id] }
-      if @params[:selected_subsubcategory_id].present?
-        criteria[:subsubcategory_id] = @params[:selected_subsubcategory_id]
-      end
-    else
+    if !@condition.show_products_by_subcategory
       criteria = { category_id: @params[:selected_category_id] }
+    elsif @params[:selected_subsubcategory_id].present?
+      criteria = { subsubcategory_id: @params[:selected_subsubcategory_id] }
+    elsif @params[:selected_subcategory_id].present?
+      criteria = { subcategory_id: @params[:selected_subcategory_id] }
     end
     @product_relation = @product_relation.where(criteria)
   end
