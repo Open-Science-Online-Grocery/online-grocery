@@ -6,6 +6,7 @@ class ProductFetcher
   #   Products should be returned (and in which order). looks like this:
   #     {
   #       condition_identifier: the :uuid for the current Condition,
+  #       selected_category_id: a Category id to find products within,
   #       selected_subcategory_id: a Subcategory id to find products within,
   #       selected_subsubcategory_id: a Subsubcategory id to find products
   #         within,
@@ -72,16 +73,21 @@ class ProductFetcher
   end
 
   private def scope_by_category
-    @product_relation = @product_relation.where(
-      subcategory_id: @params[:selected_subcategory_id]
-    )
-    return unless @params[:selected_subsubcategory_id].present?
-    @product_relation = @product_relation.where(
-      subsubcategory_id: @params[:selected_subsubcategory_id]
-    )
+    if @condition.show_products_by_subcategory
+      criteria = { subcategory_id: @params[:selected_subcategory_id] }
+      if @params[:selected_subsubcategory_id].present?
+        criteria[:subsubcategory_id] = @params[:selected_subsubcategory_id]
+      end
+    else
+      criteria = { category_id: @params[:selected_category_id] }
+    end
+    @product_relation = @product_relation.where(criteria)
   end
 
   private def filtered_products
+    @product_relation = @product_relation.where.not(
+      subcategory_id: @condition.excluded_subcategory_ids
+    )
     # `tag_id` could actually be a Subtag's id - the `selected_filter_type`
     # param indicates if it is a tag or subtag id
     tag_id = @params[:selected_filter_id]
