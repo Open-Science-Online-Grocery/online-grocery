@@ -99,6 +99,7 @@ class ConditionsController < ApplicationController
       :show_guiding_stars,
       :new_tag_csv_file,
       :new_suggestion_csv_file,
+      :show_products_by_subcategory,
       tag_csv_files_attributes: %i[id active],
       suggestion_csv_files_attributes: %i[id active],
       product_sort_field_ids: [],
