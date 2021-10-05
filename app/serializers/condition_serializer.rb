@@ -3,6 +3,8 @@
 # responsible for collecting/formatting info about a Condition for consumption
 # by the grocery store react app
 class ConditionSerializer
+  extend Memoist
+
   def initialize(condition)
     @condition = condition
   end
@@ -11,9 +13,9 @@ class ConditionSerializer
   def serialize
     {
       sort_fields: @condition.product_sort_fields.map(&:description),
-      categories: Category.order(:id),
-      subcategories: Subcategory.order(:category_id, :display_order),
-      subsubcategories: Subsubcategory.order(:subcategory_id, :display_order),
+      categories: categories,
+      subcategories: subcategories,
+      subsubcategories: subsubcategories,
       tags: @condition.tags.order(:id).uniq,
       subtags: @condition.subtags.order(:tag_id).uniq,
       filter_by_tags: @condition.filter_by_custom_categories,
@@ -27,4 +29,17 @@ class ConditionSerializer
     }
   end
   # rubocop:enable Layout/LineLength, Metrics/AbcSize, Metrics/MethodLength
+
+  private def subcategories
+    @condition.included_subcategories.sorted
+  end
+  memoize :subcategories
+
+  private def categories
+    Category.sorted.where(id: subcategories.map(&:category_id))
+  end
+
+  private def subsubcategories
+    subcategories.flat_map { |subcategory| subcategory.subsubcategories.sorted }
+  end
 end

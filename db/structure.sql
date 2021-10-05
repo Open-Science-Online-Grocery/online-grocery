@@ -151,6 +151,7 @@ SET character_set_client = utf8;
   `product_id` tinyint NOT NULL,
   `product_name` tinyint NOT NULL,
   `quantity` tinyint NOT NULL,
+  `serial_position` tinyint NOT NULL,
   `created_at` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
@@ -192,6 +193,7 @@ CREATE TABLE `participant_actions` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `product_id` bigint(20) DEFAULT NULL,
+  `serial_position` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_participant_actions_on_condition_id` (`condition_id`),
   KEY `index_participant_actions_on_product_id` (`product_id`)
@@ -308,6 +310,20 @@ CREATE TABLE `subcategories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `subcategory_exclusions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `subcategory_exclusions` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `condition_id` bigint(20) DEFAULT NULL,
+  `subcategory_id` bigint(20) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_subcategory_exclusions_on_condition_id` (`condition_id`),
+  KEY `index_subcategory_exclusions_on_subcategory_id` (`subcategory_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `subsubcategories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -388,7 +404,7 @@ CREATE TABLE `users` (
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `experiment_results` AS select `experiments`.`id` AS `experiment_id`,`experiments`.`name` AS `experiment_name`,`conditions`.`name` AS `condition_name`,`participant_actions`.`session_identifier` AS `session_identifier`,`participant_actions`.`action_type` AS `action_type`,`participant_actions`.`product_id` AS `product_id`,`products`.`name` AS `product_name`,`participant_actions`.`quantity` AS `quantity`,`participant_actions`.`created_at` AS `created_at` from (((`experiments` join `conditions` on(`conditions`.`experiment_id` = `experiments`.`id`)) join `participant_actions` on(`participant_actions`.`condition_id` = `conditions`.`id`)) left join `products` on(`participant_actions`.`product_id` = `products`.`id`)) */;
+/*!50001 VIEW `experiment_results` AS select `experiments`.`id` AS `experiment_id`,`experiments`.`name` AS `experiment_name`,`conditions`.`name` AS `condition_name`,`participant_actions`.`session_identifier` AS `session_identifier`,`participant_actions`.`action_type` AS `action_type`,`participant_actions`.`product_id` AS `product_id`,`products`.`name` AS `product_name`,`participant_actions`.`quantity` AS `quantity`,`participant_actions`.`serial_position` AS `serial_position`,`participant_actions`.`created_at` AS `created_at` from (((`experiments` join `conditions` on(`conditions`.`experiment_id` = `experiments`.`id`)) join `participant_actions` on(`participant_actions`.`condition_id` = `conditions`.`id`)) left join `products` on(`participant_actions`.`product_id` = `products`.`id`)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -449,6 +465,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20210210181943'),
 ('20210217174649'),
 ('20210223151548'),
-('20210310181245');
+('20210310181245'),
+('20210930175208'),
+('20211001155043');
 
 

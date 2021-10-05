@@ -17,13 +17,13 @@ export default class OrderSummary extends React.Component {
 
   removeFromCart(product) {
     this.props.handleRemoveFromCart(product);
-    this.props.logParticipantAction('delete', product.id, product.quantity);
+    this.props.logParticipantAction('delete', product, product.quantity);
   }
 
   clearCart() {
     this.props.handleClearCart();
     this.props.cart.items.forEach((item) => {
-      this.props.logParticipantAction('checkout', item.id, item.quantity);
+      this.props.logParticipantAction('checkout', item, item.quantity);
     });
     this.props.onSubmit();
   }
@@ -186,6 +186,7 @@ OrderSummary.propTypes = {
         name: PropTypes.string.isRequired,
         imageSrc: PropTypes.string.isRequired,
         awsImageUrl: PropTypes.string.isRequired,
+        serialPosition: PropTypes.number.isRequired,
         labels: PropTypes.arrayOf(
           PropTypes.shape({
             labelName: PropTypes.string,

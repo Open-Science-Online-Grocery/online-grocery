@@ -3,7 +3,11 @@ import TopNav from './top-nav';
 
 const mapStateToProps = (state) => {
   const {
-    selectedCategoryId, selectedCategoryType, categories, subcategories, subtags
+    selectedCategoryId,
+    selectedCategoryType,
+    categories,
+    subcategories,
+    subtags
   } = state.category;
   const tags = state.category.tags;
   // TODO: Change this if they want to choose which tag gets displayed as a tab

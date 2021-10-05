@@ -79,4 +79,8 @@ class NullCondition
   def qualtrics_code
     'ABCDEFG'
   end
+
+  def included_subcategories
+    Subcategory.all
+  end
 end

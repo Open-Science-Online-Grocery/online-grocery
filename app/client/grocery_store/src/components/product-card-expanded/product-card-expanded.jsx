@@ -6,7 +6,7 @@ import './product-card-expanded.scss';
 
 class ProductCardExpanded extends React.Component {
   componentDidMount() {
-    this.props.logParticipantAction('view', this.props.product.id);
+    this.props.logParticipantAction('view', this.props.product);
   }
 
   render() {
@@ -56,6 +56,7 @@ ProductCardExpanded.propTypes = {
     sugar: PropTypes.number,
     protein: PropTypes.number,
     vitamins: PropTypes.string,
+    serialPosition: PropTypes.number.isRequired
   }).isRequired,
   logParticipantAction: PropTypes.func.isRequired
 };

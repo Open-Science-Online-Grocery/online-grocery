@@ -2,15 +2,19 @@
 
 require 'rails_helper'
 
+# rubocop:disable RSpec/LetSetup
 RSpec.describe ConditionSerializer do
   let(:sort_field_1) { build(:product_sort_field, description: 'first sort field') }
   let(:sort_field_2) { build(:product_sort_field, description: 'second sort field') }
-  let(:category_1) { build(:category) }
-  let(:category_2) { build(:category) }
-  let(:subcategory_1) { build(:subcategory) }
-  let(:subcategory_2) { build(:subcategory) }
-  let(:subsubcategory_1) { build(:subsubcategory) }
-  let(:subsubcategory_2) { build(:subsubcategory) }
+  let!(:category_1) { create(:category) }
+  let!(:category_2) { create(:category) }
+  let!(:category_3) { create(:category) }
+  let!(:subcategory_1) { create(:subcategory, category: category_1) }
+  let!(:subcategory_2) { create(:subcategory, category: category_2) }
+  let!(:subcategory_3) { create(:subcategory, category: category_3) }
+  let!(:subsubcategory_1) { create(:subsubcategory, subcategory: subcategory_1) }
+  let!(:subsubcategory_2) { create(:subsubcategory, subcategory: subcategory_2) }
+  let!(:subsubcategory_3) { create(:subsubcategory, subcategory: subcategory_2) }
   let(:tag_1) { build(:tag) }
   let(:tag_2) { build(:tag) }
   let(:subtag_1) { build(:subtag) }
@@ -39,9 +43,9 @@ RSpec.describe ConditionSerializer do
     allow(condition).to receive_message_chain(:subtags, :order) do
       [subtag_1, subtag_2]
     end
-    allow(Category).to receive(:order) { [category_1, category_2] }
-    allow(Subcategory).to receive(:order) { [subcategory_1, subcategory_2] }
-    allow(Subsubcategory).to receive(:order) { [subsubcategory_1, subsubcategory_2] }
+    allow(condition).to receive(:included_subcategories) do
+      Subcategory.where(id: [subcategory_1.id, subcategory_2.id])
+    end
   end
 
   describe '#serialize' do
@@ -50,7 +54,7 @@ RSpec.describe ConditionSerializer do
         sort_fields: ['first sort field', 'second sort field'],
         categories: [category_1, category_2],
         subcategories: [subcategory_1, subcategory_2],
-        subsubcategories: [subsubcategory_1, subsubcategory_2],
+        subsubcategories: [subsubcategory_1, subsubcategory_2, subsubcategory_3],
         tags: [tag_1, tag_2],
         subtags: [subtag_1, subtag_2],
         filter_by_tags: true,
@@ -66,3 +70,4 @@ RSpec.describe ConditionSerializer do
     end
   end
 end
+# rubocop:enable RSpec/LetSetup
