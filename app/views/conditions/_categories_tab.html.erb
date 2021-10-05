@@ -9,11 +9,24 @@
 
   <div class="ui tall divider"></div>
 
-  <%=
-    render(
-      'categories/toggle_products_fields',
-      f: f,
-      condition: condition
-    )
-  %>
+  <div class="ui two column grid">
+    <div class="column">
+      <%=
+        render(
+          'categories/toggle_products_fields',
+          f: f,
+          condition: condition
+        )
+      %>
+    </div>
+    <div class="column">
+      <%=
+        render(
+          'categories/toggle_subcategory_fields',
+          f: f,
+          condition: condition
+        )
+      %>
+    </div>
+  </div>
 </div>
