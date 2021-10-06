@@ -6,9 +6,7 @@ require 'rails_helper'
 # an integration test (doing actual db lookups) rather than a unit test.
 # rubocop:disable RSpec/InstanceVariable, RSpec/BeforeAfterAll
 RSpec.describe ProductFetcher do
-  let(:condition) do
-    instance_double('Condition', excluded_subcategory_ids: [])
-  end
+  let(:condition) { Condition.new }
 
   subject { described_class.new(condition, params) }
 

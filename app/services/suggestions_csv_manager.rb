@@ -16,11 +16,11 @@ class SuggestionsCsvManager
     ]
   end
 
-  def self.generate_csv
+  def self.generate_csv(condition)
     CSV.generate(headers: true) do |csv|
       csv << headers
 
-      Product.find_each do |product|
+      condition.products.find_each do |product|
         csv << [product.id, product.name, '']
       end
     end

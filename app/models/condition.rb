@@ -62,6 +62,10 @@ class Condition < ApplicationRecord
     OpenStruct.new(ratio: 'ratio', percent: 'percent')
   end
 
+  def products
+    Product.where.not(subcategory_id: excluded_subcategory_ids)
+  end
+
   def new_tag_csv_file=(value)
     return unless value
     tag_csv_files.each { |t| t.active = false }

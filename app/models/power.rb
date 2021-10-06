@@ -13,14 +13,12 @@ class Power
     Experiment.where(user_id: @user.id)
   end
 
-  power :downloadable_products do
-    Product.all if @user
+  power :manageable_conditions do
+    Condition.where(experiment_id: own_experiments.select(:id))
   end
 
   power :downloadable_config_files do
-    ConfigFile.joins(:condition).where(
-      conditions: { experiment_id: own_experiments.select(:id) }
-    )
+    ConfigFile.where(condition_id: manageable_conditions.select(:id))
   end
 
   power :config_files do

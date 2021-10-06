@@ -29,8 +29,8 @@ class CustomCategoryCsvManager
     }
   end
 
-  def self.generate_csv(product_scope = nil)
-    product_scope ||= Product.all.includes(:category, :subcategory)
+  def self.generate_csv(condition)
+    product_scope = condition.products.includes(:category, :subcategory)
     CSV.generate(headers: true) do |csv|
       # headers
       csv << product_data_csv_attributes.keys
