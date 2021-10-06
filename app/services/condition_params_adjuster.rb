@@ -25,6 +25,7 @@ class ConditionParamsAdjuster
       @params.delete(:suggestion_csv_files_attributes)
     end
     @params.delete(:tag_csv_files_attributes) if @params[:new_tag_csv_file]
+    @params.delete(:sort_files_attributes) if @params[:new_sort_file]
   end
 
   private def clear_unselected_label_fields

@@ -42,6 +42,7 @@ class Condition < ApplicationRecord
                                 :condition_labels,
                                 :tag_csv_files,
                                 :suggestion_csv_files,
+                                :sort_files,
                                 allow_destroy: true
 
   def self.sort_types

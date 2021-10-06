@@ -77,7 +77,7 @@
         <div class="field">
           <div class="ui radio checkbox">
             <%= f.radio_button :sort_type,  Condition.sort_types.file, data: { refresh_form: true } %>
-            <label>Custom sort file</label>
+            <label>A custom sort file</label>
           </div>
           <div class="ui segment nested-fields <%= 'disabled' unless condition.sort_type == Condition.sort_types.file %>">
             <div class="page-heading">
@@ -98,7 +98,21 @@
 
             <p>
               To specify a customized sort order on a per-participant level,
-              download the file template by using the button above.
+              download the file template by using the button above. For each row,
+              list the ID of the participant you are specifying sorting for
+              (the session ID the participant enters before viewing the store)
+              in the "Participant ID" column, and the sort rank of the product
+              in the "Product Rank" column.  To provide sorting data for
+              multiple participants, add additional rows (one for each Product Id)
+              to the end of the file.
+            </p>
+            <p>
+              Once you have added the participant sorting data, re-upload the
+              file below and save. The current file will appear on the left with
+              a check box next to it. To remove the current file, uncheck the
+              box and click "Save". To replace the file, upload a new file
+              ("Replace file") and click "Save". Removed and replaced files will
+             appear below.
             </p>
 
             <div class="field">
