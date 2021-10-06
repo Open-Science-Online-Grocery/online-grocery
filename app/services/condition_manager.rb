@@ -21,7 +21,6 @@ class ConditionManager
   def update_condition
     ActiveRecord::Base.transaction do
       assign_params
-      add_uuid_to_new_record
       validate_cart_summary_label_params
       set_excluded_subcategories
       @errors += @condition.errors.full_messages unless @condition.save
@@ -37,11 +36,6 @@ class ConditionManager
     adjuster.adjusted_params
   end
   memoize :adjusted_params
-
-  private def add_uuid_to_new_record
-    return unless @condition.new_record?
-    @condition.uuid = SecureRandom.uuid
-  end
 
   # This kind of validation could normally be done with
   # `#accepts_nested_attributes_for :reject_if`

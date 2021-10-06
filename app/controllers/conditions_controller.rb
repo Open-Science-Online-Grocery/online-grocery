@@ -20,8 +20,7 @@ class ConditionsController < ApplicationController
   end
 
   def create
-    manager = ConditionManager.new(@condition, condition_params)
-    if manager.update_condition
+    if @condition.update(condition_params.merge(uuid: SecureRandom.uuid))
       flash[:success] = 'Condition successfully created'
       redirect_to edit_experiment_condition_path(
         @experiment,
@@ -29,7 +28,7 @@ class ConditionsController < ApplicationController
         tab: @tab
       )
     else
-      set_condition_errors(manager)
+      set_error_messages(@condition)
       @resource_name = 'Add Condition'
       render :new
     end
