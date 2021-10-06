@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CustomSorting < ApplicationRecord
+  validates :sort_order, presence: true
+
   belongs_to :condition
   belongs_to :sort_file
   belongs_to :product
