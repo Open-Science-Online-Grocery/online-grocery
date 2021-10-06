@@ -11,10 +11,10 @@ class TagImporter
     @file = file
     @condition = condition.condition
     @errors = []
-    @required_attributes = CustomCategoryCsvManager
+    @required_attributes = CsvFileManagers::Category
       .built_in_category_attributes
       .values
-    @custom_category_attributes = CustomCategoryCsvManager
+    @custom_category_attributes = CsvFileManagers::Category
       .custom_category_attributes
       .values
   end
@@ -54,7 +54,7 @@ class TagImporter
 
   # lambda to convert displayed headers to symbol attribute names
   private def convert_header_lambda
-    ->(header) { CustomCategoryCsvManager.product_data_csv_attributes[header] }
+    ->(header) { CsvFileManagers::Category.product_data_csv_attributes[header] }
   end
 
   private def validate_row(row_data, row_number)

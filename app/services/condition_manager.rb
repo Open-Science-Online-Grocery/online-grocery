@@ -26,6 +26,7 @@ class ConditionManager
       @errors += @condition.errors.full_messages unless @condition.save
       handle_tag_file_change if @errors.none?
       update_suggestions if @errors.none?
+      update_custom_sortings if @errors.none?
       raise ActiveRecord::Rollback if @errors.any?
     end
     @errors.none?
@@ -69,7 +70,12 @@ class ConditionManager
   end
 
   private def update_suggestions
-    manager = SuggestionsCsvManager.new(@condition)
+    manager = CsvFileManagers::Suggestion.new(@condition)
+    manager.import || @errors += manager.errors
+  end
+
+  private def update_custom_sortings
+    manager = CsvFileManagers::Sorting.new(@condition)
     manager.import || @errors += manager.errors
   end
 

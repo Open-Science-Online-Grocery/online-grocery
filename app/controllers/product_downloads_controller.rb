@@ -11,21 +11,21 @@ class ProductDownloadsController < ApplicationController
 
   def custom_categories
     redirect_to_download(
-      CustomCategoryCsvManager,
+      CsvFileManagers::Category,
       'product_categories_data.csv'
     )
   end
 
   def suggestions
     redirect_to_download(
-      SuggestionsCsvManager,
+      CsvFileManagers::Suggestion,
       'product_suggestion_data.csv'
     )
   end
 
   def sorting
     redirect_to_download(
-      SortingCsvManager,
+      CsvFileManagers::Sorting,
       'product_sorting_data.csv'
     )
   end
