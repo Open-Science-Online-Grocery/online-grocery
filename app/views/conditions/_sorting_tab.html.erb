@@ -1,6 +1,12 @@
 <div class="ui bottom attached tab segment" data-tab="sorting">
   <div class="ui grid">
     <div class="eight wide column">
+      <div class="page-sub-heading">
+        <h3>Default Sorting</h3>
+      </div>
+
+      <div class="ui short hidden divider"></div>
+
       <div class="grouped fields">
         <label>By default, sort products by:</label>
         <div class="field">
@@ -53,26 +59,72 @@
             </div>
           </div>
         </div>
-
         <div class="field">
           <div class="ui radio checkbox">
             <%= f.radio_button :sort_type,  Condition.sort_types.calculation, data: { refresh_form: true } %>
             <label>The following calculation</label>
           </div>
+          <div class="ui segment nested-calculator <%= 'disabled' unless condition.sort_type == Condition.sort_types.calculation %>">
+            <div
+              data-calculator
+              data-variables="<%= VariableSerializer.new(condition.sort_equation_variables).serialize %>"
+              data-input-name="condition[sort_equation_tokens]"
+              data-tokens="<%= condition.sort_equation_tokens || [] %>"
+              data-equation-type="<%= Equation.types.sort %>"
+            ></div>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <%= f.radio_button :sort_type,  Condition.sort_types.file, data: { refresh_form: true } %>
+            <label>Custom sort file</label>
+          </div>
+          <div class="ui segment nested-fields <%= 'disabled' unless condition.sort_type == Condition.sort_types.file %>">
+            <p>
+              These are some instructions
+            </p>
+
+            <div class="field">
+              <label>Current file</label>
+              <% if condition.current_sort_file %>
+                <%= f.fields_for :sort_files, condition.current_sort_file do |sort_fields| %>
+                  <div class="ui inline checkbox field">
+                    <%= sort_fields.check_box(:active) %>
+                    <%= sort_fields.label(:active) do %>
+                      <%= ConfigFilePresenter.download_link(condition.current_sort_file) %>
+                    <% end %>
+                  </div>
+                <% end %>
+              <% else %>
+                None
+              <% end %>
+            </div>
+
+            <div class="ui short hidden divider"></div>
+
+            <div class="field">
+              <%= f.label :new_sort_file, 'Replace file' %>
+              <%= f.file_field :new_sort_file %>
+            </div>
+
+            <%=
+              render(
+                'config_files/historical_files_table',
+                files: condition.sort_files.historical,
+                header_type: :h5
+              )
+            %>
+          </div>
         </div>
       </div>
-      <div class="ui segment nested-calculator <%= 'disabled' unless condition.sort_type == Condition.sort_types.calculation %>">
-        <div
-          data-calculator
-          data-variables="<%= VariableSerializer.new(condition.sort_equation_variables).serialize %>"
-          data-input-name="condition[sort_equation_tokens]"
-          data-tokens="<%= condition.sort_equation_tokens || [] %>"
-          data-equation-type="<%= Equation.types.sort %>"
-        ></div>
-      </div>
     </div>
-
     <div class="eight wide column">
+      <div class="page-sub-heading">
+        <h3>Sorting by Participant</h3>
+      </div>
+
+      <div class="ui short hidden divider"></div>
+
       <div class="field">
         <% if condition.incomplete_sort_fields.any? %>
           <%= render 'sort_warning', incomplete_sort_fields: condition.incomplete_sort_fields %>

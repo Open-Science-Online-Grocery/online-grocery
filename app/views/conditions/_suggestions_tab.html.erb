@@ -58,36 +58,12 @@
     <div class="eight wide column">
     </div>
     <div class="eight wide column">
-      <h4>Previously uploaded files</h4>
-      <table class="ui celled table">
-        <thead>
-          <tr>
-            <th class="ten wide">File</th>
-            <th class="six wide">Uploaded on</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% if condition.suggestion_csv_files.historical.any? %>
-            <% condition.suggestion_csv_files.historical.each do |file| %>
-              <tr>
-                <td>
-                  <%= ConfigFilePresenter.download_link(file) %>
-                </td>
-                <td>
-                  <%= localize(file.created_at.to_date) %>
-                </td>
-              </tr>
-            <% end %>
-          <% else %>
-            <tr>
-              <td colspan="2" class="center aligned">
-                No data
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+      <%=
+        render(
+          'config_files/historical_files_table',
+          files: condition.suggestion_csv_files.historical
+        )
+      %>
     </div>
   </div>
 </div>
