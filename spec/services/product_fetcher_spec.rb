@@ -87,6 +87,7 @@ RSpec.describe ProductFetcher do
     context 'when searching by a search term' do
       let(:params) do
         {
+          session_identifier: 'abc',
           search_type: 'term',
           search_term: 'pop',
           sort_field: 'foo',
@@ -101,8 +102,9 @@ RSpec.describe ProductFetcher do
         expect(ProductSorter).to have_received(:new).with(
           [@pop_tarts, @soda_pop],
           condition,
-          'foo',
-          'bar'
+          session_identifier: 'abc',
+          manual_sort_field_description: 'foo',
+          manual_sort_order: 'bar'
         )
       end
 

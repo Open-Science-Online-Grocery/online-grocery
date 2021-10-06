@@ -91,4 +91,8 @@ class NullCondition
   def show_products_by_subcategory
     true
   end
+
+  def products
+    Product.all
+  end
 end

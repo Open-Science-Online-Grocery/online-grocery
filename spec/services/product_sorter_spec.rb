@@ -24,8 +24,9 @@ RSpec.describe ProductSorter do
     described_class.new(
       product_hashes,
       condition,
-      manual_sort_field_description,
-      manual_sort_order
+      session_identifier: '',
+      manual_sort_field_description: manual_sort_field_description,
+      manual_sort_order: manual_sort_order
     )
   end
 

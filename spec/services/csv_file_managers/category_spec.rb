@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CustomCategoryCsvManager do
+RSpec.describe CsvFileManagers::Category do
   describe '.product_data_csv_attributes' do
     it 'returns a combined list of the built-in and custom category attributes' do
       expect(described_class.product_data_csv_attributes).to eql(
@@ -45,6 +45,7 @@ RSpec.describe CustomCategoryCsvManager do
   end
 
   describe '.generate_csv' do
+    let(:condition) { instance_double('Condition') }
     let(:category_1) { create :category, name: 'Category 1' }
     let(:category_2) { create :category, name: 'Category 2' }
     let(:subcategory_1) { create :subcategory, name: 'Subcategory 1' }
@@ -63,38 +64,22 @@ RSpec.describe CustomCategoryCsvManager do
              category_id: category_2.id,
              subcategory_id: subcategory_2.id
     end
+    let(:product_scope) { ActiveRecord::Relation.new(Product) }
 
-    context 'when provided with a product scope' do
-      let(:expected_csv) do
-        file_fixture(
-          'product_data_csv_files/product_data_provided_scope.csv'
-        ).read.gsub(/\r\n/, "\n") # gsub to fix newline character discrepancy
+    before do
+      allow(condition).to receive_message_chain(:products, :includes) do
+        product_scope
       end
-      let(:product_scope) { ActiveRecord::Relation.new(Product) }
-
-      before { allow(product_scope).to receive(:find_each).and_yield(product_1) }
-
-      it 'returns a CSV with the expected headers and data' do
-        expect(described_class.generate_csv(product_scope)).to eql expected_csv
-      end
+      allow(product_scope).to receive(:find_each)
+        .and_yield(product_1)
+        .and_yield(product_2)
     end
 
-    context 'with the default scope' do
-      let(:expected_csv) do
-        file_fixture(
-          'product_data_csv_files/product_data_default_scope.csv'
-        ).read.gsub(/\r\n/, "\n") # gsub to fix newline character discrepancy
-      end
-      let(:product_scope) { ActiveRecord::Relation.new(Product) }
-
-      before do
-        allow(Product).to receive(:all).and_return(product_scope)
-        allow(product_scope).to receive(:find_each).and_yield(product_1).and_yield(product_2)
-      end
-
-      it 'returns a CSV with the expected headers and data' do
-        expect(described_class.generate_csv).to eql expected_csv
-      end
+    it 'returns a CSV with the expected headers and data' do
+      expected_csv = file_fixture(
+        'product_data_csv_files/product_data_default_scope.csv'
+      ).read.gsub(/\r\n/, "\n") # gsub to fix newline character discrepancy
+      expect(described_class.generate_csv(condition)).to eql expected_csv
     end
   end
 end
