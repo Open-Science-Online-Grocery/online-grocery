@@ -5,6 +5,7 @@ class CreateCustomSortings < ActiveRecord::Migration[5.2]
     create_table :custom_sortings do |t|
       t.string :session_identifier
       t.references :condition
+      t.references :sort_file
       t.references :product
       t.integer :sort_order
 

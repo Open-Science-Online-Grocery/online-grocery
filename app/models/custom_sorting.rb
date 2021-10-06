@@ -2,6 +2,7 @@
 
 class CustomSorting < ApplicationRecord
   belongs_to :condition
+  belongs_to :sort_file
   belongs_to :product
 
   scope :for_session_identifier, ->(session_identifier) do

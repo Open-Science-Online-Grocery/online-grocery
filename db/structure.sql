@@ -146,12 +146,14 @@ CREATE TABLE `custom_sortings` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `session_identifier` varchar(255) DEFAULT NULL,
   `condition_id` bigint(20) DEFAULT NULL,
+  `sort_file_id` bigint(20) DEFAULT NULL,
   `product_id` bigint(20) DEFAULT NULL,
   `sort_order` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_custom_sortings_on_condition_id` (`condition_id`),
+  KEY `index_custom_sortings_on_sort_file_id` (`sort_file_id`),
   KEY `index_custom_sortings_on_product_id` (`product_id`),
   KEY `index_custom_sortings_on_session_identifier` (`session_identifier`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
