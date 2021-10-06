@@ -80,8 +80,25 @@
             <label>Custom sort file</label>
           </div>
           <div class="ui segment nested-fields <%= 'disabled' unless condition.sort_type == Condition.sort_types.file %>">
+            <div class="page-heading">
+              <div class="heading-buttons">
+                <%=
+                  link_to(
+                    sorting_condition_product_download_path(condition),
+                    class: 'ui tiny right floated button',
+                    data: { loading_spinner: true, remote: true }
+                  ) do
+                %>
+                  <i class="download icon"></i> Download Template
+                <% end %>
+              </div>
+            </div>
+
+            <div class="ui short hidden divider"></div>
+
             <p>
-              These are some instructions
+              To specify a customized sort order on a per-participant level,
+              download the file template by using the button above.
             </p>
 
             <div class="field">

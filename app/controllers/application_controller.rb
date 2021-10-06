@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   layout :layout
 
   current_power do
-    Power.new(current_user)
+    Power.new(current_user, request: request)
   end
 
   rescue_from Consul::Powerless do

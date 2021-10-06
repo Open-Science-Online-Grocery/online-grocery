@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ExperimentsController < ApplicationController
-  power :experiments, as: :experiment_scope, map: {
+  power :no_fallback, as: :experiment_scope, map: {
     %i[index new create show edit update destroy] => :own_experiments
   }
 

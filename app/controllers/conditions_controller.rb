@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ConditionsController < ApplicationController
-  power :conditions, context: :set_experiment, map: {
+  power :no_fallback, context: :set_experiment, map: {
     %i[refresh_form new create edit update destroy] => :own_experiment
   }
 

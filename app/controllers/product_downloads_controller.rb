@@ -5,8 +5,8 @@
 # file is prepared and then re-enabled when the redirect to `show`
 # is detected and the file is delivered.
 class ProductDownloadsController < ApplicationController
-  power :products, context: :set_condition, map: {
-    %i[custom_categories suggestions show] => :manageable_condition
+  power :no_fallback, context: :set_condition, map: {
+    %i[custom_categories suggestions sorting show] => :manageable_condition
   }
 
   def custom_categories
@@ -25,7 +25,7 @@ class ProductDownloadsController < ApplicationController
 
   def sorting
     redirect_to_download(
-      SortCsvManager,
+      SortingCsvManager,
       'product_sorting_data.csv'
     )
   end

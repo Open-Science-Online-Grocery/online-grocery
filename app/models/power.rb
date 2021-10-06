@@ -5,8 +5,9 @@
 class Power
   include Consul::Power
 
-  def initialize(user)
+  def initialize(user, request: nil)
     @user = user
+    @request = request
   end
 
   power :own_experiments do
@@ -21,15 +22,14 @@ class Power
     ConfigFile.where(condition_id: manageable_conditions.select(:id))
   end
 
-  power :config_files do
-    nil
-  end
-
-  power :experiments do
-    nil
-  end
-
-  power :products do
-    nil
+  # to ensure each action in a controller has a specified power, we use this
+  # power as the fallback/default power for controller power mappings.
+  # it ensures that unmapped actions are not accessible.
+  power :no_fallback do |*_args|
+    raise(
+      Consul::UncheckedPower,
+      "Please specify a power for the #{@request.params[:action]} action in "\
+      "the #{@request.params[:controller]} controller"
+    )
   end
 end
