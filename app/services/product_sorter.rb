@@ -35,6 +35,7 @@ class ProductSorter
     field_sorted_products(manual_sort_field_name, @manual_sort_order)
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
   private def default_sorted_products
     case @condition.sort_type
       when Condition.sort_types.none
@@ -49,6 +50,7 @@ class ProductSorter
         custom_sorted_products
     end
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
   private def add_serial_position(sorted_product_hashes)
     sorted_product_hashes.map.with_index(1) do |product_hash, idx|

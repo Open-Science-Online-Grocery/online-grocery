@@ -1,4 +1,4 @@
-# frozen_string_literal
+# frozen_string_literal: true
 
 module CsvFileManagers
   # contains base functionality for generating and importing csv config files

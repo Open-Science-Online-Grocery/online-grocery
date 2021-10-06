@@ -1,4 +1,4 @@
-# frozen_string_literal
+# frozen_string_literal: true
 
 module CsvFileManagers
   # responsible for generating and importing suggestion csv files

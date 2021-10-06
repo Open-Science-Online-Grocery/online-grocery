@@ -1,4 +1,4 @@
-# frozen_string_literal
+# frozen_string_literal: true
 
 module CsvFileManagers
   # responsible for generating and importing custom sorting csv files
@@ -34,17 +34,7 @@ module CsvFileManagers
       return unless row_is_valid?(row, row_number)
       product = find_product(row_number, row[headers.second])
       return unless product
-      custom_sorting = @condition.custom_sortings.build(
-        session_identifier: row[headers.first],
-        sort_file: current_file,
-        product: product,
-        sort_order: row[headers.last]
-      )
-      return if custom_sorting.save
-      add_error(
-        row_number,
-        "#{custom_sorting.errors.full_messages.join(', ')}"
-      )
+      create_custom_sorting(row, row_number, product)
     end
 
     private def row_is_valid?(row, row_number)
@@ -54,13 +44,27 @@ module CsvFileManagers
           return false
         end
       end
-      return true
+      true
     end
 
     private def find_product(row_number, product_id)
       product = Product.find_by(id: product_id)
       return product if product
       add_error(row_number, "Can't find product with Id #{product_id}")
+    end
+
+    private def create_custom_sorting(row, row_number, product)
+      custom_sorting = @condition.custom_sortings.build(
+        session_identifier: row[headers.first],
+        sort_file: current_file,
+        product: product,
+        sort_order: row[headers.last]
+      )
+      return if custom_sorting.save
+      add_error(
+        row_number,
+        custom_sorting.errors.full_messages.join(', ')
+      )
     end
   end
 end

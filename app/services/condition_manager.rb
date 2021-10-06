@@ -18,6 +18,8 @@ class ConditionManager
     @condition.attributes = adjusted_params
   end
 
+  # rubocop:disable Metrics/Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def update_condition
     ActiveRecord::Base.transaction do
       assign_params
@@ -31,6 +33,8 @@ class ConditionManager
     end
     @errors.none?
   end
+  # rubocop:enable Metrics/Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   private def adjusted_params
     adjuster = ConditionParamsAdjuster.new(@params)
