@@ -36,6 +36,7 @@ class Condition < ApplicationRecord
   has_many :excluded_subcategories,
            through: :subcategory_exclusions,
            source: :subcategory
+  has_many :custom_sortings
 
   accepts_nested_attributes_for :product_sort_fields
   accepts_nested_attributes_for :condition_cart_summary_labels,

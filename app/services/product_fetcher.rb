@@ -44,8 +44,8 @@ class ProductFetcher
       product_hashes,
       @condition,
       session_identifier: @params[:session_identifier],
-      sort_field: @params[:sort_field],
-      sort_direction: @params[:sort_direction]
+      manual_sort_field_description: @params[:sort_field],
+      manual_sort_order: @params[:sort_direction]
     ).sorted_products
   end
 
