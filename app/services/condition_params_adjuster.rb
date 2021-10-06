@@ -63,6 +63,10 @@ class ConditionParamsAdjuster
     if @params[:sort_type] != Condition.sort_types.calculation
       @params[:sort_equation_tokens] = nil
     end
+    if @params[:sort_type] != Condition.sort_types.file
+      sort_file_attrs = @params.dig(:sort_files_attributes, '0')
+      sort_file_attrs[:active] = 0 if sort_file_attrs
+    end
   end
 
   private def clear_unselected_nutrition_fields

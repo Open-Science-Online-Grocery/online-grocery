@@ -7,7 +7,11 @@ class ProductSorter
            to: :@condition
 
   def initialize(
-    product_hashes, condition, manual_sort_field_description, manual_sort_order
+    product_hashes,
+    condition,
+    session_identifier:,
+    manual_sort_field_description:,
+    manual_sort_order:
   )
     @product_hashes = product_hashes
     @condition = condition

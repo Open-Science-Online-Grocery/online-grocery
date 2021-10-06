@@ -29,6 +29,7 @@ function getProducts() {
   return (dispatch, getState) => {
     const state = getState();
     const params = {
+      sessionIdentifier: state.user.sessionId,
       conditionIdentifier: state.user.conditionIdentifier,
       selectedCategoryId: state.category.selectedCategoryId,
       selectedSubcategoryId: state.category.selectedSubcategoryId,

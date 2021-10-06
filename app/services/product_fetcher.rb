@@ -5,6 +5,8 @@ class ProductFetcher
   # @param [ActionController::Parameters] params - params pertaining to which
   #   Products should be returned (and in which order). looks like this:
   #     {
+  #       session_identifier: the identifier the participant entered upon
+  #         visiting the grocery store,
   #       condition_identifier: the :uuid for the current Condition,
   #       selected_category_id: a Category id to find products within,
   #       selected_subcategory_id: a Subcategory id to find products within,
@@ -41,8 +43,9 @@ class ProductFetcher
     ProductSorter.new(
       product_hashes,
       @condition,
-      @params[:sort_field],
-      @params[:sort_direction]
+      session_identifier: @params[:session_identifier],
+      sort_field: @params[:sort_field],
+      sort_direction: @params[:sort_direction]
     ).sorted_products
   end
 
