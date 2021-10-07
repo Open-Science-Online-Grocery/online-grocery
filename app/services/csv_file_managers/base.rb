@@ -38,6 +38,7 @@ module CsvFileManagers
       return true if records_previously_loaded? || current_file.nil?
       validate_file_type
       import_new_records if @errors.none?
+      finalize_records
       @errors.none?
     end
 
@@ -73,6 +74,10 @@ module CsvFileManagers
 
     private def process_row(row, row_number)
       raise NotImplementedError
+    end
+
+    private def finalize_records
+      # this is provided as an optional hook for subclasses to implement
     end
   end
 end

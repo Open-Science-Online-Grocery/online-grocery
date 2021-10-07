@@ -8,7 +8,7 @@ class Product < ApplicationRecord
 
   has_many :product_tags, dependent: :destroy
   has_many :product_suggestions, dependent: :destroy
-  has_many :custom_sortings
+  has_many :custom_sortings, dependent: :destroy
 
   scope :name_matches, ->(string) {
     where(arel_table[:name].matches("%#{string}%"))
