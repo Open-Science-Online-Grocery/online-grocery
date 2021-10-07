@@ -22,8 +22,6 @@ class ProductSerializer
   def label_sort
     product_labels.count * -1
   end
-  # TODO: change attribute of Product
-  alias label_image_url label_sort
 
   private def product_labels
     @condition.condition_labels.map do |condition_label|
