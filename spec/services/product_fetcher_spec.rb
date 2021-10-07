@@ -69,16 +69,12 @@ RSpec.describe ProductFetcher do
   end
 
   before do
-    allow(ProductSerializer).to receive(:new) do |product, _condition|
-      instance_double(
-        'ProductSerializer',
-        serialize: product
-      )
-    end
-    allow(ProductSorter).to receive(:new) do |product_hashes, _condition, _sort_field, _sort_direction|
+    # we're stubbing out the sorting and just making sure that `#fetch_products`
+    # returns the expected products
+    allow(ProductSorter).to receive(:new) do |args|
       instance_double(
         'ProductSorter',
-        sorted_products: product_hashes
+        sorted_products: args[:product_relation]
       )
     end
   end
@@ -97,11 +93,9 @@ RSpec.describe ProductFetcher do
 
       it 'returns the expected products' do
         expect(subject.fetch_products).to match_array [@pop_tarts, @soda_pop]
-        expect(ProductSerializer).to have_received(:new).with(@pop_tarts, condition)
-        expect(ProductSerializer).to have_received(:new).with(@soda_pop, condition)
         expect(ProductSorter).to have_received(:new).with(
-          [@pop_tarts, @soda_pop],
-          condition,
+          product_relation: [@pop_tarts, @soda_pop],
+          condition: condition,
           session_identifier: 'abc',
           manual_sort_field_description: 'foo',
           manual_sort_order: 'bar'

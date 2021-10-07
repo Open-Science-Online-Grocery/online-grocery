@@ -30,7 +30,7 @@ class ProductSorter
 
   private def product_list
     if @manual_sort_field_description.present?
-       manually_sorted_products
+      manually_sorted_products
     else
       condition_sorted_products
     end
@@ -40,6 +40,7 @@ class ProductSorter
     field_sorted_products(manual_sort_field_name, @manual_sort_order)
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
   private def condition_sorted_products
     case @condition.sort_type
       when Condition.sort_types.none
@@ -54,6 +55,7 @@ class ProductSorter
         custom_sorted_products
     end
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
   private def default_sorted_products
     as_serializers(@product_relation)
@@ -63,6 +65,7 @@ class ProductSorter
   # the sorting. unfortunately, some sort fields are dependent on calculations
   # that the database can't do, in which case we have to sort the serializers
   # in ruby.
+  # rubocop:disable Metrics/PerceivedComplexity
   private def field_sorted_products(sort_field, sort_direction = nil)
     sort_direction ||= :asc
     if sort_field.in?(@product_relation.column_names)
@@ -72,6 +75,7 @@ class ProductSorter
       sort_direction.to_sym == :asc ? result : result.reverse
     end
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   private def calculation_sorted_products
     as_serializers(@product_relation).sort_by do |serializer|

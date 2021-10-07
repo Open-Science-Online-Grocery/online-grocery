@@ -2,28 +2,26 @@
 
 require 'rails_helper'
 
+# due to the amount of query logic in this class, this spec functions more like
+# an integration test (doing actual db lookups) rather than a unit test.
 RSpec.describe ProductSorter do
-  let(:product_1) do
-    { 'total_fat' => 11, 'carbs' => 5 }
+  let!(:product_1) do
+    create(:product, total_fat: 11, carbs: 5)
   end
-  let(:product_2) do
-    { 'total_fat' => 2, 'carbs' => 9 }
+  let!(:product_2) do
+    create(:product, total_fat: 2, carbs: 9)
   end
-  let(:product_3) do
-    { 'total_fat' => 33, 'carbs' => 6 }
-  end
-  # the `dups` are so we can use these hashes as they currently stand in
-  # `expect` calls; without this, they get modified by the subject.
-  let(:product_hashes) do
-    [product_1.dup, product_2.dup, product_3.dup]
+  let!(:product_3) do
+    create(:product, total_fat: 33, carbs: 6)
   end
   let(:condition) { instance_double('Condition', sort_type: sort_type) }
   let(:product_sort_field) { build(:product_sort_field, name: 'carbs') }
+  let(:product_relation) { Product.all }
 
   subject do
     described_class.new(
-      product_hashes,
-      condition,
+      product_relation: product_relation,
+      condition: condition,
       session_identifier: '',
       manual_sort_field_description: manual_sort_field_description,
       manual_sort_order: manual_sort_order
@@ -31,8 +29,10 @@ RSpec.describe ProductSorter do
   end
 
   before do
-    allow(product_hashes).to receive(:shuffle) do
-      [product_2.dup, product_3.dup, product_1.dup]
+    allow(ProductSerializer).to receive(:new) do |product|
+      OpenStruct.new(
+        serialize: product.attributes
+      )
     end
     allow(ProductSortField).to receive(:find_by) { product_sort_field }
   end
@@ -45,10 +45,10 @@ RSpec.describe ProductSorter do
 
       context 'when sorting in ascending order' do
         it 'returns the expected results' do
-          expect(subject.sorted_products).to eq [
-            product_1.merge(serial_position: 1),
-            product_3.merge(serial_position: 2),
-            product_2.merge(serial_position: 3)
+          expect(subject.sorted_products.pluck('id', :serial_position)).to eq [
+            [product_1.id, 1],
+            [product_3.id, 2],
+            [product_2.id, 3]
           ]
         end
       end
@@ -57,24 +57,24 @@ RSpec.describe ProductSorter do
         let(:manual_sort_order) { 'desc' }
 
         it 'returns the expected results' do
-          expect(subject.sorted_products).to eq [
-            product_2.merge(serial_position: 1),
-            product_3.merge(serial_position: 2),
-            product_1.merge(serial_position: 3)
+          expect(subject.sorted_products.pluck('id', :serial_position)).to eq [
+            [product_2.id, 1],
+            [product_3.id, 2],
+            [product_1.id, 3]
           ]
         end
       end
 
       context 'when some products have nil values' do
-        let(:product_3) do
-          { 'carbs' => nil }
+        let!(:product_3) do
+          create(:product, total_fat: 33, carbs: nil)
         end
 
         it 'returns the products with nil values first' do
-          expect(subject.sorted_products).to eq [
-            product_3.merge(serial_position: 1),
-            product_1.merge(serial_position: 2),
-            product_2.merge(serial_position: 3)
+          expect(subject.sorted_products.pluck('id', :serial_position)).to eq [
+            [product_3.id, 1],
+            [product_1.id, 2],
+            [product_2.id, 3]
           ]
         end
       end
@@ -88,10 +88,10 @@ RSpec.describe ProductSorter do
         let(:sort_type) { Condition.sort_types.none }
 
         it 'returns the product hashes in the original order' do
-          expect(subject.sorted_products).to eq [
-            product_1.merge(serial_position: 1),
-            product_2.merge(serial_position: 2),
-            product_3.merge(serial_position: 3)
+          expect(subject.sorted_products.pluck('id', :serial_position)).to eq [
+            [product_1.id, 1],
+            [product_2.id, 2],
+            [product_3.id, 3]
           ]
         end
       end
@@ -100,11 +100,8 @@ RSpec.describe ProductSorter do
         let(:sort_type) { Condition.sort_types.random }
 
         it 'returns the product hashes in a shuffled order' do
-          expect(subject.sorted_products).to eq [
-            product_2.merge(serial_position: 1),
-            product_3.merge(serial_position: 2),
-            product_1.merge(serial_position: 3)
-          ]
+          expect(product_relation).to receive(:order).with('rand()').and_call_original
+          subject.sorted_products
         end
       end
 
@@ -120,10 +117,10 @@ RSpec.describe ProductSorter do
           let(:sort_order) { 'asc' }
 
           it 'returns the expected results' do
-            expect(subject.sorted_products).to eq [
-              product_2.merge(serial_position: 1),
-              product_1.merge(serial_position: 2),
-              product_3.merge(serial_position: 3)
+            expect(subject.sorted_products.pluck('id', :serial_position)).to eq [
+              [product_2.id, 1],
+              [product_1.id, 2],
+              [product_3.id, 3]
             ]
           end
         end
@@ -132,25 +129,25 @@ RSpec.describe ProductSorter do
           let(:sort_order) { 'desc' }
 
           it 'returns the expected results' do
-            expect(subject.sorted_products).to eq [
-              product_3.merge(serial_position: 1),
-              product_1.merge(serial_position: 2),
-              product_2.merge(serial_position: 3)
+            expect(subject.sorted_products.pluck('id', :serial_position)).to eq [
+              [product_3.id, 1],
+              [product_1.id, 2],
+              [product_2.id, 3]
             ]
           end
         end
 
         context 'when some products have nil values' do
-          let(:product_3) do
-            { 'total_fat' => nil }
+          let!(:product_3) do
+            create(:product, total_fat: nil, carbs: 6)
           end
           let(:sort_order) { 'asc' }
 
           it 'returns the products with nil values first' do
-            expect(subject.sorted_products).to eq [
-              product_3.merge(serial_position: 1),
-              product_2.merge(serial_position: 2),
-              product_1.merge(serial_position: 3)
+            expect(subject.sorted_products.pluck('id', :serial_position)).to eq [
+              [product_3.id, 1],
+              [product_2.id, 2],
+              [product_1.id, 3]
             ]
           end
         end
@@ -166,10 +163,10 @@ RSpec.describe ProductSorter do
         end
 
         it 'returns the expected results' do
-          expect(subject.sorted_products).to eq [
-            product_3.merge(serial_position: 1),
-            product_2.merge(serial_position: 2),
-            product_1.merge(serial_position: 3)
+          expect(subject.sorted_products.pluck('id', :serial_position)).to eq [
+            [product_3.id, 1],
+            [product_2.id, 2],
+            [product_1.id, 3]
           ]
         end
       end
@@ -194,28 +191,24 @@ RSpec.describe ProductSorter do
 
       context 'when all products have the relevant data' do
         it 'sorts products according to the calculation' do
-          expect(subject.sorted_products).to eq [
-            product_2.merge(serial_position: 1),
-            product_1.merge(serial_position: 2),
-            product_3.merge(serial_position: 3)
+          expect(subject.sorted_products.pluck('id', :serial_position)).to eq [
+            [product_2.id, 1],
+            [product_1.id, 2],
+            [product_3.id, 3]
           ]
         end
       end
 
       context 'when some products have nil values' do
-        let(:product_3) do
-          { 'total_fat' => nil, 'carbs' => 6 }
-        end
-        # Post changing nil -> 0 for sorting calculations
-        let(:transformed_product_3) do
-          { 'total_fat' => 0, 'carbs' => 6 }
+        let!(:product_3) do
+          create(:product, total_fat: nil, carbs: 6)
         end
 
         it 'sorts products according to the calculation, treating nil as 0' do
-          expect(subject.sorted_products).to eq [
-            transformed_product_3.merge(serial_position: 1),
-            product_2.merge(serial_position: 2),
-            product_1.merge(serial_position: 3)
+          expect(subject.sorted_products.pluck('id', :serial_position)).to eq [
+            [product_3.id, 1],
+            [product_2.id, 2],
+            [product_1.id, 3]
           ]
         end
       end
