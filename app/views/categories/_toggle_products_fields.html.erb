@@ -1,0 +1,52 @@
+<div class="page-sub-heading">
+  <h3>Show/hide Categories and Subcategories</h3>
+</div>
+
+<div class="ui short hidden divider"></div>
+
+<p>
+  Products in the categories and subcategories selected here will be shown in
+  the store. To prevent specific categories or subcategories of products from
+  being displayed in the store, toggle the switch to "off" (gray background).
+  Categories with no selected subcategories will not be displayed.
+</p>
+
+<table class="ui invisible collapsing table">
+  <tbody>
+    <%=
+      f.collection_check_boxes(
+        :included_category_ids,
+        Category.sorted.includes(:subcategories),
+        :id,
+        :to_s
+      ) do |included_category_fields|
+    %>
+      <tr>
+        <td><%= included_category_fields.label %></td>
+        <td>
+          <div class="ui fitted toggle checkbox">
+            <%= included_category_fields.check_box(data: { refresh_form: true }) %>
+          </div>
+        </td>
+      </tr>
+      <% class_name = 'disabled' if condition.included_category_ids.exclude?(included_category_fields.value) %>
+      <%=
+        f.collection_check_boxes(
+          :included_subcategory_ids,
+          included_category_fields.object.subcategories,
+          :id,
+          :to_s
+        ) do |included_subcategory_fields|
+      %>
+        <tr class="<%= class_name %>">
+          <td class="indented"><%= included_subcategory_fields.label %></td>
+          <td>
+            <div class="ui fitted toggle checkbox">
+              <%= included_subcategory_fields.check_box %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

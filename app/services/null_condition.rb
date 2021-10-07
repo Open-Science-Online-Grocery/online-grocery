@@ -83,4 +83,12 @@ class NullCondition
   def included_subcategories
     Subcategory.all
   end
+
+  def excluded_subcategory_ids
+    []
+  end
+
+  def show_products_by_subcategory
+    true
+  end
 end

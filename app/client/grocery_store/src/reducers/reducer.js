@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import cart from './cart/cart-reducer';
-import category from './category/category-reducer';
+import category, * as fromCategory from './category/category-reducer';
 import user from './user/user-reducer';
 import sorting from './sorting/sorting-reducer';
 import search from './search/search-reducer';
@@ -19,6 +19,18 @@ const appReducer = combineReducers({
   suggestion,
   filtering
 });
+
+export function getCategoryTitle(state) {
+  return fromCategory.getCategoryTitle(state.category);
+}
+
+export function tabIsSelected(state, categoryType, categoryId) {
+  return fromCategory.tabIsSelected(state.category, categoryType, categoryId);
+}
+
+export function subtabs(state, categoryType, categoryId) {
+  return fromCategory.subtabs(state.category, categoryType, categoryId);
+}
 
 // reset approach adapted from https://stackoverflow.com/a/35641992/10410128
 const rootReducer = (state, action) => {

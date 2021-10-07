@@ -118,6 +118,7 @@ CREATE TABLE `conditions` (
   `show_guiding_stars` tinyint(1) DEFAULT 1,
   `qualtrics_code` varchar(255) DEFAULT NULL,
   `sort_type` varchar(255) DEFAULT NULL,
+  `show_products_by_subcategory` tinyint(1) DEFAULT 1,
   PRIMARY KEY (`id`),
   KEY `index_conditions_on_experiment_id` (`experiment_id`),
   KEY `index_conditions_on_default_sort_field_id` (`default_sort_field_id`)
@@ -467,6 +468,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20210223151548'),
 ('20210310181245'),
 ('20210930175208'),
-('20211001155043');
+('20211001155043'),
+('20211005133810');
 
 

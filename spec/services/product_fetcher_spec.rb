@@ -2,127 +2,277 @@
 
 require 'rails_helper'
 
+# due to the amount of query logic in this class, this spec functions more like
+# an integration test (doing actual db lookups) rather than a unit test.
+# rubocop:disable RSpec/InstanceVariable, RSpec/BeforeAfterAll
 RSpec.describe ProductFetcher do
-  let(:product_1) { build(:product) }
-  let(:product_2) { build(:product) }
-  let(:product_3) { build(:product) }
-  let(:product_4) { build(:product) }
-  let(:condition) { build(:condition) }
-  let(:category_type) { nil }
-  let(:filter_id) { nil }
-  let(:params) do
-    {
-      search_type: search_type,
-      search_term: 'zip',
-      selected_category_id: 4,
-      selected_subcategory_id: 5,
-      selected_category_type: category_type,
-      selected_filter_id: filter_id,
-      sort_field: 'foo',
-      sort_direction: 'asc'
-    }
+  let(:condition) do
+    instance_double('Condition', excluded_subcategory_ids: [])
   end
-  let(:product_serializer) { instance_double('ProductSerializer') }
-  let(:product_sorter) do
-    instance_double('ProductSorter', sorted_products: 'the sorted products!')
-  end
-  let(:product_relation) { instance_double 'Product::ActiveRecord_Relation' }
 
   subject { described_class.new(condition, params) }
 
-  before do
-    allow(Product).to receive(:includes) { product_relation }
-    allow(product_relation).to receive(:name_matches) { [product_1, product_2] }
-    allow(product_relation).to receive(:where) { [product_3, product_4] }
-    allow(product_relation).to receive_message_chain(:joins, :where) { [product_3, product_4] }
-    allow(ProductSerializer).to receive(:new) { product_serializer }
-    allow(product_serializer).to receive(:serialize).and_return(
-      'first serialized product',
-      'second serialized product'
+  before(:all) do
+    @beverages = create(:category, name: 'Beverages')
+    dry_goods = create(:category, name: 'Dry Goods')
+
+    @breakfast_foods = create(
+      :subcategory,
+      name: 'Breakfast Foods',
+      category: dry_goods
     )
-    allow(ProductSorter).to receive(:new) { product_sorter }
+    @soft_drinks = create(
+      :subcategory,
+      name: 'Soft Drinks',
+      category: @beverages
+    )
+
+    @caffeine_free = create(
+      :subsubcategory,
+      name: 'Caffeine Free',
+      subcategory: @soft_drinks
+    )
+
+    @pop_tarts = create(
+      :product,
+      name: 'Pop Tarts',
+      category: dry_goods,
+      subcategory: @breakfast_foods
+    )
+    @orange_juice = create(
+      :product,
+      name: 'Orange Juice',
+      category: @beverages
+    )
+    @soda_pop = create(
+      :product,
+      name: 'Soda Pop',
+      category: @beverages,
+      subcategory: @soft_drinks
+    )
+    @ginger_ale = create(
+      :product,
+      name: 'Ginger Ale',
+      category: @beverages,
+      subcategory: @soft_drinks,
+      subsubcategory: @caffeine_free
+    )
+
+    @on_sale = create(:tag, name: 'On Sale')
+    @clearance = create(:subtag, name: 'Clearance', tag: @on_sale)
+
+    create(:product_tag, product: @pop_tarts, tag: @on_sale, subtag: @clearance)
+    create(:product_tag, product: @ginger_ale, tag: @on_sale, subtag: @clearance)
+    create(:product_tag, product: @orange_juice, tag: @on_sale)
   end
 
-  context 'when search term should be used to fetch products' do
-    let(:search_type) { 'term' }
+  after(:all) do
+    clean_with_deletion
+  end
 
-    it 'calls classes with the expected args' do
-      expect(product_relation).to receive(:name_matches).with('zip')
-      expect(ProductSerializer).to receive(:new).with(product_1, condition)
-      expect(ProductSerializer).to receive(:new).with(product_2, condition)
-      expect(ProductSorter).to receive(:new).with(
-        ['first serialized product', 'second serialized product'],
-        condition,
-        'foo',
-        'asc'
+  before do
+    allow(ProductSerializer).to receive(:new) do |product, _condition|
+      instance_double(
+        'ProductSerializer',
+        serialize: product
       )
-      expect(subject.fetch_products).to eq 'the sorted products!'
+    end
+    allow(ProductSorter).to receive(:new) do |product_hashes, _condition, _sort_field, _sort_direction|
+      instance_double(
+        'ProductSorter',
+        sorted_products: product_hashes
+      )
     end
   end
 
-  context 'when category data should be used to fetch products' do
-    let(:search_type) { 'category' }
-
-    context 'when the category type is `category`' do
-      let(:category_type) { 'category' }
-
-      it 'calls classes with the expected args' do
-        expect(product_relation).to receive(:where).with(subcategory_id: 5)
-        expect(ProductSerializer).to receive(:new).with(product_3, condition)
-        expect(ProductSerializer).to receive(:new).with(product_4, condition)
-        expect(ProductSorter).to receive(:new).with(
-          ['first serialized product', 'second serialized product'],
-          condition,
-          'foo',
-          'asc'
-        )
-        expect(subject.fetch_products).to eq 'the sorted products!'
+  describe '#fetch_products' do
+    context 'when searching by a search term' do
+      let(:params) do
+        {
+          search_type: 'term',
+          search_term: 'pop',
+          sort_field: 'foo',
+          sort_direction: 'bar'
+        }
       end
 
-      context 'when there is also a subsubcategory' do
-        let(:other_product_relation) do
-          instance_double 'Product::ActiveRecord_Relation'
-        end
+      it 'returns the expected products' do
+        expect(subject.fetch_products).to match_array [@pop_tarts, @soda_pop]
+        expect(ProductSerializer).to have_received(:new).with(@pop_tarts, condition)
+        expect(ProductSerializer).to have_received(:new).with(@soda_pop, condition)
+        expect(ProductSorter).to have_received(:new).with(
+          [@pop_tarts, @soda_pop],
+          condition,
+          'foo',
+          'bar'
+        )
+      end
 
+      context 'with excluded subcategories' do
         before do
-          allow(product_relation).to receive(:where) { other_product_relation }
-          allow(other_product_relation).to receive(:where) { [product_3, product_4] }
-          params[:selected_subsubcategory_id] = 99
+          allow(condition).to receive(:excluded_subcategory_ids) do
+            [@breakfast_foods.id]
+          end
         end
 
-        it 'calls classes with the expected args' do
-          expect(product_relation).to receive(:where).with(subcategory_id: 5)
-          expect(other_product_relation).to receive(:where).with(subsubcategory_id: 99)
-          expect(ProductSerializer).to receive(:new).with(product_3, condition)
-          expect(ProductSerializer).to receive(:new).with(product_4, condition)
-          expect(ProductSorter).to receive(:new).with(
-            ['first serialized product', 'second serialized product'],
-            condition,
-            'foo',
-            'asc'
-          )
-          expect(subject.fetch_products).to eq 'the sorted products!'
+        it 'does not return products from excluded subcategories' do
+          expect(subject.fetch_products).to match_array [@soda_pop]
         end
       end
     end
 
-    context 'when the category type is `tag`' do
-      let(:category_type) { 'tag' }
+    describe 'category searches' do
+      let(:params) do
+        {
+          selected_category_type: 'category',
+          selected_category_id: @beverages.id
+        }
+      end
 
-      it 'calls classes with the expected args' do
-        expect(product_relation.joins(:product_tags)).to receive(:where).with(
-          product_tags: { subtag_id: 5 }
-        )
-        expect(ProductSerializer).to receive(:new).with(product_3, condition)
-        expect(ProductSerializer).to receive(:new).with(product_4, condition)
-        expect(ProductSorter).to receive(:new).with(
-          ['first serialized product', 'second serialized product'],
-          condition,
-          'foo',
-          'asc'
-        )
-        expect(subject.fetch_products).to eq 'the sorted products!'
+      context 'when searching by category only' do
+        before do
+          allow(condition).to receive(:show_products_by_subcategory) { false }
+        end
+
+        it 'returns the expected products' do
+          expect(subject.fetch_products).to match_array [@orange_juice, @soda_pop, @ginger_ale]
+        end
+
+        context 'with excluded subcategories' do
+          before do
+            allow(condition).to receive(:excluded_subcategory_ids) do
+              [@soft_drinks.id]
+            end
+          end
+
+          it 'does not return products from excluded subcategories' do
+            expect(subject.fetch_products).to match_array [@orange_juice]
+          end
+        end
+
+        context 'when filtering by tag' do
+          before do
+            params[:selected_filter_type] = 'subtag'
+            params[:selected_filter_id] = @clearance.id
+          end
+
+          it 'only returns products with the specified tag' do
+            expect(subject.fetch_products).to match_array [@ginger_ale]
+          end
+        end
+
+        context 'when filtering by subtag' do
+          before do
+            params[:selected_filter_type] = 'tag'
+            params[:selected_filter_id] = @on_sale.id
+          end
+
+          it 'only returns products with the specified tag' do
+            expect(subject.fetch_products).to match_array [@orange_juice, @ginger_ale]
+          end
+        end
+      end
+
+      context 'when searching by subcategory' do
+        before do
+          allow(condition).to receive(:show_products_by_subcategory) { true }
+          params[:selected_subcategory_id] = @soft_drinks.id
+        end
+
+        it 'returns the expected products' do
+          expect(subject.fetch_products).to match_array [@soda_pop, @ginger_ale]
+        end
+
+        context 'with excluded subcategories' do
+          before do
+            allow(condition).to receive(:excluded_subcategory_ids) do
+              [@soft_drinks.id]
+            end
+          end
+
+          it 'does not return products from excluded subcategories' do
+            expect(subject.fetch_products).to match_array []
+          end
+        end
+      end
+
+      context 'when searching by subsubcategory' do
+        before do
+          allow(condition).to receive(:show_products_by_subcategory) { true }
+          params[:selected_subsubcategory_id] = @caffeine_free.id
+        end
+
+        it 'returns the expected products' do
+          expect(subject.fetch_products).to match_array [@ginger_ale]
+        end
+
+        context 'with excluded subcategories' do
+          before do
+            allow(condition).to receive(:excluded_subcategory_ids) do
+              [@soft_drinks.id]
+            end
+          end
+
+          it 'does not return products from excluded subcategories' do
+            expect(subject.fetch_products).to match_array []
+          end
+        end
+      end
+    end
+
+    describe 'tag searches' do
+      let(:params) do
+        {
+          selected_category_type: 'tag',
+          selected_category_id: @on_sale.id
+        }
+      end
+
+      context 'when searching by tag only' do
+        before do
+          allow(condition).to receive(:show_products_by_subcategory) { false }
+        end
+
+        it 'returns the expected products' do
+          expect(subject.fetch_products).to match_array [@pop_tarts, @ginger_ale, @orange_juice]
+        end
+
+        context 'with excluded subcategories' do
+          before do
+            allow(condition).to receive(:excluded_subcategory_ids) do
+              [@soft_drinks.id]
+            end
+          end
+
+          it 'does not return products from excluded subcategories' do
+            expect(subject.fetch_products).to match_array [@pop_tarts, @orange_juice]
+          end
+        end
+      end
+
+      context 'when searching by subtag' do
+        before do
+          allow(condition).to receive(:show_products_by_subcategory) { true }
+          params[:selected_subcategory_id] = @clearance.id
+        end
+
+        it 'returns the expected products' do
+          expect(subject.fetch_products).to match_array [@pop_tarts, @ginger_ale]
+        end
+
+        context 'with excluded subcategories' do
+          before do
+            allow(condition).to receive(:excluded_subcategory_ids) do
+              [@soft_drinks.id]
+            end
+          end
+
+          it 'does not return products from excluded subcategories' do
+            expect(subject.fetch_products).to match_array [@pop_tarts]
+          end
+        end
       end
     end
   end
 end
+# rubocop:enable RSpec/InstanceVariable, RSpec/BeforeAfterAll
