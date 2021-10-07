@@ -3,6 +3,8 @@
 # responsible for collecting/formatting info about a Product for consumption by
 # grocery store react app
 class ProductSerializer
+  extend Memoist
+
   def initialize(product, condition)
     @product = product
     @condition = condition
@@ -10,18 +12,25 @@ class ProductSerializer
 
   def serialize(include_add_on: true)
     attrs = @product.attributes
-      .merge(product_labels)
+      .merge(labels: product_labels)
       .merge(nutrition_information)
     include_add_on ? attrs.merge(add_on_info) : attrs
   end
+  memoize :serialize
+
+  # when sorting by labels, show products the the most labels first
+  def label_sort
+    product_labels.count * -1
+  end
+  # TODO: change attribute of Product
+  alias label_image_url label_sort
 
   private def product_labels
-    {
-      labels: @condition.condition_labels.map do |condition_label|
-        label_information(condition_label)
-      end.compact
-    }
+    @condition.condition_labels.map do |condition_label|
+      label_information(condition_label)
+    end.compact
   end
+  memoize :product_labels
 
   private def label_information(condition_label)
     return nil unless gets_label?(condition_label)
