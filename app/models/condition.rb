@@ -9,6 +9,7 @@ class Condition < ApplicationRecord
 
   validates :name, :uuid, :qualtrics_code, :sort_type, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
+  validate :sort_file_present_if_needed
   validate :unique_label_names
 
   delegate :sort_types, :style_use_types, :food_count_formats,
@@ -171,5 +172,13 @@ class Condition < ApplicationRecord
 
   def included_subcategory_ids
     @included_subcategory_ids&.map(&:to_i) || included_subcategories.pluck(:id)
+  end
+
+  private def sort_file_present_if_needed
+    return if sort_type != sort_types.file || sort_files.select(&:active?).any?
+    errors.add(
+      :base,
+      'Please upload a custom sort file or choose a different sort type'
+    )
   end
 end
