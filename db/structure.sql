@@ -155,7 +155,8 @@ CREATE TABLE `custom_sortings` (
   KEY `index_custom_sortings_on_condition_id` (`condition_id`),
   KEY `index_custom_sortings_on_sort_file_id` (`sort_file_id`),
   KEY `index_custom_sortings_on_product_id` (`product_id`),
-  KEY `index_custom_sortings_on_session_identifier` (`session_identifier`)
+  KEY `index_custom_sortings_on_session_identifier` (`session_identifier`),
+  KEY `index_custom_sortings_on_sort_order` (`sort_order`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `experiment_results`;

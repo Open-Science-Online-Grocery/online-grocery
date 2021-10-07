@@ -38,7 +38,7 @@ class ProductFetcher
 
   def fetch_products
     ProductSorter.new(
-      products_relation: products,
+      product_relation: products,
       condition: @condition,
       session_identifier: @params[:session_identifier],
       manual_sort_field_description: @params[:sort_field],
@@ -53,7 +53,7 @@ class ProductFetcher
       scope_by_membership
     end
     filter_products
-    @product_relation.uniq
+    @product_relation.distinct
   end
 
   private def scope_by_name

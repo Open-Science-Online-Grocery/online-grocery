@@ -2,6 +2,8 @@
 
 class CustomSorting < ApplicationRecord
   validates :sort_order, presence: true
+  validates :sort_order,
+            uniqueness: { scope: %i[condition_id product_id session_identifier]}
 
   belongs_to :condition
   belongs_to :sort_file
