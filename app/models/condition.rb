@@ -97,9 +97,12 @@ class Condition < ApplicationRecord
     sort_files.build(file: value)
   end
 
+  # the `active_was` here checks for files that have been marked inactive but
+  # not yet saved.  this allows the unchecked checkbox to remain in the form
+  # so that data can be saved on submit.
   def current_sort_file
     sort_files
-      .select { |f| f.active? && f.persisted? }
+      .select { |f| (f.active? || f.active_was) && f.persisted? }
       .max_by(&:created_at)
   end
 

@@ -9,8 +9,9 @@ RSpec.describe 'Importing custom sort data for a condition', :feature do
   let(:bad_file) { file_fixture('sorting/bad_1.csv') }
   let(:good_file_1) { file_fixture('sorting/good_1.csv') }
   let(:good_file_2) { file_fixture('sorting/good_2.csv') }
-  let!(:product_1) { create(:product, id: 111) }
-  let!(:product_2) { create(:product, id: 222) }
+  let!(:subcategory) { create(:subcategory) }
+  let!(:product_1) { create(:product, id: 111, subcategory: subcategory) }
+  let!(:product_2) { create(:product, id: 222, subcategory: subcategory) }
 
   before do
     sign_in user
@@ -37,6 +38,21 @@ RSpec.describe 'Importing custom sort data for a condition', :feature do
       expect(page).to have_content File.basename(good_file_1)
     end
     expect(condition.custom_sortings.count).to eq 2
+
+    # visit store as participant with custom sorting specified
+    visit store_path(condId: condition.uuid)
+    find('.form-input').set('abc')
+    force_click('input[type="submit"]')
+    expect(product_2.name).to appear_before(product_1.name)
+
+    # visit store as participant without custom sorting specified
+    visit store_path(condId: condition.uuid)
+    find('.form-input').set('def')
+    force_click('input[type="submit"]')
+    expect(product_1.name).to appear_before(product_2.name)
+
+    # back to researcher view...
+    visit edit_experiment_condition_path(experiment, condition)
 
     # replacing file
     attach_file 'condition_new_sort_file', good_file_2
