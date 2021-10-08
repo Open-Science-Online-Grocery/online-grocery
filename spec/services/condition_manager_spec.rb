@@ -20,6 +20,9 @@ RSpec.describe ConditionManager do
   let(:suggestion_manager) do
     instance_double 'CsvFileManagers::Suggestion', import: true
   end
+  let(:sorting_manager) do
+    instance_double 'CsvFileManagers::Sorting', import: true
+  end
   let(:tag_importer) { instance_double 'TagImporter', import: true }
 
   subject { described_class.new(condition, orig_params) }
@@ -29,6 +32,7 @@ RSpec.describe ConditionManager do
     allow(ConditionParamsAdjuster).to receive(:new) { params_adjuster }
     allow(TagImporter).to receive(:new) { tag_importer }
     allow(CsvFileManagers::Suggestion).to receive(:new) { suggestion_manager }
+    allow(CsvFileManagers::Sorting).to receive(:new) { sorting_manager }
   end
 
   describe '#assign_params' do
@@ -40,6 +44,13 @@ RSpec.describe ConditionManager do
   end
 
   describe '#update_condition' do
+    it 'coordinates with the expected classes' do
+      expect(subject.update_condition).to eq true
+      expect(subject.errors).to be_empty
+      expect(CsvFileManagers::Suggestion).to have_received(:new).with(condition)
+      expect(CsvFileManagers::Sorting).to have_received(:new).with(condition)
+    end
+
     describe 'cart summary label attributes' do
       context 'when provided label has no id' do
         let(:adjusted_params) do
@@ -213,6 +224,21 @@ RSpec.describe ConditionManager do
       it 'returns false and has errors' do
         expect(subject.update_condition).to eq false
         expect(subject.errors).to include 'kapow'
+      end
+    end
+
+    context 'when updating custom sortings fails' do
+      let(:sorting_manager) do
+        instance_double(
+          'CsvFileManagers::Sorting',
+          import: false,
+          errors: ['ouch']
+        )
+      end
+
+      it 'returns false and has errors' do
+        expect(subject.update_condition).to eq false
+        expect(subject.errors).to include 'ouch'
       end
     end
   end

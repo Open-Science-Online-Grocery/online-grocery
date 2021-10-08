@@ -71,6 +71,8 @@ module CsvFileManagers
       CustomSorting.import(@custom_sortings)
     end
 
+    # since we're importing all the records at once using, we check for
+    # uniqueness violations here rather than when records are saved.
     private def check_for_duplicates
       @custom_sortings.group_by(&:session_identifier).each_value do |sortings|
         flag_duplicate_sort_orders(sortings)

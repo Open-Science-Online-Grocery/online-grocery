@@ -182,5 +182,56 @@ RSpec.describe ConditionParamsAdjuster do
         )
       end
     end
+
+    context 'when replacing a sorting csv file' do
+      let(:params) do
+        {
+          sort_type: 'file',
+          new_sort_file: fixture_file_upload(
+            file_fixture(
+              'product_data_csv_files/product_data_default_scope.csv'
+            )
+          ),
+          sort_files_attributes: { '0' => { id: '27', active: '1' } }
+        }
+      end
+
+      it 'does not update the existing sorting file' do
+        adjusted_params = subject.adjusted_params
+        expect(adjusted_params[:sort_files_attributes]).to be_nil
+      end
+    end
+
+    context 'when not replacing a sorting csv file' do
+      let(:params) do
+        {
+          sort_type: 'file',
+          sort_files_attributes: { '0' => { id: '27', active: '1' } }
+        }
+      end
+
+      it 'updates the existing sorting file' do
+        adjusted_params = subject.adjusted_params
+        expect(adjusted_params[:sort_files_attributes]).to eq(
+          '0' => { id: '27', active: '1' }
+        )
+      end
+    end
+
+    context 'when not using a sort_type of file' do
+      let(:params) do
+        {
+          sort_type: 'none',
+          sort_files_attributes: { '0' => { id: '27', active: '1' } }
+        }
+      end
+
+      it 'deactivates the current sort file' do
+        adjusted_params = subject.adjusted_params
+        expect(adjusted_params[:sort_files_attributes]).to eq(
+          '0' => { id: '27', active: 0 }
+        )
+      end
+    end
   end
 end
