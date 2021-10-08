@@ -117,17 +117,18 @@
 
             <div class="field">
               <label>Current file</label>
-              <% if condition.current_sort_file %>
-                <%= f.fields_for :sort_files, condition.current_sort_file do |sort_fields| %>
+              <%= f.fields_for :sort_files, condition.current_sort_file do |sort_fields| %>
+                <% if condition.current_sort_file %>
                   <div class="ui inline checkbox field">
                     <%= sort_fields.check_box(:active) %>
                     <%= sort_fields.label(:active) do %>
                       <%= ConfigFilePresenter.download_link(condition.current_sort_file) %>
                     <% end %>
                   </div>
+                <% else %>
+                  <%= sort_fields.hidden_field(:active, value: 0) %>
+                  None
                 <% end %>
-              <% else %>
-                None
               <% end %>
             </div>
 
