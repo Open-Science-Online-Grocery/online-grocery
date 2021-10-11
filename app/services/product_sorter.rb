@@ -90,13 +90,19 @@ class ProductSorter
   # (session_identifier), we just return the default-sorted products. if some,
   # but not all products have custom sortings for this participant, only
   # products with a custom sorting specified will be returned.
+  #
+  # the `select` calls are needed for some database settings that require a
+  # column used for sorting to be present in the list of selected columns.
   private def custom_sorted_products
-    sorted_relation = @product_relation.joins(:custom_sortings).where(
-      custom_sortings: {
-        condition_id: @condition.id,
-        session_identifier: @session_identifier
-      }
-    ).order(CustomSorting.arel_table[:sort_order])
+    sorted_relation = @product_relation.joins(:custom_sortings)
+      .select(Product.arel_table[Arel.star])
+      .select(CustomSorting.arel_table[:sort_order])
+      .where(
+        custom_sortings: {
+          condition_id: @condition.id,
+          session_identifier: @session_identifier
+        }
+      ).order(CustomSorting.arel_table[:sort_order])
     return default_sorted_products unless sorted_relation.exists?
     as_serializers(sorted_relation)
   end
