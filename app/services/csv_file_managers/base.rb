@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
+require 'csv'
+
 module CsvFileManagers
   # contains base functionality for generating and importing csv config files
   class Base
-    require 'csv'
-
     attr_reader :errors
 
     delegate :headers, to: :class
