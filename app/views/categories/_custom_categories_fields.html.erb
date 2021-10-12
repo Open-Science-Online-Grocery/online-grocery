@@ -4,12 +4,12 @@
   <div class="heading-buttons">
     <%=
       link_to(
-        custom_categories_product_download_path,
+        custom_categories_condition_product_download_path(condition),
         class: 'ui right floated button',
         data: { loading_spinner: true, remote: true }
       ) do
     %>
-      <i class="download icon"></i> Download Product Data
+      <i class="download icon"></i> Download Template
     <% end %>
   </div>
 </div>
@@ -18,12 +18,12 @@
   <strong>Instructions: </strong>
 </div>
 <div>
-  To add custom categories and subcategories, download the product data using the button above.
-  Once you have added the custom categories, re-upload the file below and save.
-  The categories added in the file will appear on the left below.
-  The current file will appear on the left with a check box next to it. To remove the current file,
-  uncheck the box. To replace the file, just upload a new one. Removed and replaced files will appear
-  on the right below.
+  To add custom categories and subcategories, download the file template using
+  the button above. Once you have added the custom categories, re-upload the
+  file below and save. The categories added in the file will appear on the left
+  below. The current file will appear on the left with a check box next to it.
+  To remove the current file, uncheck the box. To replace the file, just upload
+  a new one. Removed and replaced files will appear on the right below.
 </div>
 
 <div class="ui hidden divider"></div>
@@ -56,7 +56,7 @@
 <div class="ui grid">
   <div class="eight wide column">
     <h4>Active categories and subcategories</h4>
-    <table class="ui celled table">
+    <table class="ui small very compact celled table">
       <thead>
         <tr>
           <th class="eight wide">Category</th>
@@ -89,36 +89,12 @@
   </div>
 
   <div class="eight wide column">
-    <h4>Previously uploaded files</h4>
-    <table class="ui celled table">
-      <thead>
-        <tr>
-          <th class="ten wide">File</th>
-          <th class="six wide">Uploaded on</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% if condition.tag_csv_files.historical.any? %>
-          <% condition.tag_csv_files.historical.each do |file| %>
-            <tr>
-              <td>
-                <%= ConfigFilePresenter.download_link(file) %>
-              </td>
-              <td>
-                <%= localize(file.created_at.to_date) %>
-              </td>
-            </tr>
-          <% end %>
-        <% else %>
-          <tr>
-            <td colspan="2" class="center aligned">
-              No data
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <%=
+      render(
+        'config_files/historical_files_table',
+        files: condition.tag_csv_files.historical
+      )
+    %>
   </div>
 </div>
 

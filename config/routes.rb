@@ -18,10 +18,13 @@ Rails.application.routes.draw do
     resources :data_downloads, only: [:index, :create]
   end
 
-  resource :product_download, only: [:show] do
-    collection do
-      get :custom_categories
-      get :suggestions
+  resources :conditions, only: [] do
+    resource :product_download, only: [:show] do
+      collection do
+        get :custom_categories
+        get :suggestions
+        get :sorting
+      end
     end
   end
 

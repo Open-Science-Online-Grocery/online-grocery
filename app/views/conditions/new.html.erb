@@ -4,4 +4,25 @@
   <h2>Add Condition</h2>
 </div>
 
-<%= render 'form', experiment: @experiment, condition: @condition %>
+<%=
+  form_for(
+    [@experiment, @condition.condition],
+    html: { class: 'ui form' },
+    data: { form_validation: true }
+  ) do |f|
+%>
+  <%= hidden_field_tag :tab, @tab %>
+
+  <div class="ui top attached tabular menu">
+    <div class="item" data-tab="basic-info">Basic Information</div>
+  </div>
+
+  <%= render "basic_info_tab", f: f %>
+
+  <div class="button-wrapper right">
+    <button type="submit" class="ui positive button" data-tab-submit>
+      <i class="check icon"></i>
+      Save
+    </button>
+  </div>
+<% end %>

@@ -3,14 +3,21 @@
 # responsible for sorting products based on the condition's settings and/or the
 # sort field/order manually specified by the participant user.
 class ProductSorter
+  extend Memoist
+
   delegate :default_sort_field_name, :default_sort_order, :sort_equation,
            to: :@condition
 
   def initialize(
-    product_hashes, condition, manual_sort_field_description, manual_sort_order
+    product_hashes,
+    condition,
+    session_identifier:,
+    manual_sort_field_description:,
+    manual_sort_order:
   )
     @product_hashes = product_hashes
     @condition = condition
+    @session_identifier = session_identifier
     @manual_sort_field_description = manual_sort_field_description
     @manual_sort_order = manual_sort_order
   end
@@ -28,6 +35,7 @@ class ProductSorter
     field_sorted_products(manual_sort_field_name, @manual_sort_order)
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
   private def default_sorted_products
     case @condition.sort_type
       when Condition.sort_types.none
@@ -38,8 +46,11 @@ class ProductSorter
         field_sorted_products(default_sort_field_name, default_sort_order)
       when Condition.sort_types.calculation
         calculation_sorted_products
+      when Condition.sort_types.file
+        custom_sorted_products
     end
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
   private def add_serial_position(sorted_product_hashes)
     sorted_product_hashes.map.with_index(1) do |product_hash, idx|
@@ -66,6 +77,16 @@ class ProductSorter
     end
   end
 
+  private def custom_sorted_products
+    return @product_hashes if participant_sort_data.none?
+    @product_hashes.sort_by do |product_hash|
+      sort_data = participant_sort_data[product_hash['id']]
+      # for products where a sort order was not specified, show them at the
+      # end of the list.
+      sort_data&.sort_order || Float::INFINITY
+    end
+  end
+
   private def manual_sort_field_name
     ProductSortField.find_by(
       description: @manual_sort_field_description
@@ -80,4 +101,11 @@ class ProductSorter
       end
     end
   end
+
+  private def participant_sort_data
+    @condition.custom_sortings
+      .for_session_identifier(@session_identifier)
+      .index_by(&:product_id)
+  end
+  memoize :participant_sort_data
 end

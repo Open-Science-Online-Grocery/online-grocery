@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DataDownloadsController < ApplicationController
-  power :data_downloads, context: :set_experiment, map: {
+  power :no_fallback, context: :set_experiment, map: {
     %i[index create] => :own_experiment
   }
 

@@ -5,12 +5,12 @@
     <div class="heading-buttons">
       <%=
         link_to(
-          suggestions_product_download_path,
+          suggestions_condition_product_download_path(condition),
           class: 'ui right floated button',
           data: { loading_spinner: true, remote: true }
         ) do
       %>
-        <i class="download icon"></i> Download Product Data
+        <i class="download icon"></i> Download Template
       <% end %>
     </div>
   </div>
@@ -19,7 +19,7 @@
     <strong>Instructions: </strong>
   </div>
   <div>
-    To add suggested add-on items, download the product data using the button
+    To add suggested add-on items, download the file template using the button
     above. For each row, you may add the ID of a product to suggest as an
     add-on. Once you have done this, re-upload the file below and save. The
     current file will appear on the left with a check box next to it. To remove
@@ -58,36 +58,12 @@
     <div class="eight wide column">
     </div>
     <div class="eight wide column">
-      <h4>Previously uploaded files</h4>
-      <table class="ui celled table">
-        <thead>
-          <tr>
-            <th class="ten wide">File</th>
-            <th class="six wide">Uploaded on</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% if condition.suggestion_csv_files.historical.any? %>
-            <% condition.suggestion_csv_files.historical.each do |file| %>
-              <tr>
-                <td>
-                  <%= ConfigFilePresenter.download_link(file) %>
-                </td>
-                <td>
-                  <%= localize(file.created_at.to_date) %>
-                </td>
-              </tr>
-            <% end %>
-          <% else %>
-            <tr>
-              <td colspan="2" class="center aligned">
-                No data
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+      <%=
+        render(
+          'config_files/historical_files_table',
+          files: condition.suggestion_csv_files.historical
+        )
+      %>
     </div>
   </div>
 </div>

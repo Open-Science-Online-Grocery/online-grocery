@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe SuggestionsCsvManager do
+RSpec.describe CsvFileManagers::Suggestion do
   let(:product_1) { build(:product) }
   let(:product_2) { build(:product) }
   let(:add_on_1) { build(:product) }
@@ -22,7 +22,7 @@ RSpec.describe SuggestionsCsvManager do
   let(:csv) do
     ActionDispatch::Http::UploadedFile.new(
       tempfile: File.open(
-        File.expand_path('../fixtures/files/suggestions/good_1.csv', __dir__)
+        Rails.root.join('spec/fixtures/files/suggestions/good_1.csv')
       ),
       filename: 'good_1.csv'
     )

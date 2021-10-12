@@ -5,6 +5,8 @@ class ProductFetcher
   # @param [ActionController::Parameters] params - params pertaining to which
   #   Products should be returned (and in which order). looks like this:
   #     {
+  #       session_identifier: the identifier the participant entered upon
+  #         visiting the grocery store,
   #       condition_identifier: the :uuid for the current Condition,
   #       selected_category_id: a Category id to find products within,
   #       selected_subcategory_id: a Subcategory id to find products within,
@@ -41,8 +43,9 @@ class ProductFetcher
     ProductSorter.new(
       product_hashes,
       @condition,
-      @params[:sort_field],
-      @params[:sort_direction]
+      session_identifier: @params[:session_identifier],
+      manual_sort_field_description: @params[:sort_field],
+      manual_sort_order: @params[:sort_direction]
     ).sorted_products
   end
 
@@ -100,9 +103,7 @@ class ProductFetcher
   end
 
   private def filter_by_excluded_subcategories
-    @product_relation = @product_relation.where.not(
-      subcategory_id: @condition.excluded_subcategory_ids
-    )
+    @product_relation = @product_relation.merge(@condition.products)
   end
 
   private def filter_by_tag
