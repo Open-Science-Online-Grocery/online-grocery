@@ -6,7 +6,7 @@ RSpec.describe Paginator do
   context 'with full pages of records' do
     let(:records) { (1..400).to_a }
 
-    context 'for the first page' do
+    context 'when requesting the first page' do
       subject { described_class.new(records, 1) }
 
       it 'returns the expected records' do
@@ -15,7 +15,7 @@ RSpec.describe Paginator do
       end
     end
 
-    context 'for the last page' do
+    context 'when requesting the last page' do
       subject { described_class.new(records, 4) }
 
       it 'returns the expected records' do
@@ -28,7 +28,7 @@ RSpec.describe Paginator do
   context 'when the last page is not full' do
     let(:records) { (1..405).to_a }
 
-    context 'for the first page' do
+    context 'when requesting the first page' do
       subject { described_class.new(records, 1) }
 
       it 'returns the expected records' do
@@ -37,7 +37,7 @@ RSpec.describe Paginator do
       end
     end
 
-    context 'for the last page' do
+    context 'when requesting the last page' do
       subject { described_class.new(records, 5) }
 
       it 'returns the expected records' do
