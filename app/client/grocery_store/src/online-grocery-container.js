@@ -2,10 +2,6 @@ import { connect } from 'react-redux';
 import OnlineGrocery from './online-grocery';
 import { searchActionCreators } from './reducers/search/search-actions';
 
-const mapStateToProps = (state) => (
-  { loaderActive: state.category.loaderActive }
-);
-
 const mapDispatchToProps = (dispatch) => (
   {
     updateSearchType: () => {
@@ -14,4 +10,4 @@ const mapDispatchToProps = (dispatch) => (
   }
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(OnlineGrocery);
+export default connect(null, mapDispatchToProps)(OnlineGrocery);
