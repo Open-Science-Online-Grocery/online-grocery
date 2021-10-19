@@ -8,7 +8,7 @@ class Paginator
 
   def records
     first_record_index = ((@current_page - 1) * records_per_page)
-    @records[first_record_index..first_record_index + records_per_page]
+    @records[first_record_index...first_record_index + records_per_page]
   end
 
   def total_pages

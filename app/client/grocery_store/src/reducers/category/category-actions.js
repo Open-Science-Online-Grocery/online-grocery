@@ -18,9 +18,10 @@ function setCategory(
   };
 }
 
-function setProducts(products) {
+function setProducts(productResponse) {
   return {
-    products,
+    products: productResponse.products,
+    page: productResponse.page,
     type: categoryActionTypes.SET_PRODUCTS
   };
 }
@@ -40,7 +41,8 @@ function getProducts() {
       sortField: state.sorting.selectedSortField,
       sortDirection: state.sorting.sortDirection,
       selectedFilterId: state.filtering.selectedFilterId,
-      selectedFilterType: state.filtering.selectedFilterType
+      selectedFilterType: state.filtering.selectedFilterType,
+      page: state.category.page
     };
     fromApi.jsonApiCall(
       routes.products(),

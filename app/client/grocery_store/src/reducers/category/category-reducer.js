@@ -2,6 +2,7 @@ import { categoryActionTypes } from './category-actions';
 import { userActionTypes } from '../user/user-actions';
 
 const initialCategoryState = {
+  page: 1,
   selectedCategoryId: null,
   selectedSubcategoryId: null,
   selectedSubsubcategoryId: null,
@@ -51,7 +52,7 @@ export function tabIsSelected(state, categoryType, categoryId) {
 export default function categoryReducer(state = initialCategoryState, action) {
   const {
     categories, subcategories, subsubcategories, products, selectedCategoryId,
-    selectedSubcategoryId, selectedSubsubcategoryId, tags, subtags,
+    selectedSubcategoryId, selectedSubsubcategoryId, tags, subtags, page,
     selectedCategoryType
   } = action;
 
@@ -65,6 +66,7 @@ export default function categoryReducer(state = initialCategoryState, action) {
       });
     case categoryActionTypes.SET_PRODUCTS:
       return Object.assign({}, state, {
+        page,
         products
       });
     case userActionTypes.SET_CONDITION_DATA:

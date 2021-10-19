@@ -10,7 +10,7 @@ module Api
     def index
       condition = condition_from_uuid
       fetcher = ProductFetcher.new(condition, params)
-      paginator = Paginator.new(fetcher.fetch_products, params[:page] || 1)
+      paginator = Paginator.new(fetcher.fetch_products, params[:page].to_i || 1)
       response = {
         products: paginator.records,
         page: params[:page],
