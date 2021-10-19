@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
+# responsible for paginating pre-sorted records
 class Paginator
+  # @param records [Array]
+  # @param current_page [Integer] the (1-indexed) desired page of records
   def initialize(records, current_page)
     @records = records
     @current_page = current_page

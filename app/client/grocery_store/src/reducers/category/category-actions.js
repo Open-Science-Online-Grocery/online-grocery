@@ -3,7 +3,8 @@ import * as fromApi from '../../../../utils/api_call';
 
 export const categoryActionTypes = {
   SET_CATEGORY: 'SET_CATEGORY',
-  SET_PRODUCTS: 'SET_PRODUCTS'
+  SET_PRODUCTS: 'SET_PRODUCTS',
+  SET_LOADER: 'SET_LOADER'
 };
 
 function setCategory(
@@ -27,8 +28,16 @@ function setProducts(productResponse) {
   };
 }
 
+function setLoader(active) {
+  return {
+    loaderActive: active,
+    type: categoryActionTypes.SET_LOADER
+  };
+}
+
 function getProducts(requestedPage = 1) {
   return (dispatch, getState) => {
+    dispatch(setLoader(true));
     const state = getState();
     const params = {
       sessionIdentifier: state.user.sessionId,
@@ -48,7 +57,10 @@ function getProducts(requestedPage = 1) {
     fromApi.jsonApiCall(
       routes.products(),
       params,
-      data => dispatch(setProducts(data)),
+      data => {
+        dispatch(setProducts(data));
+        dispatch(setLoader(false));
+      },
       error => console.log(error)
     );
   };
