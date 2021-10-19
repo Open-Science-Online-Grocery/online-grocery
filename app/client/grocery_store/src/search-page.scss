@@ -1,7 +1,9 @@
+@import "./base/base";
+
 .search-page {
   .title {
     font-size: 30px;
-    color: green;
+    color: $price-green;
     margin-top: 1.3rem;
   }
 }

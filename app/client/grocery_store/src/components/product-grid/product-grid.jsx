@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProductCardContainer from '../product-card/product-card-container';
+import PaginationContainer from '../pagination/pagination-container';
 import './product-grid.scss';
 
 export default class ProductGrid extends React.Component {
@@ -22,6 +23,7 @@ export default class ProductGrid extends React.Component {
   render() {
     return (
       <div className="product-grid">
+        <PaginationContainer />
         {this.props.products.length > 0 ? this.productCards() : this.noProductsMessage()}
       </div>
     );
