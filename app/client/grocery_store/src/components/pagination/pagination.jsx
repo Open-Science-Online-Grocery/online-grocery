@@ -3,32 +3,38 @@ import PropTypes from 'prop-types';
 import './pagination.scss';
 
 export default class Pagination extends React.Component {
+  goToPage(requestedPage) {
+    const { requestPage } = this.props;
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+    requestPage(requestedPage);
+  }
+
   prevPage() {
-    const { currentPage, requestPage } = this.props;
+    const { currentPage } = this.props;
     if (currentPage === 1) {
       return (
         <span className="disabled">{'<'}</span>
       );
     }
     return (
-      <a onClick={() => requestPage(currentPage - 1)}>{'<'}</a>
+      <a onClick={() => this.goToPage(currentPage - 1)}>{'<'}</a>
     );
   }
 
   nextPage() {
-    const { currentPage, totalPages, requestPage } = this.props;
+    const { currentPage, totalPages } = this.props;
     if (currentPage === totalPages) {
       return (
         <span className="disabled">{'>'}</span>
       );
     }
     return (
-      <a onClick={() => requestPage(currentPage + 1)}>{'>'}</a>
+      <a onClick={() => this.goToPage(currentPage + 1)}>{'>'}</a>
     );
   }
 
   pageNumbers() {
-    const { currentPage, totalPages, requestPage } = this.props;
+    const { currentPage, totalPages } = this.props;
     const nums = Array.from({ length: totalPages }, (_v, i) => i + 1);
     return nums.map((pageNumber) => {
       if (pageNumber === currentPage) {
@@ -36,7 +42,7 @@ export default class Pagination extends React.Component {
       }
       return (
         <a
-          onClick={() => requestPage(pageNumber)}
+          onClick={() => this.goToPage(pageNumber)}
           key={pageNumber}
         >
           {pageNumber}

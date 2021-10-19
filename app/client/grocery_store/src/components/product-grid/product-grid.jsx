@@ -5,6 +5,15 @@ import PaginationContainer from '../pagination/pagination-container';
 import './product-grid.scss';
 
 export default class ProductGrid extends React.Component {
+  productsAndPagination() {
+    return (
+      <>
+        {this.productCards()}
+        <PaginationContainer />
+      </>
+    );
+  }
+
   productCards() {
     return this.props.products.map(product => (
       <div key={product.id} className="product-grid-item">
@@ -23,8 +32,7 @@ export default class ProductGrid extends React.Component {
   render() {
     return (
       <div className="product-grid">
-        <PaginationContainer />
-        {this.props.products.length > 0 ? this.productCards() : this.noProductsMessage()}
+        {this.props.products.length > 0 ? this.productsAndPagination() : this.noProductsMessage()}
       </div>
     );
   }
