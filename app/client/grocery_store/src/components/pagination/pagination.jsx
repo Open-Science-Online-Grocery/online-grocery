@@ -38,7 +38,7 @@ export default class Pagination extends React.Component {
     const nums = Array.from({ length: totalPages }, (_v, i) => i + 1);
     return nums.map((pageNumber) => {
       if (pageNumber === currentPage) {
-        return (<span key={pageNumber} className="active">{pageNumber}</span>);
+        return (<span key={pageNumber} className="disabled">{pageNumber}</span>);
       }
       return (
         <a

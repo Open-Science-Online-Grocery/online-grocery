@@ -2,6 +2,8 @@
 
 # responsible for paginating pre-sorted records
 class Paginator
+  RECORDS_PER_PAGE = 100
+
   # @param records [Array]
   # @param current_page [Integer] the (1-indexed) desired page of records
   def initialize(records, current_page)
@@ -10,15 +12,11 @@ class Paginator
   end
 
   def records
-    first_record_index = ((@current_page - 1) * records_per_page)
-    @records[first_record_index...first_record_index + records_per_page]
+    first_record_index = ((@current_page - 1) * RECORDS_PER_PAGE)
+    @records[first_record_index...first_record_index + RECORDS_PER_PAGE]
   end
 
   def total_pages
-    (@records.count / records_per_page.to_f).ceil
-  end
-
-  private def records_per_page
-    100
+    (@records.count / RECORDS_PER_PAGE.to_f).ceil
   end
 end
