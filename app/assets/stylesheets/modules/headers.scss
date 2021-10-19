@@ -3,3 +3,8 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
   }
 }
+
+h5 {
+  margin-top: 1.5rem;
+  font-size: 0.93rem; // to mirror form labels
+}

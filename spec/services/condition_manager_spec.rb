@@ -18,7 +18,10 @@ RSpec.describe ConditionManager do
     )
   end
   let(:suggestion_manager) do
-    instance_double 'SuggestionsCsvManager', import: true
+    instance_double 'CsvFileManagers::Suggestion', import: true
+  end
+  let(:sorting_manager) do
+    instance_double 'CsvFileManagers::Sorting', import: true
   end
   let(:tag_importer) { instance_double 'TagImporter', import: true }
 
@@ -28,7 +31,8 @@ RSpec.describe ConditionManager do
     allow(condition).to receive(:save) { true }
     allow(ConditionParamsAdjuster).to receive(:new) { params_adjuster }
     allow(TagImporter).to receive(:new) { tag_importer }
-    allow(SuggestionsCsvManager).to receive(:new) { suggestion_manager }
+    allow(CsvFileManagers::Suggestion).to receive(:new) { suggestion_manager }
+    allow(CsvFileManagers::Sorting).to receive(:new) { sorting_manager }
   end
 
   describe '#assign_params' do
@@ -40,28 +44,11 @@ RSpec.describe ConditionManager do
   end
 
   describe '#update_condition' do
-    context 'when condition is a new record' do
-      it 'sets the uuid' do
-        expect(condition.uuid).to be_nil
-        expect(condition).to receive(:save)
-        expect(subject.update_condition).to eq true
-        expect(subject.errors).to be_empty
-        expect(condition.uuid).not_to be_nil
-      end
-
-      context 'when saving fails' do
-        before do
-          allow(condition).to receive(:save) { false }
-          allow(condition).to receive_message_chain(:errors, :full_messages) do
-            ['an error!']
-          end
-        end
-
-        it 'returns false and has errors' do
-          expect(subject.update_condition).to eq false
-          expect(subject.errors).to include 'an error!'
-        end
-      end
+    it 'coordinates with the expected classes' do
+      expect(subject.update_condition).to eq true
+      expect(subject.errors).to be_empty
+      expect(CsvFileManagers::Suggestion).to have_received(:new).with(condition)
+      expect(CsvFileManagers::Sorting).to have_received(:new).with(condition)
     end
 
     describe 'cart summary label attributes' do
@@ -228,7 +215,7 @@ RSpec.describe ConditionManager do
     context 'when updating suggestions fails' do
       let(:suggestion_manager) do
         instance_double(
-          'SuggestionsCsvManager',
+          'CsvFileManagers::Suggestion',
           import: false,
           errors: ['kapow']
         )
@@ -237,6 +224,21 @@ RSpec.describe ConditionManager do
       it 'returns false and has errors' do
         expect(subject.update_condition).to eq false
         expect(subject.errors).to include 'kapow'
+      end
+    end
+
+    context 'when updating custom sortings fails' do
+      let(:sorting_manager) do
+        instance_double(
+          'CsvFileManagers::Sorting',
+          import: false,
+          errors: ['ouch']
+        )
+      end
+
+      it 'returns false and has errors' do
+        expect(subject.update_condition).to eq false
+        expect(subject.errors).to include 'ouch'
       end
     end
   end

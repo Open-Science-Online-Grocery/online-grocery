@@ -65,58 +65,82 @@ RSpec.describe ProductSerializer do
       let(:label_1_applies) { false }
       let(:label_2_applies) { false }
 
-      it 'returns the product\'s attributes and an empty labels array' do
-        expected_output = { 'foo' => 'bar', labels: [] }
-        expect(subject.serialize).to eq expected_output
+      describe '#serialize' do
+        it 'returns the product\'s attributes and an empty labels array' do
+          expected_output = { 'foo' => 'bar', labels: [] }
+          expect(subject.serialize).to eq expected_output
+        end
+      end
+
+      describe '#label_sort' do
+        it 'returns the expected value' do
+          expect(subject.label_sort).to eq 0
+        end
       end
     end
 
     context 'when one label applies to the product' do
       let(:label_2_applies) { false }
 
-      it 'returns the product\'s attributes plus the applicable label attributes' do
-        expected_output = {
-          'foo' => 'bar',
-          labels: [
-            {
+      describe '#serialize' do
+        it 'returns the product\'s attributes plus the applicable label attributes' do
+          expected_output = {
+            'foo' => 'bar',
+            labels: [
+              {
 
-              'label_name' => 'foo label',
-              'label_image_url' => 'foo.jpg',
-              'label_position' => 'bottom right',
-              'label_size' => 20,
-              'label_tooltip' => 'hello',
-              'label_below_button' => true
-            }
-          ]
-        }
-        expect(subject.serialize).to eq expected_output
+                'label_name' => 'foo label',
+                'label_image_url' => 'foo.jpg',
+                'label_position' => 'bottom right',
+                'label_size' => 20,
+                'label_tooltip' => 'hello',
+                'label_below_button' => true
+              }
+            ]
+          }
+          expect(subject.serialize).to eq expected_output
+        end
+      end
+
+      describe '#label_sort' do
+        it 'returns the expected value' do
+          expect(subject.label_sort).to eq(-1)
+        end
       end
     end
 
     context 'when multiple labels apply to the product' do
-      it 'returns the product\'s attributes plus the applicable labels attributes' do
-        expected_output = {
-          'foo' => 'bar',
-          labels: [
-            {
-              'label_name' => 'foo label',
-              'label_image_url' => 'foo.jpg',
-              'label_position' => 'bottom right',
-              'label_size' => 20,
-              'label_tooltip' => 'hello',
-              'label_below_button' => true
-            },
-            {
-              'label_name' => 'bar label',
-              'label_image_url' => 'bar.jpg',
-              'label_position' => 'top left',
-              'label_size' => 25,
-              'label_tooltip' => 'goodbye',
-              'label_below_button' => false
-            }
-          ]
-        }
-        expect(subject.serialize).to eq expected_output
+      describe '#serialize' do
+        it 'returns the product\'s attributes plus the applicable labels attributes' do
+          expected_output = {
+            'foo' => 'bar',
+            labels: [
+              {
+                'label_name' => 'foo label',
+                'label_image_url' => 'foo.jpg',
+                'label_position' => 'bottom right',
+                'label_size' => 20,
+                'label_tooltip' => 'hello',
+                'label_below_button' => true
+              },
+              {
+                'label_name' => 'bar label',
+                'label_image_url' => 'bar.jpg',
+                'label_position' => 'top left',
+                'label_size' => 25,
+                'label_tooltip' => 'goodbye',
+                'label_below_button' => false
+              }
+            ]
+          }
+          expect(subject.serialize).to eq expected_output
+        end
+      end
+
+      describe '#label_sort' do
+        it 'returns the expected value' do
+          expect(subject.label_sort).to eq(-2)
+        end
       end
     end
   end

@@ -13,7 +13,7 @@ module Seeds
 
         additional_sort_fields = [
           { description: 'Name', name: :name },
-          { description: 'Custom label', name: :label_image_url }
+          { description: 'Custom label', name: :label_sort }
         ]
         additional_sort_fields.each do |sort_field|
           ProductSortField.find_or_create_by!(

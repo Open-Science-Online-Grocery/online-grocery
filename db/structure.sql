@@ -139,6 +139,26 @@ CREATE TABLE `config_files` (
   KEY `index_config_files_on_condition_id` (`condition_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `custom_sortings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `custom_sortings` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `session_identifier` varchar(255) DEFAULT NULL,
+  `condition_id` bigint(20) DEFAULT NULL,
+  `sort_file_id` bigint(20) DEFAULT NULL,
+  `product_id` bigint(20) DEFAULT NULL,
+  `sort_order` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_custom_sortings_on_condition_id` (`condition_id`),
+  KEY `index_custom_sortings_on_sort_file_id` (`sort_file_id`),
+  KEY `index_custom_sortings_on_product_id` (`product_id`),
+  KEY `index_custom_sortings_on_session_identifier` (`session_identifier`),
+  KEY `index_custom_sortings_on_sort_order` (`sort_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `experiment_results`;
 /*!50001 DROP VIEW IF EXISTS `experiment_results`*/;
 SET @saved_cs_client     = @@character_set_client;
@@ -469,6 +489,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20210310181245'),
 ('20210930175208'),
 ('20211001155043'),
-('20211005133810');
+('20211005133810'),
+('20211006163426'),
+('20211007184814');
 
 

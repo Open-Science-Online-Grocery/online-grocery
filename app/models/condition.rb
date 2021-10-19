@@ -9,6 +9,7 @@ class Condition < ApplicationRecord
 
   validates :name, :uuid, :qualtrics_code, :sort_type, presence: true
   validates :name, uniqueness: { scope: :experiment_id }
+  validate :sort_file_present_if_needed
   validate :unique_label_names
 
   delegate :sort_types, :style_use_types, :food_count_formats,
@@ -23,6 +24,7 @@ class Condition < ApplicationRecord
   has_many :product_sort_fields, through: :condition_product_sort_fields
   has_many :tag_csv_files, dependent: :destroy
   has_many :suggestion_csv_files, dependent: :destroy
+  has_many :sort_files, dependent: :destroy
   has_many :product_tags, dependent: :destroy
   has_many :tags, through: :product_tags
   has_many :subtags, through: :product_tags
@@ -35,12 +37,14 @@ class Condition < ApplicationRecord
   has_many :excluded_subcategories,
            through: :subcategory_exclusions,
            source: :subcategory
+  has_many :custom_sortings, dependent: :destroy
 
   accepts_nested_attributes_for :product_sort_fields
   accepts_nested_attributes_for :condition_cart_summary_labels,
                                 :condition_labels,
                                 :tag_csv_files,
                                 :suggestion_csv_files,
+                                :sort_files,
                                 allow_destroy: true
 
   def self.sort_types
@@ -48,7 +52,8 @@ class Condition < ApplicationRecord
       none: 'none',
       field: 'field',
       calculation: 'calculation',
-      random: 'random'
+      random: 'random',
+      file: 'file'
     )
   end
 
@@ -58,6 +63,10 @@ class Condition < ApplicationRecord
 
   def self.food_count_formats
     OpenStruct.new(ratio: 'ratio', percent: 'percent')
+  end
+
+  def products
+    Product.where.not(subcategory_id: excluded_subcategory_ids)
   end
 
   def new_tag_csv_file=(value)
@@ -79,6 +88,21 @@ class Condition < ApplicationRecord
   def current_suggestion_csv_file
     suggestion_csv_files
       .select { |f| f.active? && f.persisted? }
+      .max_by(&:created_at)
+  end
+
+  def new_sort_file=(value)
+    return unless value
+    sort_files.each { |s| s.active = false }
+    sort_files.build(file: value)
+  end
+
+  # the `active_was` here checks for files that have been marked inactive but
+  # not yet saved.  this allows the unchecked checkbox to remain in the form
+  # so that data can be saved on submit.
+  def current_sort_file
+    sort_files
+      .select { |f| (f.active? || f.active_was) && f.persisted? }
       .max_by(&:created_at)
   end
 
@@ -151,5 +175,13 @@ class Condition < ApplicationRecord
 
   def included_subcategory_ids
     @included_subcategory_ids&.map(&:to_i) || included_subcategories.pluck(:id)
+  end
+
+  private def sort_file_present_if_needed
+    return if sort_type != sort_types.file || sort_files.select(&:active?).any?
+    errors.add(
+      :base,
+      'Please upload a custom sort file or choose a different sort type'
+    )
   end
 end

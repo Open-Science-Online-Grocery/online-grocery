@@ -18,30 +18,29 @@ class ConditionManager
     @condition.attributes = adjusted_params
   end
 
+  # rubocop:disable Metrics/Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def update_condition
     ActiveRecord::Base.transaction do
       assign_params
-      add_uuid_to_new_record
       validate_cart_summary_label_params
       set_excluded_subcategories
       @errors += @condition.errors.full_messages unless @condition.save
       handle_tag_file_change if @errors.none?
       update_suggestions if @errors.none?
+      update_custom_sortings if @errors.none?
       raise ActiveRecord::Rollback if @errors.any?
     end
     @errors.none?
   end
+  # rubocop:enable Metrics/Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   private def adjusted_params
     adjuster = ConditionParamsAdjuster.new(@params)
     adjuster.adjusted_params
   end
   memoize :adjusted_params
-
-  private def add_uuid_to_new_record
-    return unless @condition.new_record?
-    @condition.uuid = SecureRandom.uuid
-  end
 
   # This kind of validation could normally be done with
   # `#accepts_nested_attributes_for :reject_if`
@@ -75,7 +74,12 @@ class ConditionManager
   end
 
   private def update_suggestions
-    manager = SuggestionsCsvManager.new(@condition)
+    manager = CsvFileManagers::Suggestion.new(@condition)
+    manager.import || @errors += manager.errors
+  end
+
+  private def update_custom_sortings
+    manager = CsvFileManagers::Sorting.new(@condition)
     manager.import || @errors += manager.errors
   end
 
