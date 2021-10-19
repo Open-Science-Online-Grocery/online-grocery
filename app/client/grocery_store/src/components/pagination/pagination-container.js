@@ -1,11 +1,20 @@
 import { connect } from 'react-redux';
 import Pagination from './pagination';
+import { categoryActionCreators } from '../../reducers/category/category-actions';
 
 const mapStateToProps = state => (
   {
-    currentPage: 3,
-    totalPages: 12
+    currentPage: parseInt(state.category.page, 10),
+    totalPages: parseInt(state.category.totalPages)
   }
 );
 
-export default connect(mapStateToProps, null)(Pagination);
+const mapDispatchToProps = dispatch => (
+  {
+    requestPage: (requestedPage) => (
+      dispatch(categoryActionCreators.getProducts(requestedPage))
+    )
+  }
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Pagination);

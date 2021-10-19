@@ -22,11 +22,12 @@ function setProducts(productResponse) {
   return {
     products: productResponse.products,
     page: productResponse.page,
+    totalPages: productResponse.totalPages,
     type: categoryActionTypes.SET_PRODUCTS
   };
 }
 
-function getProducts() {
+function getProducts(requestedPage = 1) {
   return (dispatch, getState) => {
     const state = getState();
     const params = {
@@ -42,7 +43,7 @@ function getProducts() {
       sortDirection: state.sorting.sortDirection,
       selectedFilterId: state.filtering.selectedFilterId,
       selectedFilterType: state.filtering.selectedFilterType,
-      page: state.category.page
+      page: requestedPage
     };
     fromApi.jsonApiCall(
       routes.products(),

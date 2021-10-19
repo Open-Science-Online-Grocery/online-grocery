@@ -1,58 +1,64 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './pagination.scss';
 
 export default class Pagination extends React.Component {
   prevPage() {
-    const { currentPage } = this.props;
+    const { currentPage, requestPage } = this.props;
     if (currentPage === 1) {
       return (
         <span className="disabled">{'<'}</span>
       );
-
     }
-    // TODO: onclick listener
     return (
-      <a>{'<'}</a>
+      <a onClick={() => requestPage(currentPage - 1)}>{'<'}</a>
     );
   }
 
   nextPage() {
-    const { currentPage, totalPages } = this.props;
+    const { currentPage, totalPages, requestPage } = this.props;
     if (currentPage === totalPages) {
       return (
         <span className="disabled">{'>'}</span>
       );
     }
-    // TODO: onclick listener
     return (
-      <a>{'>'}</a>
+      <a onClick={() => requestPage(currentPage + 1)}>{'>'}</a>
     );
   }
 
   pageNumbers() {
-    const { currentPage, totalPages } = this.props;
+    const { currentPage, totalPages, requestPage } = this.props;
     const nums = Array.from({ length: totalPages }, (_v, i) => i + 1);
     return nums.map((pageNumber) => {
       if (pageNumber === currentPage) {
         return (<span key={pageNumber} className="active">{pageNumber}</span>);
       }
-      // TODO: onclick listener
-      return (<a key={pageNumber}>{pageNumber}</a>);
+      return (
+        <a
+          onClick={() => requestPage(pageNumber)}
+          key={pageNumber}
+        >
+          {pageNumber}
+        </a>
+      );
     });
   }
 
   render() {
     const { currentPage, totalPages } = this.props;
-    if (totalPages === 1) return null;
-
     return (
       <div className="pagination">
-        <div className="page-links">
-          {this.prevPage()}
-          {this.pageNumbers()}
-          {this.nextPage()}
-        </div>
+        {this.prevPage()}
+        {this.pageNumbers()}
+        {this.nextPage()}
       </div>
     );
   }
 }
+
+Pagination.propTypes = {
+  currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  requestPage: PropTypes.func.isRequired
+};

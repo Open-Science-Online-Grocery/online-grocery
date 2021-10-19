@@ -3,13 +3,12 @@
 .pagination {
   text-align: center;
   width: 100%;
+  color: $price-green;
+  display: flex;
+  justify-content: center;
 
-  .page-links {
-    margin: auto;
-    color: $price-green;
-    width: 50%;
-    display: flex;
-    justify-content: space-between;
+  span, a {
+    margin: 1rem;
   }
 
   a {
