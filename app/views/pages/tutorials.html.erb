@@ -44,7 +44,7 @@
       </li>
       <li>
         If you’re still experiencing problems, please email Holly at
-        <a href = "mailto: holly.howe@duke.edu">holly.howe@duke.edu</a>
+        <a href="mailto: holly.howe@duke.edu">holly.howe@duke.edu</a>
       </li>
     </ol>
   </div>
@@ -55,8 +55,8 @@
     <i class="dropdown icon"></i>
     How do I create an experimental condition?
   </div>
-  <div class="embed-responsive embed-responsive-16by9">
-    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/onrzCh_gmwQ" allowfullscreen></iframe>
+  <div class="content">
+    <iframe src="https://www.youtube.com/embed/onrzCh_gmwQ" allowfullscreen></iframe>
   </div>
 </div>
 
@@ -98,83 +98,152 @@
     <i class="dropdown icon"></i>
     How can I integrate Howe’s grocery into my Qualtrics survey?
   </div>
-  <div class="content">We have included a video and detailed text instructions below.</div>
-  <div class="embed-responsive embed-responsive-16by9">
-    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qqGv4nOQqPI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  </div>
   <div class="content">
-    <u><b>Step 1: Add a link to your experiment into Qualtrics</b></u>
-    <br>
-    When you have finished creating a condition within the Howe’s Grocery website, you will be given a link that uniquely takes participants to this condition. See the screenshot below. 
-    <br>
-    <%= image_tag('img1.png', class: 'accordion-image compact')%>
-    <br>
-    You can integrate this link into your Qualtrics using a hyperlink. The store is not currently compatible with being embedded as an iFrame. 
-    <br>
-    <u><b>Hyperlink</b></u>
-    <br>
-    A hyperlink looks like the image below. It will open a new tab of the grocery store 
-    <br>
-    <%= image_tag('img2.png', class: 'accordion-image compact')%>
-    <br>
-    The html for using a hyperlink is as follows: 
-    <br>
-    <a href="[YOUR HOWES GROCERY LINK]/" target="_blank">Click this link </a> 
-    <br>
-    
-    <u><b> Step 2: Randomly Assign Participants to Condition</b></u>
-        <br>
-    If manipulating something in the store is one of your independent variables, then you will want to randomly assign participants to different links (that represent your different conditions). 
-    <br>
-    You can use the random assignment function in Qualtrics survey flow to do this. 
-    <br>
-    <%= image_tag('img3.png', class: 'accordion-image compact')%>
-    <br>
-    Simply change the hyperlinked condition, depending on which version of the store you want participants to see.
-    <br>
-    <b><u>Stage 3: Tracking your participants from Qualtrics to the Grocer (and back again)</u></b>
-    <br>
-    Once a participant opens the store, the first page will always look like this:
-    <br>
-    <%= image_tag('img4.png', class: 'accordion-image compact')%>
-    <br>
-    You will assign each participant a unique session ID. The session ID will allow you to link their responses in Qualtrics to their behavior in the store.
-    <br>
-    The easiest session ID to use is the participant identifier assigned by Qualtrics, called “ResponseID”
-    <br>
-    In the Qualtrics, you would pipe in the ResponseID (${e://Field/ResponseID}), so that all your participants saw something like this before entering the store:
-    <br>
-    <%= image_tag('img5.png', class: 'accordion-image compact')%>
-    <br>
-    However, you could also pipe in other unique identifiers like MTurk ID(${e://Field/workerId}; if using Turk Prime to run studies), or any other unique identifier you have already assigned. 
-    <br>
-    When you download the data, you will see that this identifier appears as the first line in your data set.
-    <br>
-    <%= image_tag('img6.png', class: 'accordion-image compact')%>
-    <br>
-    <br>
-    <b><u>Step 4: Ensuring that participants actually “Check Out”</u></b>
-    <br>All your participants must check out in order for their cart contents to appear in your data. So, it’s very important to incentivize your participants to actually click the “Check Out” Button in the store.  
-    <br>
-    The easiest way to do this is to ensure that they cannot move on in your Qualtrics without entering a “password”. The only way that they can get this password is by checking out of your store. 
-    <br>You can set this password (“Qualtrics Code”) on the first page of your “condition” within the Howe’s Grocery interface. 
-    <br>
-    <%= image_tag('img7.png', class: 'accordion-image compact')%>
-    <br>
-    <br>Then, when a participant checks out they will be given this code:
-    <br>
-    <%= image_tag('img8.png', class: 'accordion-image compact')%>
-    <br>
-    <br>To add a “password” into Qualtrics, create a question that looks something like this:
-    <br>
-    <%= image_tag('img9.png', class: 'accordion-image compact')%>
-    <br>
-    <br>Within Qualtrics, use Custom Validation to ensure that participants cannot move on unless they enter the correct password
-    <br>
-    <%= image_tag('img10.png', class: 'accordion-image compact')%>
-    <br>
+    <p>
+      We have included a video and detailed text instructions below.
+    </p>
+    <div>
+      <iframe
+        src="https://www.youtube.com/embed/qqGv4nOQqPI"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <h3><u>Step 1: Add a link to your experiment into Qualtrics</u></h3>
+
+    <p>
+      When you have finished creating a condition within the Howe’s Grocery
+      website, you will be given a link that uniquely takes participants to this
+      condition. See the screenshot below.
+    </p>
+
+    <%= image_tag('img1.png', class: 'accordion-image')%>
+
+    <p>
+      You can integrate this link into your Qualtrics using a hyperlink. The
+      store is not currently compatible with being embedded as an iFrame.
+    </p>
+
+    <h3><u>Hyperlink</u></h3>
+
+    <p>
+      A hyperlink looks like the image below. It will open a new tab of the grocery store
+    </p>
+
+    <%= image_tag('img2.png', class: 'accordion-image')%>
+
+    <p>
+      The HTML for using a hyperlink is as follows:
+    </p>
+    <pre>
+      <code>
+        <%= "<a href=\"[YOUR HOWES GROCERY LINK]/\" target=\"_blank\">Click this link</a>" %>
+      </code>
+    </pre>
+
+    <h3>
+      <u>Step 2: Randomly Assign Participants to Condition</u>
+    </h3>
+
+    <p>
+      If manipulating something in the store is one of your independent
+      variables, then you will want to randomly assign participants to different
+      links (that represent your different conditions).
+    </p>
+
+    <p>
+      You can use the random assignment function in Qualtrics survey flow to do this.
+    </p>
+
+    <%= image_tag('img3.png', class: 'accordion-image')%>
+
+    <p>
+      Simply change the hyperlinked condition, depending on which version of the
+      store you want participants to see.
+    </p>
+
+    <h3><u>Stage 3: Tracking your participants from Qualtrics to the Grocer (and back again)</u></h3>
+
+    <p>
+      Once a participant opens the store, the first page will always look like this:
+    </p>
+
+    <%= image_tag('img4.png', class: 'accordion-image')%>
+
+    <p>
+      You will assign each participant a unique session ID. The session ID will
+      allow you to link their responses in Qualtrics to their behavior in the store.
+    </p>
+
+    <p>
+      The easiest session ID to use is the participant identifier assigned by
+      Qualtrics, called “ResponseID”
+    </p>
+
+    <p>
+      In Qualtrics, you would pipe in the ResponseID (${e://Field/ResponseID}),
+      so that all your participants saw something like this before entering the
+      store:
+    </p>
+
+    <%= image_tag('img5.png', class: 'accordion-image')%>
+
+    <p>
+      However, you could also pipe in other unique identifiers like MTurk
+      ID(${e://Field/workerId}; if using Turk Prime to run studies), or any
+      other unique identifier you have already assigned.
+    </p>
+
+    <p>
+      When you download the data, you will see that this identifier appears as
+      the first line in your data set.
+    </p>
+
+    <%= image_tag('img6.png', class: 'accordion-image')%>
+
+    <h3><u>Step 4: Ensuring that participants actually “Check Out”</u></h3>
+
+    <p>
+      All your participants must check out in order for their cart contents to
+      appear in your data. So, it’s very important to incentivize your
+      participants to actually click the “Check Out” Button in the store.
+    </p>
+
+    <p>
+      The easiest way to do this is to ensure that they cannot move on in your
+      Qualtrics without entering a “password”. The only way that they can get
+      this password is by checking out of your store.
+    </p>
+
+    <p>
+      You can set this password (“Qualtrics Code”) on the first page of your
+      “condition” within the Howe’s Grocery interface.
+    </p>
+
+    <%= image_tag('img7.png', class: 'accordion-image')%>
+
+    <p>
+      Then, when a participant checks out they will be given this code:
+    </p>
+
+    <%= image_tag('img8.png', class: 'accordion-image')%>
+
+    <p>
+      To add a “password” into Qualtrics, create a question that looks something like this:
+    </p>
+
+    <%= image_tag('img9.png', class: 'accordion-image')%>
+
+    <p>
+      Within Qualtrics, use Custom Validation to ensure that participants cannot
+      move on unless they enter the correct password
+    </p>
+
+    <%= image_tag('img10.png', class: 'accordion-image')%>
   </div>
-  
 </div>
 
 <div class="ui accordion">
@@ -184,10 +253,15 @@
   </div>
   <div class="content">
     <%= render 'labeling_table' %>
-    For additional information on labeling, please watch the video below
-  </div>
-  <div class="embed-responsive embed-responsive-16by9">
-    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/-TM22iSg0MA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <p>
+      For additional information on labeling, please watch the video below
+    </p>
+    <iframe
+      src="https://www.youtube.com/embed/-TM22iSg0MA"
+      title="YouTube video player"
+      frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
   </div>
 </div>
 
@@ -195,10 +269,10 @@
   <div class="title bold large">
     <i class="dropdown icon"></i>
     I would like to use a label that is not based on nutrition
-    information (like "Organic" or "SNAP Eligible").Please email <a href = "mailto: holly.howe@duke.edu">holly.howe@duke.edu</a> with your requested feature to discuss further. 
+    information (like "Organic" or "SNAP Eligible").
   </div>
   <div class="content">
-    This function is not currently available in the store, but we would love to work with you to create it. Please email <a href = "mailto: holly.howe@duke.edu">holly.howe@duke.edu</a> with your requested feature to discuss further.
+    <%= render 'unavailable_feature' %>
   </div>
 </div>
 
@@ -208,15 +282,20 @@
     Can I add more than one label to foods?
   </div>
   <div class="content">
-    <div>
+    <p>
       Yes! The healthy stars label can be combined with any on-image label.
       Researchers can also add multiple on-image labels. To see how, watch the video below.
-    </div>
+    </p>
 
-    <br>
-    <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/-TM22iSg0MA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
+    <div>
+      <iframe
+        src="https://www.youtube.com/embed/-TM22iSg0MA"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
   </div>
 </div>
 
@@ -266,18 +345,15 @@
   </div>
 </div>
 
-
-
 <div class="ui accordion">
-    <div class="title bold large">
-      <i class="dropdown icon"></i>
-      Can I see the order that items were presented to my participants?
-    </div>
-    <div class="content">
-      We are working on creating this function right now. Stay tuned!
-    </div>
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Can I see the order that items were presented to my participants?
   </div>
-
+  <div class="content">
+    We are working on creating this function right now. Stay tuned!
+  </div>
+</div>
 
 <div class="ui accordion">
   <div class="title bold large">
@@ -285,10 +361,18 @@
     Can I create a custom category other than the ones listed?
   </div>
   <div class="content">
-    Yes! Navigate to the "Categories" tab within an experimental condition.
-    <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/k-eauQZqVzo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
+    <p>
+      Yes! Navigate to the "Categories" tab within an experimental condition.
+    </p>
+    <div>
+      <iframe
+        src="https://www.youtube.com/embed/k-eauQZqVzo"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
   </div>
 </div>
 
@@ -305,20 +389,22 @@
     <div>
       Currently, researchers do not have the ability to turn this category
       "double dipping" on or off. If that’s a feature you’re interested on
-      working with us to develop, please email <a href = "mailto: holly.howe@duke.edu">holly.howe@duke.edu</a>.
+      working with us to develop, please email <a href="mailto: holly.howe@duke.edu">holly.howe@duke.edu</a>.
     </div>
   </div>
 </div>
 
 <div class="ui accordion">
-    <div class="title bold large">
-      <i class="dropdown icon"></i>
-      Can I make some categories and subcategories invisible?
-    </div>
-    <div class="content">
-        You may want to remove certain categories (e.g., meat) from the store and observe how this changes participants behavior. We are currently working on creating this function. Stay tuned!
-    </div>
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Can I make some categories and subcategories invisible?
   </div>
+  <div class="content">
+    You may want to remove certain categories (e.g., meat) from the store and
+    observe how this changes participants behavior. We are currently working on
+    creating this function. Stay tuned!
+  </div>
+</div>
 
 <div class="ui accordion">
   <div class="title bold large">
@@ -326,8 +412,10 @@
     Can I change what participants see at check out?
   </div>
   <div class="content">
-    Yes, there are multiple ways in which you can modify the check out screen to
-    deliver a message to participants
+    <p>
+      Yes, there are multiple ways in which you can modify the check out screen to
+      deliver a message to participants
+    </p>
 
     <ol>
       <li>
@@ -344,14 +432,19 @@
       </li>
     </ol>
 
-    <div>
+    <p>
       See the video below for more information
-    </div>
+    </p>
 
-    <br>
-    <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/C1xX7QOqEJk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
+    <div>
+      <iframe
+        src="https://www.youtube.com/embed/C1xX7QOqEJk"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
   </div>
 </div>
 
@@ -386,7 +479,7 @@
       different contexts. For example, you could not say if calories
       < 100 then Label A, and if 100 < calories < 1000 then Label B, etc.
       If you are interested in helping us develop this function, please
-      email <a href = "mailto: holly.howe@duke.edu">holly.howe@duke.edu</a>
+      email <a href="mailto: holly.howe@duke.edu">holly.howe@duke.edu</a>
     </div>
   </div>
 </div>
@@ -410,18 +503,15 @@
     Can I give participants a budget?
   </div>
   <div class="content">
-    <div>
+    <p>
       Yes. Navigate to the budgeting tab of a specific condition and input
       values into one or both of the "participants must spend at least" or
       "participants must not spend more than".
-    </div>
-
-    <br>
-
-    <div>
+    </p>
+    <p>
       If participants exceed their budget, they will be given a notification
       and will be prevented from checking out.
-    </div>
+    </p>
   </div>
 </div>
 
@@ -432,23 +522,19 @@
     personal budget)?
   </div>
   <div class="content">
-    This function is not currently available in the store, but we would love to work with you to create it. Please email <a href = "mailto: holly.howe@duke.edu">holly.howe@duke.edu</a> with your requested feature to discuss further.
+    <%= render 'unavailable_feature' %>
   </div>
 </div>
 
 <div class="ui accordion">
-    <div class="title bold large">
-      <i class="dropdown icon"></i>
-      Can I provide participants with a price promotion on certain products?
-    </div>
-    <div class="content">
-       This function is not currently available in the store, but we would love to work with you to create it. Please email <a href = "mailto: holly.howe@duke.edu">holly.howe@duke.edu</a> with your requested feature to discuss further.
-    </div>
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Can I provide participants with a price promotion on certain products?
   </div>
-
-
-
-
+  <div class="content">
+    <%= render 'unavailable_feature' %>
+  </div>
+</div>
 
 <div class="ui accordion">
   <div class="title bold large">
@@ -457,49 +543,55 @@
     (e.g., $5 worth of bananas)?
   </div>
   <div class="content">
-    <div>
+    <p>
       Yes. Navigate to the budgeting tab of a specific condition and
       select "Allow participants to add items to cart by dollar amount"
-    </div>
+    </p>
 
-    <div>
+    <p>
       Participants can now specify that they would like to add $X
       worth of a product to their cart versus X number of a product.
       If adding $X results in a fractional amount of a product (e.g.,
       1/4 a box of crackers) the store will round down.
-    </div>
+    </p>
 
-    <br>
-
-    <div>
+    <p>
       The participants will see something that looks like this:
-    </div>
+    </p>
 
     <%= image_tag('add_by_dollar_amount.png', class: 'accordion-image compact')%>
 
-    <div>
+    <p>
       Note that giving participants the option to add items by price
       does not remove their ability to also add them by number.
-    </div>
+    </p>
   </div>
 </div>
 
 <div class="ui accordion">
-    <div class="title bold large">
-      <i class="dropdown icon"></i>
-      Can I recommend products to participants based on their activity?
-    </div>
-    <div class="content">
-      <div>
-        Yes, we have a very basic recommendation system implemented. If a participant selects a product (e.g., tortilla chips) you can recommend that they add another product to their cart (e.g., guacamole). Please see the following video to learn how to use the recommendation system 
-    </div>
-      <br>
-      <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/lseUAyXB_0M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Can I recommend products to participants based on their activity?
+  </div>
+  <div class="content">
+    <p>
+      Yes, we have a very basic recommendation system implemented. If a
+      participant selects a product (e.g., tortilla chips) you can recommend
+      that they add another product to their cart (e.g., guacamole). Please see
+      the following video to learn how to use the recommendation system
+    </p>
+
+    <div>
+      <iframe
+        src="https://www.youtube.com/embed/lseUAyXB_0M"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
     </div>
   </div>
-
+</div>
 
 <div class="ui accordion">
   <div class="title bold large">
@@ -507,15 +599,15 @@
     Can I give participants a time limit?
   </div>
   <div class="content">
-    <div>
+    <p>
       You cannot currently give participants a time limit while shopping.
-    </div>
-    <div>
+    </p>
+    <p>
       You may be able to work-around this limitation by using an iFrame
       and a timer question in Qualtrics. However, if participants do
       not check out, their data will only be recorded in the "All participants
       actions" download.
-    </div>
+    </p>
   </div>
 </div>
 
@@ -527,7 +619,8 @@
   <div class="content">
     We do not currently have a record of the SKUs for products in the
     store. We would love to work with you to add this data. Please email
-    <a href = "mailto: holly.howe@duke.edu">holly.howe@duke.edu</a> with your requested feature to discuss further.
+    <a href="mailto: holly.howe@duke.edu">holly.howe@duke.edu</a> with your
+    requested feature to discuss further.
   </div>
 </div>
 
@@ -553,7 +646,6 @@
       Two data sets are available for download: "All participant actions"
       and "Products in cart at checkout"
     </div>
-
     <%= render 'collected_data_table' %>
   </div>
 </div>
@@ -564,7 +656,7 @@
     Can I know how long participants looked at an item?
   </div>
   <div class="content">
-    <%= unavailable_feature_text %>
+    <%= render 'unavailable_feature' %>
   </div>
 </div>
 
