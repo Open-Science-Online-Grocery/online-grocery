@@ -3,12 +3,25 @@
 require 'rails_helper'
 
 RSpec.describe CsvFileManagers::Suggestion do
+  let(:csv) do
+    ActionDispatch::Http::UploadedFile.new(
+      tempfile: File.open(
+        Rails.root.join('spec/fixtures/files/suggestions/good_1.csv')
+      ),
+      filename: 'good_1.csv'
+    )
+  end
+  let(:suggestion_file) { build(:suggestion_csv_file, file: csv) }
   let(:product_1) { build(:product) }
   let(:product_2) { build(:product) }
   let(:add_on_1) { build(:product) }
   let(:add_on_2) { build(:product) }
   let(:condition) do
-    instance_double 'Condition'
+    instance_double(
+      'Condition',
+      current_suggestion_csv_file: suggestion_file,
+      product_suggestions: existing_suggestions_relation
+    )
   end
   let(:product_suggestion) { instance_double 'ProductSuggestion', save: true }
   let(:existing_suggestions_relation) do
@@ -19,29 +32,11 @@ RSpec.describe CsvFileManagers::Suggestion do
       destroy_all: true
     )
   end
-  let(:csv) do
-    ActionDispatch::Http::UploadedFile.new(
-      tempfile: File.open(
-        Rails.root.join('spec/fixtures/files/suggestions/good_1.csv')
-      ),
-      filename: 'good_1.csv'
-    )
-  end
-  let(:suggestion_file) do
-    build(:suggestion_csv_file, file: csv)
-  end
 
   subject { described_class.new(condition) }
 
   before do
-    allow(condition).to receive(:current_suggestion_csv_file) { suggestion_file }
-    allow(condition).to receive(:product_suggestions) do
-      existing_suggestions_relation
-    end
     allow(existing_suggestions_relation).to receive_message_chain(:where, :not) do
-      existing_suggestions_relation
-    end
-    allow(condition).to receive_message_chain(:product_suggestions, :where, :not) do
       existing_suggestions_relation
     end
     allow(Product).to receive(:find_by) do |arg|

@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.4'
 
+gem 'activerecord-import'
 gem 'aws-sdk-s3'
 gem 'aws-sdk-rds'
 gem 'bcrypt_pbkdf'

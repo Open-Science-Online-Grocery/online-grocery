@@ -37,12 +37,9 @@ class ProductFetcher
   end
 
   def fetch_products
-    product_hashes = products.map do |product|
-      ProductSerializer.new(product, @condition).serialize
-    end
     ProductSorter.new(
-      product_hashes,
-      @condition,
+      product_relation: products,
+      condition: @condition,
       session_identifier: @params[:session_identifier],
       manual_sort_field_description: @params[:sort_field],
       manual_sort_order: @params[:sort_direction]
@@ -56,7 +53,7 @@ class ProductFetcher
       scope_by_membership
     end
     filter_products
-    @product_relation.uniq
+    @product_relation.distinct
   end
 
   private def scope_by_name

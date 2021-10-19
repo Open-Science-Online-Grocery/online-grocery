@@ -13,5 +13,6 @@ class CreateCustomSortings < ActiveRecord::Migration[5.2]
     end
 
     add_index :custom_sortings, :session_identifier
+    add_index :custom_sortings, :sort_order
   end
 end

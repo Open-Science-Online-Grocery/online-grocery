@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
+require 'csv'
+
 module CsvFileManagers
   # responsible for generating a csv of all product and category data
   # with blanks for users to input custom categories
   class Category
-    require 'csv'
-
     def self.product_data_csv_attributes
       built_in_category_attributes.merge(custom_category_attributes)
     end
