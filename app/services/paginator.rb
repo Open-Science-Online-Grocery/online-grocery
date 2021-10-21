@@ -4,9 +4,11 @@
 class Paginator
   RECORDS_PER_PAGE = 100
 
+  attr_reader :current_page
+
   # @param records [Array]
   # @param current_page [Integer] the (1-indexed) desired page of records
-  def initialize(records, current_page)
+  def initialize(records, current_page = 1)
     @records = records
     @current_page = current_page
   end
