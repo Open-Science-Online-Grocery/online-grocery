@@ -3,6 +3,10 @@
 .product-grid {
   display: flex;
   flex-wrap: wrap;
+
+  .ui.loader {
+    margin-top: 5rem;
+  }
 }
 
 .product-grid-item {

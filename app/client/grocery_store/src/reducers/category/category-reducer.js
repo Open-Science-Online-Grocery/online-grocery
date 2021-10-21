@@ -2,6 +2,9 @@ import { categoryActionTypes } from './category-actions';
 import { userActionTypes } from '../user/user-actions';
 
 const initialCategoryState = {
+  page: 1,
+  totalPages: 1,
+  loaderActive: false,
   selectedCategoryId: null,
   selectedSubcategoryId: null,
   selectedSubsubcategoryId: null,
@@ -52,7 +55,7 @@ export default function categoryReducer(state = initialCategoryState, action) {
   const {
     categories, subcategories, subsubcategories, products, selectedCategoryId,
     selectedSubcategoryId, selectedSubsubcategoryId, tags, subtags,
-    selectedCategoryType
+    selectedCategoryType, page, totalPages, loaderActive
   } = action;
 
   switch (action.type) {
@@ -65,7 +68,13 @@ export default function categoryReducer(state = initialCategoryState, action) {
       });
     case categoryActionTypes.SET_PRODUCTS:
       return Object.assign({}, state, {
+        page,
+        totalPages,
         products
+      });
+    case categoryActionTypes.SET_LOADER:
+      return Object.assign({}, state, {
+        loaderActive
       });
     case userActionTypes.SET_CONDITION_DATA:
       return Object.assign({}, state, {

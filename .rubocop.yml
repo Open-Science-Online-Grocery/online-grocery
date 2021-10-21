@@ -62,8 +62,6 @@ Lint/DuplicateElsifCondition:
   Enabled: true
 Lint/MixedRegexpCaptureTypes:
   Enabled: true
-Lint/NumberConversion:
-  Enabled: true
 Lint/RaiseException:
   Enabled: true
 Lint/StructNewOverride:
@@ -118,8 +116,6 @@ Naming/MethodParameterName:
     - x
     - y
     - _
-Naming/VariableNumber:
-  EnforcedStyle: snake_case
 
 Performance/AncestorsInclude:
   Enabled: false

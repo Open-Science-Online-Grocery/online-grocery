@@ -1,0 +1,27 @@
+@import "../../base/base";
+
+.pagination {
+  margin: 1rem;
+  text-align: center;
+  width: 100%;
+  color: $price-green;
+  display: flex;
+  justify-content: center;
+
+  span, a {
+    margin: 1rem;
+  }
+
+  a {
+    color: $price-green;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .disabled {
+    color: $light-shadow;
+  }
+}
