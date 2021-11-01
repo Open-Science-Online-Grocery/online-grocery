@@ -30,7 +30,7 @@ class Search extends React.Component {
         <ProductFilterContainer />
         <form onSubmit={this.handleSubmit}>
           <input
-            className="form-input"
+            className="form-input search-input"
             type="text"
             placeholder="Search..."
             value={this.state.value}
