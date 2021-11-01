@@ -16,9 +16,9 @@ const mapDispatchToProps = dispatch => (
     handleDismiss: () => {
       dispatch(suggestionActionCreators.dismissSuggestion());
     },
-    logParticipantAction: (actionType, product, quantity) => {
+    logParticipantAction: (actionType, attributes) => {
       dispatch(
-        userActionCreators.logParticipantAction(actionType, product, quantity)
+        userActionCreators.logParticipantAction(actionType, attributes)
       );
     }
   }
