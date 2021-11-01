@@ -24,7 +24,6 @@ export default class CartDropdown extends React.Component {
 
   removeFromCart(product) {
     this.props.handleRemoveFromCart(product);
-    this.props.logParticipantAction('delete', product, product.quantity);
   }
 
   render() {
@@ -87,6 +86,5 @@ CartDropdown.propTypes = {
       })
     )
   }).isRequired,
-  handleRemoveFromCart: PropTypes.func.isRequired,
-  logParticipantAction: PropTypes.func.isRequired
+  handleRemoveFromCart: PropTypes.func.isRequired
 };

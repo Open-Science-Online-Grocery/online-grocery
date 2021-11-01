@@ -73,16 +73,18 @@ function sessionIdSubmitted(sessionId) {
   };
 }
 
-// `actionType` here is a string representing the action the participant has
-// taken, such as 'view', 'add', 'delete', 'checkout'
-function logParticipantAction(actionType, product, quantity) {
+// @param {string} actionType - string representing the action the participant
+//   has taken, such as 'view', 'add', 'delete', 'checkout'
+// @param {object} attributes - (optional) data about the action
+function logParticipantAction(actionType, attributes = {}) {
   return (dispatch, getState) => {
     const state = getState();
     const params = {
+      ...attributes,
       actionType,
-      quantity,
-      productId: product.id,
-      serialPosition: product.serialPosition,
+      // quantity,
+      // productId: product.id,
+      // serialPosition: product.serialPosition,
       sessionId: state.user.sessionId,
       conditionIdentifier: state.user.conditionIdentifier
     };

@@ -17,7 +17,6 @@ export default class OrderSummary extends React.Component {
 
   removeFromCart(product) {
     this.props.handleRemoveFromCart(product);
-    this.props.logParticipantAction('delete', product, product.quantity);
   }
 
   clearCart() {

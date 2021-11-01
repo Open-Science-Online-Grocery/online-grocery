@@ -64,6 +64,16 @@ function removeFromCart(product) {
   return (dispatch, getState) => {
     const underMinSpendBefore = underMinSpend(getState());
     dispatch({ type: cartActionTypes.REMOVE_FROM_CART, product });
+    dispatch(
+      userActionCreators.logParticipantAction(
+        'delete',
+        {
+          quantity: product.quantity,
+          productId: product.id,
+          serialPosition: product.serialPosition
+        }
+      )
+    );
 
     const underMinSpendAfter = underMinSpend(getState());
 
