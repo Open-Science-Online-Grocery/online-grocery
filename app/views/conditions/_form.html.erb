@@ -24,6 +24,7 @@
       <div class="item" data-tab="nutrition-facts">Nutrition Facts</div>
       <div class="item" data-tab="budgeting">Budgeting</div>
       <div class="item" data-tab="suggestions">Suggestions</div>
+      <div class="item" data-tab="searching">Searching</div>
     </div>
 
     <%= render "basic_info_tab", f: f %>
@@ -34,6 +35,7 @@
     <%= render "nutrition_facts_tab", f: f, condition: condition %>
     <%= render "budgeting_tab", f: f, condition: condition %>
     <%= render "suggestions_tab", f: f, condition: condition %>
+    <%= render "searching_tab", f: f, condition: condition %>
 
     <div class="button-wrapper right">
       <button type="submit" class="ui positive button" data-tab-submit>

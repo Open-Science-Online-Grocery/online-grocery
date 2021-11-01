@@ -100,6 +100,7 @@ class ConditionsController < ApplicationController
       :new_suggestion_csv_file,
       :new_sort_file,
       :show_products_by_subcategory,
+      :allow_searching,
       tag_csv_files_attributes: %i[id active],
       sort_files_attributes: %i[id active],
       suggestion_csv_files_attributes: %i[id active],
