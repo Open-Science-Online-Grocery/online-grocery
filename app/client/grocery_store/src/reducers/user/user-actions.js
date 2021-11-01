@@ -73,6 +73,26 @@ function sessionIdSubmitted(sessionId) {
   };
 }
 
+function pageViewed() {
+  return (dispatch, getState) => {
+    const state = getState();
+    dispatch(
+      logParticipantAction(
+        'page view',
+        {
+          serialPosition: state.category.page,
+          selectedCategoryId: state.category.selectedCategoryId,
+          selectedSubcategoryId: state.category.selectedSubcategoryId,
+          selectedSubsubcategoryId: state.category.selectedSubsubcategoryId,
+          selectedCategoryType: state.category.selectedCategoryType,
+          searchTerm: state.search.term,
+          searchType: state.search.type
+        }
+      )
+    );
+  }
+}
+
 // @param {string} actionType - string representing the action the participant
 //   has taken, such as 'view', 'add', 'delete', 'checkout'
 // @param {object} attributes - (optional) data about the action
@@ -82,9 +102,6 @@ function logParticipantAction(actionType, attributes = {}) {
     const params = {
       ...attributes,
       actionType,
-      // quantity,
-      // productId: product.id,
-      // serialPosition: product.serialPosition,
       sessionId: state.user.sessionId,
       conditionIdentifier: state.user.conditionIdentifier
     };
@@ -100,5 +117,6 @@ function logParticipantAction(actionType, attributes = {}) {
 export const userActionCreators = {
   setUser,
   sessionIdSubmitted,
+  pageViewed,
   logParticipantAction
 };

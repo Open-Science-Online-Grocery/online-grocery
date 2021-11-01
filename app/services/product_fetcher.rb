@@ -2,6 +2,25 @@
 
 # responsible for finding and formatting product data based on search params
 class ProductFetcher
+  delegate :term_search_type, :category_type, :tag_type, :subtag_type,
+           to: :class
+
+  def self.term_search_type
+    'term'
+  end
+
+  def self.category_type
+    'category'
+  end
+
+  def self.tag_type
+    'tag'
+  end
+
+  def self.subtag_type
+    'subtag'
+  end
+
   # @param [ActionController::Parameters] params - params pertaining to which
   #   Products should be returned (and in which order). looks like this:
   #     {
@@ -114,21 +133,5 @@ class ProductFetcher
     else
       @product_relation = @product_relation.with_tag(tag_id)
     end
-  end
-
-  private def term_search_type
-    'term'
-  end
-
-  private def category_type
-    'category'
-  end
-
-  private def tag_type
-    'tag'
-  end
-
-  private def subtag_type
-    'subtag'
   end
 end
