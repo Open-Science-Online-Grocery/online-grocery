@@ -95,4 +95,8 @@ class NullCondition
   def products
     Product.all
   end
+
+  def allow_searching
+    true
+  end
 end
