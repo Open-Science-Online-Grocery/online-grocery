@@ -55,14 +55,14 @@ export default class TopNav extends React.Component {
   }
 
   render() {
-    const { categoryTitle } = this.props;
+    const { categoryTitle, allowSearching } = this.props;
     return (
-      <div>
-        <div className="top-nav">
+      <div className="top-nav">
+        <div className="menu">
           {this.categoryTabs()}
           {this.tagTab()}
         </div>
-        <SearchContainer />
+        {allowSearching && <SearchContainer />}
         <div className="title">
           {categoryTitle}
         </div>
@@ -86,9 +86,12 @@ TopNav.propTypes = {
     PropTypes.shape({
       name: PropTypes.string
     })
-  ).isRequired
+  ).isRequired,
+  categoryTitle: PropTypes.string,
+  allowSearching: PropTypes.bool.isRequired
 };
 
 TopNav.defaultProps = {
-  displayedTag: null
+  displayedTag: null,
+  categoryTitle: ''
 };

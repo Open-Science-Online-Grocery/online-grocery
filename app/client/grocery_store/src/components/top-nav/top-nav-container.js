@@ -10,7 +10,8 @@ const mapStateToProps = (state) => {
     displayedTag: firstTag,
     categories,
     tags,
-    categoryTitle: getCategoryTitle(state)
+    categoryTitle: getCategoryTitle(state),
+    allowSearching: state.user.allowSearching
   });
 };
 

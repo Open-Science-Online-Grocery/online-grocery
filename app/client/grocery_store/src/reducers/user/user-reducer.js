@@ -7,7 +7,8 @@ const initialUserState = {
   mayAddToCartByDollarAmount: false,
   showGuidingStars: true,
   qualtricsCode: null,
-  showProductsBySubcategory: true
+  showProductsBySubcategory: true,
+  allowSearching: true
 };
 
 export default function userReducer(state = initialUserState, action) {
@@ -23,7 +24,8 @@ export default function userReducer(state = initialUserState, action) {
         mayAddToCartByDollarAmount: action.mayAddToCartByDollarAmount,
         showGuidingStars: action.showGuidingStars,
         qualtricsCode: action.qualtricsCode,
-        showProductsBySubcategory: action.showProductsBySubcategory
+        showProductsBySubcategory: action.showProductsBySubcategory,
+        allowSearching: action.allowSearching
       });
     default:
       return state;

@@ -28,8 +28,10 @@ function setUser(sessionId, conditionIdentifier) {
 //     subtags: [
 //       { id: 3, tagId: 1, name: 'Dairy-free' },
 //       { id: 4, tagId: 1, name: 'Tofu' },
-//     ]
+//     ],
+//     ...
 //   }
+// see `ConditionSerializer` in the rails app for details.
 function setConditionData(conditionData) {
   return {
     ...conditionData,
