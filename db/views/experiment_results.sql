@@ -8,6 +8,7 @@ SELECT experiments.id AS experiment_id,
   products.name AS product_name,
   participant_actions.quantity AS quantity,
   participant_actions.serial_position AS serial_position,
+  participant_actions.detail AS detail,
   participant_actions.created_at AS created_at
 FROM experiments
   JOIN conditions
