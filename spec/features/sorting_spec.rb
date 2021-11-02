@@ -90,7 +90,7 @@ RSpec.describe 'Sorting products in grocery store', :feature do
     expect(page).to have_content 'This is a product'
     force_click(find('span', text: 'Back to Browsing'))
 
-    actions = ParticipantAction.last(2)
+    actions = ParticipantAction.where(action_type: 'view').last(2)
     expect(actions.first.product_id).to eq product_3.id
     expect(actions.first.serial_position).to eq 1
     expect(actions.last.product_id).to eq product_3.id

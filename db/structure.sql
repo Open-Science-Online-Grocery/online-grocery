@@ -119,6 +119,7 @@ CREATE TABLE `conditions` (
   `qualtrics_code` varchar(255) DEFAULT NULL,
   `sort_type` varchar(255) DEFAULT NULL,
   `show_products_by_subcategory` tinyint(1) DEFAULT 1,
+  `allow_searching` tinyint(1) DEFAULT 1,
   PRIMARY KEY (`id`),
   KEY `index_conditions_on_experiment_id` (`experiment_id`),
   KEY `index_conditions_on_default_sort_field_id` (`default_sort_field_id`)
@@ -173,6 +174,7 @@ SET character_set_client = utf8;
   `product_name` tinyint NOT NULL,
   `quantity` tinyint NOT NULL,
   `serial_position` tinyint NOT NULL,
+  `detail` tinyint NOT NULL,
   `created_at` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
@@ -215,6 +217,7 @@ CREATE TABLE `participant_actions` (
   `updated_at` datetime NOT NULL,
   `product_id` bigint(20) DEFAULT NULL,
   `serial_position` int(11) DEFAULT NULL,
+  `detail` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_participant_actions_on_condition_id` (`condition_id`),
   KEY `index_participant_actions_on_product_id` (`product_id`)
@@ -425,7 +428,7 @@ CREATE TABLE `users` (
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `experiment_results` AS select `experiments`.`id` AS `experiment_id`,`experiments`.`name` AS `experiment_name`,`conditions`.`name` AS `condition_name`,`participant_actions`.`session_identifier` AS `session_identifier`,`participant_actions`.`action_type` AS `action_type`,`participant_actions`.`product_id` AS `product_id`,`products`.`name` AS `product_name`,`participant_actions`.`quantity` AS `quantity`,`participant_actions`.`serial_position` AS `serial_position`,`participant_actions`.`created_at` AS `created_at` from (((`experiments` join `conditions` on(`conditions`.`experiment_id` = `experiments`.`id`)) join `participant_actions` on(`participant_actions`.`condition_id` = `conditions`.`id`)) left join `products` on(`participant_actions`.`product_id` = `products`.`id`)) */;
+/*!50001 VIEW `experiment_results` AS select `experiments`.`id` AS `experiment_id`,`experiments`.`name` AS `experiment_name`,`conditions`.`name` AS `condition_name`,`participant_actions`.`session_identifier` AS `session_identifier`,`participant_actions`.`action_type` AS `action_type`,`participant_actions`.`product_id` AS `product_id`,`products`.`name` AS `product_name`,`participant_actions`.`quantity` AS `quantity`,`participant_actions`.`serial_position` AS `serial_position`,`participant_actions`.`detail` AS `detail`,`participant_actions`.`created_at` AS `created_at` from (((`experiments` join `conditions` on(`conditions`.`experiment_id` = `experiments`.`id`)) join `participant_actions` on(`participant_actions`.`condition_id` = `conditions`.`id`)) left join `products` on(`participant_actions`.`product_id` = `products`.`id`)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -491,6 +494,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20211001155043'),
 ('20211005133810'),
 ('20211006163426'),
-('20211007184814');
+('20211007184814'),
+('20211101155624'),
+('20211101190836');
 
 

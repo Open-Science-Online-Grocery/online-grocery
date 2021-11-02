@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import './pagination.scss';
 
 export default class Pagination extends React.Component {
+  componentDidMount() {
+    this.props.handlePageViewed();
+  }
+
   goToPage(requestedPage) {
     const { requestPage } = this.props;
     document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -66,5 +70,6 @@ export default class Pagination extends React.Component {
 Pagination.propTypes = {
   currentPage: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
-  requestPage: PropTypes.func.isRequired
+  requestPage: PropTypes.func.isRequired,
+  handlePageViewed: PropTypes.func.isRequired
 };

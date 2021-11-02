@@ -42,7 +42,14 @@ function addToCart(product, amount, addByDollar) {
     const newProduct = Object.assign({}, product, { quantity });
     dispatch({ type: cartActionTypes.ADD_TO_CART, product: newProduct });
     dispatch(
-      userActionCreators.logParticipantAction('add', newProduct, quantity)
+      userActionCreators.logParticipantAction(
+        'add',
+        {
+          quantity,
+          productId: newProduct.id,
+          serialPosition: newProduct.serialPosition
+        }
+      )
     );
 
     const overMaxSpendAfter = overMaxSpend(getState());
@@ -64,6 +71,16 @@ function removeFromCart(product) {
   return (dispatch, getState) => {
     const underMinSpendBefore = underMinSpend(getState());
     dispatch({ type: cartActionTypes.REMOVE_FROM_CART, product });
+    dispatch(
+      userActionCreators.logParticipantAction(
+        'delete',
+        {
+          quantity: product.quantity,
+          productId: product.id,
+          serialPosition: product.serialPosition
+        }
+      )
+    );
 
     const underMinSpendAfter = underMinSpend(getState());
 
@@ -73,6 +90,26 @@ function removeFromCart(product) {
       ));
     }
   };
+}
+
+function checkout() {
+  return (dispatch, getState) => {
+    const state = getState();
+    const products = state.cart.items;
+    products.forEach((product) => {
+      dispatch(
+        userActionCreators.logParticipantAction(
+          'checkout',
+          {
+            quantity: product.quantity,
+            productId: product.id,
+            serialPosition: product.serialPosition
+          }
+        )
+      )
+    });
+    dispatch(clearCart);
+  }
 }
 
 function clearCart() {
@@ -115,6 +152,7 @@ function getCartSettings() {
 export const cartActionCreators = {
   addToCart,
   removeFromCart,
+  checkout,
   clearCart,
   getCartSettings
 };

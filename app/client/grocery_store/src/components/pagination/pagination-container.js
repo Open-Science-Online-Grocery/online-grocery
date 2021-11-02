@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import Pagination from './pagination';
 import { categoryActionCreators } from '../../reducers/category/category-actions';
+import { userActionCreators } from '../../reducers/user/user-actions';
 
 const mapStateToProps = state => (
   {
@@ -13,7 +14,8 @@ const mapDispatchToProps = dispatch => (
   {
     requestPage: (requestedPage) => (
       dispatch(categoryActionCreators.getProducts(requestedPage))
-    )
+    ),
+    handlePageViewed: () => dispatch(userActionCreators.pageViewed())
   }
 );
 

@@ -15,16 +15,8 @@ export default class OrderSummary extends React.Component {
     }
   }
 
-  removeFromCart(product) {
-    this.props.handleRemoveFromCart(product);
-    this.props.logParticipantAction('delete', product, product.quantity);
-  }
-
-  clearCart() {
-    this.props.handleClearCart();
-    this.props.cart.items.forEach((item) => {
-      this.props.logParticipantAction('checkout', item, item.quantity);
-    });
+  checkout() {
+    this.props.handleCheckout();
     this.props.onSubmit();
   }
 
@@ -66,7 +58,7 @@ export default class OrderSummary extends React.Component {
             ${parseFloat(item.price).toFixed(2)}
           </span>
         </span>
-        <span onClick={() => this.removeFromCart(item)} className="order-delete-item">X</span>
+        <span onClick={() => this.props.handleRemoveFromCart(item)} className="order-delete-item">X</span>
       </div>
     ));
     return listedItems;
@@ -151,7 +143,7 @@ export default class OrderSummary extends React.Component {
       );
     }
     return (
-      <button type="submit" onClick={() => this.clearCart()} className="checkout-button bold">
+      <button type="submit" onClick={() => this.checkout()} className="checkout-button bold">
         Complete Order
       </button>
     );
@@ -202,10 +194,9 @@ OrderSummary.propTypes = {
   tax: PropTypes.string.isRequired,
   total: PropTypes.string.isRequired,
   errorMessage: PropTypes.string,
-  handleClearCart: PropTypes.func.isRequired,
+  handleCheckout: PropTypes.func.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
   getCartSettings: PropTypes.func.isRequired,
-  logParticipantAction: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired
 };
 

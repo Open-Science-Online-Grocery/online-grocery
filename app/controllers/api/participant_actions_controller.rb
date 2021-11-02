@@ -17,7 +17,8 @@ module Api
         action_type: params[:action_type],
         product_id: params[:product_id],
         quantity: params[:quantity],
-        serial_position: params[:serial_position]
+        serial_position: params[:serial_position],
+        detail: description
       )
       json = {
         data: { success: action.valid? },
@@ -26,5 +27,10 @@ module Api
       render json: json
     end
     # rubocop:enable Rails/SaveBang, Metrics/AbcSize
+
+    private def description
+      return unless params[:action_type] == 'page view'
+      PageDescriber.new(params).description
+    end
   end
 end

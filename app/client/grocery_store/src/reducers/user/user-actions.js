@@ -28,8 +28,10 @@ function setUser(sessionId, conditionIdentifier) {
 //     subtags: [
 //       { id: 3, tagId: 1, name: 'Dairy-free' },
 //       { id: 4, tagId: 1, name: 'Tofu' },
-//     ]
+//     ],
+//     ...
 //   }
+// see `ConditionSerializer` in the rails app for details.
 function setConditionData(conditionData) {
   return {
     ...conditionData,
@@ -73,16 +75,35 @@ function sessionIdSubmitted(sessionId) {
   };
 }
 
-// `actionType` here is a string representing the action the participant has
-// taken, such as 'view', 'add', 'delete', 'checkout'
-function logParticipantAction(actionType, product, quantity) {
+function pageViewed() {
+  return (dispatch, getState) => {
+    const state = getState();
+    dispatch(
+      logParticipantAction(
+        'page view',
+        {
+          serialPosition: state.category.page,
+          selectedCategoryId: state.category.selectedCategoryId,
+          selectedSubcategoryId: state.category.selectedSubcategoryId,
+          selectedSubsubcategoryId: state.category.selectedSubsubcategoryId,
+          selectedCategoryType: state.category.selectedCategoryType,
+          searchTerm: state.search.term,
+          searchType: state.search.type
+        }
+      )
+    );
+  }
+}
+
+// @param {string} actionType - string representing the action the participant
+//   has taken, such as 'view', 'add', 'delete', 'checkout'
+// @param {object} attributes - (optional) data about the action
+function logParticipantAction(actionType, attributes = {}) {
   return (dispatch, getState) => {
     const state = getState();
     const params = {
+      ...attributes,
       actionType,
-      quantity,
-      productId: product.id,
-      serialPosition: product.serialPosition,
       sessionId: state.user.sessionId,
       conditionIdentifier: state.user.conditionIdentifier
     };
@@ -98,5 +119,6 @@ function logParticipantAction(actionType, product, quantity) {
 export const userActionCreators = {
   setUser,
   sessionIdSubmitted,
+  pageViewed,
   logParticipantAction
 };

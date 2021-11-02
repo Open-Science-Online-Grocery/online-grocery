@@ -4,9 +4,9 @@ import { userActionCreators } from '../../reducers/user/user-actions';
 
 const mapDispatchToProps = dispatch => (
   {
-    logParticipantAction: (actionType, product, quantity) => {
+    logParticipantAction: (actionType, attributes) => {
       dispatch(
-        userActionCreators.logParticipantAction(actionType, product, quantity)
+        userActionCreators.logParticipantAction(actionType, attributes)
       );
     }
   }

@@ -57,7 +57,7 @@ export default class Tab extends React.Component {
       >
         {this.tabBody()}
         {
-          subcats.length
+          subcats.length > 0
             && this.state.open
             && (
               <div className="tab-dropdown">
