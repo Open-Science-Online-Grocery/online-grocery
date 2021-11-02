@@ -28,7 +28,8 @@ RSpec.describe ConditionSerializer do
       maximum_spend: 50,
       may_add_to_cart_by_dollar_amount: false,
       qualtrics_code: 'FOOBAR',
-      show_products_by_subcategory: true
+      show_products_by_subcategory: true,
+      allow_searching: false
     )
   end
 
@@ -66,7 +67,8 @@ RSpec.describe ConditionSerializer do
         maximum_spend: BigDecimal('50'),
         may_add_to_cart_by_dollar_amount: false,
         show_guiding_stars: true,
-        qualtrics_code: 'FOOBAR'
+        qualtrics_code: 'FOOBAR',
+        allow_searching: false
       }
       expect(subject.serialize).to eq expected_data
     end
@@ -92,7 +94,8 @@ RSpec.describe ConditionSerializer do
           maximum_spend: BigDecimal('50'),
           may_add_to_cart_by_dollar_amount: false,
           show_guiding_stars: true,
-          qualtrics_code: 'FOOBAR'
+          qualtrics_code: 'FOOBAR',
+          allow_searching: false
         }
         expect(subject.serialize).to eq expected_data
       end

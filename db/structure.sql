@@ -119,6 +119,7 @@ CREATE TABLE `conditions` (
   `qualtrics_code` varchar(255) DEFAULT NULL,
   `sort_type` varchar(255) DEFAULT NULL,
   `show_products_by_subcategory` tinyint(1) DEFAULT 1,
+  `allow_searching` tinyint(1) DEFAULT 1,
   PRIMARY KEY (`id`),
   KEY `index_conditions_on_experiment_id` (`experiment_id`),
   KEY `index_conditions_on_default_sort_field_id` (`default_sort_field_id`)
@@ -494,6 +495,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20211005133810'),
 ('20211006163426'),
 ('20211007184814'),
-('20211101155624');
+('20211101155624'),
+('20211101190836');
 
 

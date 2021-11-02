@@ -26,7 +26,8 @@ class ConditionSerializer
       maximum_spend: @condition.maximum_spend,
       may_add_to_cart_by_dollar_amount: @condition.may_add_to_cart_by_dollar_amount,
       show_guiding_stars: @condition.show_guiding_stars,
-      qualtrics_code: @condition.qualtrics_code
+      qualtrics_code: @condition.qualtrics_code,
+      allow_searching: @condition.allow_searching
     }
   end
   # rubocop:enable Layout/LineLength, Metrics/AbcSize, Metrics/MethodLength
