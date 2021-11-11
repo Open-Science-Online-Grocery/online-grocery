@@ -40,3 +40,4 @@ en:
   time:
     formats:
       default: '%-m/%-d/%Y %-l:%M %p %Z'
+      with_seconds: '%-m/%-d/%Y %-l:%M:%S %p %Z'
