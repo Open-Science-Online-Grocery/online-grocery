@@ -11,6 +11,7 @@ RSpec.describe ParticipantActionsExporter do
       condition_name: 'Control Condition',
       session_identifier: 'asdf',
       action_type: 'view',
+      product_id: 456,
       product_name: 'Daves Killer Bread Bread, Organic, 21 Whole Grains and Seeds',
       quantity: nil,
       created_at: Time.zone.parse('2018-11-15 14:00:00'),
@@ -26,9 +27,10 @@ RSpec.describe ParticipantActionsExporter do
       condition_name: 'Control Condition',
       session_identifier: 'asdf',
       action_type: 'add',
+      product_id: 456,
       product_name: 'Daves Killer Bread Bread, Organic, 21 Whole Grains and Seeds',
       quantity: 3,
-      created_at: Time.zone.parse('2018-11-15 14:01:00'),
+      created_at: Time.zone.parse('2018-11-15 14:01:01'),
       serial_position: 123,
       detail: nil
     )
@@ -41,9 +43,10 @@ RSpec.describe ParticipantActionsExporter do
       condition_name: 'Control Condition',
       session_identifier: 'asdf',
       action_type: 'page view',
+      product_id: nil,
       product_name: nil,
       quantity: nil,
-      created_at: Time.zone.parse('2018-11-15 14:02:00'),
+      created_at: Time.zone.parse('2018-11-15 14:02:02'),
       serial_position: 2,
       detail: 'Category: Bakery'
     )
@@ -57,10 +60,10 @@ RSpec.describe ParticipantActionsExporter do
   end
   let(:expected_output) do
     <<~CSV
-      Experiment Name,Condition Name,Session Identifier,Participant Action Type,Product Name,Quantity,Serial Position,Detail,Participant Action Date/Time
-      The Best Experiment,Control Condition,asdf,view,"Daves Killer Bread Bread, Organic, 21 Whole Grains and Seeds",,123,,11/15/2018 2:00 PM EST
-      The Best Experiment,Control Condition,asdf,add,"Daves Killer Bread Bread, Organic, 21 Whole Grains and Seeds",3,123,,11/15/2018 2:01 PM EST
-      The Best Experiment,Control Condition,asdf,page view,,,2,Category: Bakery,11/15/2018 2:02 PM EST
+      Experiment Name,Condition Name,Session Identifier,Participant Action Type,Product Name,Product Id,Quantity,Serial Position,Detail,Participant Action Date/Time
+      The Best Experiment,Control Condition,asdf,view,"Daves Killer Bread Bread, Organic, 21 Whole Grains and Seeds",456,,123,,11/15/2018 2:00:00 PM EST
+      The Best Experiment,Control Condition,asdf,add,"Daves Killer Bread Bread, Organic, 21 Whole Grains and Seeds",456,3,123,,11/15/2018 2:01:01 PM EST
+      The Best Experiment,Control Condition,asdf,page view,,,,2,Category: Bakery,11/15/2018 2:02:02 PM EST
     CSV
   end
 

@@ -33,6 +33,7 @@ class ParticipantActionsExporter
       'Session Identifier' => :session_identifier,
       'Participant Action Type' => :action_type,
       'Product Name' => :product_name,
+      'Product Id' => :product_id,
       'Quantity' => :quantity,
       'Serial Position' => :serial_position,
       'Detail' => :detail,

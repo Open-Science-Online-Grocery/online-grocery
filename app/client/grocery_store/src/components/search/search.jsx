@@ -26,8 +26,6 @@ class Search extends React.Component {
   render() {
     return (
       <div className="search-container">
-        <SortLinksContainer />
-        <ProductFilterContainer />
         <form onSubmit={this.handleSubmit}>
           <input
             className="form-input search-input"
@@ -39,6 +37,8 @@ class Search extends React.Component {
           {/* html entity below is a unicode magnifying glass icon */}
           <button type="submit">&#128270;</button>
         </form>
+        <SortLinksContainer />
+        <ProductFilterContainer />
       </div>
     );
   }
