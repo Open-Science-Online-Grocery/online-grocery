@@ -1,3 +1,21 @@
 i.nomargin {
   margin: 0;
 }
+
+.ui.table {
+  &.invisible {
+    border: none;
+
+    > thead > tr,
+    > thead > tr > th,
+    > tbody > tr,
+    > tbody > tr > td {
+      border: none;
+      background-color: inherit;
+    }
+  }
+
+  td.indented {
+    padding-left: 2.5rem;
+  }
+}

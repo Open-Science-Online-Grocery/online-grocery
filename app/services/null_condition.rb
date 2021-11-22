@@ -79,4 +79,24 @@ class NullCondition
   def qualtrics_code
     'ABCDEFG'
   end
+
+  def included_subcategories
+    Subcategory.all
+  end
+
+  def excluded_subcategory_ids
+    []
+  end
+
+  def show_products_by_subcategory
+    true
+  end
+
+  def products
+    Product.all
+  end
+
+  def allow_searching
+    true
+  end
 end

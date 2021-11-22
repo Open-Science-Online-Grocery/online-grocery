@@ -14,6 +14,80 @@ RSpec.describe Condition, type: :model do
       expect(subject).to validate_uniqueness_of(:name)
         .scoped_to(:experiment_id)
     end
+
+    describe 'sort file presence' do
+      context 'with no sort files' do
+        before do
+          allow(subject).to receive(:sort_files) { [] }
+        end
+
+        context 'when sort type is not file' do
+          before do
+            allow(subject).to receive(:sort_type) { 'none' }
+          end
+
+          it 'is valid' do
+            expect(subject).to be_valid
+          end
+        end
+
+        context 'when sort type is file' do
+          before do
+            allow(subject).to receive(:sort_type) { 'file' }
+          end
+
+          it 'is invalid' do
+            expect(subject).to be_invalid
+          end
+        end
+      end
+
+      context 'with no active sort files' do
+        before do
+          allow(subject).to receive(:sort_files) do
+            [build(:sort_file, active: false)]
+          end
+        end
+
+        context 'when sort type is not file' do
+          before do
+            allow(subject).to receive(:sort_type) { 'none' }
+          end
+
+          it 'is valid' do
+            expect(subject).to be_valid
+          end
+        end
+
+        context 'when sort type is file' do
+          before do
+            allow(subject).to receive(:sort_type) { 'file' }
+          end
+
+          it 'is invalid' do
+            expect(subject).to be_invalid
+          end
+        end
+      end
+
+      context 'with an active sort file' do
+        before do
+          allow(subject).to receive(:sort_files) do
+            [build(:sort_file, active: true)]
+          end
+        end
+
+        context 'when sort type is file' do
+          before do
+            allow(subject).to receive(:sort_type) { 'file' }
+          end
+
+          it 'is valid' do
+            expect(subject).to be_valid
+          end
+        end
+      end
+    end
   end
 
   describe 'delegations' do
@@ -35,6 +109,7 @@ RSpec.describe Condition, type: :model do
     end
     it { is_expected.to have_many(:tag_csv_files) }
     it { is_expected.to have_many(:suggestion_csv_files) }
+    it { is_expected.to have_many(:sort_files) }
     it { is_expected.to have_many(:product_tags) }
     it { is_expected.to have_many(:tags).through(:product_tags) }
     it { is_expected.to have_many(:subtags).through(:product_tags) }
@@ -43,6 +118,9 @@ RSpec.describe Condition, type: :model do
     it { is_expected.to have_many(:cart_summary_labels) }
     it { is_expected.to have_many(:condition_labels) }
     it { is_expected.to have_many(:labels).through(:condition_labels) }
+    it { is_expected.to have_many(:subcategory_exclusions) }
+    it { is_expected.to have_many(:excluded_subcategories).through(:subcategory_exclusions) }
+    it { is_expected.to have_many(:custom_sortings) }
   end
 
   describe 'nested attributes' do
@@ -51,5 +129,40 @@ RSpec.describe Condition, type: :model do
     it { is_expected.to accept_nested_attributes_for(:condition_labels) }
     it { is_expected.to accept_nested_attributes_for(:tag_csv_files) }
     it { is_expected.to accept_nested_attributes_for(:suggestion_csv_files) }
+    it { is_expected.to accept_nested_attributes_for(:sort_files) }
+  end
+
+  describe 'category and subcategory methods' do
+    let!(:category_1) { create(:category) }
+    let!(:category_2) { create(:category) }
+    let!(:category_3) { create(:category) }
+    let!(:subcategory_1) { create(:subcategory, category: category_1) }
+    let!(:subcategory_2) { create(:subcategory, category: category_2) }
+    let!(:subcategory_3) { create(:subcategory, category: category_3) }
+    let!(:subcategory_4) { create(:subcategory, category: category_3) }
+
+    before do
+      allow(subject).to receive(:excluded_subcategory_ids) do
+        [subcategory_2.id, subcategory_4.id]
+      end
+    end
+
+    describe '#included_subcategories' do
+      it 'returns the expected subcategories' do
+        expect(subject.included_subcategories).to eq [subcategory_1, subcategory_3]
+      end
+    end
+
+    describe '#included_category_ids' do
+      it 'returns the expected category ids' do
+        expect(subject.included_category_ids).to eq [category_1.id, category_3.id]
+      end
+    end
+
+    describe '#included_subcategory_ids' do
+      it 'returns the expected subcategory ids' do
+        expect(subject.included_subcategory_ids).to eq [subcategory_1.id, subcategory_3.id]
+      end
+    end
   end
 end

@@ -8,7 +8,6 @@ export default class CartDropdown extends React.Component {
     super(props);
     this.state = { dropdownOpen: false, windowHeight: 0 };
     this.openCloseDropdown = this.openCloseDropdown.bind(this);
-    this.removeFromCart = this.removeFromCart.bind(this);
   }
 
   openCloseDropdown() {
@@ -22,11 +21,6 @@ export default class CartDropdown extends React.Component {
     }
   }
 
-  removeFromCart(product) {
-    this.props.handleRemoveFromCart(product);
-    this.props.logParticipantAction('delete', product.id, product.quantity);
-  }
-
   render() {
     const cartItems = this.props.cart.items.map(item => (
       <div key={item.id} className="cart-item">
@@ -38,7 +32,7 @@ export default class CartDropdown extends React.Component {
           }
           <span className="cart-price">${parseFloat(Math.round(item.price * 100) / 100).toFixed(2)} </span>
         </span>
-        <span onClick={() => this.removeFromCart(item)} className="cart-delete-item">X</span>
+        <span onClick={() => this.props.handleRemoveFromCart(item)} className="cart-delete-item">X</span>
       </div>
     ));
 
@@ -82,10 +76,10 @@ CartDropdown.propTypes = {
         id: PropTypes.number.isRequired,
         quantity: PropTypes.number.isRequired,
         price: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired
+        name: PropTypes.string.isRequired,
+        serialPosition: PropTypes.number.isRequired
       })
     )
   }).isRequired,
-  handleRemoveFromCart: PropTypes.func.isRequired,
-  logParticipantAction: PropTypes.func.isRequired
+  handleRemoveFromCart: PropTypes.func.isRequired
 };

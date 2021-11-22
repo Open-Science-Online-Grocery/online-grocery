@@ -10,15 +10,15 @@ const mapStateToProps = (state, ownProps) => (
   }
 );
 
-const mapDispatchToProps = dispatch => (
+const mapDispatchToProps = (dispatch, ownProps) => (
   {
-    handleSetCategory: (categoryId, subcategoryId, subsubcategoryId, categoryType) => {
+    handleSetCategory: (subsubcategoryId) => {
       dispatch(
         categoryActionCreators.updateCategory(
-          categoryId,
-          subcategoryId,
+          ownProps.categoryId,
+          ownProps.subcat.id,
           subsubcategoryId,
-          categoryType
+          ownProps.categoryType
         )
       );
     }

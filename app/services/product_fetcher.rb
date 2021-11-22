@@ -2,10 +2,32 @@
 
 # responsible for finding and formatting product data based on search params
 class ProductFetcher
+  delegate :term_search_type, :category_type, :tag_type, :subtag_type,
+           to: :class
+
+  def self.term_search_type
+    'term'
+  end
+
+  def self.category_type
+    'category'
+  end
+
+  def self.tag_type
+    'tag'
+  end
+
+  def self.subtag_type
+    'subtag'
+  end
+
   # @param [ActionController::Parameters] params - params pertaining to which
   #   Products should be returned (and in which order). looks like this:
   #     {
+  #       session_identifier: the identifier the participant entered upon
+  #         visiting the grocery store,
   #       condition_identifier: the :uuid for the current Condition,
+  #       selected_category_id: a Category id to find products within,
   #       selected_subcategory_id: a Subcategory id to find products within,
   #       selected_subsubcategory_id: a Subsubcategory id to find products
   #         within,
@@ -34,14 +56,12 @@ class ProductFetcher
   end
 
   def fetch_products
-    product_hashes = products.map do |product|
-      ProductSerializer.new(product, @condition).serialize
-    end
     ProductSorter.new(
-      product_hashes,
-      @condition,
-      @params[:sort_field],
-      @params[:sort_direction]
+      product_relation: products,
+      condition: @condition,
+      session_identifier: @params[:session_identifier],
+      manual_sort_field_description: @params[:sort_field],
+      manual_sort_order: @params[:sort_direction]
     ).sorted_products
   end
 
@@ -51,7 +71,8 @@ class ProductFetcher
     else
       scope_by_membership
     end
-    filtered_products.uniq
+    filter_products
+    @product_relation.distinct
   end
 
   private def scope_by_name
@@ -63,48 +84,54 @@ class ProductFetcher
       when category_type
         scope_by_category
       when tag_type
-        @product_relation = @product_relation.joins(:product_tags).where(
-          product_tags: { subtag_id: @params[:selected_subcategory_id] }
-        )
+        scope_by_tag
       else
         @product_relation = @product_relation.none
     end
   end
 
   private def scope_by_category
-    @product_relation = @product_relation.where(
-      subcategory_id: @params[:selected_subcategory_id]
-    )
-    return unless @params[:selected_subsubcategory_id].present?
-    @product_relation = @product_relation.where(
-      subsubcategory_id: @params[:selected_subsubcategory_id]
-    )
+    if !@condition.show_products_by_subcategory
+      criteria = { category_id: @params[:selected_category_id] }
+    elsif @params[:selected_subsubcategory_id].present?
+      criteria = { subsubcategory_id: @params[:selected_subsubcategory_id] }
+    elsif @params[:selected_subcategory_id].present?
+      criteria = { subcategory_id: @params[:selected_subcategory_id] }
+    end
+    @product_relation = @product_relation.where(criteria)
   end
 
-  private def filtered_products
+  private def scope_by_tag
+    if !@condition.show_products_by_subcategory
+      @product_relation = @product_relation.with_tag(
+        @params[:selected_category_id]
+      )
+    else
+      @product_relation = @product_relation.with_subtag(
+        @params[:selected_subcategory_id]
+      )
+    end
+  end
+
+  private def filter_products
+    filter_by_excluded_subcategories
+    filter_by_tag
+  end
+
+  private def filter_by_excluded_subcategories
+    @product_relation = @product_relation.merge(@condition.products)
+  end
+
+  private def filter_by_tag
     # `tag_id` could actually be a Subtag's id - the `selected_filter_type`
     # param indicates if it is a tag or subtag id
     tag_id = @params[:selected_filter_id]
-    return @product_relation unless tag_id.present?
+    return if tag_id.blank?
+
     if @params[:selected_filter_type] == subtag_type
-      return @product_relation.with_subtag(tag_id)
+      @product_relation = @product_relation.with_subtag(tag_id)
+    else
+      @product_relation = @product_relation.with_tag(tag_id)
     end
-    @product_relation.with_tag(tag_id)
-  end
-
-  private def term_search_type
-    'term'
-  end
-
-  private def category_type
-    'category'
-  end
-
-  private def tag_type
-    'tag'
-  end
-
-  private def subtag_type
-    'subtag'
   end
 end

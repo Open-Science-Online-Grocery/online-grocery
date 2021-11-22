@@ -75,9 +75,25 @@ RSpec.describe 'Sorting products in grocery store', :feature do
     expect(product_3.name).to appear_before(product_2.name)
     expect(product_2.name).to appear_before(product_1.name)
 
+    # view product when it is first on the page (has a serial_position of 1)
+    force_click(find('.product-card-name', text: product_3.name))
+    expect(page).to have_content 'This is a product'
+    force_click(find('span', text: 'Back to Browsing'))
+
     force_click_on('Carbs')
     expect(page).to have_content('▼')
     expect(product_1.name).to appear_before(product_2.name)
     expect(product_2.name).to appear_before(product_3.name)
+
+    # view product when it is last on the page (has a serial_position of 3)
+    force_click(find('.product-card-name', text: product_3.name))
+    expect(page).to have_content 'This is a product'
+    force_click(find('span', text: 'Back to Browsing'))
+
+    actions = ParticipantAction.where(action_type: 'view').last(2)
+    expect(actions.first.product_id).to eq product_3.id
+    expect(actions.first.serial_position).to eq 1
+    expect(actions.last.product_id).to eq product_3.id
+    expect(actions.last.serial_position).to eq 3
   end
 end

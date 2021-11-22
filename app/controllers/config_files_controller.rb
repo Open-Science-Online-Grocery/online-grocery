@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ConfigFilesController < ApplicationController
-  power :config_files, context: :set_config_file, map: {
+  power :no_fallback, context: :set_config_file, map: {
     %i[show] => :downloadable_config_file
   }
 

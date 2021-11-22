@@ -4,7 +4,6 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
 
   &:empty {
     margin-bottom: 0;
@@ -22,17 +21,31 @@
 
   form {
     flex-grow: 1;
-    text-align: right;
     flex-shrink: 0;
+    padding: 0.25rem 0;
+    display: flex;
+
     input[type=text] {
       margin-top: 0px;
+      border: 1px solid black;
+      width: 20rem;
+
+      &:focus, &:focus-visible {
+        outline: none;
+      }
+
+      &::placeholder {
+        color: black;
+        opacity: 1;
+      }
     }
 
     button {
       padding: 6px 10px;
       background: #ddd;
       font-size: 17px;
-      border: none;
+      border: 1px solid black;
+      border-left: none;
       cursor: pointer;
 
       &:hover {
@@ -41,4 +54,3 @@
     }
   }
 }
-

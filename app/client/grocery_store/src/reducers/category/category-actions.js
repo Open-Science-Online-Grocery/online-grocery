@@ -3,7 +3,8 @@ import * as fromApi from '../../../../utils/api_call';
 
 export const categoryActionTypes = {
   SET_CATEGORY: 'SET_CATEGORY',
-  SET_PRODUCTS: 'SET_PRODUCTS'
+  SET_PRODUCTS: 'SET_PRODUCTS',
+  SET_LOADER: 'SET_LOADER'
 };
 
 function setCategory(
@@ -18,18 +19,30 @@ function setCategory(
   };
 }
 
-function setProducts(products) {
+function setProducts(productResponse) {
   return {
-    products,
+    products: productResponse.products,
+    page: productResponse.page,
+    totalPages: productResponse.totalPages,
     type: categoryActionTypes.SET_PRODUCTS
   };
 }
 
-function getProducts() {
+function setLoader(active) {
+  return {
+    loaderActive: active,
+    type: categoryActionTypes.SET_LOADER
+  };
+}
+
+function getProducts(requestedPage = 1) {
   return (dispatch, getState) => {
+    dispatch(setLoader(true));
     const state = getState();
     const params = {
+      sessionIdentifier: state.user.sessionId,
       conditionIdentifier: state.user.conditionIdentifier,
+      selectedCategoryId: state.category.selectedCategoryId,
       selectedSubcategoryId: state.category.selectedSubcategoryId,
       selectedSubsubcategoryId: state.category.selectedSubsubcategoryId,
       selectedCategoryType: state.category.selectedCategoryType,
@@ -38,12 +51,16 @@ function getProducts() {
       sortField: state.sorting.selectedSortField,
       sortDirection: state.sorting.sortDirection,
       selectedFilterId: state.filtering.selectedFilterId,
-      selectedFilterType: state.filtering.selectedFilterType
+      selectedFilterType: state.filtering.selectedFilterType,
+      page: requestedPage
     };
     fromApi.jsonApiCall(
       routes.products(),
       params,
-      data => dispatch(setProducts(data)),
+      data => {
+        dispatch(setProducts(data));
+        dispatch(setLoader(false));
+      },
       error => console.log(error)
     );
   };

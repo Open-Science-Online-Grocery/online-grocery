@@ -24,16 +24,7 @@ export default class Subtab extends React.Component {
       <div
         key={subsubcat.id}
         className="tab-subsubcat"
-        onClick={
-          () => (
-            this.props.handleSetCategory(
-              this.props.categoryId,
-              this.props.subcat.id,
-              subsubcat.id,
-              this.props.categoryType
-            )
-          )
-        }
+        onClick={() => this.props.handleSetCategory(subsubcat.id)}
       >
         {subsubcat.name}
       </div>
@@ -50,16 +41,7 @@ export default class Subtab extends React.Component {
         <div className="tab-subcat-item">
           <div
             className="tab-subcat-title"
-            onClick={
-              () => (
-                this.props.handleSetCategory(
-                  this.props.categoryId,
-                  this.props.subcat.id,
-                  null,
-                  this.props.categoryType
-                )
-              )
-            }
+            onClick={() => this.props.handleSetCategory(null)}
           >
             {this.props.subcat.name}
           </div>

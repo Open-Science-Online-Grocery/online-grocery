@@ -50,7 +50,7 @@ end
 
 task('db:migrate' => ['db:drop_views']).enhance do
   Rake::Task['db:create_views'].invoke
-  if Rails.application.config.active_record.schema_format == :sql && Rails.env.development?
+  if Rails.application.config.active_record.schema_format == :sql && (Rails.env.development? || Rails.env.test?)
     Rake::Task["db:structure:dump"].invoke
     StructureFixer.run
   end
@@ -58,7 +58,7 @@ end
 
 task('db:rollback' => ['db:drop_views']).enhance do
   Rake::Task['db:create_views'].invoke
-  if Rails.application.config.active_record.schema_format == :sql && Rails.env.development?
+  if Rails.application.config.active_record.schema_format == :sql && (Rails.env.development? || Rails.env.test?)
     Rake::Task["db:structure:dump"].invoke
     StructureFixer.run
   end

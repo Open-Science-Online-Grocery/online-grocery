@@ -1,0 +1,32 @@
+<% header_type ||= :h4 %>
+
+<%= tag.send(header_type, 'Previously uploaded files') %>
+<table class="ui small very compact celled table">
+  <thead>
+    <tr>
+      <th class="ten wide">File</th>
+      <th class="six wide">Uploaded on</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if files.any? %>
+      <% files.each do |file| %>
+        <tr>
+          <td>
+            <%= ConfigFilePresenter.download_link(file) %>
+          </td>
+          <td>
+            <%= localize(file.created_at.to_date) %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="2" class="center aligned">
+          No data
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

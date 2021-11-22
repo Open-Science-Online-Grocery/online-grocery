@@ -13,11 +13,6 @@ const mapDispatchToProps = dispatch => (
   {
     handleRemoveFromCart: (product) => {
       dispatch(cartActionCreators.removeFromCart(product));
-    },
-    logParticipantAction: (actionType, productId, quantity) => {
-      dispatch(
-        userActionCreators.logParticipantAction(actionType, productId, quantity)
-      );
     }
   }
 );

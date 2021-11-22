@@ -6,4 +6,6 @@ class Subsubcategory < ApplicationRecord
   belongs_to :subcategory
 
   alias_attribute :to_s, :name
+
+  scope :sorted, -> { order(:subcategory_id, :display_order) }
 end

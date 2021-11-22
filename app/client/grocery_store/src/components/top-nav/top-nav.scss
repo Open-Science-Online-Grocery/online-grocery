@@ -1,6 +1,6 @@
 @import "../../base/base";
 
-.top-nav {
+.top-nav .menu {
   display: flex;
   justify-content: space-between;
 }
@@ -12,5 +12,6 @@
 
 .title {
   font-size: 30px;
-  color: green
+  margin-top: 1rem;
+  color: $price-green;
 }

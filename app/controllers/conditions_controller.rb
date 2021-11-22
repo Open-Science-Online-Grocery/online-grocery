@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ConditionsController < ApplicationController
-  power :conditions, context: :set_experiment, map: {
+  power :no_fallback, context: :set_experiment, map: {
     %i[refresh_form new create edit update destroy] => :own_experiment
   }
 
@@ -20,8 +20,7 @@ class ConditionsController < ApplicationController
   end
 
   def create
-    manager = ConditionManager.new(@condition, condition_params)
-    if manager.update_condition
+    if @condition.update(condition_params.merge(uuid: SecureRandom.uuid))
       flash[:success] = 'Condition successfully created'
       redirect_to edit_experiment_condition_path(
         @experiment,
@@ -29,7 +28,7 @@ class ConditionsController < ApplicationController
         tab: @tab
       )
     else
-      set_condition_errors(manager)
+      set_error_messages(@condition)
       @resource_name = 'Add Condition'
       render :new
     end
@@ -99,9 +98,15 @@ class ConditionsController < ApplicationController
       :show_guiding_stars,
       :new_tag_csv_file,
       :new_suggestion_csv_file,
+      :new_sort_file,
+      :show_products_by_subcategory,
+      :allow_searching,
       tag_csv_files_attributes: %i[id active],
+      sort_files_attributes: %i[id active],
       suggestion_csv_files_attributes: %i[id active],
       product_sort_field_ids: [],
+      included_category_ids: [],
+      included_subcategory_ids: [],
       condition_labels_attributes: [
         :id,
         :_destroy,

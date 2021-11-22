@@ -1,134 +1,32 @@
 <div class="ui bottom attached tab segment" data-tab="categories">
-  <div class="page-heading">
-    <h2>Custom Categories</h2>
+  <%=
+    render(
+      'categories/custom_categories_fields',
+      f: f,
+      condition: condition
+    )
+  %>
 
-    <div class="heading-buttons">
+  <div class="ui tall divider"></div>
+
+  <div class="ui two column grid">
+    <div class="column">
       <%=
-        link_to(
-          custom_categories_product_download_path,
-          class: 'ui right floated button',
-          data: { loading_spinner: true, remote: true }
-        ) do
+        render(
+          'categories/toggle_products_fields',
+          f: f,
+          condition: condition
+        )
       %>
-        <i class="download icon"></i> Download Product Data
-      <% end %>
     </div>
-  </div>
-
-  <div class="page-sub-heading">
-    <strong>Instructions: </strong>
-  </div>
-  <div>
-    To add custom categories and subcategories, download the product data using the button above.
-    Once you have added the custom categories, re-upload the file below and save.
-    The categories added in the file will appear on the left below.
-    The current file will appear on the left with a check box next to it. To remove the current file,
-    uncheck the box. To replace the file, just upload a new one. Removed and replaced files will appear
-    on the right below.
-  </div>
-
-  <div class="ui hidden divider"></div>
-
-  <div class="two fields">
-    <div class="field">
-      <label>Current file</label>
-      <% if condition.current_tag_csv_file %>
-        <%= f.fields_for :tag_csv_files, condition.current_tag_csv_file do |tag_csv_fields| %>
-          <div class="ui inline checkbox field">
-            <%= tag_csv_fields.check_box(:active) %>
-            <%= tag_csv_fields.label(:active) do %>
-              <%= ConfigFilePresenter.download_link(condition.current_tag_csv_file) %>
-            <% end %>
-          </div>
-        <% end %>
-      <% else %>
-        None
-      <% end %>
-    </div>
-
-    <div class="field">
-      <%= f.label :new_tag_csv_file, 'Replace file' %>
-      <%= f.file_field :new_tag_csv_file %>
-    </div>
-  </div>
-
-  <div class="ui hidden divider"></div>
-
-  <div class="ui grid">
-    <div class="eight wide column">
-      <h4>Active categories and subcategories</h4>
-      <table class="ui celled table">
-        <thead>
-          <tr>
-            <th class="eight wide">Category</th>
-            <th class="eight wide">Subcategory</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% unique_tag_combinations = condition.unique_tag_combinations %>
-          <% if unique_tag_combinations.any? %>
-            <% unique_tag_combinations.each do |tag_combination| %>
-              <tr>
-                <td>
-                  <%= tag_combination[0] %><%# tag %>
-                </td>
-                <td>
-                  <%= tag_combination[1] %><%# subtag %>
-                </td>
-              </tr>
-            <% end %>
-          <% else %>
-            <tr>
-              <td colspan="2" class="center aligned">
-                No data
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="eight wide column">
-      <h4>Previously uploaded files</h4>
-      <table class="ui celled table">
-        <thead>
-          <tr>
-            <th class="ten wide">File</th>
-            <th class="six wide">Uploaded on</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% if condition.tag_csv_files.historical.any? %>
-            <% condition.tag_csv_files.historical.each do |file| %>
-              <tr>
-                <td>
-                  <%= ConfigFilePresenter.download_link(file) %>
-                </td>
-                <td>
-                  <%= localize(file.created_at.to_date) %>
-                </td>
-              </tr>
-            <% end %>
-          <% else %>
-            <tr>
-              <td colspan="2" class="center aligned">
-                No data
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="ui hidden divider"></div>
-
-  <div class="field">
-    <div class="ui checkbox">
-      <%= f.check_box :filter_by_custom_categories %>
-      <%= f.label :filter_by_custom_categories, 'Allow users to filter store-wide by custom categories'%>
+    <div class="column">
+      <%=
+        render(
+          'categories/toggle_subcategory_fields',
+          f: f,
+          condition: condition
+        )
+      %>
     </div>
   </div>
 </div>

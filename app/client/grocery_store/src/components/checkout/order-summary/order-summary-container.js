@@ -24,16 +24,11 @@ const mapDispatchToProps = dispatch => (
     handleRemoveFromCart: (product) => {
       dispatch(cartActionCreators.removeFromCart(product));
     },
-    handleClearCart: () => {
-      dispatch(cartActionCreators.clearCart());
+    handleCheckout: () => {
+      dispatch(cartActionCreators.checkout());
     },
     getCartSettings: () => {
       dispatch(cartActionCreators.getCartSettings());
-    },
-    logParticipantAction: (actionType, productId, quantity) => {
-      dispatch(
-        userActionCreators.logParticipantAction(actionType, productId, quantity)
-      );
     }
   }
 );
