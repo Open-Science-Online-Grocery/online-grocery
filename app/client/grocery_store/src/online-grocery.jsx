@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ProductGridContainer from './components/product-grid/product-grid-container';
 import TopNavContainer from './components/top-nav/top-nav-container';
 import CartDropdownContainer from './components/cart-dropdown/cart-dropdown-container';
+import ErrorMessageContainer from './components/error-message/error-message-container';
 import './online-grocery.scss';
 
 class HomePage extends React.Component {
@@ -19,6 +20,7 @@ class HomePage extends React.Component {
           alt="Grocery store logo in banner"
           src={require('./images/howesgrocerybanner.png')}
         />
+        <ErrorMessageContainer />
         <TopNavContainer {...this.props} />
         <ProductGridContainer />
       </div>
