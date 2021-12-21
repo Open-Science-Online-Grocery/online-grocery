@@ -18,7 +18,9 @@ module Api
         product_id: params[:product_id],
         quantity: params[:quantity],
         serial_position: params[:serial_position],
-        detail: description
+        detail: description,
+        frontend_id: params[:id],
+        performed_at: Time.zone.parse(params[:performed_at])
       )
       json = {
         data: { success: action.valid? },
