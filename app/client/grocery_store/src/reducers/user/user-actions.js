@@ -1,4 +1,5 @@
 import * as qs from 'query-string';
+import { v1 as uuidv1 } from 'uuid';
 import * as routes from '../../../../utils/routes';
 import * as fromApi from '../../../../utils/api_call';
 import { categoryActionCreators } from '../category/category-actions';
@@ -6,7 +7,9 @@ import { categoryActionCreators } from '../category/category-actions';
 export const userActionTypes = {
   SET_USER: 'SET_USER',
   SET_CONDITION_DATA: 'SET_CONDITION_DATA',
-  RESET_ALL: 'RESET_ALL'
+  RESET_ALL: 'RESET_ALL',
+  OPERATION_PERFORMED: 'OPERATION_PERFORMED',
+  OPERATION_LOGGED: 'OPERATION_LOGGED'
 };
 
 function setUser(sessionId, conditionIdentifier) {
@@ -95,22 +98,46 @@ function pageViewed() {
   }
 }
 
+// @param {Object} operation - object with all data sent to server
+function operationPerformed(operation) {
+  console.log('hello')
+  return {
+    operation,
+    type: userActionTypes.OPERATION_PERFORMED
+  };
+}
+
+// @param {Object} operation - object with all data sent to server
+function operationLogged(operation) {
+  return {
+    operation,
+    type: userActionTypes.OPERATION_LOGGED
+  };
+}
+
 // @param {string} actionType - string representing the action the participant
 //   has taken, such as 'view', 'add', 'delete', 'checkout'
 // @param {object} attributes - (optional) data about the action
 function logParticipantAction(actionType, attributes = {}) {
   return (dispatch, getState) => {
     const state = getState();
+
     const params = {
       ...attributes,
       actionType,
       sessionId: state.user.sessionId,
-      conditionIdentifier: state.user.conditionIdentifier
+      conditionIdentifier: state.user.conditionIdentifier,
+      id: uuidv1(),
+      performedAt: new Date().toISOString(),
+      logged: false
     };
+
+    dispatch(operationPerformed(params));
+
     fromApi.jsonApiCall(
       routes.addParticipantAction(),
       params,
-      data => console.log(data),
+      data => dispatch(operationLogged(params)),
       error => console.log(error)
     );
   };

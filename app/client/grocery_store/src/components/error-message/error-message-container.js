@@ -3,8 +3,8 @@ import ErrorMessage from './error-message';
 
 const mapStateToProps = state => (
   {
-    visible: true,
-    message: 'this is a test'
+    visible: state.errorMessage.visible,
+    message: state.errorMessage.message
   }
 );
 
