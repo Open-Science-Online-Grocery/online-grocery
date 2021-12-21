@@ -14,6 +14,14 @@ const initialUserState = {
   operations: []
 };
 
+/* ****************************** selectors ********************************* */
+
+export function selectUnloggedOperations(state) {
+  return state.operations.filter((operation) => !operation.logged);
+}
+
+/* ******************************* reducer ********************************** */
+
 export default function userReducer(state = initialUserState, action) {
   switch (action.type) {
     case userActionTypes.SET_USER:

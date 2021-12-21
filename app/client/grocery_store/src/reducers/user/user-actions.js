@@ -2,6 +2,7 @@ import * as qs from 'query-string';
 import { v1 as uuidv1 } from 'uuid';
 import * as routes from '../../../../utils/routes';
 import * as fromApi from '../../../../utils/api_call';
+import { selectUnloggedOperations } from './user-reducer';
 import { categoryActionCreators } from '../category/category-actions';
 
 export const userActionTypes = {
@@ -100,7 +101,6 @@ function pageViewed() {
 
 // @param {Object} operation - object with all data sent to server
 function operationPerformed(operation) {
-  console.log('hello')
   return {
     operation,
     type: userActionTypes.OPERATION_PERFORMED
@@ -121,6 +121,8 @@ function operationLogged(operation) {
 function logParticipantAction(actionType, attributes = {}) {
   return (dispatch, getState) => {
     const state = getState();
+
+    // TODO: send all unlogged actions too
 
     const params = {
       ...attributes,
