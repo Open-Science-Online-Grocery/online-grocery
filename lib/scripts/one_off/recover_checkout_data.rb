@@ -1,27 +1,54 @@
+# frozen_string_literal: true
+
+require 'csv'
+
 # to run from Rails console:
 #   require_relative 'lib/scripts/one_off/recover_checkout_data'
 #   RecoverCheckoutData.new.run
-
 class RecoverCheckoutData
+  include ActionView::Helpers::TranslationHelper
+
   def initialize(log_dir)
     @log_dir = log_dir
-    @cart_settings_log_filepath = File.join(@log_dir, 'cart_settings.log')
-    @output_filepath = File.join(@log_dir, 'amended_chekcout_actions.csv')
-    @ip_to_sid = Hash.new { |h, k| h[k] = [].to_set }
+    @cart_settings_lines = []
     @in_process_requests = {}
+    @ips_to_sids = Hash.new { |h, k| h[k] = [].to_set }
     @cart_settings_by_sid = {}
+    @output_filepath = File.join(@log_dir, 'amended_chekcout_actions.csv')
   end
 
   def run
-    # create_cart_settings_log
-    match_ips_to_sids
+    parse_logs
     parse_cart_data
+    write_action_csv
+  end
 
+  private def parse_logs
+    Dir[File.join(@log_dir, '*')].sort.each do |filepath|
+      File.foreach(filepath) do |line|
+        if line.match(/\/api\/cart_settings\?condition_identifier=7ab074b4-0ec8-464c-bde4-d3bb100356a7/)
+          # capture lines for POSTs to cart_settings endpoint; this is where
+          # we'll get the cart product data
+          @cart_settings_lines << line
+        elsif line.match(/Started POST \"\/api\/participant_actions\"/)
+          # correlate the rails request ID with the IP from this kind of line
+          parse_post_line(line)
+        elsif line.match(/Parameters/)
+          # correlate the IP with the session_identifier (SID) from this kind
+          # of line
+          parse_params_line(line)
+        end
+      end
+    end
+    puts @ips_to_sids
+  end
+
+  private def parse_cart_data
     regex = /\/api\/cart_settings\?(?<params>\S+)" for (?<ip>\S+) at (?<timestamp>.+)/
-    File.foreach(@cart_settings_log_filepath) do |line|
+    @cart_settings_lines.each do |line|
       match_data = line.match(regex)
 
-      sids = @ip_to_sid[match_data[:ip]]
+      sids = @ips_to_sids[match_data[:ip]]
       if sids.many?
         puts "Too many sids for #{match_data[:ip]}: #{sids}"
         next
@@ -35,30 +62,34 @@ class RecoverCheckoutData
         timestamp: match_data[:timestamp]
       }
     end
-    binding.pry
   end
 
-  # create a single file of all the log lines where requests were made to the
-  # cart_settings endpoint; this is where the data about cart products at
-  # checkout is.
-  private def create_cart_settings_log
-    FileUtils.rm(@cart_settings_log_filepath)
-    Dir[File.join(@log_dir, '*')].each do |filepath|
-      `grep cart_settings #{filepath} >> #{@cart_settings_log_filepath}`
-    end
-  end
-
-  def match_ips_to_sids
-    Dir[File.join(@log_dir, '*')].each do |filepath|
-      File.foreach(filepath) do |line|
-        if line.match(/Started POST \"\/api\/participant_actions\"/)
-          parse_post_line(line)
-        elsif line.match(/Parameters/)
-          parse_params_line(line)
+  private def write_action_csv
+    CSV.open(@output_filepath, 'wb') do |csv|
+      csv << csv_headers
+      @cart_settings_by_sid.each do |sid, data|
+        next unless sid
+        timestamp = localize(
+          Time.zone.parse(data[:timestamp]),
+          format: :with_seconds
+        )
+        data[:params].fetch('cart_products', {}).values.each do |product_attrs|
+          product = Product.find(product_attrs['id'])
+          csv << [
+            'recommendation test',
+            'training',
+            sid,
+            'checkout',
+            product.name,
+            product.id,
+            product_attrs['quantity'],
+            '',
+            '',
+            timestamp
+          ]
         end
       end
     end
-    puts @ip_to_sid
   end
 
   private def parse_post_line(line)
@@ -74,8 +105,23 @@ class RecoverCheckoutData
     return unless match_data
     matching_ip = @in_process_requests[match_data[:request_id]]
     if matching_ip
-      @ip_to_sid[matching_ip].add(match_data[:sid].strip)
+      @ips_to_sids[matching_ip].add(match_data[:sid].strip)
       @in_process_requests.delete(match_data[:request_id])
     end
+  end
+
+  private def csv_headers
+    [
+      'Experiment Name',
+      'Condition Name',
+      'Session Identifier',
+      'Participant Action Type',
+      'Product Name',
+      'Product Id',
+      'Quantity',
+      'Serial Position',
+      'Detail',
+      'Participant Action Date/Time'
+    ]
   end
 end
