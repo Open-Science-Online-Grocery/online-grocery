@@ -123,7 +123,6 @@ function addOperation(attributes) {
     const params = {
       ...attributes,
       sessionId: state.user.sessionId,
-      conditionIdentifier: state.user.conditionIdentifier,
       id: uuidv1(),
       performedAt: new Date().toISOString(),
       logged: false
@@ -139,7 +138,10 @@ function sendOperationsToServer({ onSuccess, onFailure }) {
 
     fromApi.jsonApiCall(
       routes.addParticipantAction(),
-      { operations: unloggedOperations },
+      {
+        conditionIdentifier: state.user.conditionIdentifier,
+        operations: unloggedOperations
+      },
       (data) => {
         unloggedOperations.forEach((op) => dispatch(operationLogged(op)));
         onSuccess(data);

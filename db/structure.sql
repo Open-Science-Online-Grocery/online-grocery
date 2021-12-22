@@ -175,7 +175,7 @@ SET character_set_client = utf8;
   `quantity` tinyint NOT NULL,
   `serial_position` tinyint NOT NULL,
   `detail` tinyint NOT NULL,
-  `created_at` tinyint NOT NULL
+  `performed_at` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 DROP TABLE IF EXISTS `experiments`;
@@ -430,7 +430,7 @@ CREATE TABLE `users` (
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `experiment_results` AS select `experiments`.`id` AS `experiment_id`,`experiments`.`name` AS `experiment_name`,`conditions`.`name` AS `condition_name`,`participant_actions`.`session_identifier` AS `session_identifier`,`participant_actions`.`action_type` AS `action_type`,`participant_actions`.`product_id` AS `product_id`,`products`.`name` AS `product_name`,`participant_actions`.`quantity` AS `quantity`,`participant_actions`.`serial_position` AS `serial_position`,`participant_actions`.`detail` AS `detail`,`participant_actions`.`created_at` AS `created_at` from (((`experiments` join `conditions` on(`conditions`.`experiment_id` = `experiments`.`id`)) join `participant_actions` on(`participant_actions`.`condition_id` = `conditions`.`id`)) left join `products` on(`participant_actions`.`product_id` = `products`.`id`)) */;
+/*!50001 VIEW `experiment_results` AS select `experiments`.`id` AS `experiment_id`,`experiments`.`name` AS `experiment_name`,`conditions`.`name` AS `condition_name`,`participant_actions`.`session_identifier` AS `session_identifier`,`participant_actions`.`action_type` AS `action_type`,`participant_actions`.`product_id` AS `product_id`,`products`.`name` AS `product_name`,`participant_actions`.`quantity` AS `quantity`,`participant_actions`.`serial_position` AS `serial_position`,`participant_actions`.`detail` AS `detail`,`participant_actions`.`performed_at` AS `performed_at` from (((`experiments` join `conditions` on(`conditions`.`experiment_id` = `experiments`.`id`)) join `participant_actions` on(`participant_actions`.`condition_id` = `conditions`.`id`)) left join `products` on(`participant_actions`.`product_id` = `products`.`id`)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -499,6 +499,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20211007184814'),
 ('20211101155624'),
 ('20211101190836'),
-('20211221205528');
+('20211221205528'),
+('20211222160023');
 
 

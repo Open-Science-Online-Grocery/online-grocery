@@ -37,7 +37,7 @@ class ParticipantActionsExporter
       'Quantity' => :quantity,
       'Serial Position' => :serial_position,
       'Detail' => :detail,
-      'Participant Action Date/Time' => :humanized_created_at
+      'Participant Action Date/Time' => :humanized_performed_at
     }
   end
 

@@ -4,7 +4,7 @@
 class ExperimentResultPresenter < SimpleDelegator
   include ActionView::Helpers::TranslationHelper
 
-  def humanized_created_at
-    localize(created_at, format: :with_seconds)
+  def humanized_performed_at
+    localize(performed_at, format: :with_seconds)
   end
 end
