@@ -14,7 +14,7 @@ RSpec.describe ParticipantActionsExporter do
       product_id: 456,
       product_name: 'Daves Killer Bread Bread, Organic, 21 Whole Grains and Seeds',
       quantity: nil,
-      created_at: Time.zone.parse('2018-11-15 14:00:00'),
+      performed_at: Time.zone.parse('2018-11-15 14:00:00'),
       serial_position: 123,
       detail: nil
     )
@@ -30,7 +30,7 @@ RSpec.describe ParticipantActionsExporter do
       product_id: 456,
       product_name: 'Daves Killer Bread Bread, Organic, 21 Whole Grains and Seeds',
       quantity: 3,
-      created_at: Time.zone.parse('2018-11-15 14:01:01'),
+      performed_at: Time.zone.parse('2018-11-15 14:01:01'),
       serial_position: 123,
       detail: nil
     )
@@ -46,7 +46,7 @@ RSpec.describe ParticipantActionsExporter do
       product_id: nil,
       product_name: nil,
       quantity: nil,
-      created_at: Time.zone.parse('2018-11-15 14:02:02'),
+      performed_at: Time.zone.parse('2018-11-15 14:02:02'),
       serial_position: 2,
       detail: 'Category: Bakery'
     )

@@ -15,17 +15,19 @@ const mapStateToProps = (state) => {
     subtotal: budgetManager.subtotal(),
     tax: budgetManager.tax(),
     total: budgetManager.total(),
-    errorMessage: budgetManager.checkoutErrorMessage()
+    budgetErrorMessage: budgetManager.checkoutErrorMessage(),
+    checkoutErrorMessage: state.cart.checkoutErrorMessage,
+    checkoutProcessing: state.cart.checkoutProcessing
   };
 };
 
-const mapDispatchToProps = dispatch => (
+const mapDispatchToProps = (dispatch, ownProps) => (
   {
     handleRemoveFromCart: (product) => {
       dispatch(cartActionCreators.removeFromCart(product));
     },
     handleCheckout: () => {
-      dispatch(cartActionCreators.checkout());
+      dispatch(userActionCreators.checkout(ownProps.onSubmit));
     },
     getCartSettings: () => {
       dispatch(cartActionCreators.getCartSettings());

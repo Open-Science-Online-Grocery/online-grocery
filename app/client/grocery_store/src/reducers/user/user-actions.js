@@ -1,12 +1,19 @@
 import * as qs from 'query-string';
+import { v1 as uuidv1 } from 'uuid';
 import * as routes from '../../../../utils/routes';
 import * as fromApi from '../../../../utils/api_call';
+import { selectUnloggedOperations, CHECKOUT_ACTION_TYPE } from './user-reducer';
 import { categoryActionCreators } from '../category/category-actions';
+import { cartActionCreators } from '../cart/cart-actions';
 
 export const userActionTypes = {
   SET_USER: 'SET_USER',
   SET_CONDITION_DATA: 'SET_CONDITION_DATA',
-  RESET_ALL: 'RESET_ALL'
+  RESET_ALL: 'RESET_ALL',
+  OPERATION_PERFORMED: 'OPERATION_PERFORMED',
+  OPERATION_LOGGED: 'OPERATION_LOGGED',
+  START_CHECKOUT_PROCESSING: 'START_CHECKOUT_PROCESSING',
+  CHECKOUT_FAILURE: 'CHECKOUT_FAILURE'
 };
 
 function setUser(sessionId, conditionIdentifier) {
@@ -51,7 +58,7 @@ function setInitialCategory(data) {
     subcategoryId,
     null,
     'category'
-  )
+  );
 }
 
 function sessionIdSubmitted(sessionId) {
@@ -70,7 +77,7 @@ function sessionIdSubmitted(sessionId) {
       routes.condition(),
       { conditionIdentifier },
       onSuccess,
-      error => console.log(error)
+      (error) => console.log(error)
     );
   };
 }
@@ -80,8 +87,8 @@ function pageViewed() {
     const state = getState();
     dispatch(
       logParticipantAction(
-        'page view',
         {
+          type: 'page view',
           serialPosition: state.category.page,
           selectedCategoryId: state.category.selectedCategoryId,
           selectedSubcategoryId: state.category.selectedSubcategoryId,
@@ -92,26 +99,128 @@ function pageViewed() {
         }
       )
     );
-  }
+  };
 }
 
-// @param {string} actionType - string representing the action the participant
-//   has taken, such as 'view', 'add', 'delete', 'checkout'
-// @param {object} attributes - (optional) data about the action
-function logParticipantAction(actionType, attributes = {}) {
+// indicates the user has performed an operation (i.e., something that should be
+// logged on the server as a ParticipantAction).
+// @param {Object} operation - object with all operation data as sent to server
+function operationPerformed(operation) {
+  return {
+    operation,
+    type: userActionTypes.OPERATION_PERFORMED
+  };
+}
+
+// indicates the server has successfully logged an operation as a
+// ParticipantAction.
+// @param {Object} operation - object with all operation data as sent to server
+function operationLogged(operation) {
+  return {
+    operation,
+    type: userActionTypes.OPERATION_LOGGED
+  };
+}
+
+// builds an operation object and adds it to the state.
+// @param {object} attributes - data about the action. at minimum should include
+//   a key `type` where the value is a string indicating the action type,
+//   such as 'view', 'add', 'delete', 'checkout'.
+function addOperation(attributes) {
   return (dispatch, getState) => {
     const state = getState();
     const params = {
       ...attributes,
-      actionType,
       sessionId: state.user.sessionId,
-      conditionIdentifier: state.user.conditionIdentifier
+      id: uuidv1(),
+      performedAt: new Date().toISOString(),
+      logged: false
     };
+    dispatch(operationPerformed(params));
+  };
+}
+
+// sends all unlogged operations to the server for logging as ParticipantActions.
+// @param {function} onSuccess - function that should be run if the request to
+//   the server is successful.
+// @param {function} onFailure - function that should be run if request fails.
+function sendOperationsToServer({ onSuccess, onFailure }) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const unloggedOperations = selectUnloggedOperations(state.user);
+
     fromApi.jsonApiCall(
       routes.addParticipantAction(),
-      params,
-      data => console.log(data),
-      error => console.log(error)
+      {
+        conditionIdentifier: state.user.conditionIdentifier,
+        operations: unloggedOperations
+      },
+      (data) => {
+        unloggedOperations.forEach((op) => dispatch(operationLogged(op)));
+        onSuccess(data);
+      },
+      onFailure
+    );
+  };
+}
+
+// adds a 'checkout' type operation for every product currently in the cart.
+function addCheckoutOperations() {
+  return (dispatch, getState) => {
+    const products = getState().cart.items;
+    products.forEach((product) => {
+      dispatch(
+        addOperation({
+          type: CHECKOUT_ACTION_TYPE,
+          quantity: product.quantity,
+          productId: product.id,
+          serialPosition: product.serialPosition
+        })
+      );
+    });
+  };
+}
+
+function startCheckoutProcessing() {
+  return { type: userActionTypes.START_CHECKOUT_PROCESSING };
+}
+
+function checkoutFailure() {
+  return {
+    message: 'Unable to checkout. Please try again.',
+    type: userActionTypes.CHECKOUT_FAILURE
+  };
+}
+
+// @param {function} successCallback - function that should be run if checkout
+//   operations are successfully logged by the sever.
+function checkout(successCallback) {
+  return (dispatch) => {
+    dispatch(startCheckoutProcessing());
+    dispatch(addCheckoutOperations());
+    dispatch(
+      sendOperationsToServer({
+        onSuccess: () => {
+          successCallback();
+          dispatch(cartActionCreators.clearCart());
+        },
+        onFailure: () => dispatch(checkoutFailure())
+      })
+    );
+  };
+}
+
+// @param {object} attributes - data about the action. at minimum should include
+//   a key `type` where the value is a string indicating the action type,
+//   such as 'view', 'add', 'delete', 'checkout'.
+function logParticipantAction(attributes) {
+  return (dispatch) => {
+    dispatch(addOperation(attributes));
+    dispatch(
+      sendOperationsToServer({
+        onSuccess: () => {},
+        onFailure: (error) => console.log(error)
+      })
     );
   };
 }
@@ -120,5 +229,6 @@ export const userActionCreators = {
   setUser,
   sessionIdSubmitted,
   pageViewed,
+  checkout,
   logParticipantAction
 };
