@@ -46,10 +46,9 @@ export default function userReducer(state = initialUserState, action) {
       return Object.assign({}, state, {
         operations: state.operations.map((operation) => {
           if (operation.id === action.operation.id) {
-            return Object.assign({}, operation, { logged: true })
-          } else {
-            return operation
+            return Object.assign({}, operation, { logged: true });
           }
+          return operation;
         })
       });
     default:

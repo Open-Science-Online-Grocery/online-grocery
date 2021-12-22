@@ -11,11 +11,12 @@ module Api
     def create
       condition = condition_from_uuid
       creator = ParticipantActionCreator.new(condition, params[:operations])
+      success = creator.create_participant_actions
       json = {
-        data: { success: creator.create_participant_actions },
+        data: { success: success },
         errors: creator.errors.map { |error| { title: error } }
       }
-      render json: json
+      render(json: json, status: success ? :ok : :unprocessable_entity)
     end
   end
 end

@@ -96,7 +96,7 @@ function pageViewed() {
         }
       )
     );
-  }
+  };
 }
 
 // @param {Object} operation - object with all data sent to server
@@ -127,10 +127,10 @@ function addOperation(attributes) {
       logged: false
     };
     dispatch(operationPerformed(params));
-  }
+  };
 }
 
-function sendOperationsToServer() {
+function sendOperationsToServer({ onSuccess, onFailure }) {
   return (dispatch, getState) => {
     const state = getState();
     const unloggedOperations = selectUnloggedOperations(state.user);
@@ -138,27 +138,55 @@ function sendOperationsToServer() {
     fromApi.jsonApiCall(
       routes.addParticipantAction(),
       { operations: unloggedOperations },
-      () => {
-        unloggedOperations.forEach(
-          (operation) => dispatch(operationLogged(operation))
-        )
+      (data) => {
+        unloggedOperations.forEach((op) => dispatch(operationLogged(op)));
+        onSuccess(data);
       },
-      error => console.log(error)
+      onFailure
     );
-  }
+  };
 }
 
-function logParticipantActions(action_array) {
+function addCheckoutOperations() {
+  return (dispatch, getState) => {
+    const products = getState().cart.items;
+    products.forEach((product) => {
+      dispatch(
+        addOperation({
+          type: 'checkout',
+          quantity: product.quantity,
+          productId: product.id,
+          serialPosition: product.serialPosition
+        })
+      );
+    });
+  };
+}
 
+function checkout(successCallback) {
+  return (dispatch, getState) => {
+    dispatch(addCheckoutOperations());
+    dispatch(
+      sendOperationsToServer({
+        onSuccess: successCallback,
+        onFailure: (error) => console.log(error)
+      })
+    );
+  };
 }
 
 // @param {object} attributes - data about the action. at minimum should include
 //   a key `type` where the value is a string indicating the action type,
 //   such as 'view', 'add', 'delete', 'checkout'.
 function logParticipantAction(attributes) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(addOperation(attributes));
-    dispatch(sendOperationsToServer());
+    dispatch(
+      sendOperationsToServer({
+        onSuccess: () => {},
+        onFailure: (error) => console.log(error)
+      })
+    );
   };
 }
 
@@ -166,5 +194,6 @@ export const userActionCreators = {
   setUser,
   sessionIdSubmitted,
   pageViewed,
+  checkout,
   logParticipantAction
 };

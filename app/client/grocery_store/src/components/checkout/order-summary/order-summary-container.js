@@ -19,13 +19,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => (
+const mapDispatchToProps = (dispatch, ownProps) => (
   {
     handleRemoveFromCart: (product) => {
       dispatch(cartActionCreators.removeFromCart(product));
     },
     handleCheckout: () => {
-      dispatch(cartActionCreators.checkout());
+      dispatch(userActionCreators.checkout(ownProps.onSubmit));
     },
     getCartSettings: () => {
       dispatch(cartActionCreators.getCartSettings());

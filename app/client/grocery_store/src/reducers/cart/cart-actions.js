@@ -92,26 +92,6 @@ function removeFromCart(product) {
   };
 }
 
-function checkout() {
-  return (dispatch, getState) => {
-    const state = getState();
-    const products = state.cart.items;
-    products.forEach((product) => {
-      dispatch(
-        userActionCreators.logParticipantAction(
-          {
-            type: 'checkout',
-            quantity: product.quantity,
-            productId: product.id,
-            serialPosition: product.serialPosition
-          }
-        )
-      )
-    });
-    dispatch(clearCart);
-  }
-}
-
 function clearCart() {
   return {
     type: cartActionTypes.CLEAR_CART
@@ -152,7 +132,6 @@ function getCartSettings() {
 export const cartActionCreators = {
   addToCart,
   removeFromCart,
-  checkout,
   clearCart,
   getCartSettings
 };

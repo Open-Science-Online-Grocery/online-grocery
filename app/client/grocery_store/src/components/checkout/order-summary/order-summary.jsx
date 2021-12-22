@@ -17,7 +17,6 @@ export default class OrderSummary extends React.Component {
 
   checkout() {
     this.props.handleCheckout();
-    this.props.onSubmit();
   }
 
   productLabels(item) {
@@ -136,14 +135,14 @@ export default class OrderSummary extends React.Component {
       return (
         <React.Fragment>
           {this.checkoutErrorMessage()}
-          <button type="submit" disabled className="checkout-button bold disabled">
+          <button type="button" disabled className="checkout-button bold disabled">
             Complete Order
           </button>
         </React.Fragment>
       );
     }
     return (
-      <button type="submit" onClick={() => this.checkout()} className="checkout-button bold">
+      <button type="button" onClick={() => this.checkout()} className="checkout-button bold">
         Complete Order
       </button>
     );
@@ -196,8 +195,7 @@ OrderSummary.propTypes = {
   errorMessage: PropTypes.string,
   handleCheckout: PropTypes.func.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
-  getCartSettings: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired
+  getCartSettings: PropTypes.func.isRequired
 };
 
 OrderSummary.defaultProps = {
