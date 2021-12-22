@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Popup } from 'semantic-ui-react'
+import { Popup } from 'semantic-ui-react';
 import './below-button-label.scss';
-
 
 export default class BelowButtonLabel extends React.Component {
   styles() {

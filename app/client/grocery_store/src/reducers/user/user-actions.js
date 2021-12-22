@@ -57,7 +57,7 @@ function setInitialCategory(data) {
     subcategoryId,
     null,
     'category'
-  )
+  );
 }
 
 function sessionIdSubmitted(sessionId) {
@@ -76,7 +76,7 @@ function sessionIdSubmitted(sessionId) {
       routes.condition(),
       { conditionIdentifier },
       onSuccess,
-      error => console.log(error)
+      (error) => console.log(error)
     );
   };
 }
@@ -177,7 +177,7 @@ function checkoutFailure() {
 }
 
 function checkout(successCallback) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(startCheckoutProcessing());
     dispatch(addCheckoutOperations());
     dispatch(

@@ -17,7 +17,7 @@ export default class OrderSummary extends React.Component {
 
   productLabels(item) {
     return (
-      item.labels.map(label => (
+      item.labels.map((label) => (
         <div
           className="order-item-overlay"
           style={this.labelStyles(label)}
@@ -37,7 +37,7 @@ export default class OrderSummary extends React.Component {
   }
 
   listCartItems() {
-    const listedItems = this.props.cart.items.map(item => (
+    const listedItems = this.props.cart.items.map((item) => (
       <div key={item.id} className="order-item">
         <div className="order-item-image-wrapper">
           <img className="order-item-image" src={item.awsImageUrl} />
@@ -92,7 +92,7 @@ export default class OrderSummary extends React.Component {
     const healthLabelSummaries = this.props.cart.healthLabelSummaries;
     if (healthLabelSummaries === null || healthLabelSummaries.length === 0) return null;
     return (
-      this.props.cart.healthLabelSummaries.map(summary => (
+      this.props.cart.healthLabelSummaries.map((summary) => (
         <div className="label-summary" key={summary}>
           {summary}
         </div>
@@ -105,7 +105,7 @@ export default class OrderSummary extends React.Component {
       return (
         <div className="custom-images">
           {
-            this.props.cart.labelImageUrls.map(imageUrl => (
+            this.props.cart.labelImageUrls.map((imageUrl) => (
               <img key={imageUrl} src={imageUrl} />
             ))
           }
@@ -204,11 +204,14 @@ OrderSummary.propTypes = {
   tax: PropTypes.string.isRequired,
   total: PropTypes.string.isRequired,
   budgetErrorMessage: PropTypes.string,
+  checkoutErrorMessage: PropTypes.string,
+  checkoutProcessing: PropTypes.bool.isRequired,
   handleCheckout: PropTypes.func.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
   getCartSettings: PropTypes.func.isRequired
 };
 
 OrderSummary.defaultProps = {
-  budgetErrorMessage: null
+  budgetErrorMessage: null,
+  checkoutErrorMessage: null
 };
