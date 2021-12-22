@@ -5,7 +5,6 @@ import user from './user/user-reducer';
 import sorting from './sorting/sorting-reducer';
 import search from './search/search-reducer';
 import alert from './alert/alert-reducer';
-import errorMessage from './error-message/error-message-reducer';
 import suggestion from './suggestion/suggestion-reducer';
 import filtering from './filtering/filtering-reducer';
 import { userActionTypes } from './user/user-actions';
@@ -17,7 +16,6 @@ const appReducer = combineReducers({
   category,
   user,
   alert,
-  errorMessage,
   suggestion,
   filtering
 });
