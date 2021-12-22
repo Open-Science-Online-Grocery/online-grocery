@@ -43,8 +43,8 @@ function addToCart(product, amount, addByDollar) {
     dispatch({ type: cartActionTypes.ADD_TO_CART, product: newProduct });
     dispatch(
       userActionCreators.logParticipantAction(
-        'add',
         {
+          type: 'add',
           quantity,
           productId: newProduct.id,
           serialPosition: newProduct.serialPosition
@@ -73,8 +73,8 @@ function removeFromCart(product) {
     dispatch({ type: cartActionTypes.REMOVE_FROM_CART, product });
     dispatch(
       userActionCreators.logParticipantAction(
-        'delete',
         {
+          type: 'delete',
           quantity: product.quantity,
           productId: product.id,
           serialPosition: product.serialPosition
@@ -99,8 +99,8 @@ function checkout() {
     products.forEach((product) => {
       dispatch(
         userActionCreators.logParticipantAction(
-          'checkout',
           {
+            type: 'checkout',
             quantity: product.quantity,
             productId: product.id,
             serialPosition: product.serialPosition

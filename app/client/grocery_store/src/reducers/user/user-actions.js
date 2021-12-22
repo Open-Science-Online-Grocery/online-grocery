@@ -84,8 +84,8 @@ function pageViewed() {
     const state = getState();
     dispatch(
       logParticipantAction(
-        'page view',
         {
+          type: 'page view',
           serialPosition: state.category.page,
           selectedCategoryId: state.category.selectedCategoryId,
           selectedSubcategoryId: state.category.selectedSubcategoryId,
@@ -115,33 +115,50 @@ function operationLogged(operation) {
   };
 }
 
-// @param {string} actionType - string representing the action the participant
-//   has taken, such as 'view', 'add', 'delete', 'checkout'
-// @param {object} attributes - (optional) data about the action
-function logParticipantAction(actionType, attributes = {}) {
+function addOperation(attributes) {
   return (dispatch, getState) => {
     const state = getState();
-
-    // TODO: send all unlogged actions too
-
     const params = {
       ...attributes,
-      actionType,
       sessionId: state.user.sessionId,
       conditionIdentifier: state.user.conditionIdentifier,
       id: uuidv1(),
       performedAt: new Date().toISOString(),
       logged: false
     };
-
     dispatch(operationPerformed(params));
+  }
+}
+
+function sendOperationsToServer() {
+  return (dispatch, getState) => {
+    const state = getState();
+    const unloggedOperations = selectUnloggedOperations(state.user);
 
     fromApi.jsonApiCall(
       routes.addParticipantAction(),
-      params,
-      data => dispatch(operationLogged(params)),
+      { operations: unloggedOperations },
+      () => {
+        unloggedOperations.forEach(
+          (operation) => dispatch(operationLogged(operation))
+        )
+      },
       error => console.log(error)
     );
+  }
+}
+
+function logParticipantActions(action_array) {
+
+}
+
+// @param {object} attributes - data about the action. at minimum should include
+//   a key `type` where the value is a string indicating the action type,
+//   such as 'view', 'add', 'delete', 'checkout'.
+function logParticipantAction(attributes) {
+  return (dispatch, getState) => {
+    dispatch(addOperation(attributes));
+    dispatch(sendOperationsToServer());
   };
 }
 
