@@ -10,7 +10,9 @@ export const userActionTypes = {
   SET_CONDITION_DATA: 'SET_CONDITION_DATA',
   RESET_ALL: 'RESET_ALL',
   OPERATION_PERFORMED: 'OPERATION_PERFORMED',
-  OPERATION_LOGGED: 'OPERATION_LOGGED'
+  OPERATION_LOGGED: 'OPERATION_LOGGED',
+  START_CHECKOUT_PROCESSING: 'START_CHECKOUT_PROCESSING',
+  CHECKOUT_FAILURE: 'CHECKOUT_FAILURE'
 };
 
 function setUser(sessionId, conditionIdentifier) {
@@ -163,13 +165,25 @@ function addCheckoutOperations() {
   };
 }
 
+function startCheckoutProcessing() {
+  return { type: userActionTypes.START_CHECKOUT_PROCESSING };
+}
+
+function checkoutFailure() {
+  return {
+    message: 'Unable to checkout. Please try again.',
+    type: userActionTypes.CHECKOUT_FAILURE
+  };
+}
+
 function checkout(successCallback) {
   return (dispatch, getState) => {
+    dispatch(startCheckoutProcessing());
     dispatch(addCheckoutOperations());
     dispatch(
       sendOperationsToServer({
         onSuccess: successCallback,
-        onFailure: (error) => console.log(error)
+        onFailure: () => dispatch(checkoutFailure())
       })
     );
   };

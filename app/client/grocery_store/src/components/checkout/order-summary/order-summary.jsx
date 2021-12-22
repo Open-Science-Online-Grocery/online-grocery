@@ -15,10 +15,6 @@ export default class OrderSummary extends React.Component {
     }
   }
 
-  checkout() {
-    this.props.handleCheckout();
-  }
-
   productLabels(item) {
     return (
       item.labels.map(label => (
@@ -119,11 +115,11 @@ export default class OrderSummary extends React.Component {
     return null;
   }
 
-  checkoutErrorMessage() {
-    if (this.props.errorMessage) {
+  checkoutErrorMessage(errorMessage) {
+    if (errorMessage) {
       return (
         <div className="error-message">
-          {this.props.errorMessage}
+          {errorMessage}
         </div>
       );
     }
@@ -131,20 +127,35 @@ export default class OrderSummary extends React.Component {
   }
 
   checkoutButtonSection() {
-    if (this.props.errorMessage) {
+    const {
+      budgetErrorMessage,
+      checkoutErrorMessage,
+      checkoutProcessing,
+      handleCheckout
+    } = this.props;
+    if (budgetErrorMessage) {
       return (
         <React.Fragment>
-          {this.checkoutErrorMessage()}
+          {this.checkoutErrorMessage(budgetErrorMessage)}
           <button type="button" disabled className="checkout-button bold disabled">
             Complete Order
           </button>
         </React.Fragment>
       );
+    } else if (checkoutProcessing) {
+      return (
+        <button type="button" disabled className="checkout-button bold disabled">
+          Processing...
+        </button>
+      );
     }
     return (
-      <button type="button" onClick={() => this.checkout()} className="checkout-button bold">
-        Complete Order
-      </button>
+      <React.Fragment>
+        {this.checkoutErrorMessage(checkoutErrorMessage)}
+        <button type="button" onClick={handleCheckout} className="checkout-button bold">
+          Complete Order
+        </button>
+      </React.Fragment>
     );
   }
 
@@ -192,12 +203,12 @@ OrderSummary.propTypes = {
   subtotal: PropTypes.string.isRequired,
   tax: PropTypes.string.isRequired,
   total: PropTypes.string.isRequired,
-  errorMessage: PropTypes.string,
+  budgetErrorMessage: PropTypes.string,
   handleCheckout: PropTypes.func.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
   getCartSettings: PropTypes.func.isRequired
 };
 
 OrderSummary.defaultProps = {
-  errorMessage: null
+  budgetErrorMessage: null
 };

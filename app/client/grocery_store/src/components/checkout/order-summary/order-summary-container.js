@@ -15,7 +15,9 @@ const mapStateToProps = (state) => {
     subtotal: budgetManager.subtotal(),
     tax: budgetManager.tax(),
     total: budgetManager.total(),
-    errorMessage: budgetManager.checkoutErrorMessage()
+    budgetErrorMessage: budgetManager.checkoutErrorMessage(),
+    checkoutErrorMessage: state.cart.checkoutErrorMessage,
+    checkoutProcessing: state.cart.checkoutProcessing
   };
 };
 

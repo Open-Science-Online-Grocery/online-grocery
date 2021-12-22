@@ -7,7 +7,9 @@ const initialCartState = {
   showPriceTotal: true,
   items: [],
   healthLabelSummaries: [],
-  labelImageUrls: []
+  labelImageUrls: [],
+  checkoutProcessing: false,
+  checkoutErrorMessage: null
 };
 
 // An index of -1 indicates that the item is not in the cart
@@ -62,6 +64,18 @@ export default function cartReducer(state = initialCartState, action) {
     case cartActionTypes.SET_CART_SETTINGS: {
       const { healthLabelSummaries, labelImageUrls } = action;
       return Object.assign({}, state, { healthLabelSummaries, labelImageUrls });
+    }
+    case userActionTypes.START_CHECKOUT_PROCESSING: {
+      return Object.assign({}, state, {
+        checkoutProcessing: true,
+        checkoutErrorMessage: null
+      });
+    }
+    case userActionTypes.CHECKOUT_FAILURE: {
+      return Object.assign({}, state, {
+        checkoutProcessing: false,
+        checkoutErrorMessage: action.message
+      });
     }
     case (cartActionTypes.CLEAR_CART):
       return Object.assign({}, state, {
