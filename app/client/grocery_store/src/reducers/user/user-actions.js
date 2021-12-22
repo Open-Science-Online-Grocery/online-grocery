@@ -102,7 +102,9 @@ function pageViewed() {
   };
 }
 
-// @param {Object} operation - object with all data sent to server
+// indicates the user has performed an operation (i.e., something that should be
+// logged on the server as a ParticipantAction).
+// @param {Object} operation - object with all operation data as sent to server
 function operationPerformed(operation) {
   return {
     operation,
@@ -110,7 +112,9 @@ function operationPerformed(operation) {
   };
 }
 
-// @param {Object} operation - object with all data sent to server
+// indicates the server has successfully logged an operation as a
+// ParticipantAction.
+// @param {Object} operation - object with all operation data as sent to server
 function operationLogged(operation) {
   return {
     operation,
@@ -118,6 +122,10 @@ function operationLogged(operation) {
   };
 }
 
+// builds an operation object and adds it to the state.
+// @param {object} attributes - data about the action. at minimum should include
+//   a key `type` where the value is a string indicating the action type,
+//   such as 'view', 'add', 'delete', 'checkout'.
 function addOperation(attributes) {
   return (dispatch, getState) => {
     const state = getState();
@@ -132,6 +140,10 @@ function addOperation(attributes) {
   };
 }
 
+// sends all unlogged operations to the server for logging as ParticipantActions.
+// @param {function} onSuccess - function that should be run if the request to
+//   the server is successful.
+// @param {function} onFailure - function that should be run if request fails.
 function sendOperationsToServer({ onSuccess, onFailure }) {
   return (dispatch, getState) => {
     const state = getState();
@@ -152,6 +164,7 @@ function sendOperationsToServer({ onSuccess, onFailure }) {
   };
 }
 
+// adds a 'checkout' type operation for every product currently in the cart.
 function addCheckoutOperations() {
   return (dispatch, getState) => {
     const products = getState().cart.items;
@@ -179,6 +192,8 @@ function checkoutFailure() {
   };
 }
 
+// @param {function} successCallback - function that should be run if checkout
+//   operations are successfully logged by the sever.
 function checkout(successCallback) {
   return (dispatch) => {
     dispatch(startCheckoutProcessing());
