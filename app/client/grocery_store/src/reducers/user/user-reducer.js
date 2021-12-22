@@ -1,5 +1,7 @@
 import { userActionTypes } from './user-actions';
 
+export const CHECKOUT_ACTION_TYPE = 'checkout';
+
 const initialUserState = {
   user: null,
   conditionIdentifier: null,
@@ -50,6 +52,12 @@ export default function userReducer(state = initialUserState, action) {
           }
           return operation;
         })
+      });
+    case userActionTypes.CHECKOUT_FAILURE:
+      return Object.assign({}, state, {
+        operations: state.operations.filter(
+          (operation) => operation.type !== CHECKOUT_ACTION_TYPE
+        )
       });
     default:
       return state;

@@ -2,7 +2,7 @@ import * as qs from 'query-string';
 import { v1 as uuidv1 } from 'uuid';
 import * as routes from '../../../../utils/routes';
 import * as fromApi from '../../../../utils/api_call';
-import { selectUnloggedOperations } from './user-reducer';
+import { selectUnloggedOperations, CHECKOUT_ACTION_TYPE } from './user-reducer';
 import { categoryActionCreators } from '../category/category-actions';
 
 export const userActionTypes = {
@@ -155,7 +155,7 @@ function addCheckoutOperations() {
     products.forEach((product) => {
       dispatch(
         addOperation({
-          type: 'checkout',
+          type: CHECKOUT_ACTION_TYPE,
           quantity: product.quantity,
           productId: product.id,
           serialPosition: product.serialPosition
