@@ -4,6 +4,7 @@ import * as routes from '../../../../utils/routes';
 import * as fromApi from '../../../../utils/api_call';
 import { selectUnloggedOperations, CHECKOUT_ACTION_TYPE } from './user-reducer';
 import { categoryActionCreators } from '../category/category-actions';
+import { cartActionCreators } from '../cart/cart-actions';
 
 export const userActionTypes = {
   SET_USER: 'SET_USER',
@@ -184,7 +185,10 @@ function checkout(successCallback) {
     dispatch(addCheckoutOperations());
     dispatch(
       sendOperationsToServer({
-        onSuccess: successCallback,
+        onSuccess: () => {
+          successCallback();
+          dispatch(cartActionCreators.clearCart());
+        },
         onFailure: () => dispatch(checkoutFailure())
       })
     );
