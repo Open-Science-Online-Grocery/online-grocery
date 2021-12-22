@@ -17,6 +17,8 @@ class BackpopulateParticipantActionsPerformedAt < ActiveRecord::Migration[5.2]
     ActiveRecord::Base.connection.schema_cache.clear!
     ParticipantAction.reset_column_information
 
+    # rubocop:disable Rails/SkipsModelValidations
     ParticipantAction.update_all(performed_at: nil)
+    # rubocop:enable Rails/SkipsModelValidations
   end
 end

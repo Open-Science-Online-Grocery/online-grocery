@@ -1,14 +1,20 @@
 # frozen_string_literal: true
 
+# responsible for creating ParticipantActions from data submitted by the
+# grocery-store react app.
 class ParticipantActionCreator
   attr_reader :errors
 
+  # @param condition [Condition] the condition the actions belong to
+  # @param operations [Array<Hash>] array of hashes containing information about
+  #   the operation the user performed as sent by the grocery-store react app.
   def initialize(condition, operations)
     @condition = condition
     @operations = operations
     @errors = []
   end
 
+  # @return [Boolean] success of ParticipantAction creation
   def create_participant_actions
     ActiveRecord::Base.transaction do
       @operations.each { |operation_attrs| create_action(operation_attrs) }
