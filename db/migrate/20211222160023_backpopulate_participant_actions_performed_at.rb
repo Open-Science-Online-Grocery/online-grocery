@@ -8,7 +8,7 @@ class BackpopulateParticipantActionsPerformedAt < ActiveRecord::Migration[5.2]
     ActiveRecord::Base.connection.schema_cache.clear!
     ParticipantAction.reset_column_information
 
-    ParticipantAction.where(performed_at: nil).each do |participant_action|
+    ParticipantAction.where(performed_at: nil).find_each do |participant_action|
       participant_action.update!(performed_at: participant_action.created_at)
     end
   end
