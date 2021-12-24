@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import CartDropdown from './cart-dropdown';
 import { cartActionCreators } from '../../reducers/cart/cart-actions';
-import { userActionCreators } from '../../reducers/user/user-actions';
 
 const mapStateToProps = state => (
   {

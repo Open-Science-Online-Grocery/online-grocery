@@ -8,29 +8,15 @@ module Api
     skip_before_action :authenticate_user!
     skip_before_action :verify_authenticity_token
 
-    # rubocop:disable Rails/SaveBang, Metrics/AbcSize
     def create
       condition = condition_from_uuid
-      action = ParticipantAction.create(
-        session_identifier: params[:session_id],
-        condition_id: condition.id,
-        action_type: params[:action_type],
-        product_id: params[:product_id],
-        quantity: params[:quantity],
-        serial_position: params[:serial_position],
-        detail: description
-      )
+      creator = ParticipantActionCreator.new(condition, params[:operations])
+      success = creator.create_participant_actions
       json = {
-        data: { success: action.valid? },
-        errors: action.errors.full_messages.map { |error| { title: error } }
+        data: { success: success },
+        errors: creator.errors.map { |error| { title: error } }
       }
-      render json: json
-    end
-    # rubocop:enable Rails/SaveBang, Metrics/AbcSize
-
-    private def description
-      return unless params[:action_type] == 'page view'
-      PageDescriber.new(params).description
+      render(json: json, status: success ? :ok : :unprocessable_entity)
     end
   end
 end

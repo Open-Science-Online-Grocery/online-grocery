@@ -7,8 +7,10 @@ export default class SuggestionPopup extends React.Component {
   render() {
     if (!this.props.visible) return null;
     this.props.logParticipantAction(
-      'suggested add-on shown',
-      { productId: this.props.product.id }
+      {
+        type: 'suggested add-on shown',
+        productId: this.props.product.id
+      }
     );
     return (
       <div className="suggestion-popup">
