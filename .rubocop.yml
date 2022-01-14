@@ -81,8 +81,9 @@ Metrics/ClassLength:
   Exclude:
     - 'app/controllers/conditions_controller.rb'
     - 'app/models/condition.rb'
-    - 'app/services/condition_manager.rb'
     - 'app/services/cart.rb'
+    - 'app/services/condition_manager.rb'
+    - 'app/services/csv_file_managers/sorting.rb'
     - 'app/services/equation.rb'
     - 'app/services/product_url_manager.rb'
     - '**/db/migrate/**/*'
