@@ -81,32 +81,16 @@ module CsvFileManagers
     end
 
     private def finalize_records
-      validate_records
+      check_for_duplicates
       return if @errors.any?
       # drop the csv row number from the array; this is not saved to the db.
       values =  @custom_sortings.map { |attrs| attrs.first(5) }
       CustomSorting.import(columns, values, timestamps: false, validate: false)
+      @custom_sortings = []
     end
 
-    # while this duplicates the validations on the CustomSorting model, doing
-    # it here so that we can import with `validate: false` is substantially
-    # faster than allowing rails to validate each created model object.
-    private def validate_records
-      validate_sort_order
-      validate_session_identifier
-      check_for_duplicates
-    end
-
-    private def validate_sort_order
-      bad_records = @custom_sortings.select { |attrs| attrs.fifth.blank? }
-      add_errors('Rows missing product rank', bad_records) if bad_records.any?
-    end
-
-    private def validate_session_identifier
-      bad_records = @custom_sortings.select { |attrs| attrs.first.blank? }
-      add_errors('Rows missing Participant Id', bad_records) if bad_records.any?
-    end
-
+    # since we're importing all the records at once using, we check for
+    # uniqueness violations here rather than when records are saved.
     private def check_for_duplicates
       # grouping by session_identifier
       @custom_sortings.group_by(&:first).each_value do |sortings|
