@@ -150,8 +150,6 @@ CREATE TABLE `custom_sortings` (
   `sort_file_id` bigint(20) DEFAULT NULL,
   `product_id` bigint(20) DEFAULT NULL,
   `sort_order` int(11) DEFAULT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_custom_sortings_on_condition_id` (`condition_id`),
   KEY `index_custom_sortings_on_sort_file_id` (`sort_file_id`),
@@ -500,6 +498,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20211101155624'),
 ('20211101190836'),
 ('20211221205528'),
-('20211222160023');
+('20211222160023'),
+('20220114152549');
 
 
