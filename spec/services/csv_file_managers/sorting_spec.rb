@@ -46,8 +46,8 @@ RSpec.describe CsvFileManagers::Sorting do
     before do
       allow(condition).to receive(:current_sort_file) { sort_file }
       allow(Product).to receive(:all) { [product_1, product_2] }
-      allow(CustomSorting).to receive(:import) do |arg|
-        @built_records = arg
+      allow(CustomSorting).to receive(:import) do |_cols, values, _opts|
+        @built_records = values
         true
       end
     end
@@ -57,18 +57,27 @@ RSpec.describe CsvFileManagers::Sorting do
         expect(subject.import).to eq true
         expect(subject.errors).to be_empty
         expect(CustomSorting).to have_received(:import).with(
+          %i[
+            session_identifier
+            condition_id
+            sort_file_id
+            product_id
+            sort_order
+          ],
           array_including(
-            instance_of(CustomSorting),
-            instance_of(CustomSorting)
-          )
+            instance_of(Array),
+            instance_of(Array)
+          ),
+          timestamps: false,
+          validate: false
         )
-        expect(@built_records.first.session_identifier).to eq 'abc'
-        expect(@built_records.first.product_id).to eq 111
-        expect(@built_records.first.sort_order).to eq 2
+        expect(@built_records.first.first).to eq 'abc'
+        expect(@built_records.first.fourth).to eq 111
+        expect(@built_records.first.fifth).to eq '2'
 
-        expect(@built_records.last.session_identifier).to eq 'abc'
-        expect(@built_records.last.product_id).to eq 222
-        expect(@built_records.last.sort_order).to eq 1
+        expect(@built_records.last.first).to eq 'abc'
+        expect(@built_records.last.fourth).to eq 222
+        expect(@built_records.last.fifth).to eq '1'
       end
     end
 

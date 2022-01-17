@@ -32,20 +32,35 @@ module CsvFileManagers
     memoize :current_file
 
     private def destroy_obsolete_records
-      @condition.custom_sortings.where.not(sort_file: current_file).destroy_all
+      @condition.custom_sortings.where.not(sort_file: current_file).delete_all
+    end
+
+    private def columns
+      %i[
+        session_identifier
+        condition_id
+        sort_file_id
+        product_id
+        sort_order
+      ]
     end
 
     private def process_row(row, row_number)
       return unless row_is_valid?(row, row_number)
       product = find_product(row_number, row[headers.second])
       return unless product
-      @custom_sortings << @condition.custom_sortings.build(
-        session_identifier: row[headers.first],
-        sort_file: current_file,
-        product: product,
-        sort_order: row[headers.last],
-        csv_row_number: row_number
-      )
+      # we are capturing an array of attributes instead of building records
+      # because array-based importing is faster than record-based importing
+      # when using the activerecord-import gem. these values map onto the
+      # fields in `columns` above, plus the row number for error reporting.
+      @custom_sortings << [
+        row[headers.first],
+        @condition.id,
+        current_file.id,
+        product.id,
+        row[headers.last],
+        row_number
+      ]
     end
 
     private def row_is_valid?(row, row_number)
@@ -68,21 +83,26 @@ module CsvFileManagers
     private def finalize_records
       check_for_duplicates
       return if @errors.any?
-      CustomSorting.import(@custom_sortings)
+      # drop the csv row number from the array; this is not saved to the db.
+      values =  @custom_sortings.map { |attrs| attrs.first(5) }
+      CustomSorting.import(columns, values, timestamps: false, validate: false)
+      @custom_sortings = []
     end
 
     # since we're importing all the records at once using, we check for
     # uniqueness violations here rather than when records are saved.
     private def check_for_duplicates
-      @custom_sortings.group_by(&:session_identifier).each_value do |sortings|
+      # grouping by session_identifier
+      @custom_sortings.group_by(&:first).each_value do |sortings|
         flag_duplicate_sort_orders(sortings)
         flag_duplicate_product_ids(sortings)
       end
     end
 
     private def flag_duplicate_sort_orders(sortings)
-      sortings.group_by(&:sort_order).values.select(&:many?).each do |group|
-        add_duplicate_errors(
+      # grouping by sort_order
+      sortings.group_by(&:fifth).values.select(&:many?).each do |group|
+        add_errors(
           'Duplicate product rank specified for same Participant ID',
           group
         )
@@ -90,16 +110,18 @@ module CsvFileManagers
     end
 
     private def flag_duplicate_product_ids(sortings)
-      sortings.group_by(&:product_id).values.select(&:many?).each do |group|
-        add_duplicate_errors(
+      # grouping by product_id
+      sortings.group_by(&:fourth).values.select(&:many?).each do |group|
+        add_errors(
           'Duplicate product ID specified for for same Participant ID',
           group
         )
       end
     end
 
-    private def add_duplicate_errors(message, records)
-      @errors << "#{message}: rows #{records.map(&:csv_row_number).to_sentence}"
+    private def add_errors(message, records)
+      # records.map(&:last) => the csv row number
+      @errors << "#{message}: rows #{records.map(&:last).to_sentence}"
     end
 
     private def product_cache
