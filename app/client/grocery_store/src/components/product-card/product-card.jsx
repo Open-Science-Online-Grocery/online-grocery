@@ -6,6 +6,7 @@ import OverlayLabel from '../overlay-label/overlay-label';
 import BelowButtonLabel from '../below-button-label/below-button-label';
 import GuidingStars from '../guiding-stars/guiding-stars';
 import './product-card.scss';
+import GuidingStarsContainer from '../guiding-stars/guiding-stars-container';
 
 export default class ProductCard extends React.Component {
   overlayLabels() {
@@ -35,8 +36,15 @@ export default class ProductCard extends React.Component {
     return (
       <div className="product-card-guiding-stars-wrapper">
         {
-          this.props.showGuidingStars &&
-            <GuidingStars starpoints={this.props.product.starpoints} />
+          this.props.showGuidingStars && (
+            <GuidingStarsContainer
+              starpoints={this.props.product.starpoints}
+              product={{
+                id: this.props.product.id,
+                serialPosition: this.props.product.serialPosition
+              }}
+            />
+          )
         }
       </div>
     );
@@ -74,6 +82,7 @@ ProductCard.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
+    serialPosition: PropTypes.number,
     imageSrc: PropTypes.string,
     awsImageUrl: PropTypes.string,
     size: PropTypes.string,
