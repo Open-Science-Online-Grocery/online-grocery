@@ -101,6 +101,8 @@ class ConditionsController < ApplicationController
       :new_tag_csv_file,
       :new_suggestion_csv_file,
       :new_current_product_attribute_file,
+      :show_custom_attribute_on_checkout,
+      :show_custom_attribute_on_product,
       :new_sort_file,
       :show_products_by_subcategory,
       :allow_searching,

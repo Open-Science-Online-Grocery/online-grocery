@@ -9,6 +9,7 @@ class Product < ApplicationRecord
   has_many :product_tags, dependent: :destroy
   has_many :product_suggestions, dependent: :destroy
   has_many :custom_sortings, dependent: :destroy
+  has_one :custom_product_attribute, dependent: :destroy
 
   scope :name_matches, ->(string) {
     where(arel_table[:name].matches("%#{string}%"))
@@ -30,5 +31,10 @@ class Product < ApplicationRecord
     product_suggestions.find do |suggestion|
       suggestion.condition_id == condition.id
     end.try(:add_on_product)
+  end
+
+  def custom_attribute_amount
+    return unless custom_product_attribute
+    custom_product_attribute.custom_attribute_amount
   end
 end
