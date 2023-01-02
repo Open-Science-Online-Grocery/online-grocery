@@ -24,6 +24,7 @@ class Condition < ApplicationRecord
   has_many :product_sort_fields, through: :condition_product_sort_fields
   has_many :tag_csv_files, dependent: :destroy
   has_many :suggestion_csv_files, dependent: :destroy
+  has_many :product_attribute_csv_files, dependent: :destroy
   has_many :sort_files, dependent: :destroy
   has_many :product_tags, dependent: :destroy
   has_many :tags, through: :product_tags
@@ -89,6 +90,17 @@ class Condition < ApplicationRecord
     suggestion_csv_files
       .select { |f| f.active? && f.persisted? }
       .max_by(&:created_at)
+  end
+
+  def current_product_attribute_csv_file
+    product_attribute_csv_files.select { |f| f.active? && f.persisted? }
+      .max_by(&:created_at)
+  end
+
+  def new_current_product_attribute_file=(value)
+    return unless value
+    product_attribute_csv_files.each { |s| s.active = false }
+    product_attribute_csv_files.build(file: value)
   end
 
   def new_sort_file=(value)
