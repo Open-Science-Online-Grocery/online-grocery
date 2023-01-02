@@ -27,6 +27,7 @@
           <div class="item" data-tab="budgeting">Budgeting</div>
           <div class="item" data-tab="suggestions">Suggestions</div>
           <div class="item" data-tab="searching">Searching</div>
+          <div class="item" data-tab="custom-attribute">Products</div>
         </div>
       </div>
 
@@ -40,6 +41,7 @@
         <%= render "budgeting_tab", f: f, condition: condition %>
         <%= render "suggestions_tab", f: f, condition: condition %>
         <%= render "searching_tab", f: f, condition: condition %>
+        <%= render "custom_attribute_tab", f: f, condition: condition %>
 
         <div class="button-wrapper right">
           <button type="submit" class="ui positive button" data-tab-submit>
