@@ -44,7 +44,9 @@ RSpec.describe ProductSerializer do
       style_use_types: Condition.style_use_types,
       nutrition_styles: 'some styles',
       custom_attribute_name: 'attr_name',
-      custom_attribute_units: 'attr_unit'
+      custom_attribute_units: 'attr_unit',
+      show_custom_attribute_on_product: false,
+      show_custom_attribute_on_checkout: true
     )
   end
   let(:label_equation_1) do
@@ -197,6 +199,35 @@ RSpec.describe ProductSerializer do
       end
     end
 
+    context 'when the user unchecked both the options to display' do
+      let(:product) do
+        instance_double(
+          'Product',
+          attributes: { 'foo' => 'bar' },
+          add_on_product: false,
+          custom_attribute_amount: 12
+        )
+      end
+      let(:condition) do
+        instance_double(
+          'Condition',
+          condition_labels: [condition_label_1, condition_label_2],
+          style_use_type: style_use_type,
+          nutrition_equation: nutrition_equation,
+          style_use_types: Condition.style_use_types,
+          nutrition_styles: 'some styles',
+          show_custom_attribute_on_product: false,
+          show_custom_attribute_on_checkout: false
+        )
+      end
+
+      describe '#serialize' do
+        it 'returns the product\'s attributes without the custom attributes field' do
+          expect(subject.serialize).not_to have_key(:custom_attribute)
+        end
+      end
+    end
+
     context 'when the product have custom attributes' do
       let(:product) do
         instance_double(
@@ -217,7 +248,9 @@ RSpec.describe ProductSerializer do
             custom_attribute: {
               'custom_attribute_unit' => 'attr_unit',
               'custom_attribute_name' => 'attr_name',
-              'custom_attribute_amount' => 12
+              'custom_attribute_amount' => 12,
+              'display_on_detail' => false,
+              'display_on_checkout' => true
             }
           }
           expect(subject.serialize).to eql(expected_output)

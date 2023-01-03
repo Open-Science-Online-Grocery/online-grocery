@@ -15,7 +15,10 @@ class ProductSerializer
       .merge(labels: product_labels)
       .merge(nutrition_information)
 
-    if @product.custom_attribute_amount.present?
+    should_display_custom_attr = @condition.show_custom_attribute_on_product ||
+      @condition.show_custom_attribute_on_checkout
+
+    if should_display_custom_attr && @product.custom_attribute_amount.present?
       attrs = attrs.merge(custom_attribute: custom_attributes_info)
     end
     include_add_on ? attrs.merge(add_on_info) : attrs
@@ -63,7 +66,9 @@ class ProductSerializer
     {
       'custom_attribute_unit' => @condition.custom_attribute_units,
       'custom_attribute_name' => @condition.custom_attribute_name,
-      'custom_attribute_amount' => @product.custom_attribute_amount
+      'custom_attribute_amount' => @product.custom_attribute_amount,
+      'display_on_detail' => @condition.show_custom_attribute_on_product,
+      'display_on_checkout' => @condition.show_custom_attribute_on_checkout
     }
   end
 

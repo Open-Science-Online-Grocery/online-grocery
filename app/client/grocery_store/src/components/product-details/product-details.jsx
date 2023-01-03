@@ -36,7 +36,7 @@ export default class ProductDetails extends React.Component {
   }
 
   customAttributes() {
-    if (this.props.customAttribute) {
+    if (this.props.customAttribute?.displayOnDetail) {
       const attribute = this.props.customAttribute;
       return (
         <div className="custom-attribute-container">
@@ -119,7 +119,8 @@ ProductDetails.propTypes = {
   customAttribute: PropTypes.shape({
     customAttributeAmount: PropTypes.string,
     customAttributeName: PropTypes.string,
-    customAttributeUnit: PropTypes.string
+    customAttributeUnit: PropTypes.string,
+    displayOnDetail: PropTypes.bool
   }),
   labels: PropTypes.arrayOf(
     PropTypes.shape({
