@@ -14,23 +14,19 @@
   %>
     <%= hidden_field_tag :id, condition.id %>
     <%= hidden_field_tag :tab, @tab %>
-    <div class="ui grid">
-
-      <div class="four wide column">
-        <div class="ui vertical poiting menu">
-          <div class="item" data-tab="basic-info">Basic Information</div>
-          <div class="item" data-tab="labeling">Labeling</div>
-          <div class="item" data-tab="sorting">Sorting</div>
-          <div class="item" data-tab="categories">Categories</div>
-          <div class="item" data-tab="cart-summary">Cart Summary</div>
-          <div class="item" data-tab="nutrition-facts">Nutrition Facts</div>
-          <div class="item" data-tab="budgeting">Budgeting</div>
-          <div class="item" data-tab="suggestions">Suggestions</div>
-          <div class="item" data-tab="searching">Searching</div>
-        </div>
+    <div class="menu-container">
+      <div class="ui vertical pointing menu">
+        <div class="item" data-tab="basic-info">Basic Information</div>
+        <div class="item" data-tab="labeling">Labeling</div>
+        <div class="item" data-tab="sorting">Sorting</div>
+        <div class="item" data-tab="categories">Categories</div>
+        <div class="item" data-tab="cart-summary">Cart Summary</div>
+        <div class="item" data-tab="nutrition-facts">Nutrition Facts</div>
+        <div class="item" data-tab="budgeting">Budgeting</div>
+        <div class="item" data-tab="suggestions">Suggestions</div>
+        <div class="item" data-tab="searching">Searching</div>
       </div>
-
-      <div class="twelve wide column">
+      <div class="content">
         <%= render "basic_info_tab", f: f %>
         <%= render "labeling_tab", f: f, condition: condition %>
         <%= render "sorting_tab", f: f, condition: condition %>
