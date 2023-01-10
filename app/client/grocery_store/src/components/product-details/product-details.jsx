@@ -4,14 +4,20 @@ import NutritionLabel from '../nutrition-label/nutrition-label';
 import AddToCartContainer from '../add-to-cart/add-to-cart-container';
 import OverlayLabel from '../overlay-label/overlay-label';
 import BelowButtonLabel from '../below-button-label/below-button-label';
-import GuidingStars from '../guiding-stars/guiding-stars';
 import './product-details.scss';
+import GuidingStarsContainer from '../guiding-stars/guiding-stars-container';
 
 export default class ProductDetails extends React.Component {
   guidingStars() {
     if (!this.props.showGuidingStars) return null;
     return (
-      <GuidingStars starpoints={this.props.starpoints} />
+      <GuidingStarsContainer
+        starpoints={this.props.starpoints}
+        product={{
+          id: this.props.id,
+          serialPosition: this.props.serialPosition
+        }}
+      />
     );
   }
 
@@ -94,6 +100,7 @@ ProductDetails.propTypes = {
   awsImageUrl: PropTypes.string.isRequired,
   description: PropTypes.string,
   ingredients: PropTypes.string,
+  serialPosition: PropTypes.number,
   labels: PropTypes.arrayOf(
     PropTypes.shape({
       labelName: PropTypes.string,
@@ -139,5 +146,6 @@ ProductDetails.defaultProps = {
   sugar: null,
   protein: null,
   vitamins: null,
-  nutritionLabelCss: null
+  nutritionLabelCss: null,
+  serialPosition: null
 };
