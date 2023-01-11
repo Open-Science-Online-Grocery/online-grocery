@@ -37,6 +37,6 @@ class Product < ApplicationRecord
     return unless custom_product_attributes
     custom_product_attributes
       .find_by(condition: condition)
-      .custom_attribute_amount
+      &.custom_attribute_amount
   end
 end
