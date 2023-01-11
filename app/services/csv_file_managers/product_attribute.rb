@@ -44,7 +44,7 @@ module CsvFileManagers
 
     private def row_is_valid?(row, row_number)
       headers.each do |header|
-        if row[header].blank?
+        if row[header].blank? && header != headers.last
           add_error(row_number, "#{header} must have a value")
           return false
         end
