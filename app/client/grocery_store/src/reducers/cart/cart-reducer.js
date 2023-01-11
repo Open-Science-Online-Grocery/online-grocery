@@ -4,6 +4,7 @@ import { userActionTypes } from '../user/user-actions';
 const initialCartState = {
   count: 0,
   price: 0,
+  customAttributeTotal: 0,
   showPriceTotal: true,
   items: [],
   healthLabelSummaries: [],
@@ -28,13 +29,20 @@ export default function cartReducer(state = initialCartState, action) {
     case cartActionTypes.ADD_TO_CART: {
       const itemIndexInCart = getItemIndexInCart(action.product, state.items);
 
+      const customAttributeTotal = action.product.customAttribute
+        ? state.customAttributeTotal
+          + parseFloat(action.product.customAttribute.customAttributeAmount)
+          * action.product.quantity
+        : state.customAttributeTotal;
+
       if (itemIndexInCart > -1) {
         const updatedItem = Object.assign({}, state.items[itemIndexInCart], {
           quantity: state.items[itemIndexInCart].quantity + action.product.quantity
         });
         const finalState = Object.assign({}, state, {
           count: state.count + action.product.quantity,
-          price: state.price + action.product.price * action.product.quantity
+          price: state.price + action.product.price * action.product.quantity,
+          customAttributeTotal
         });
         finalState.items[itemIndexInCart] = updatedItem;
         return finalState;
@@ -45,7 +53,8 @@ export default function cartReducer(state = initialCartState, action) {
           ...state.items,
           action.product
         ],
-        price: state.price + action.product.price * action.product.quantity
+        price: state.price + action.product.price * action.product.quantity,
+        customAttributeTotal
       });
     }
     case cartActionTypes.REMOVE_FROM_CART: {
@@ -55,10 +64,17 @@ export default function cartReducer(state = initialCartState, action) {
       if (productIndex > -1) {
         newItems.splice(productIndex, 1);
       }
+      const customAttributeTotal = action.product.customAttribute
+        ? state.customAttributeTotal
+          - parseFloat(action.product.customAttribute.customAttributeAmount)
+          * action.product.quantity
+        : state.customAttributeTotal;
+
       return Object.assign({}, state, {
         count: state.count - action.product.quantity,
         items: newItems,
-        price: state.price - action.product.price * action.product.quantity
+        price: state.price - action.product.price * action.product.quantity,
+        customAttributeTotal
       });
     }
     case cartActionTypes.SET_CART_SETTINGS: {
@@ -81,6 +97,7 @@ export default function cartReducer(state = initialCartState, action) {
       return Object.assign({}, state, {
         count: 0,
         price: 0,
+        customAttributeTotal: 0,
         items: [],
         healthLabelSummaries: [],
         labelImageUrls: []

@@ -101,6 +101,12 @@ export default class AddToCart extends React.Component {
 AddToCart.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.number,
+    customAttribute: PropTypes.shape({
+      customAttributeAmount: PropTypes.string,
+      customAttributeName: PropTypes.string,
+      customAttributeUnit: PropTypes.string,
+      displayOnDetail: PropTypes.bool
+    }),
     name: PropTypes.string,
     imageSrc: PropTypes.string,
     awsImageUrl: PropTypes.string,

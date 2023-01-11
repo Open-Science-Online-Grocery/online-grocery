@@ -88,6 +88,19 @@ export default class OrderSummary extends React.Component {
     );
   }
 
+  customAttributeSection() {
+    const baseItem = this.props.cart.items.find((item) => !!item.customAttribute)?.customAttribute;
+    if (!baseItem?.displayOnCheckout) return null;
+    const attributeName = baseItem.customAttributeName;
+    const attributeUnit = baseItem.customAttributeUnit;
+
+    return (
+      <div className="label-summary">
+        <span className="bold">Total {attributeName}:</span> {this.props.cart.customAttributeTotal} {attributeUnit}
+      </div>
+    );
+  }
+
   healthLabelsSection() {
     const healthLabelSummaries = this.props.cart.healthLabelSummaries;
     if (healthLabelSummaries === null || healthLabelSummaries.length === 0) return null;
@@ -168,6 +181,7 @@ export default class OrderSummary extends React.Component {
         {this.listCartItems()}
         {this.healthLabelsSection()}
         {this.customImagesSection()}
+        {this.customAttributeSection()}
         {this.cartTotalSection()}
         {this.checkoutButtonSection()}
       </div>
@@ -179,6 +193,7 @@ OrderSummary.propTypes = {
   cart: PropTypes.shape({
     count: PropTypes.number.isRequired,
     showPriceTotal: PropTypes.bool.isRequired,
+    customAttributeTotal: PropTypes.number.isRequired,
     healthLabelSummaries: PropTypes.arrayOf(PropTypes.string),
     labelImageUrls: PropTypes.arrayOf(PropTypes.string),
     items: PropTypes.arrayOf(
@@ -186,6 +201,13 @@ OrderSummary.propTypes = {
         quantity: PropTypes.number.isRequired,
         price: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
+        customAttributeTotal: PropTypes.number,
+        customAttribute: PropTypes.shape({
+          customAttributeAmount: PropTypes.string,
+          customAttributeName: PropTypes.string,
+          customAttributeUnit: PropTypes.string,
+          displayOnDetail: PropTypes.bool
+        }),
         imageSrc: PropTypes.string.isRequired,
         awsImageUrl: PropTypes.string.isRequired,
         serialPosition: PropTypes.number.isRequired,
