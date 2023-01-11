@@ -34,11 +34,22 @@ module CsvFileManagers
     end
 
     private def process_row(row, row_number)
+      return unless row_is_valid?(row, row_number)
       attribute_amount = row[headers.last]
       return if attribute_amount.blank?
       product = find_product(row_number, row[headers.first])
       return if product.blank?
       create_custom_product_attribute(product, attribute_amount)
+    end
+
+    private def row_is_valid?(row, row_number)
+      headers.each do |header|
+        if row[header].blank?
+          add_error(row_number, "#{header} must have a value")
+          return false
+        end
+      end
+      true
     end
 
     private def find_product(row_number, id)
