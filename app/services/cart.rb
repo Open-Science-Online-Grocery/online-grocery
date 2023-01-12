@@ -15,17 +15,28 @@ class Cart
     @condition = condition
   end
 
-  # rubocop:disable Style/GuardClause
   def get_value(variable_token)
     variable = CartVariable.from_token(variable_token, @condition)
     if variable.in?(CartVariable.total_fields)
       return total(variable.attribute)
     elsif variable.in?(CartVariable.average_fields)
       return average(variable.attribute)
+    elsif variable.in?(CartVariable.product_attribute_fields)
+      return handle_custom_attribute_fields(variable.token_name)
     end
     public_send(variable_token)
   end
-  # rubocop:enable Style/GuardClause
+
+  def handle_custom_attribute_fields(token_name)
+    total_amount, products_with_attributes_count = calculate_product_attributes
+    return 0 if products_with_attributes_count == 0
+
+    if token_name == CartVariable.product_attribute_average_field.token_name
+      total_amount / products_with_attributes_count
+    elsif token_name == CartVariable.product_attribute_total_field.token_name
+      total_amount
+    end
+  end
 
   def total_products
     @total_products ||= @product_data.reduce(0) do |total, item|
@@ -87,6 +98,20 @@ class Cart
     number_of_products_label_name(method_name).present? ||
       percent_of_products_label_name(method_name).present? ||
       super
+  end
+
+  private def calculate_product_attributes
+    products_with_attributes_count = 0
+    total_amount = @product_data.pluck(:product)
+      .map.with_index do |product, index|
+      amount = product.custom_attribute_amount(@condition)
+      if amount.present?
+        products_with_attributes_count += 1
+        amount.to_f * @product_data[index][:quantity].to_f
+      end
+    end.compact.reduce(:+)
+
+    [total_amount, products_with_attributes_count]
   end
 
   private def number_of_products_label_name(method_name)

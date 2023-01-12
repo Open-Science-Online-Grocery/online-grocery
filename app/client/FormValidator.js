@@ -31,7 +31,7 @@ export default class FormValidator {
           const firstErrorField = this.$form.find('.error.field');
           const tab = firstErrorField.closest('[data-tab]').data('tab');
           // switch to tab containing error if it's in a tab view
-          if (tab) $('.tabular.menu .item').tab('change tab', tab);
+          if (tab) $('.menu .item').tab('change tab', tab);
           firstErrorField[0].scrollIntoView({ behavior: 'smooth' });
           return false;
         }
