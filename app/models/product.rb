@@ -34,7 +34,6 @@ class Product < ApplicationRecord
   end
 
   def custom_attribute_amount(condition)
-    return unless custom_product_attributes
     custom_product_attributes
       .find_by(condition: condition)
       &.custom_attribute_amount
