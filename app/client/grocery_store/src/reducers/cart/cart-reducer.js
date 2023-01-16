@@ -29,12 +29,13 @@ export default function cartReducer(state = initialCartState, action) {
     case cartActionTypes.ADD_TO_CART: {
       const itemIndexInCart = getItemIndexInCart(action.product, state.items);
 
-      const customAttributeTotal = action.product.customAttribute
+      const customAttributeTotal = action.product.customAttributeAmount
         ? state.customAttributeTotal
-          + parseFloat(action.product.customAttribute.customAttributeAmount)
+          + parseFloat(action.product.customAttributeAmount)
           * action.product.quantity
         : state.customAttributeTotal;
 
+      debugger
       if (itemIndexInCart > -1) {
         const updatedItem = Object.assign({}, state.items[itemIndexInCart], {
           quantity: state.items[itemIndexInCart].quantity + action.product.quantity
@@ -64,9 +65,9 @@ export default function cartReducer(state = initialCartState, action) {
       if (productIndex > -1) {
         newItems.splice(productIndex, 1);
       }
-      const customAttributeTotal = action.product.customAttribute
+      const customAttributeTotal = action.product.customAttributeAmount
         ? state.customAttributeTotal
-          - parseFloat(action.product.customAttribute.customAttributeAmount)
+          - parseFloat(action.product.customAttributeAmount)
           * action.product.quantity
         : state.customAttributeTotal;
 

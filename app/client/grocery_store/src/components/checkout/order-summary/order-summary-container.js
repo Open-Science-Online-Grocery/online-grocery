@@ -17,6 +17,9 @@ const mapStateToProps = (state) => {
     total: budgetManager.total(),
     budgetErrorMessage: budgetManager.checkoutErrorMessage(),
     checkoutErrorMessage: state.cart.checkoutErrorMessage,
+    displayCustomAttrOnCheckout: state.user.displayCustomAttrOnCheckout,
+    customAttrName: state.user.customAttrName,
+    customAttrUnit: state.user.customAttrUnit,
     checkoutProcessing: state.cart.checkoutProcessing
   };
 };

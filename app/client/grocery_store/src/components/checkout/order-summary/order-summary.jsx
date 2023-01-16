@@ -89,11 +89,12 @@ export default class OrderSummary extends React.Component {
   }
 
   customAttributeSection() {
-    const baseItem = this.props.cart.items.find((item) => !!item.customAttribute)?.customAttribute;
-    if (!baseItem?.displayOnCheckout) return null;
-    const attributeName = baseItem.customAttributeName;
-    const attributeUnit = baseItem.customAttributeUnit;
+    if(!this.props.displayCustomAttrOnCheckout) {
+      return null
+    }
 
+    const attributeName = this.props.customAttrName;
+    const attributeUnit = this.props.customAttrUnit;
     return (
       <div className="label-summary">
         <span className="bold">Total {attributeName}:</span> {this.props.cart.customAttributeTotal} {attributeUnit}
@@ -202,12 +203,7 @@ OrderSummary.propTypes = {
         price: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         customAttributeTotal: PropTypes.number,
-        customAttribute: PropTypes.shape({
-          customAttributeAmount: PropTypes.string,
-          customAttributeName: PropTypes.string,
-          customAttributeUnit: PropTypes.string,
-          displayOnDetail: PropTypes.bool
-        }),
+        customAttributeAmount: PropTypes.string,
         imageSrc: PropTypes.string.isRequired,
         awsImageUrl: PropTypes.string.isRequired,
         serialPosition: PropTypes.number.isRequired,
@@ -230,6 +226,9 @@ OrderSummary.propTypes = {
   checkoutProcessing: PropTypes.bool.isRequired,
   handleCheckout: PropTypes.func.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
+  displayCustomAttrOnCheckout: PropTypes.bool.isRequired,
+  customAttrUnit: PropTypes.string,
+  customAttrName: PropTypes.string,
   getCartSettings: PropTypes.func.isRequired
 };
 

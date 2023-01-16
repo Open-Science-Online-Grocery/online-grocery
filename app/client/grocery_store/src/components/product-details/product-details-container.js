@@ -9,7 +9,10 @@ const mapStateToProps = (state, ownProps) => {
   }
   return {
     nutritionLabelCss: css,
-    showGuidingStars: state.user.showGuidingStars
+    showGuidingStars: state.user.showGuidingStars,
+    displayCustomAttrOnDetail: state.user.displayCustomAttrOnCheckout,
+    customAttrName: state.user.customAttrName,
+    customAttrUnit: state.user.customAttrUnit
   };
 };
 
