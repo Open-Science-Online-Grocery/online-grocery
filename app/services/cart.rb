@@ -15,6 +15,7 @@ class Cart
     @condition = condition
   end
 
+  # rubocop:disable Style/GuardClause
   def get_value(variable_token)
     variable = CartVariable.from_token(variable_token, @condition)
     if variable.in?(CartVariable.total_fields)
@@ -26,6 +27,7 @@ class Cart
     end
     public_send(variable_token)
   end
+  # rubocop:enable Style/GuardClause
 
   def handle_custom_attribute_fields(token_name)
     total_amount, products_with_attributes_count = calculate_product_attributes
