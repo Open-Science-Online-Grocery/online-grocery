@@ -9,7 +9,6 @@
 #    determining the value of the variable.
 class CartVariable < Variable
   def self.all(condition = nil)
-    @condition = condition
     @all ||= begin
       [
         number_of_products_tokens(condition),
@@ -22,8 +21,12 @@ class CartVariable < Variable
       ].flatten.map { |attrs| new(attrs) } +
         total_fields +
         average_fields +
-        product_attribute_fields
+        custom_attribute_fields(condition)
     end
+  end
+
+  def self.custom_attribute_fields(condition)
+    @custom_attribute_fields ||= product_attribute_fields(condition)
   end
 
   def self.total_fields
@@ -50,46 +53,12 @@ class CartVariable < Variable
     end
   end
 
-  def self.product_attribute_fields
-    if @condition.blank? || @condition.custom_product_attributes.empty?
-      return []
-    end
-    @product_attribute_fields ||= [
-      product_attribute_average_field,
-      product_attribute_total_field
-    ]
-  end
-
-  def self.product_attribute_average_field
-    new(
-      token_name: "avg_#{@condition.custom_attribute_name.underscore}",
-      description: "Average #{@condition.custom_attribute_name}
-      (#{@condition.custom_attribute_units})".capitalize,
-      attribute: :custom_attribute
-    )
-  end
-
-  def self.product_attribute_total_field
-    new(
-      token_name: "total_#{@condition.custom_attribute_name.underscore}",
-      description: "total #{@condition.custom_attribute_name}
-      (#{@condition.custom_attribute_units})".capitalize,
-      attribute: :custom_attribute
-    )
-  end
-
   def self.from_token(token_name, condition = nil)
     all(condition).find { |variable| variable.token_name == token_name }
   end
 
   def self.from_attribute(attribute, condition = nil)
     all(condition).find { |variable| variable.attribute == attribute.to_sym }
-  end
-
-  def incomplete_data?
-    return false unless attribute
-    return true if attribute == :custom_attribute
-    Product.where(attribute => nil).any?
   end
 
   private_class_method def self.number_of_products_tokens(condition)

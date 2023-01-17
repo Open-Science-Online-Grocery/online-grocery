@@ -9,14 +9,18 @@
 #  - `attribute` indicates an attribute on Product corresponding to the value of
 #    the variable.
 class ProductVariable < Variable
-  def self.all
+  def self.all(condition = nil)
     @all ||= nutrition + [
       new(
         token_name: 'price',
         description: 'Price',
         attribute: :price
       )
-    ]
+    ] + custom_attribute_fields(condition)
+  end
+
+  def self.custom_attribute_fields(condition)
+    @custom_attribute_fields ||= product_attribute_fields(condition)
   end
 
   # rubocop:disable Metrics/MethodLength

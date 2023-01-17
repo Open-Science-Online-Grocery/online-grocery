@@ -5,6 +5,10 @@ module Equations
   class Sort < Equation
     include Equations::EvaluatesProduct
 
+    def variables
+      ProductVariable.all(@condition)
+    end
+
     private def should_return_boolean?
       false
     end

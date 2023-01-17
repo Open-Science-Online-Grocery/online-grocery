@@ -8,10 +8,6 @@ module Equations
       calculator.evaluate(to_s, product_attributes)
     end
 
-    def variables
-      ProductVariable.all
-    end
-
     private def evaluate_with_fake_data
       evaluate(fake_product_data)
     end

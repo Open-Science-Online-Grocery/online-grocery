@@ -6,6 +6,10 @@ module Equations
   class Nutrition < Equation
     include Equations::EvaluatesProduct
 
+    def variables
+      ProductVariable.all(@condition)
+    end
+
     private def should_return_boolean?
       true
     end

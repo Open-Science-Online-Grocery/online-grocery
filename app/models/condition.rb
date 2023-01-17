@@ -136,7 +136,8 @@ class Condition < ApplicationRecord
   def sort_equation
     @sort_equation ||= Equation.for_type(
       Equation.types.sort,
-      sort_equation_tokens
+      sort_equation_tokens,
+      self
     )
   end
 
@@ -148,7 +149,8 @@ class Condition < ApplicationRecord
   def nutrition_equation
     @nutrition_equation ||= Equation.for_type(
       Equation.types.nutrition,
-      nutrition_equation_tokens
+      nutrition_equation_tokens,
+      self
     )
   end
 

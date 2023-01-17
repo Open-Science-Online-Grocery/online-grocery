@@ -22,7 +22,7 @@ class Cart
       return total(variable.attribute)
     elsif variable.in?(CartVariable.average_fields)
       return average(variable.attribute)
-    elsif variable.in?(CartVariable.product_attribute_fields)
+    elsif variable.in?(CartVariable.custom_attribute_fields(@condition))
       return handle_custom_attribute_fields(variable.token_name)
     end
     public_send(variable_token)
@@ -33,9 +33,13 @@ class Cart
     total_amount, products_with_attributes_count = calculate_product_attributes
     return 0 if products_with_attributes_count == 0
 
-    if token_name == CartVariable.product_attribute_average_field.token_name
+    if token_name == CartVariable
+        .product_attribute_average_field(@condition).token_name
+
       total_amount / products_with_attributes_count
-    elsif token_name == CartVariable.product_attribute_total_field.token_name
+    elsif token_name == CartVariable
+        .product_attribute_total_field(@condition).token_name
+
       total_amount
     end
   end
