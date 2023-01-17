@@ -4,7 +4,6 @@ import { userActionTypes } from '../user/user-actions';
 const initialCartState = {
   count: 0,
   price: 0,
-  customAttributeTotal: 0,
   showPriceTotal: true,
   items: [],
   healthLabelSummaries: [],
@@ -13,10 +12,24 @@ const initialCartState = {
   checkoutErrorMessage: null
 };
 
+/* ****************************** selectors ********************************* */
+
 // An index of -1 indicates that the item is not in the cart
 const getItemIndexInCart = (item, itemsInCart) => (
   itemsInCart.findIndex(itemInCart => itemInCart.name === item.name)
 );
+
+export const getCustomAttributeTotal = (state) => {
+  let total = 0;
+  state.items.forEach((item) => {
+    if (item.customAttributeAmount) {
+      total += item.customAttributeAmount * item.quantity;
+    }
+  });
+  return total;
+};
+
+/* ******************************* reducers ********************************* */
 
 export default function cartReducer(state = initialCartState, action) {
   switch (action.type) {
@@ -28,22 +41,13 @@ export default function cartReducer(state = initialCartState, action) {
       });
     case cartActionTypes.ADD_TO_CART: {
       const itemIndexInCart = getItemIndexInCart(action.product, state.items);
-
-      const customAttributeTotal = action.product.customAttributeAmount
-        ? state.customAttributeTotal
-          + parseFloat(action.product.customAttributeAmount)
-          * action.product.quantity
-        : state.customAttributeTotal;
-
-      debugger
       if (itemIndexInCart > -1) {
         const updatedItem = Object.assign({}, state.items[itemIndexInCart], {
           quantity: state.items[itemIndexInCart].quantity + action.product.quantity
         });
         const finalState = Object.assign({}, state, {
           count: state.count + action.product.quantity,
-          price: state.price + action.product.price * action.product.quantity,
-          customAttributeTotal
+          price: state.price + action.product.price * action.product.quantity
         });
         finalState.items[itemIndexInCart] = updatedItem;
         return finalState;
@@ -54,8 +58,7 @@ export default function cartReducer(state = initialCartState, action) {
           ...state.items,
           action.product
         ],
-        price: state.price + action.product.price * action.product.quantity,
-        customAttributeTotal
+        price: state.price + action.product.price * action.product.quantity
       });
     }
     case cartActionTypes.REMOVE_FROM_CART: {
@@ -65,17 +68,10 @@ export default function cartReducer(state = initialCartState, action) {
       if (productIndex > -1) {
         newItems.splice(productIndex, 1);
       }
-      const customAttributeTotal = action.product.customAttributeAmount
-        ? state.customAttributeTotal
-          - parseFloat(action.product.customAttributeAmount)
-          * action.product.quantity
-        : state.customAttributeTotal;
-
       return Object.assign({}, state, {
         count: state.count - action.product.quantity,
         items: newItems,
-        price: state.price - action.product.price * action.product.quantity,
-        customAttributeTotal
+        price: state.price - action.product.price * action.product.quantity
       });
     }
     case cartActionTypes.SET_CART_SETTINGS: {
@@ -98,7 +94,6 @@ export default function cartReducer(state = initialCartState, action) {
       return Object.assign({}, state, {
         count: 0,
         price: 0,
-        customAttributeTotal: 0,
         items: [],
         healthLabelSummaries: [],
         labelImageUrls: []

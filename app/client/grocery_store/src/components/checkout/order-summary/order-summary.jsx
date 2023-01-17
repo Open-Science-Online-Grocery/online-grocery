@@ -97,7 +97,7 @@ export default class OrderSummary extends React.Component {
     const attributeUnit = this.props.customAttrUnit;
     return (
       <div className="label-summary">
-        <span className="bold">Total {attributeName}:</span> {this.props.cart.customAttributeTotal} {attributeUnit}
+        <span className="bold">Total {attributeName}:</span> {this.props.customAttributeTotal} {attributeUnit}
       </div>
     );
   }
@@ -194,7 +194,6 @@ OrderSummary.propTypes = {
   cart: PropTypes.shape({
     count: PropTypes.number.isRequired,
     showPriceTotal: PropTypes.bool.isRequired,
-    customAttributeTotal: PropTypes.number.isRequired,
     healthLabelSummaries: PropTypes.arrayOf(PropTypes.string),
     labelImageUrls: PropTypes.arrayOf(PropTypes.string),
     items: PropTypes.arrayOf(
@@ -202,7 +201,6 @@ OrderSummary.propTypes = {
         quantity: PropTypes.number.isRequired,
         price: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        customAttributeTotal: PropTypes.number,
         customAttributeAmount: PropTypes.string,
         imageSrc: PropTypes.string.isRequired,
         awsImageUrl: PropTypes.string.isRequired,
@@ -218,6 +216,7 @@ OrderSummary.propTypes = {
       })
     )
   }).isRequired,
+  customAttributeTotal: PropTypes.number.isRequired,
   subtotal: PropTypes.string.isRequired,
   tax: PropTypes.string.isRequired,
   total: PropTypes.string.isRequired,

@@ -3,6 +3,7 @@ import OrderSummary from './order-summary';
 import { cartActionCreators } from '../../../reducers/cart/cart-actions';
 import { userActionCreators } from '../../../reducers/user/user-actions';
 import BudgetManager from '../../../utils/BudgetManager';
+import { getCustomAttributeTotal } from '../../../reducers/reducer';
 
 const mapStateToProps = (state) => {
   const budgetManager = new BudgetManager(
@@ -20,6 +21,7 @@ const mapStateToProps = (state) => {
     displayCustomAttrOnCheckout: state.user.displayCustomAttrOnCheckout,
     customAttrName: state.user.customAttrName,
     customAttrUnit: state.user.customAttrUnit,
+    customAttributeTotal: getCustomAttributeTotal(state),
     checkoutProcessing: state.cart.checkoutProcessing
   };
 };
