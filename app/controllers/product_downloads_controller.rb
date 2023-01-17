@@ -6,13 +6,26 @@
 # is detected and the file is delivered.
 class ProductDownloadsController < ApplicationController
   power :no_fallback, context: :set_condition, map: {
-    %i[custom_categories suggestions sorting show] => :manageable_condition
+    %i[
+      custom_categories
+      suggestions
+      sorting
+      show
+      custom_product_attribute
+    ] => :manageable_condition
   }
 
   def custom_categories
     redirect_to_download(
       CsvFileManagers::Category,
       'product_categories_data.csv'
+    )
+  end
+
+  def custom_product_attribute
+    redirect_to_download(
+      CsvFileManagers::ProductAttribute,
+      'product_attribute_data.csv'
     )
   end
 

@@ -99,4 +99,12 @@ class NullCondition
   def allow_searching
     true
   end
+
+  def show_custom_attribute_on_checkout
+    false
+  end
+
+  def show_custom_attribute_on_product
+    false
+  end
 end

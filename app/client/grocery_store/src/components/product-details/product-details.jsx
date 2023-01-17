@@ -35,6 +35,20 @@ export default class ProductDetails extends React.Component {
     );
   }
 
+  customAttributes() {
+    if (this.props.customAttribute?.displayOnDetail) {
+      const attribute = this.props.customAttribute;
+      return (
+        <div className="custom-attribute-container">
+          <div className="bold">{attribute.customAttributeName}:</div>
+          <div>{attribute.customAttributeAmount}</div>
+          <div>{attribute.customAttributeUnit}</div>
+        </div>
+      );
+    }
+    return <></>;
+  }
+
   render() {
     return (
       <div className="product-details">
@@ -60,6 +74,7 @@ export default class ProductDetails extends React.Component {
         </div>
         <div className="product-details-right-section">
           {this.guidingStars()}
+          {this.customAttributes()}
           {
             this.props.servingSize
               && (
@@ -101,6 +116,12 @@ ProductDetails.propTypes = {
   description: PropTypes.string,
   ingredients: PropTypes.string,
   serialPosition: PropTypes.number,
+  customAttribute: PropTypes.shape({
+    customAttributeAmount: PropTypes.string,
+    customAttributeName: PropTypes.string,
+    customAttributeUnit: PropTypes.string,
+    displayOnDetail: PropTypes.bool
+  }),
   labels: PropTypes.arrayOf(
     PropTypes.shape({
       labelName: PropTypes.string,
@@ -147,5 +168,6 @@ ProductDetails.defaultProps = {
   protein: null,
   vitamins: null,
   nutritionLabelCss: null,
-  serialPosition: null
+  serialPosition: null,
+  customAttribute: null
 };

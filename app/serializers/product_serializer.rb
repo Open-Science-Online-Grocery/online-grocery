@@ -14,6 +14,14 @@ class ProductSerializer
     attrs = @product.attributes
       .merge(labels: product_labels)
       .merge(nutrition_information)
+
+    should_display_custom_attr = @condition.show_custom_attribute_on_product ||
+      @condition.show_custom_attribute_on_checkout
+
+    if should_display_custom_attr &&
+        @product.custom_attribute_amount(@condition).present?
+      attrs = attrs.merge(custom_attribute: custom_attributes_info)
+    end
     include_add_on ? attrs.merge(add_on_info) : attrs
   end
   memoize :serialize
@@ -53,6 +61,16 @@ class ProductSerializer
     add_on_attrs = ProductSerializer.new(add_on, @condition)
       .serialize(include_add_on: false) # avoid recursive add-on suggestions!
     { 'add_on' => add_on_attrs }
+  end
+
+  private def custom_attributes_info
+    {
+      'custom_attribute_unit' => @condition.custom_attribute_units,
+      'custom_attribute_name' => @condition.custom_attribute_name,
+      'custom_attribute_amount' => @product.custom_attribute_amount(@condition),
+      'display_on_detail' => @condition.show_custom_attribute_on_product,
+      'display_on_checkout' => @condition.show_custom_attribute_on_checkout
+    }
   end
 
   private def gets_label?(condition_label)

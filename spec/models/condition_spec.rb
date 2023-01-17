@@ -121,6 +121,8 @@ RSpec.describe Condition, type: :model do
     it { is_expected.to have_many(:subcategory_exclusions) }
     it { is_expected.to have_many(:excluded_subcategories).through(:subcategory_exclusions) }
     it { is_expected.to have_many(:custom_sortings) }
+    it { is_expected.to have_many(:product_attribute_csv_files) }
+    it { is_expected.to have_many(:custom_product_attributes) }
   end
 
   describe 'nested attributes' do
