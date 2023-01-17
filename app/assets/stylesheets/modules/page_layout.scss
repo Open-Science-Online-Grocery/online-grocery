@@ -2,6 +2,15 @@
   text-align: right;
 }
 
+.menu-container {
+  display: flex;
+  gap: 10px;
+}
+
+.menu-container .content { 
+  width: 100%;
+}
+
 .ui.divider {
   &.tall {
     margin-top: 2rem;
