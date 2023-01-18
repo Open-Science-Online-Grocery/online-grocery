@@ -89,15 +89,13 @@ export default class OrderSummary extends React.Component {
   }
 
   customAttributeSection() {
-    if(!this.props.displayCustomAttrOnCheckout) {
-      return null
+    if (!this.props.displayCustomAttrOnCheckout) {
+      return null;
     }
-
-    const attributeName = this.props.customAttrName;
-    const attributeUnit = this.props.customAttrUnit;
+    const { customAttrName, customAttrUnit, customAttributeTotal } = this.props;
     return (
       <div className="label-summary">
-        <span className="bold">Total {attributeName}:</span> {this.props.customAttributeTotal} {attributeUnit}
+        <span className="bold">Total {customAttrName}:</span> {customAttributeTotal} {customAttrUnit}
       </div>
     );
   }
