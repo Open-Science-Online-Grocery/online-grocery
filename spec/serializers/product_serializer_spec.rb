@@ -245,13 +245,7 @@ RSpec.describe ProductSerializer do
           expected_output = {
             'foo' => 'bar',
             labels: [],
-            custom_attribute: {
-              'custom_attribute_unit' => 'attr_unit',
-              'custom_attribute_name' => 'attr_name',
-              'custom_attribute_amount' => 12,
-              'display_on_detail' => false,
-              'display_on_checkout' => true
-            }
+            'custom_attribute_amount' => 12
           }
           expect(subject.serialize).to eql(expected_output)
         end

@@ -25,7 +25,6 @@ RSpec.describe 'Importing custom product attributes for a condition', :feature d
       fill_in 'Custom attribute name', with: 'attrName'
       fill_in 'Custom attribute units', with: 'attrUnits'
       force_click('#condition_show_custom_attribute_on_product')
-      force_click('#condition_show_custom_attribute_on_checkout')
 
       # uploading bad file
       attach_file 'condition_new_current_product_attribute_file', bad_file

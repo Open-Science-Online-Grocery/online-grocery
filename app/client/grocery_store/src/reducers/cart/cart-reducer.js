@@ -12,10 +12,24 @@ const initialCartState = {
   checkoutErrorMessage: null
 };
 
+/* ****************************** selectors ********************************* */
+
 // An index of -1 indicates that the item is not in the cart
 const getItemIndexInCart = (item, itemsInCart) => (
   itemsInCart.findIndex(itemInCart => itemInCart.name === item.name)
 );
+
+export const getCustomAttributeTotal = (state) => {
+  let total = 0;
+  state.items.forEach((item) => {
+    if (item.customAttributeAmount) {
+      total += item.customAttributeAmount * item.quantity;
+    }
+  });
+  return total;
+};
+
+/* ******************************* reducers ********************************* */
 
 export default function cartReducer(state = initialCartState, action) {
   switch (action.type) {
@@ -27,7 +41,6 @@ export default function cartReducer(state = initialCartState, action) {
       });
     case cartActionTypes.ADD_TO_CART: {
       const itemIndexInCart = getItemIndexInCart(action.product, state.items);
-
       if (itemIndexInCart > -1) {
         const updatedItem = Object.assign({}, state.items[itemIndexInCart], {
           quantity: state.items[itemIndexInCart].quantity + action.product.quantity
