@@ -67,6 +67,10 @@ class Condition < ApplicationRecord
     OpenStruct.new(ratio: 'ratio', percent: 'percent')
   end
 
+  def uses_custom_attributes?
+    product_attribute_csv_files.active.exists?
+  end
+
   def products
     Product.where.not(subcategory_id: excluded_subcategory_ids)
   end

@@ -83,11 +83,8 @@ class ConditionManager
   end
 
   private def update_custom_product_attribute
-    if @condition.show_custom_attribute_on_product ||
-        @condition.show_custom_attribute_on_checkout
-      manager = CsvFileManagers::ProductAttribute.new(@condition)
-      manager.import || @errors += manager.errors
-    end
+    manager = CsvFileManagers::ProductAttribute.new(@condition)
+    manager.import || @errors += manager.errors
   end
 
   private def cart_image_exists?(cart_label_attrs)

@@ -112,8 +112,9 @@ class Cart
       .map.with_index do |product, index|
       amount = product.custom_attribute_amount(@condition)
       if amount.present?
-        products_with_attributes_count += 1
-        amount.to_f * @product_data[index][:quantity].to_f
+        quantity = @product_data[index][:quantity].to_f
+        products_with_attributes_count += quantity
+        amount.to_f * quantity
       end
     end.compact.reduce(:+)
 

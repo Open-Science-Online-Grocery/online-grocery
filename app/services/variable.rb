@@ -21,7 +21,8 @@ class Variable
 
   def incomplete_data?
     return false unless attribute
-    return true if attribute == :custom_attribute
-    Product.where(attribute => nil).any?
+    Product.where.not(
+      id: CustomProductAttribute.where(condition: @condition)
+    ).any?
   end
 end

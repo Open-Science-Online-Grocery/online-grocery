@@ -25,10 +25,7 @@ class ProductVariable < Variable
   end
 
   def self.product_attribute_field(condition)
-    if condition.blank? ||
-        condition.custom_product_attributes.empty?
-      return nil 
-    end
+    return [] unless condition&.uses_custom_attributes?
     new(
       token_name: format_attr_name(condition.custom_attribute_name),
       description: "#{condition.custom_attribute_name}

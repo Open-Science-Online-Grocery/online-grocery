@@ -30,10 +30,7 @@ class CartVariable < Variable
   end
 
   def self.product_attribute_fields(condition)
-    if condition.blank? ||
-        condition.custom_product_attributes.empty?
-      return []
-    end
+    return [] unless condition&.uses_custom_attributes?
     [
       product_attribute_average_field(condition),
       product_attribute_total_field(condition)
