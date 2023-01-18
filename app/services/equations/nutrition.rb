@@ -7,7 +7,7 @@ module Equations
     include Equations::EvaluatesProduct
 
     private def should_return_boolean?
-      false
+      true
     end
   end
 end
