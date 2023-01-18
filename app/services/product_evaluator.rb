@@ -9,10 +9,13 @@ class ProductEvaluator
   end
 
   def get_value(variable_token)
+    return 0 if @product.blank?
+
     variable = ProductVariable.from_token(variable_token.to_s, @condition)
     if variable == ProductVariable.custom_attribute_field(@condition)
       return @product.custom_attribute_amount(@condition)
     end
+
     evaluate_product(variable_token)
   end
 
