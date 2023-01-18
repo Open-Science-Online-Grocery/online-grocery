@@ -31,6 +31,7 @@
     <div class="ui segment nested-calculator <%= 'disabled' unless condition.style_uses_calculation? %>">
       <div
         data-calculator
+        data-condition-id="<%= @condition.id %>"
         data-variables="<%= VariableSerializer.new(condition.nutrition_equation_variables).serialize %>"
         data-input-name="condition[nutrition_equation_tokens]"
         data-tokens="<%= condition.nutrition_equation_tokens || [] %>"

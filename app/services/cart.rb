@@ -18,9 +18,9 @@ class Cart
   # rubocop:disable Style/GuardClause
   def get_value(variable_token)
     variable = CartVariable.from_token(variable_token, @condition)
-    if variable.in?(CartVariable.total_fields)
+    if variable.in?(CartVariable.total_fields(@condition))
       return total(variable.attribute)
-    elsif variable.in?(CartVariable.average_fields)
+    elsif variable.in?(CartVariable.average_fields(@condition))
       return average(variable.attribute)
     elsif variable.in?(CartVariable.custom_attribute_fields(@condition))
       return handle_custom_attribute_fields(variable.token_name)

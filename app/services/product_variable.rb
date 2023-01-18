@@ -10,21 +10,36 @@
 #    the variable.
 class ProductVariable < Variable
   def self.all(condition = nil)
-    @all ||= nutrition + [
+    @all ||= nutrition(condition) + [
       new(
         token_name: 'price',
         description: 'Price',
-        attribute: :price
+        attribute: :price,
+        condition: condition
       )
-    ] + custom_attribute_fields(condition)
+    ] + [custom_attribute_field(condition)].compact
   end
 
-  def self.custom_attribute_fields(condition)
-    @custom_attribute_fields ||= product_attribute_fields(condition)
+  def self.custom_attribute_field(condition)
+    @custom_attribute_field ||= product_attribute_field(condition)
+  end
+
+  def self.product_attribute_field(condition)
+    if condition.blank? ||
+        condition.custom_product_attributes.empty?
+      return nil 
+    end
+    new(
+      token_name: format_attr_name(condition.custom_attribute_name),
+      description: "#{condition.custom_attribute_name}
+        (#{condition.custom_attribute_units})".capitalize,
+      attribute: :custom_attribute,
+      condition: condition
+    )
   end
 
   # rubocop:disable Metrics/MethodLength
-  def self.nutrition
+  def self.nutrition(condition)
     @nutrition ||= [
       {
         token_name: 'serving_size_grams',
@@ -111,7 +126,7 @@ class ProductVariable < Variable
         description: 'Star points',
         attribute: :starpoints
       }
-    ].map { |attrs| new(attrs) }
+    ].map { |attrs| new(attrs.merge(condition: condition)) }
   end
   # rubocop:enable Metrics/MethodLength
 end

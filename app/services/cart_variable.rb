@@ -19,8 +19,8 @@ class CartVariable < Variable
           attribute: nil
         }
       ].flatten.map { |attrs| new(attrs) } +
-        total_fields +
-        average_fields +
+        total_fields(condition) +
+        average_fields(condition) +
         custom_attribute_fields(condition)
     end
   end
@@ -29,32 +29,63 @@ class CartVariable < Variable
     @custom_attribute_fields ||= product_attribute_fields(condition)
   end
 
-  def self.total_fields
+  def self.product_attribute_fields(condition)
+    if condition.blank? ||
+        condition.custom_product_attributes.empty?
+      return []
+    end
+    [
+      product_attribute_average_field(condition),
+      product_attribute_total_field(condition)
+    ]
+  end
+
+  def self.product_attribute_average_field(condition)
+    new(
+      token_name: "avg_#{format_attr_name(condition.custom_attribute_name)}",
+      description: "Average #{condition.custom_attribute_name}
+      (#{condition.custom_attribute_units})".capitalize,
+      attribute: :custom_attribute,
+      condition: condition
+    )
+  end
+
+  def self.product_attribute_total_field(condition)
+    new(
+      token_name: "total_#{format_attr_name(condition.custom_attribute_name)}",
+      description: "total #{condition.custom_attribute_name}
+      (#{condition.custom_attribute_units})".capitalize,
+      attribute: :custom_attribute,
+      condition: condition
+    )
+  end
+
+  def self.total_fields(condition)
     @total_fields ||= begin
       ProductVariable.all.map do |product_variable|
+        next if product_variable.attribute == :custom_attribute
         new(
           token_name: "total_#{product_variable.token_name}",
           description: "Total #{product_variable.description}".capitalize,
-          attribute: product_variable.attribute
+          attribute: product_variable.attribute,
+          condition: condition
         )
-      end
+      end.compact
     end
   end
 
-  def self.average_fields
+  def self.average_fields(condition)
     @average_fields ||= begin
       ProductVariable.all.map do |product_variable|
+        next if product_variable.attribute == :custom_attribute
         new(
           token_name: "avg_#{product_variable.token_name}",
           description: "Average #{product_variable.description}".capitalize,
-          attribute: product_variable.attribute
+          attribute: product_variable.attribute,
+          condition: condition
         )
-      end
+      end.compact
     end
-  end
-
-  def self.from_token(token_name, condition = nil)
-    all(condition).find { |variable| variable.token_name == token_name }
   end
 
   def self.from_attribute(attribute, condition = nil)
