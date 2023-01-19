@@ -12,8 +12,16 @@ class ProductDownloadsController < ApplicationController
       sorting
       show
       custom_product_attribute
+      custom_product_prices
     ] => :manageable_condition
   }
+
+  def custom_product_prices
+    redirect_to_download(
+      CsvFileManagers::ProductPrice,
+      'product_price_data.csv'
+    )
+  end
 
   def custom_categories
     redirect_to_download(
