@@ -5,21 +5,29 @@ class ProductEvaluator
   def initialize(condition, product_attributes)
     @condition = condition
     @product_attributes = product_attributes
-    @product = Product.find_by(id: @product_attributes['id'])
   end
 
   def get_value(variable_token)
-    return 0 if @product.blank?
+    if @product_attributes[variable_token].present?
+      return @product_attributes[variable_token]
+    end
 
     variable = ProductVariable.from_token(variable_token.to_s, @condition)
     if variable == ProductVariable.custom_attribute_field(@condition)
-      return @product.custom_attribute_amount(@condition)
+      if @product_attributes[:custom_attribute_amount].present?
+        return @product_attributes[:custom_attribute_amount]
+      end
+
+      product = Product.find_by(id: @product_attributes['id'])
+      return 0 if product.blank?
+      return product.custom_attribute_amount(@condition)
     end
 
     evaluate_product(variable_token)
   end
 
   private def evaluate_product(attribute)
-    @product.public_send(attribute)
+    product = Product.find_by(id: @product_attributes['id'])
+    product.public_send(attribute)
   end
 end
