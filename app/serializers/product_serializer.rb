@@ -28,7 +28,7 @@ class ProductSerializer
     product_labels.count * -1
   end
 
-  private def product_labels(attrs)
+  private def product_labels(attrs = @product.attributes)
     @condition.condition_labels.map do |condition_label|
       label_information(condition_label, attrs)
     end.compact
