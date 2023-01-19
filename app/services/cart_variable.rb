@@ -58,7 +58,7 @@ class CartVariable < Variable
   end
 
   def self.total_fields(condition)
-    @total_fields = begin
+    @total_fields ||= begin
       ProductVariable.all.map do |product_variable|
         next if product_variable.attribute == :custom_attribute
         new(
@@ -72,7 +72,7 @@ class CartVariable < Variable
   end
 
   def self.average_fields(condition)
-    @average_fields = begin
+    @average_fields ||= begin
       ProductVariable.all.map do |product_variable|
         next if product_variable.attribute == :custom_attribute
         new(
