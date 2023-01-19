@@ -28,6 +28,7 @@ class ProductEvaluator
 
   private def evaluate_product(attribute)
     product = Product.find_by(id: @product_attributes['id'])
+    return 0 if product.blank?
     product.public_send(attribute)
   end
 end
