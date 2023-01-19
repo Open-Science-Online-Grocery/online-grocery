@@ -88,6 +88,18 @@ export default class OrderSummary extends React.Component {
     );
   }
 
+  customAttributeSection() {
+    if (!this.props.displayCustomAttrOnCheckout) {
+      return null;
+    }
+    const { customAttrName, customAttrUnit, customAttributeTotal } = this.props;
+    return (
+      <div className="label-summary">
+        <span className="bold">Total {customAttrName}:</span> {customAttributeTotal} {customAttrUnit}
+      </div>
+    );
+  }
+
   healthLabelsSection() {
     const healthLabelSummaries = this.props.cart.healthLabelSummaries;
     if (healthLabelSummaries === null || healthLabelSummaries.length === 0) return null;
@@ -168,6 +180,7 @@ export default class OrderSummary extends React.Component {
         {this.listCartItems()}
         {this.healthLabelsSection()}
         {this.customImagesSection()}
+        {this.customAttributeSection()}
         {this.cartTotalSection()}
         {this.checkoutButtonSection()}
       </div>
@@ -186,6 +199,7 @@ OrderSummary.propTypes = {
         quantity: PropTypes.number.isRequired,
         price: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
+        customAttributeAmount: PropTypes.string,
         imageSrc: PropTypes.string.isRequired,
         awsImageUrl: PropTypes.string.isRequired,
         serialPosition: PropTypes.number.isRequired,
@@ -200,6 +214,7 @@ OrderSummary.propTypes = {
       })
     )
   }).isRequired,
+  customAttributeTotal: PropTypes.number.isRequired,
   subtotal: PropTypes.string.isRequired,
   tax: PropTypes.string.isRequired,
   total: PropTypes.string.isRequired,
@@ -208,6 +223,9 @@ OrderSummary.propTypes = {
   checkoutProcessing: PropTypes.bool.isRequired,
   handleCheckout: PropTypes.func.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
+  displayCustomAttrOnCheckout: PropTypes.bool.isRequired,
+  customAttrUnit: PropTypes.string,
+  customAttrName: PropTypes.string,
   getCartSettings: PropTypes.func.isRequired
 };
 

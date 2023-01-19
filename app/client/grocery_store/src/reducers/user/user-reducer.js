@@ -11,6 +11,10 @@ const initialUserState = {
   qualtricsCode: null,
   showProductsBySubcategory: true,
   allowSearching: true,
+  displayCustomAttrOnCheckout: false,
+  displayCustomAttrOnDetail: false,
+  customAttrName: null,
+  customAttrUnit: null,
   // this maps onto ParticipantActions on the Rails side, but we're calling it
   // `operations` to avoid the term `action` which has special meaning in redux.
   operations: []
@@ -38,7 +42,11 @@ export default function userReducer(state = initialUserState, action) {
         showGuidingStars: action.showGuidingStars,
         qualtricsCode: action.qualtricsCode,
         showProductsBySubcategory: action.showProductsBySubcategory,
-        allowSearching: action.allowSearching
+        allowSearching: action.allowSearching,
+        displayCustomAttrOnCheckout: action.displayCustomAttrOnCheckout,
+        displayCustomAttrOnDetail: action.displayCustomAttrOnDetail,
+        customAttrUnit: action.customAttrUnit,
+        customAttrName: action.customAttrName
       });
     case userActionTypes.OPERATION_PERFORMED:
       return Object.assign({}, state, {

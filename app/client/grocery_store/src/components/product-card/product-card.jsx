@@ -81,6 +81,7 @@ ProductCard.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
+    customAttributeAmount: PropTypes.string,
     serialPosition: PropTypes.number,
     imageSrc: PropTypes.string,
     awsImageUrl: PropTypes.string,
