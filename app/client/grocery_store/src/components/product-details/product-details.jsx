@@ -36,13 +36,12 @@ export default class ProductDetails extends React.Component {
   }
 
   customAttributes() {
-    if (this.props.customAttribute?.displayOnDetail) {
-      const attribute = this.props.customAttribute;
+    if (this.props.displayCustomAttrOnDetail) {
       return (
         <div className="custom-attribute-container">
-          <div className="bold">{attribute.customAttributeName}:</div>
-          <div>{attribute.customAttributeAmount}</div>
-          <div>{attribute.customAttributeUnit}</div>
+          <div className="bold">{this.props.customAttrName}:</div>
+          <div>{this.props.customAttributeAmount}</div>
+          <div>{this.props.customAttrUnit}</div>
         </div>
       );
     }
@@ -116,12 +115,7 @@ ProductDetails.propTypes = {
   description: PropTypes.string,
   ingredients: PropTypes.string,
   serialPosition: PropTypes.number,
-  customAttribute: PropTypes.shape({
-    customAttributeAmount: PropTypes.string,
-    customAttributeName: PropTypes.string,
-    customAttributeUnit: PropTypes.string,
-    displayOnDetail: PropTypes.bool
-  }),
+  customAttributeAmount: PropTypes.string,
   labels: PropTypes.arrayOf(
     PropTypes.shape({
       labelName: PropTypes.string,
@@ -146,7 +140,10 @@ ProductDetails.propTypes = {
   protein: PropTypes.number,
   vitamins: PropTypes.string,
   nutritionLabelCss: PropTypes.string,
-  showGuidingStars: PropTypes.bool.isRequired
+  showGuidingStars: PropTypes.bool.isRequired,
+  displayCustomAttrOnDetail: PropTypes.bool.isRequired,
+  customAttrName: PropTypes.string.isRequired,
+  customAttrUnit: PropTypes.string.isRequired
 };
 
 ProductDetails.defaultProps = {
@@ -168,6 +165,5 @@ ProductDetails.defaultProps = {
   protein: null,
   vitamins: null,
   nutritionLabelCss: null,
-  serialPosition: null,
-  customAttribute: null
+  serialPosition: null
 };

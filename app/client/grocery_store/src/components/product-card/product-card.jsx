@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import AddToCartContainer from '../add-to-cart/add-to-cart-container';
 import OverlayLabel from '../overlay-label/overlay-label';
 import BelowButtonLabel from '../below-button-label/below-button-label';
-import GuidingStars from '../guiding-stars/guiding-stars';
 import './product-card.scss';
 import GuidingStarsContainer from '../guiding-stars/guiding-stars-container';
 
@@ -82,6 +81,7 @@ ProductCard.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
+    customAttributeAmount: PropTypes.string,
     serialPosition: PropTypes.number,
     imageSrc: PropTypes.string,
     awsImageUrl: PropTypes.string,

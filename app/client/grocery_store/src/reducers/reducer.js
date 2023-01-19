@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import cart from './cart/cart-reducer';
+import cart, * as fromCart from './cart/cart-reducer';
 import category, * as fromCategory from './category/category-reducer';
 import user from './user/user-reducer';
 import sorting from './sorting/sorting-reducer';
@@ -22,6 +22,10 @@ const appReducer = combineReducers({
 
 export function getCategoryTitle(state) {
   return fromCategory.getCategoryTitle(state.category);
+}
+
+export function getCustomAttributeTotal(state) {
+  return fromCart.getCustomAttributeTotal(state.cart);
 }
 
 export function tabIsSelected(state, categoryType, categoryId) {

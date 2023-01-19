@@ -20,7 +20,7 @@ class ProductSerializer
 
     if should_display_custom_attr &&
         @product.custom_attribute_amount(@condition).present?
-      attrs = attrs.merge(custom_attribute: custom_attributes_info)
+      attrs = attrs.merge(custom_attributes_info)
     end
     include_add_on ? attrs.merge(add_on_info) : attrs
   end
@@ -65,11 +65,7 @@ class ProductSerializer
 
   private def custom_attributes_info
     {
-      'custom_attribute_unit' => @condition.custom_attribute_units,
-      'custom_attribute_name' => @condition.custom_attribute_name,
-      'custom_attribute_amount' => @product.custom_attribute_amount(@condition),
-      'display_on_detail' => @condition.show_custom_attribute_on_product,
-      'display_on_checkout' => @condition.show_custom_attribute_on_checkout
+      'custom_attribute_amount' => @product.custom_attribute_amount(@condition)
     }
   end
 
