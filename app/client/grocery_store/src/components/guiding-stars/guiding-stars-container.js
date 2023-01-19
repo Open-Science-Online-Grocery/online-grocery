@@ -7,7 +7,7 @@ const mapDispatchToProps = dispatch => (
     handleHoverAction: (product) => dispatch(
       userActionCreators.logParticipantAction(
         {
-          type: 'hovered',
+          type: 'hover on Guiding Stars label',
           productId: product.id,
           serialPosition: product.serialPosition
         }
