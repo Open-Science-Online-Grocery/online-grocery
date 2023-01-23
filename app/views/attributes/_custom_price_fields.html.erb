@@ -29,7 +29,7 @@
 
 <div class="two fields">
   <div class="field">
-    <label>Current file</label>
+    <label class="custom-price">Current file</label>
     <% if condition.current_product_price_csv_file %>
       <%= f.fields_for :product_price_csv_files, condition.current_product_price_csv_file do |tag_csv_fields| %>
         <div class="ui inline checkbox field">

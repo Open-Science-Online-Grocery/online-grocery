@@ -169,7 +169,7 @@ CREATE TABLE `custom_product_prices` (
   `condition_id` bigint DEFAULT NULL,
   `product_price_csv_file_id` bigint DEFAULT NULL,
   `product_id` bigint DEFAULT NULL,
-  `new_price` varchar(255) DEFAULT NULL,
+  `new_price` decimal(64,12) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),

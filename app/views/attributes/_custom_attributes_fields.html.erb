@@ -41,7 +41,7 @@
 
 <div class="two fields">
   <div class="field">
-    <label>Current file</label>
+    <label class="custom-attribute">Current file</label>
     <% if condition.current_product_attribute_csv_file %>
       <%= f.fields_for :product_attribute_csv_files, condition.current_product_attribute_csv_file do |tag_csv_fields| %>
         <div class="ui inline checkbox field">

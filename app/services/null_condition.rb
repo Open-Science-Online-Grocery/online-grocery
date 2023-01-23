@@ -20,6 +20,10 @@ class NullCondition
     false
   end
 
+  def uses_custom_prices?
+    false
+  end
+
   def tags
     Tag.none
   end

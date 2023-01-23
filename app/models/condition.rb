@@ -73,6 +73,10 @@ class Condition < ApplicationRecord
     product_attribute_csv_files.active.exists?
   end
 
+  def uses_custom_prices?
+    product_price_csv_files.active.exists?
+  end
+
   def products
     Product.where.not(subcategory_id: excluded_subcategory_ids)
   end
