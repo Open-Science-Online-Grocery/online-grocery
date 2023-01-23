@@ -9,7 +9,7 @@
 #  - `attribute` indicates an attribute on Product corresponding to the value of
 #    the variable.
 class ProductVariable < Variable
-  def self.all(condition = nil)
+  def self.all(condition = nil, include_custom_price: false)
     @all = nutrition(condition) + [
       new(
         token_name: 'price',
@@ -18,11 +18,22 @@ class ProductVariable < Variable
         condition: condition
       )
     ] + [custom_attribute_field(condition)]
+
+    @all += [custom_price_field(condition)] if include_custom_price
     @all = @all.compact.flatten
   end
 
   def self.custom_attribute_field(condition)
     @custom_attribute_field = product_attribute_field(condition)
+  end
+
+  def self.custom_price_field(condition)
+    @custom_price_field = new(
+      token_name: 'custom_price',
+      description: 'Price reduced',
+      attribute: :custom_attribute,
+      condition: condition
+    )
   end
 
   def self.product_attribute_field(condition)

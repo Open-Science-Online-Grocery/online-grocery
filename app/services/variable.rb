@@ -8,7 +8,9 @@ class Variable
   attr_accessor :token_name, :description, :attribute, :condition
 
   def self.from_token(token_name, condition = nil)
-    all(condition).find { |variable| variable.token_name == token_name }
+    all(condition, include_custom_price: true).find do |variable|
+      variable.token_name == token_name
+    end
   end
 
   def self.from_attribute(attribute)

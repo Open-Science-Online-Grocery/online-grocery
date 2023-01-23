@@ -17,7 +17,10 @@ class ProductSerializer
       attrs = attrs.merge(custom_attributes_info)
     end
 
-    attrs = attrs.merge(custom_price_info) if @condition.uses_custom_prices?
+    if @condition.uses_custom_prices? && custom_price_info['price'].present?
+      attrs = attrs.merge(custom_price_info)
+    end
+
     attrs = attrs.merge(labels: product_labels(attrs))
       .merge(nutrition_information(attrs))
     include_add_on ? attrs.merge(add_on_info) : attrs
@@ -79,7 +82,8 @@ class ProductSerializer
 
   private def custom_price_info
     {
-      'price' => custom_price_amount
+      'price' => custom_price_amount,
+      'original_price' => @product.price
     }
   end
 
