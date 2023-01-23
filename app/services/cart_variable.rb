@@ -9,7 +9,7 @@
 #    determining the value of the variable.
 class CartVariable < Variable
   def self.all(condition = nil)
-    @all ||= begin
+    @all = begin
       [
         number_of_products_tokens(condition),
         percent_of_products_tokens(condition),
@@ -26,7 +26,7 @@ class CartVariable < Variable
   end
 
   def self.custom_attribute_fields(condition)
-    @custom_attribute_fields ||= product_attribute_fields(condition)
+    @custom_attribute_fields = product_attribute_fields(condition)
   end
 
   def self.product_attribute_fields(condition)

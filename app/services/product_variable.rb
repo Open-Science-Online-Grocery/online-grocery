@@ -10,18 +10,19 @@
 #    the variable.
 class ProductVariable < Variable
   def self.all(condition = nil)
-    @all ||= nutrition(condition) + [
+    @all = nutrition(condition) + [
       new(
         token_name: 'price',
         description: 'Price',
         attribute: :price,
         condition: condition
       )
-    ] + [custom_attribute_field(condition)].compact
+    ] + [custom_attribute_field(condition)]
+    @all = @all.compact.flatten
   end
 
   def self.custom_attribute_field(condition)
-    @custom_attribute_field ||= product_attribute_field(condition)
+    @custom_attribute_field = product_attribute_field(condition)
   end
 
   def self.product_attribute_field(condition)
@@ -36,8 +37,8 @@ class ProductVariable < Variable
   end
 
   # rubocop:disable Metrics/MethodLength
-  def self.nutrition(condition)
-    @nutrition ||= [
+  def self.nutrition(condition = nil)
+    @nutrition = [
       {
         token_name: 'serving_size_grams',
         description: 'Serving size (g)',

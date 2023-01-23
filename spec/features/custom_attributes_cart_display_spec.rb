@@ -6,6 +6,7 @@ RSpec.describe 'Displaying custom attributes on cart summary', :feature do
   let!(:category) { create(:category) }
   let!(:subcategory) { create(:subcategory, category: category, display_order: 1) }
 
+  let(:product_attribute_csv_file) { create(:product_attribute_csv_file, active: true) }
   let(:user) { create(:user) }
   let(:experiment) { create(:experiment, user: user) }
   let(:condition) do
@@ -13,6 +14,7 @@ RSpec.describe 'Displaying custom attributes on cart summary', :feature do
       :condition,
       experiment: experiment,
       show_custom_attribute_on_checkout: true,
+      product_attribute_csv_files: [product_attribute_csv_file],
       custom_attribute_name: 'attrName',
       custom_attribute_units: 'attrUnit'
     )

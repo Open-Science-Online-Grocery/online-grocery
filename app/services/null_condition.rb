@@ -16,6 +16,10 @@ class NullCondition
     []
   end
 
+  def uses_custom_attributes?
+    false
+  end
+
   def tags
     Tag.none
   end
