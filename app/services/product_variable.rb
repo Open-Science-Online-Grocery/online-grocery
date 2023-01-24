@@ -9,19 +9,36 @@
 #  - `attribute` indicates an attribute on Product corresponding to the value of
 #    the variable.
 class ProductVariable < Variable
-  def self.all
-    @all ||= nutrition + [
+  def self.all(condition = nil)
+    @all = nutrition(condition) + [
       new(
         token_name: 'price',
         description: 'Price',
-        attribute: :price
+        attribute: :price,
+        condition: condition
       )
-    ]
+    ] + [custom_attribute_field(condition)]
+    @all = @all.compact.flatten
+  end
+
+  def self.custom_attribute_field(condition)
+    @custom_attribute_field = product_attribute_field(condition)
+  end
+
+  def self.product_attribute_field(condition)
+    return [] unless condition&.uses_custom_attributes?
+    new(
+      token_name: format_attr_name(condition.custom_attribute_name),
+      description: "#{condition.custom_attribute_name}
+        (#{condition.custom_attribute_units})".capitalize,
+      attribute: :custom_attribute,
+      condition: condition
+    )
   end
 
   # rubocop:disable Metrics/MethodLength
-  def self.nutrition
-    @nutrition ||= [
+  def self.nutrition(condition = nil)
+    @nutrition = [
       {
         token_name: 'serving_size_grams',
         description: 'Serving size (g)',
@@ -107,7 +124,7 @@ class ProductVariable < Variable
         description: 'Star points',
         attribute: :starpoints
       }
-    ].map { |attrs| new(attrs) }
+    ].map { |attrs| new(attrs.merge(condition: condition)) }
   end
   # rubocop:enable Metrics/MethodLength
 end

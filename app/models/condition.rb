@@ -67,6 +67,10 @@ class Condition < ApplicationRecord
     OpenStruct.new(ratio: 'ratio', percent: 'percent')
   end
 
+  def uses_custom_attributes?
+    product_attribute_csv_files.active.exists?
+  end
+
   def products
     Product.where.not(subcategory_id: excluded_subcategory_ids)
   end
@@ -136,7 +140,8 @@ class Condition < ApplicationRecord
   def sort_equation
     @sort_equation ||= Equation.for_type(
       Equation.types.sort,
-      sort_equation_tokens
+      sort_equation_tokens,
+      self
     )
   end
 
@@ -148,7 +153,8 @@ class Condition < ApplicationRecord
   def nutrition_equation
     @nutrition_equation ||= Equation.for_type(
       Equation.types.nutrition,
-      nutrition_equation_tokens
+      nutrition_equation_tokens,
+      self
     )
   end
 

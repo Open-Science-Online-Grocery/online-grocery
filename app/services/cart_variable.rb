@@ -9,7 +9,7 @@
 #    determining the value of the variable.
 class CartVariable < Variable
   def self.all(condition = nil)
-    @all ||= begin
+    @all = begin
       [
         number_of_products_tokens(condition),
         percent_of_products_tokens(condition),
@@ -18,36 +18,67 @@ class CartVariable < Variable
           description: 'Total number of products',
           attribute: nil
         }
-      ].flatten.map { |attrs| new(attrs) } + total_fields + average_fields
+      ].flatten.map { |attrs| new(attrs) } +
+        total_fields(condition) +
+        average_fields(condition) +
+        custom_attribute_fields(condition)
     end
   end
 
-  def self.total_fields
-    @total_fields ||= begin
-      ProductVariable.all.map do |product_variable|
-        new(
-          token_name: "total_#{product_variable.token_name}",
-          description: "Total #{product_variable.description}".capitalize,
-          attribute: product_variable.attribute
-        )
-      end
-    end
+  def self.custom_attribute_fields(condition)
+    @custom_attribute_fields = product_attribute_fields(condition)
   end
 
-  def self.average_fields
-    @average_fields ||= begin
-      ProductVariable.all.map do |product_variable|
-        new(
-          token_name: "avg_#{product_variable.token_name}",
-          description: "Average #{product_variable.description}".capitalize,
-          attribute: product_variable.attribute
-        )
-      end
-    end
+  def self.product_attribute_fields(condition)
+    return [] unless condition&.uses_custom_attributes?
+    [
+      product_attribute_average_field(condition),
+      product_attribute_total_field(condition)
+    ]
   end
 
-  def self.from_token(token_name, condition = nil)
-    all(condition).find { |variable| variable.token_name == token_name }
+  def self.product_attribute_average_field(condition)
+    new(
+      token_name: "avg_#{format_attr_name(condition.custom_attribute_name)}",
+      description: "Average #{condition.custom_attribute_name}
+      (#{condition.custom_attribute_units})".capitalize,
+      attribute: :custom_attribute,
+      condition: condition
+    )
+  end
+
+  def self.product_attribute_total_field(condition)
+    new(
+      token_name: "total_#{format_attr_name(condition.custom_attribute_name)}",
+      description: "total #{condition.custom_attribute_name}
+      (#{condition.custom_attribute_units})".capitalize,
+      attribute: :custom_attribute,
+      condition: condition
+    )
+  end
+
+  def self.total_fields(condition)
+    ProductVariable.all(condition).map do |product_variable|
+      next if product_variable.attribute == :custom_attribute
+      new(
+        token_name: "total_#{product_variable.token_name}",
+        description: "Total #{product_variable.description}".capitalize,
+        attribute: product_variable.attribute,
+        condition: condition
+      )
+    end.compact
+  end
+
+  def self.average_fields(condition)
+    ProductVariable.all(condition).map do |product_variable|
+      next if product_variable.attribute == :custom_attribute
+      new(
+        token_name: "avg_#{product_variable.token_name}",
+        description: "Average #{product_variable.description}".capitalize,
+        attribute: product_variable.attribute,
+        condition: condition
+      )
+    end.compact
   end
 
   def self.from_attribute(attribute, condition = nil)

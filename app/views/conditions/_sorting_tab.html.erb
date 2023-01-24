@@ -70,6 +70,7 @@
               data-variables="<%= VariableSerializer.new(condition.sort_equation_variables).serialize %>"
               data-input-name="condition[sort_equation_tokens]"
               data-tokens="<%= condition.sort_equation_tokens || [] %>"
+              data-condition-id="<%= @condition.id %>"
               data-equation-type="<%= Equation.types.sort %>"
             ></div>
           </div>

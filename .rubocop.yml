@@ -86,6 +86,7 @@ Metrics/ClassLength:
     - 'app/services/csv_file_managers/sorting.rb'
     - 'app/services/equation.rb'
     - 'app/services/product_url_manager.rb'
+    - 'app/services/product_variable.rb'
     - '**/db/migrate/**/*'
     - '**/db/seeds/**/*'
 Metrics/CyclomaticComplexity:
