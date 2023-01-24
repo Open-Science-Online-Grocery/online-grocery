@@ -124,6 +124,7 @@ CREATE TABLE `conditions` (
   `show_custom_attribute_on_checkout` tinyint(1) NOT NULL DEFAULT '0',
   `custom_attribute_units` varchar(255) DEFAULT NULL,
   `custom_attribute_name` varchar(255) DEFAULT NULL,
+  `display_old_price` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_conditions_on_experiment_id` (`experiment_id`),
   KEY `index_conditions_on_default_sort_field_id` (`default_sort_field_id`)
@@ -569,6 +570,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20221229180249'),
 ('20230102153452'),
 ('20230119135913'),
-('20230119140755');
+('20230119140755'),
+('20230123192926');
 
 

@@ -46,7 +46,8 @@ export default function userReducer(state = initialUserState, action) {
         displayCustomAttrOnCheckout: action.displayCustomAttrOnCheckout,
         displayCustomAttrOnDetail: action.displayCustomAttrOnDetail,
         customAttrUnit: action.customAttrUnit,
-        customAttrName: action.customAttrName
+        customAttrName: action.customAttrName,
+        displayOldPrice: action.displayOldPrice
       });
     case userActionTypes.OPERATION_PERFORMED:
       return Object.assign({}, state, {

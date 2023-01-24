@@ -27,7 +27,8 @@ class ConditionSerializer
       may_add_to_cart_by_dollar_amount: @condition.may_add_to_cart_by_dollar_amount,
       show_guiding_stars: @condition.show_guiding_stars,
       qualtrics_code: @condition.qualtrics_code,
-      allow_searching: @condition.allow_searching
+      allow_searching: @condition.allow_searching,
+      display_old_price: @condition.display_old_price
     }.merge(custom_attributes_info)
   end
   # rubocop:enable Layout/LineLength, Metrics/AbcSize, Metrics/MethodLength
