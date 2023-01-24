@@ -29,6 +29,7 @@ class ConditionManager
       update_suggestions if @errors.none?
       update_custom_sortings if @errors.none?
       update_custom_product_attribute if @errors.none?
+      update_custom_product_price if @errors.none?
       raise ActiveRecord::Rollback if @errors.any?
     end
     @errors.none?
@@ -84,6 +85,11 @@ class ConditionManager
 
   private def update_custom_product_attribute
     manager = CsvFileManagers::ProductAttribute.new(@condition)
+    manager.import || @errors += manager.errors
+  end
+
+  private def update_custom_product_price
+    manager = CsvFileManagers::ProductPrice.new(@condition)
     manager.import || @errors += manager.errors
   end
 

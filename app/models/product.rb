@@ -10,6 +10,7 @@ class Product < ApplicationRecord
   has_many :product_suggestions, dependent: :destroy
   has_many :custom_sortings, dependent: :destroy
   has_many :custom_product_attributes, dependent: :destroy
+  has_many :custom_product_prices, dependent: :destroy
 
   scope :name_matches, ->(string) {
     where(arel_table[:name].matches("%#{string}%"))
@@ -37,5 +38,11 @@ class Product < ApplicationRecord
     custom_product_attributes
       .find_by(condition: condition)
       &.custom_attribute_amount
+  end
+
+  def custom_price(condition)
+    custom_product_prices
+      .find_by(condition: condition)
+      &.new_price
   end
 end

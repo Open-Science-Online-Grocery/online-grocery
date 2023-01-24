@@ -161,6 +161,23 @@ CREATE TABLE `custom_product_attributes` (
   KEY `index_custom_product_attributes_on_product_id` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `custom_product_prices`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `custom_product_prices` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `condition_id` bigint DEFAULT NULL,
+  `product_price_csv_file_id` bigint DEFAULT NULL,
+  `product_id` bigint DEFAULT NULL,
+  `new_price` decimal(64,12) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_custom_product_prices_on_condition_id` (`condition_id`),
+  KEY `index_custom_product_prices_on_product_price_csv_file_id` (`product_price_csv_file_id`),
+  KEY `index_custom_product_prices_on_product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `custom_sortings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -255,6 +272,20 @@ CREATE TABLE `product_attribute_csv_files` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_product_attribute_csv_files_on_condition_id` (`condition_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `product_price_csv_files`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `product_price_csv_files` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `csv_file` varchar(255) DEFAULT NULL,
+  `condition_id` bigint DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_product_price_csv_files_on_condition_id` (`condition_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `product_sort_fields`;
@@ -536,6 +567,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20221229170233'),
 ('20221229172827'),
 ('20221229180249'),
-('20230102153452');
+('20230102153452'),
+('20230119135913'),
+('20230119140755');
 
 
