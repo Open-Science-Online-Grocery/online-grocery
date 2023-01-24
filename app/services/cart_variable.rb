@@ -58,31 +58,27 @@ class CartVariable < Variable
   end
 
   def self.total_fields(condition)
-    @total_fields ||= begin
-      ProductVariable.all.map do |product_variable|
-        next if product_variable.attribute == :custom_attribute
-        new(
-          token_name: "total_#{product_variable.token_name}",
-          description: "Total #{product_variable.description}".capitalize,
-          attribute: product_variable.attribute,
-          condition: condition
-        )
-      end.compact
-    end
+    ProductVariable.all(condition).map do |product_variable|
+      next if product_variable.attribute == :custom_attribute
+      new(
+        token_name: "total_#{product_variable.token_name}",
+        description: "Total #{product_variable.description}".capitalize,
+        attribute: product_variable.attribute,
+        condition: condition
+      )
+    end.compact
   end
 
   def self.average_fields(condition)
-    @average_fields ||= begin
-      ProductVariable.all.map do |product_variable|
-        next if product_variable.attribute == :custom_attribute
-        new(
-          token_name: "avg_#{product_variable.token_name}",
-          description: "Average #{product_variable.description}".capitalize,
-          attribute: product_variable.attribute,
-          condition: condition
-        )
-      end.compact
-    end
+    ProductVariable.all(condition).map do |product_variable|
+      next if product_variable.attribute == :custom_attribute
+      new(
+        token_name: "avg_#{product_variable.token_name}",
+        description: "Average #{product_variable.description}".capitalize,
+        attribute: product_variable.attribute,
+        condition: condition
+      )
+    end.compact
   end
 
   def self.from_attribute(attribute, condition = nil)

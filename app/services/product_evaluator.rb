@@ -8,13 +8,13 @@ class ProductEvaluator
   end
 
   def get_value(variable_token)
-    if @product_attributes[variable_token].present?
+    if @product_attributes.key?(variable_token)
       return @product_attributes[variable_token]
     end
 
     variable = ProductVariable.from_token(variable_token.to_s, @condition)
     if variable == ProductVariable.custom_attribute_field(@condition)
-      if @product_attributes[:custom_attribute_amount].present?
+      if @product_attributes.key?(:custom_attribute_amount)
         return @product_attributes[:custom_attribute_amount]
       end
 
