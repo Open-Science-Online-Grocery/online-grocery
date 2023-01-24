@@ -41,9 +41,8 @@ class Product < ApplicationRecord
   end
 
   def custom_price(condition)
-    return unless custom_product_prices
     custom_product_prices
       .find_by(condition: condition)
-      &.new_price || price
+      &.new_price
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module CsvFileManagers
-  # responsible for generating and importing product attribute csv files
+  # responsible for generating and importing custom product price csv files
   class ProductPrice < Base
     extend Memoist
     def self.headers
