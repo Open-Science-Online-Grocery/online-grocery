@@ -9,7 +9,6 @@
     <%= stylesheet_pack_tag 'style' %>
     <%= javascript_include_tag 'application' %>
     <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= stylesheet_link_tag    'intro', media: 'all' %>
     <%= favicon_link_tag 'favicon.ico' %>
   </head>
 
@@ -35,11 +34,5 @@
       </div>
       <%= render 'layouts/confirm_modal' %>
     </main>
-    <footer>
-      <h2>The Open Science Online Grocery Store is Supported By Researchers At:</h2>
-      <%= image_tag('duke.png')%>
-      <%= image_tag('hec.png')%>
-      <%= image_tag('insead.png')%>
-    </footer>
   </body>
 </html>
