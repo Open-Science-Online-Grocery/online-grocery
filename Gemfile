@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.4'
+ruby '3.1.1'
 
 gem 'activerecord-import'
 gem 'aws-sdk-s3'
@@ -19,9 +19,10 @@ gem 'fog-aws'
 gem 'faraday'
 gem 'jbuilder'
 gem 'memoist'
+gem 'psych', '< 4'
 gem 'mysql2'
 gem 'puma'
-gem 'rails', '~> 5.2'
+gem 'rails', '~> 6'
 gem 'rake'
 gem 'sassc-rails'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
@@ -64,8 +65,8 @@ group :test do
   gem 'capybara-screenshot'
   gem 'database_cleaner'
   gem 'headless'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '3.142.7'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
-  gem 'webdrivers'
+  gem 'webdrivers', '4.7.0'
 end
