@@ -14,7 +14,7 @@ namespace :db do
   end
 
   task drop_views: :environment do
-    database = ActiveRecord::Base.connection_config[:database]
+    database = ActiveRecord::Base.connection_db_config.configuration_hash[:database]
     views = ActiveRecord::Base.connection.execute(
       <<~SQL
         SELECT TABLE_NAME

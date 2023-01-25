@@ -11,18 +11,19 @@ class ProductSerializer
   end
 
   def serialize(include_add_on: true)
-    attrs = @product.attributes
+    @serialize ||= begin
+      attrs = @product.attributes
 
-    if @condition.uses_custom_attributes?
-      attrs = attrs.merge(custom_attributes_info)
+      if @condition.uses_custom_attributes?
+        attrs = attrs.merge(custom_attributes_info)
+      end
+
+      attrs = attrs.merge(custom_price_info) if @condition.uses_custom_prices?
+      attrs = attrs.merge(labels: product_labels(attrs))
+        .merge(nutrition_information(attrs))
+      include_add_on ? attrs.merge(add_on_info) : attrs
     end
-
-    attrs = attrs.merge(custom_price_info) if @condition.uses_custom_prices?
-    attrs = attrs.merge(labels: product_labels(attrs))
-      .merge(nutrition_information(attrs))
-    include_add_on ? attrs.merge(add_on_info) : attrs
   end
-  memoize :serialize
 
   # when sorting by labels, show products the the most labels first
   def label_sort
