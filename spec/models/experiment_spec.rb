@@ -10,7 +10,7 @@ RSpec.describe Experiment, type: :model do
     it { is_expected.to validate_presence_of :name }
     it do
       expect(subject).to validate_uniqueness_of(:name)
-        .scoped_to(:user_id)
+        .scoped_to(:user_id).case_insensitive
     end
   end
 

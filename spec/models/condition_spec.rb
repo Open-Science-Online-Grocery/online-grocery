@@ -12,7 +12,7 @@ RSpec.describe Condition, type: :model do
     it { is_expected.to validate_presence_of :sort_type }
     it do
       expect(subject).to validate_uniqueness_of(:name)
-        .scoped_to(:experiment_id)
+        .scoped_to(:experiment_id).case_insensitive
     end
 
     describe 'sort file presence' do
