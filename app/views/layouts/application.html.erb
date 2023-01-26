@@ -5,11 +5,11 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= javascript_pack_tag 'application' %>
-    <%= stylesheet_pack_tag 'style' %>
     <%= javascript_include_tag 'application' %>
-    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= stylesheet_link_tag 'style' %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= favicon_link_tag 'favicon.ico' %>
+    <%= javascript_include_tag "main", "data-turbo-track": "reload", defer: true %>
   </head>
 
   <body>

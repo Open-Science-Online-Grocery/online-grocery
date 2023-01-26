@@ -219,6 +219,8 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     jmespath (1.6.2)
+    jsbundling-rails (1.1.1)
+      railties (>= 6.0.0)
     json (2.6.3)
     launchy (2.5.2)
       addressable (~> 2.8)
@@ -282,8 +284,6 @@ GEM
       nio4r (~> 2.0)
     racc (1.6.2)
     rack (2.2.6.2)
-    rack-proxy (0.7.6)
-      rack
     rack-test (2.0.2)
       rack (>= 1.3)
     rails (6.1.7.2)
@@ -379,7 +379,6 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
-    semantic_range (3.0.0)
     shoulda-matchers (5.3.0)
       activesupport (>= 5.2.0)
     simplecov (0.22.0)
@@ -424,11 +423,6 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (> 3.141, < 5.0)
-    webpacker (5.4.3)
-      activesupport (>= 5.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 5.2)
-      semantic_range (>= 2.3.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -474,6 +468,7 @@ DEPENDENCIES
   git_rails_tagger!
   headless
   jbuilder
+  jsbundling-rails
   letter_opener
   listen
   memoist
@@ -498,7 +493,6 @@ DEPENDENCIES
   uglifier
   web-console
   webdrivers (= 4.7.0)
-  webpacker
   whenever
 
 RUBY VERSION

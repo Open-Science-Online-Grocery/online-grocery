@@ -27,7 +27,7 @@ gem 'rake'
 gem 'sassc-rails'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'uglifier'
-gem 'webpacker'
+gem 'jsbundling-rails'
 gem 'whenever', require: false
 
 group :development, :test do

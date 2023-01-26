@@ -62,3 +62,6 @@ howes_grocery.priv
 howes_grocery.pub
 
 .tool-versions
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

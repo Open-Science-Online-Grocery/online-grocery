@@ -47,7 +47,7 @@ can be accessed with `Rails.application.credentials.foo`, which will return `bar
 
 ### Start the webpack dev server
 
-In one terminal tab, run `./bin/webpack-dev-server` from the root directory of the application.
+In one terminal tab, run `NODE_ENV=development yarn build --watch` from the root directory of the application.
 
 ### Start the server
 
