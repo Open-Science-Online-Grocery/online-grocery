@@ -1,8 +1,8 @@
 GIT
-  remote: git@gitlab.com:scimedsolutions/git-rails-tagger.git
-  revision: 767f359ef5508dbc5d865802bdf7a1b5ee3c11f8
+  remote: https://gitlab.com/scimed-public/git-rails-tagger.git
+  revision: c9ef0846e4dad1de8fee96cf411edb4ae840851a
   specs:
-    git_rails_tagger (0.0.1)
+    git_rails_tagger (2.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -75,8 +75,8 @@ GEM
     ast (2.4.2)
     awesome_print (1.9.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.699.0)
-    aws-sdk-core (3.169.0)
+    aws-partitions (1.700.0)
+    aws-sdk-core (3.170.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.5)
@@ -96,7 +96,7 @@ GEM
     bcrypt (3.1.18)
     bcrypt_pbkdf (1.1.0)
     bindex (0.8.1)
-    bootsnap (1.15.0)
+    bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
     bullet (7.0.7)
@@ -207,7 +207,7 @@ GEM
       fog-core
       nokogiri (>= 1.5.11, < 2.0.0)
     formatador (1.1.0)
-    globalid (1.0.1)
+    globalid (1.1.0)
       activesupport (>= 5.0)
     headless (2.3.1)
     i18n (1.12.0)
@@ -275,7 +275,8 @@ GEM
       method_source (~> 1.0)
     pry-nav (1.0.0)
       pry (>= 0.9.10, < 0.15)
-    psych (3.3.4)
+    psych (5.0.2)
+      stringio
     public_suffix (5.0.1)
     puma (6.0.2)
       nio4r (~> 2.0)
@@ -402,6 +403,7 @@ GEM
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     ssrf_filter (1.1.1)
+    stringio (3.0.4)
     thor (1.2.1)
     tilt (2.0.11)
     timeout (0.3.1)
@@ -469,7 +471,7 @@ DEPENDENCIES
   faker
   faraday
   fog-aws
-  git_rails_tagger (= 0.0.1)!
+  git_rails_tagger!
   headless
   jbuilder
   letter_opener
@@ -477,7 +479,7 @@ DEPENDENCIES
   memoist
   mysql2
   pry-nav
-  psych (< 4)
+  psych
   puma
   rails (~> 6)
   rake
