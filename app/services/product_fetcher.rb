@@ -119,7 +119,9 @@ class ProductFetcher
   end
 
   private def filter_by_excluded_subcategories
-    @product_relation = @product_relation.merge(@condition.products)
+    @product_relation = @product_relation.where(
+      id: @condition.products.select(:id)
+    )
   end
 
   private def filter_by_tag
