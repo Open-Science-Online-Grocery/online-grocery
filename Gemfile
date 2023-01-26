@@ -65,8 +65,7 @@ group :test do
   gem 'capybara-screenshot'
   gem 'database_cleaner'
   gem 'headless'
-  gem 'selenium-webdriver', '3.142.7'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
-  gem 'webdrivers', '4.7.0'
+  gem 'webdrivers'
 end

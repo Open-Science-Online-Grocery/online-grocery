@@ -107,8 +107,7 @@ RSpec.configure do |config|
     Capybara::Selenium::Driver.new(
       app,
       browser: :chrome,
-      options: browser_options,
-      desired_capabilities: capabilities,
+      options: [browser_options, capabilities],
       http_client: client
     )
   end
