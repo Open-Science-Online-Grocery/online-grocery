@@ -7,8 +7,8 @@
 # Instructions are here: https://gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal/container_registry
 
 # docker login registry.gitlab.com
-# docker build -t registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.15 .
-# docker push registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.15
+# docker build -t registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.16 .
+# docker push registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.16
 
 # If you would like to make a different version of this image when you're working on new features
 # You could build an image with a name that includes your branch name in it. e.g.
@@ -18,7 +18,7 @@
 FROM ruby:3.1.3
 
 LABEL name="Howe's Grocery CI"
-LABEL version="0.0.15"
+LABEL version="0.0.16"
 
 ## Install apt based dependencies required to run Rails as
 ## well as RubyGems. As the Ruby image itself is based on a
@@ -28,11 +28,13 @@ RUN apt-get update && \
     apt-get install -y \
     build-essential \
     nodejs \
-    unzip \
     chromium \
+    chromium-driver \
+    unzip \
     default-mysql-client && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get clean
+
 
 RUN npm install -g yarn
 RUN gem install bundler && gem cleanup all
