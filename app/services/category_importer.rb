@@ -36,7 +36,7 @@ class CategoryImporter
       import_subsubcategory(subcategory, row)
     end
     subcategory.subsubcategories.where.not(
-      display_order: rows.map { |r| r['Subsubcategory Order'] }
+      display_order: rows.pluck('Subsubcategory Order')
     ).destroy_all
   end
 

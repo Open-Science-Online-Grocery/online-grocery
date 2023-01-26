@@ -485,6 +485,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   sassc-rails
+  selenium-webdriver
   shoulda-matchers
   simplecov
   spring

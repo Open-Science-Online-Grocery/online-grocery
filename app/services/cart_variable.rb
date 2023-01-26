@@ -9,20 +9,18 @@
 #    determining the value of the variable.
 class CartVariable < Variable
   def self.all(condition = nil)
-    @all = begin
-      [
-        number_of_products_tokens(condition),
-        percent_of_products_tokens(condition),
-        {
-          token_name: 'total_products',
-          description: 'Total number of products',
-          attribute: nil
-        }
-      ].flatten.map { |attrs| new(attrs) } +
-        total_fields(condition) +
-        average_fields(condition) +
-        custom_attribute_fields(condition)
-    end
+    @all = [
+      number_of_products_tokens(condition),
+      percent_of_products_tokens(condition),
+      {
+        token_name: 'total_products',
+        description: 'Total number of products',
+        attribute: nil
+      }
+    ].flatten.map { |attrs| new(attrs) } +
+      total_fields(condition) +
+      average_fields(condition) +
+      custom_attribute_fields(condition)
   end
 
   def self.custom_attribute_fields(condition)

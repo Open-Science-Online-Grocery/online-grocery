@@ -69,10 +69,9 @@ class Cart
   end
 
   def percent_of_products_with_each_label
-    @percent_of_products_with_each_label ||= begin
-      number_of_products_with_each_label.transform_values do |count|
-        total_products.zero? ? 0 : (count / total_products.to_f) * 100
-      end
+    @percent_of_products_with_each_label ||= number_of_products_with_each_label
+      .transform_values do |count|
+      total_products.zero? ? 0 : (count / total_products.to_f) * 100
     end
   end
 

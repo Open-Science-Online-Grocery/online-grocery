@@ -19,9 +19,6 @@ require 'shoulda-matchers'
 require 'capybara-screenshot/rspec'
 require 'webdrivers'
 
-Webdrivers.cache_time = 1
-Webdrivers::Chromedriver.required_version = '2.42'
-
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
@@ -91,23 +88,19 @@ RSpec.configure do |config|
 
   Capybara.register_driver :selenium_chrome_headless do |app|
     browser_options = ::Selenium::WebDriver::Chrome::Options.new
-    if ENV['BROWSER']
-      capabilities = Selenium::WebDriver::Remote::Capabilities.chrome
-    else
+    unless ENV['BROWSER']
       browser_options.args << '--headless'
       browser_options.args << '--disable-gpu'
       browser_options.args << '--no-sandbox'
       browser_options.args << '--window-size=1440,900'
-      capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-        acceptInsecureCerts: true
-      )
+      browser_options.accept_insecure_certs = true
     end
     client = Selenium::WebDriver::Remote::Http::Default.new
     client.read_timeout = 240 # instead of the default 60
     Capybara::Selenium::Driver.new(
       app,
       browser: :chrome,
-      options: [browser_options, capabilities],
+      options: browser_options,
       http_client: client
     )
   end

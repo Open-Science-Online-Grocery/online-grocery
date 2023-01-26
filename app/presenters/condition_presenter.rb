@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#:nodoc:
+# :nodoc:
 class ConditionPresenter < SimpleDelegator
   include ActionView::Helpers::NumberHelper
 
