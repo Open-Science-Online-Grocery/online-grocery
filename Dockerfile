@@ -20,6 +20,9 @@ FROM ruby:3.1.3
 LABEL name="Howe's Grocery CI"
 LABEL version="0.0.16"
 
+ARG CHROME_VERSION="97.0.4692.99-1"
+RUN wget --no-verbose -O /tmp/chrome.deb https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb
+
 ## Install apt based dependencies required to run Rails as
 ## well as RubyGems. As the Ruby image itself is based on a
 ## Debian image, we use apt-get to install those.
@@ -28,8 +31,7 @@ RUN apt-get update && \
     apt-get install -y \
     build-essential \
     nodejs \
-    chromium \
-    chromium-driver \
+    /tmp/chrome.deb \
     unzip \
     default-mysql-client && \
     rm -rf /var/lib/apt/lists/* && \
