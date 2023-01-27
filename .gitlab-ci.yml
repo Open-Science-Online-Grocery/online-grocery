@@ -3,3 +3,8 @@ include:
     file: '/ci/mysql/v1.yml'
 
 image: registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher_portal:0.0.16
+
+rspec:
+  before_script:
+    - yarn install
+    - yarn build
