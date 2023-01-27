@@ -17,40 +17,46 @@ RSpec.describe 'Showing labels in grocery store', :feature do
     )
   end
   let!(:overlay_label_1) do
-    create :condition_label,
-           condition: condition,
-           label: label_1,
-           position: 'top left',
-           size: 20,
-           equation_tokens: [
-             { 'type' => 'variable', 'value' => 'calories' },
-             { 'type' => 'operator', 'value' => '<' },
-             { 'type' => 'digit', 'value' => '5' }
-           ].to_json
+    create(
+      :condition_label,
+      condition: condition,
+      label: label_1,
+      position: 'top left',
+      size: 20,
+      equation_tokens: [
+        { 'type' => 'variable', 'value' => 'calories' },
+        { 'type' => 'operator', 'value' => '<' },
+        { 'type' => 'digit', 'value' => '5' }
+      ].to_json
+    )
   end
   let!(:overlay_label_2) do
-    create :condition_label,
-           condition: condition,
-           label: label_2,
-           position: 'bottom right',
-           size: 25,
-           equation_tokens: [
-             { 'type' => 'variable', 'value' => 'total_fat' },
-             { 'type' => 'operator', 'value' => '<' },
-             { 'type' => 'digit', 'value' => '20' }
-           ].to_json
+    create(
+      :condition_label,
+      condition: condition,
+      label: label_2,
+      position: 'bottom right',
+      size: 25,
+      equation_tokens: [
+        { 'type' => 'variable', 'value' => 'total_fat' },
+        { 'type' => 'operator', 'value' => '<' },
+        { 'type' => 'digit', 'value' => '20' }
+      ].to_json
+    )
   end
   let!(:below_button_label) do
-    create :condition_label,
-           condition: condition,
-           label: label_3,
-           position: ConditionLabel.below_button_position,
-           size: 30,
-           equation_tokens: [
-             { 'type' => 'variable', 'value' => 'total_fat' },
-             { 'type' => 'operator', 'value' => '>' },
-             { 'type' => 'digit', 'value' => '20' }
-           ].to_json
+    create(
+      :condition_label,
+      condition: condition,
+      label: label_3,
+      position: ConditionLabel.below_button_position,
+      size: 30,
+      equation_tokens: [
+        { 'type' => 'variable', 'value' => 'total_fat' },
+        { 'type' => 'operator', 'value' => '>' },
+        { 'type' => 'digit', 'value' => '20' }
+      ].to_json
+    )
   end
   let!(:labeled_product) do
     create(
@@ -92,14 +98,14 @@ RSpec.describe 'Showing labels in grocery store', :feature do
       expect(overlay_1[:style]).to match(/background-size: 20%/)
       expect(overlay_2[:style]).to match(/background-size: 25%/)
     end
-    expect(parent_of(first_product_div)).to have_no_selector '.below-button-container img'
+    expect(parent_of(first_product_div)).not_to have_selector '.below-button-container img'
 
     second_product_div = parent_of(
       find('.product-card-name', text: 'unlabeled product', exact_text: true)
     )
 
     # this product should not have any overlays rendered
-    expect(second_product_div).to have_no_selector '.overlay-label'
+    expect(second_product_div).not_to have_selector '.overlay-label'
 
     within(parent_of(second_product_div)) do
       below_button_label = first('.below-button-container img')

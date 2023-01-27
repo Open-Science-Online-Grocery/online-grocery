@@ -91,8 +91,8 @@ class Equation
     return unless test_value.nil?
     errors.add(
       :base,
-      'This calculation has an error. Please change the calculation and try '\
-      'again.'
+      'This calculation has an error. Please change the calculation and try ' \
+        'again.'
     )
   end
 

@@ -1,5 +1,17 @@
-inherit_from:
-  - https://raw.githubusercontent.com/SciMed/style-guide/master/.rubocop.yml
+# rubocop version: 1.10.0
+# rubocop-performance version: 1.9.2
+# rubocop-rails version: 2.9.1
+# rubocop-rake version: 0.5.1
+# rubocop-rspec version: 2.2.0
+#
+# In addition, feel free to use rubocop-md for linting Markdown files with Ruby
+# code snippets
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rake
+  - rubocop-rspec
 
 AllCops:
   Exclude:
@@ -8,19 +20,22 @@ AllCops:
     - '**/node_modules/**/*'
     - '**/script/**/*'
     - '**/spec/test_app/**/*'
+    - '**/vendor/**/*'
     - '**/*.gemspec'
     - '**/Gemfile'
     - '**/Guardfile'
     - '**/Rakefile'
     - '**/Vagrantfile'
     - '**/db/schema.rb'
-    - '**/lib/scripts/**/*'
-  TargetRubyVersion: 3.1
-  TargetRailsVersion: 6.1 
+  NewCops: enable
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 6.1
 
 Layout/CaseIndentation:
   IndentOneStep: true
 Layout/ClassStructure:
+  Enabled: true
+Layout/EmptyLineAfterMultilineCondition:
   Enabled: true
 Layout/FirstArrayElementLineBreak:
   Enabled: true
@@ -30,6 +45,8 @@ Layout/FirstMethodArgumentLineBreak:
   Enabled: true
 Layout/FirstMethodParameterLineBreak:
   Enabled: true
+Layout/LineEndStringConcatenationIndentation:
+  EnforcedStyle: indented
 Layout/LineLength:
   Exclude:
     - '**/bin/**/*'
@@ -37,14 +54,16 @@ Layout/LineLength:
     - '**/db/migrate/**/*'
     - '**/spec/**/*'
   Max: 80
+Layout/MultilineArrayLineBreaks:
+  Enabled: true
 Layout/MultilineHashKeyLineBreaks:
+  Enabled: true
+Layout/MultilineMethodArgumentLineBreaks:
   Enabled: true
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
-Layout/SpaceAroundMethodCallOperator:
-  Enabled: true
 Layout/SpaceBeforeFirstArg:
   Exclude:
     - '**/spec/factories/**/*'
@@ -54,16 +73,10 @@ Layout/SpaceBeforeFirstArg:
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - '**/spec/**/*'
-Lint/DeprecatedOpenSSLConstant:
-  Enabled: true
-Lint/DuplicateElsifCondition:
-  Enabled: true
-Lint/MixedRegexpCaptureTypes:
-  Enabled: true
-Lint/RaiseException:
-  Enabled: true
-Lint/StructNewOverride:
-  Enabled: true
+Lint/EmptyClass:
+  Enabled: false
+Lint/NumberConversion:
+  Enabled: false
 
 Metrics/AbcSize:
   Exclude:
@@ -72,27 +85,15 @@ Metrics/BlockLength:
   Exclude:
     - '**/config/**/*'
     - '**/helpers/**/*'
-    - '**/db/**/*'
-    - '**/spec/**/*'
-    - '**/lib/**/*'
-Metrics/ClassLength:
-  Exclude:
-    - 'app/controllers/conditions_controller.rb'
-    - 'app/models/condition.rb'
-    - 'app/services/cart.rb'
-    - 'app/services/condition_manager.rb'
-    - 'app/services/csv_file_managers/sorting.rb'
-    - 'app/services/equation.rb'
-    - 'app/services/product_url_manager.rb'
-    - 'app/services/product_variable.rb'
     - '**/db/migrate/**/*'
     - '**/db/seeds/**/*'
+    - '**/spec/**/*'
 Metrics/CyclomaticComplexity:
   Max: 5
 Metrics/MethodLength:
   Max: 15
   Exclude:
-    - '**/db/**/*'
+    - '**/db/migrate/**/*'
 Metrics/ModuleLength:
   Exclude:
     - '**/db/seeds/**/*'
@@ -102,8 +103,6 @@ Metrics/PerceivedComplexity:
 Naming/AccessorMethodName:
   Exclude:
     - '**/app/controllers/**/*'
-Naming/BlockForwarding:
-  Enabled: false
 Naming/BlockParameterName:
   AllowedNames:
     - id
@@ -118,10 +117,14 @@ Naming/MethodParameterName:
     - x
     - y
     - _
+Naming/VariableNumber:
+  EnforcedStyle: snake_case
 
 Performance/AncestorsInclude:
   Enabled: false
-Performance/BigDecimalWithNumericArgument:
+# We're preferring this from a stylistic point of view; it does not actually
+# impact performance
+Performance/ArraySemiInfiniteRangeSlice:
   Enabled: true
 # `foo.downcase == bar.downcase` is more readable than
 # `foo.casecmp(bar).zero?`
@@ -131,21 +134,7 @@ Performance/CaseWhenSplat:
   Enabled: true
 Performance/IoReadlines:
   Enabled: true
-Performance/RedundantSortBlock:
-  Enabled: true
-Performance/RedundantStringChars:
-  Enabled: true
-Performance/ReverseFirst:
-  Enabled: true
-Performance/SortReverse:
-  Enabled: true
-Performance/Squeeze:
-  Enabled: true
-Performance/StringInclude:
-  Enabled: true
 
-Rails/ActiveRecordCallbacksOrder:
-  Enabled: true
 Rails/Blank:
   NilOrEmpty: false
   UnlessPresent: false
@@ -153,54 +142,40 @@ Rails/DefaultScope:
   Enabled: true
 Rails/FilePath:
   EnforcedStyle: slashes
-Rails/FindById:
-  Enabled: true
 # Keyword arguments aren't functionally equivalent to positional arguments.
 # Using keyword arguments in controller specs makes the param keys strings and
 # not symbols, even if adding `.with_indifferent_access`.
 Rails/HttpPositionalArguments:
   Enabled: false
-Rails/Inquiry:
-  Enabled: true
-Rails/MailerName:
-  Enabled: true
-Rails/MatchRoute:
-  Enabled: true
-Rails/NegateInclude:
-  Enabled: true
+Rails/I18nLocaleTexts:
+  Enabled: false
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
 # There are often no reasonable defaults for not null columns
 Rails/NotNullColumn:
+  Enabled: false
+Rails/OrderById:
   Enabled: false
 Rails/Output:
   Exclude:
     - '**/db/seeds.rb'
     - '**/lib/tasks/**/*'
-Rails/Pluck:
-  Enabled: true
-Rails/PluckId:
-  Enabled: false
-Rails/PluckInWhere:
-  Enabled: true
-Rails/RenderInline:
-  Enabled: true
-Rails/RenderPlainText:
-  Enabled: true
 Rails/ShortI18n:
+  Enabled: false
+Rails/SquishedSQLHeredocs:
   Enabled: false
 Rails/UniqBeforePluck:
   EnforcedStyle: aggressive
-Rails/WhereExists:
-  Enabled: true
 
-# Prefer eql
+# Prefer eq
 RSpec/BeEql:
   Enabled: false
 RSpec/BeforeAfterAll:
   Exclude:
-    - '**/spec/models/power_spec.rb'
     - '**/spec/models/powers/*'
 RSpec/ContextWording:
   Prefixes:
+    - as
     - by
     - when
     - with
@@ -209,6 +184,9 @@ RSpec/ContextWording:
 RSpec/DescribeClass:
   Exclude:
     - '**/spec/features/**/*'
+    - '**/spec/requests/**/*'
+RSpec/DescribedClassModuleWrapping:
+  Enabled: true
 RSpec/EmptyLineAfterExample:
   Enabled: false
 RSpec/ExampleLength:
@@ -219,13 +197,13 @@ RSpec/ImplicitSubject:
   Enabled: false
 RSpec/InstanceVariable:
   Exclude:
-    - '**/spec/models/power_spec.rb'
     - '**/spec/models/powers/*'
 RSpec/LeadingSubject:
   Enabled: false
 RSpec/LetSetup:
   Exclude:
     - '**/spec/features/**/*'
+    - '**/spec/requests/**/*'
 RSpec/MessageChain:
   Enabled: false
 RSpec/MultipleExpectations:
@@ -241,16 +219,12 @@ RSpec/SubjectStub:
 
 Style/AccessModifierDeclarations:
   EnforcedStyle: inline
-Style/AccessorGrouping:
-  Enabled: true
 Style/ArrayCoercion:
   Enabled: true
 Style/AutoResourceCleanup:
   Enabled: true
-Style/BisectedAttrAccessor:
+Style/ClassMethodsDefinitions:
   Enabled: true
-Style/CaseLikeIf:
-  Enabled: false
 Style/CollectionMethods:
   Enabled: true
 Style/ConditionalAssignment:
@@ -260,89 +234,110 @@ Style/DateTime:
   Enabled: true
 Style/Documentation:
   Exclude:
-    - '**/controllers/**/*'
-    - '**/db/**/*'
     - '**/app/helpers/application_helper.rb'
     - '**/app/mailers/application_mailer.rb'
     - '**/app/models/application_record.rb'
+    - '**/controllers/**/*'
+    - '**/db/migrate/**/*'
+    - '**/presenters/**/*'
 Style/EmptyMethod:
   EnforcedStyle: expanded
 Style/ExponentialNotation:
-  Enabled: true
   EnforcedStyle: scientific
 Style/FormatStringToken:
   Enabled: false
 Style/HashAsLastArrayItem:
   Enabled: false
-Style/HashEachMethods:
-  Enabled: true
-Style/HashLikeCase:
-  Enabled: true
-Style/HashSyntax:
-  Enabled: false
-Style/HashTransformKeys:
-  Enabled: true
-Style/HashTransformValues:
-  Enabled: true
 Style/IpAddresses:
   Enabled: true
 Style/Lambda:
   EnforcedStyle: literal
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
+  Exclude:
+    - '**/config/**/*'
+    - '**/db/migrate/**/*'
+    - '**/spec/**/*'
+  AllowedMethods:
+    # ActiveModel/ActiveRecord
+    - accepts_nested_attributes_for
+    - alias_attribute
+    - attr_readonly
+    - enum
+    - belongs_to
+    - has_many
+    - has_one
+    - has_many_attached
+    - has_one_attached
+    - has_rich_text
+    - delegate
+    - validate
+    - validates
+    - validates_with
+    - before_validation
+    - after_validation
+    - before_save
+    - around_save
+    - before_create
+    - around_create
+    - after_create
+    - after_save
+    - after_commit
+    - after_rollback
+    - before_update
+    - around_update
+    - after_update
+    - before_destroy
+    - around_destroy
+    - after_destroy
+    - scope
+    # ActionController
+    - after_action
+    - around_action
+    - before_action
+    - redirect_to
+    - render
+    # CarrierWave
+    - store
+    - mount_uploader
+    # Consul
+    - power
+Style/MultilineMethodSignature:
+  Enabled: true
 Style/NumericPredicate:
   Enabled: false
 Style/OptionHash:
   Enabled: true
-Style/RedundantAssignment:
-  Enabled: true
-Style/RedundantFetchBlock:
-  Enabled: true
-Style/RedundantFileExtensionInRequire:
-  Enabled: true
-Style/RedundantRegexpCharacterClass:
-  Enabled: true
-Style/RedundantRegexpEscape:
-  Enabled: true
+Style/RedundantArgument:
+  Enabled: false
+Style/RegexpLiteral:
+  AllowInnerSlashes: true
 Style/Send:
   Enabled: true
-# Prevents self-documentation
-Style/SingleLineBlockParams:
-  Enabled: false
 Style/SlicingWithRange:
   Enabled: false
 Style/StringMethods:
   Enabled: true
+Style/TrailingCommaInBlockArgs:
+  Enabled: true
 
 # Defaults; may make sense to change for specific projects
+Layout/EmptyLineAfterGuardClause:
+  Enabled: true
+
 Rails/SaveBang:
   Enabled: true
 Rails/UniqueValidationWithoutIndex:
   Enabled: false
 
+Style/DocumentationMethod:
+  Enabled: true
+  Exclude:
+    - '**/config/**/*'
+    - '**/controllers/**/*'
+    - '**/db/**/*'
+    - '**/spec/**/*'
 Style/RedundantBegin:
   Enabled: true
 Style/ZeroLengthPredicate:
   Enabled: true
-
-# project-specific changes:
-Layout/EmptyLineAfterGuardClause:
-  Enabled: false
-Layout/MultilineMethodArgumentLineBreaks:
-  Enabled: false
-Lint/NumberConversion:
-  Enabled: false
-Naming/VariableNumber:
-  Enabled: false
-Rails/BulkChangeTable:
-  Enabled: false
-Rails/UnknownEnv:
-  Environments:
-    - development
-    - test
-    - staging
-    - production
-RSpec/MessageSpies:
-  Enabled: false
-RSpec/MultipleMemoizedHelpers:
-  Enabled: false
-Style/DocumentationMethod:
-  Enabled: false

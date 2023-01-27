@@ -11,9 +11,18 @@ class ExperimentsController < ApplicationController
     @experiments = Experiment.for_user(current_user).order(created_at: :desc)
   end
 
+  def show
+    @resource_name = "Experiment: #{@experiment.name}"
+    @conditions = @experiment.conditions
+  end
+
   def new
     @experiment = Experiment.new
     @resource_name = 'Add Experiment'
+  end
+
+  def edit
+    @resource_name = "Experiment: #{@experiment.name}"
   end
 
   def create
@@ -25,15 +34,6 @@ class ExperimentsController < ApplicationController
       set_error_messages(@experiment)
       render :new
     end
-  end
-
-  def show
-    @resource_name = "Experiment: #{@experiment.name}"
-    @conditions = @experiment.conditions
-  end
-
-  def edit
-    @resource_name = "Experiment: #{@experiment.name}"
   end
 
   def update
@@ -57,7 +57,7 @@ class ExperimentsController < ApplicationController
 
   private def set_experiment
     @experiment = Experiment.find(params[:id])
-    raise Consul::Powerless unless experiment_scope.include?(@experiment)
+    raise(Consul::Powerless) unless experiment_scope.include?(@experiment)
   end
 
   private def experiment_params

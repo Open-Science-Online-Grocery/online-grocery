@@ -30,7 +30,7 @@ class ConditionManager
       update_custom_sortings if @errors.none?
       update_custom_product_attribute if @errors.none?
       update_custom_product_price if @errors.none?
-      raise ActiveRecord::Rollback if @errors.any?
+      raise(ActiveRecord::Rollback) if @errors.any?
     end
     @errors.none?
   end
@@ -106,7 +106,7 @@ class ConditionManager
   end
 
   private def cart_summary_label_missing_error
-    @errors << 'A cart summary image must be uploaded or selected '\
+    @errors << 'A cart summary image must be uploaded or selected ' \
       'for all conditional images'
   end
 end

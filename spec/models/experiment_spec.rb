@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Experiment, type: :model do
-  subject { build :experiment }
+  subject { build(:experiment) }
 
   describe 'validations' do
     it { is_expected.to validate_presence_of :user }

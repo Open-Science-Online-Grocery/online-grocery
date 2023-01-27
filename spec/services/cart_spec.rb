@@ -73,11 +73,11 @@ RSpec.describe Cart do
       { id: '3', quantity: '3', has_labels: ['bar image'] }
     ]
   end
-  let(:condition) { create :condition }
-  let(:label_1) { create :label, name: 'foo image' }
-  let(:label_2) { create :label, name: 'bar image' }
-  let(:cond_label_1) { create :condition_label, condition: condition, label: label_1 }
-  let(:cond_label_2) { create :condition_label, condition: condition, label: label_2 }
+  let(:condition) { create(:condition) }
+  let(:label_1) { create(:label, name: 'foo image') }
+  let(:label_2) { create(:label, name: 'bar image') }
+  let(:cond_label_1) { create(:condition_label, condition: condition, label: label_1) }
+  let(:cond_label_2) { create(:condition_label, condition: condition, label: label_2) }
 
   subject { described_class.new(product_data, condition) }
 

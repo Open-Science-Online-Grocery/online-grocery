@@ -18,7 +18,7 @@ class ProductImporter
       CSV.foreach(import_filepath, headers: true) do |row|
         i += 1
         import_row(row) if sampled_row?(i)
-        puts "imported product #{i}" if i % 1000 == 0
+        puts("imported product #{i}") if i % 1000 == 0
       end
       Product.where.not(id: @imported_ids).destroy_all
     end

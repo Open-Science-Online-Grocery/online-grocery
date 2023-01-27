@@ -10,8 +10,8 @@ RSpec.describe CartSummarizer do
       show_food_count: true
     )
   end
-  let(:label_1) { build :label, name: 'foo label' }
-  let(:label_2) { build :label, name: 'bar label' }
+  let(:label_1) { build(:label, name: 'foo label') }
+  let(:label_2) { build(:label, name: 'bar label') }
   let(:cart) do
     instance_double(
       'Cart',

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe ConditionManager do
   let(:condition) { Condition.new(show_custom_attribute_on_product: true) }
-  let(:condition_label) { build :condition_label, condition: condition }
+  let(:condition_label) { build(:condition_label, condition: condition) }
   let(:orig_params) do
     { foo: 'bar' }
   end
