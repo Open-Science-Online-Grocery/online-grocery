@@ -6,5 +6,9 @@ image: registry.gitlab.com/scimedsolutions/howesgrocery/howes_grocery_researcher
 
 rspec:
   before_script:
+    - cp config/database.yml.example config/database.yml
+    - bundle install -j $(nproc) --path /vendor/ruby --without development production --deployment
     - yarn install
     - yarn build
+    - bundle exec rake db:create db:migrate
+
