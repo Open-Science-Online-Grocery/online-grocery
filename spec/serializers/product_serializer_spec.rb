@@ -288,7 +288,8 @@ RSpec.describe ProductSerializer do
           'Product',
           attributes: { 'foo' => 'bar' },
           add_on_product: false,
-          custom_price: 12
+          custom_price: 12,
+          price: 10
         )
       end
       let(:condition) do

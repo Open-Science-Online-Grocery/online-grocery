@@ -8,7 +8,7 @@ class ProductEvaluator
   end
 
   def get_value(variable_token)
-    if @product_attributes[variable_token].present?
+    if @product_attributes.key?(variable_token)
       return @product_attributes[variable_token]
     end
 

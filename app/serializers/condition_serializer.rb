@@ -38,7 +38,7 @@ class ConditionSerializer
   end
 
   private def categories
-    Category.sorted.where(id: applicable_subcategories.map(&:category_id))
+    Category.sorted.where(id: applicable_subcategories.map(&:category_id)).to_a
   end
 
   private def subsubcategories
