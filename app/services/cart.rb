@@ -123,7 +123,7 @@ class Cart
         products_with_attributes_count += quantity
         amount.to_f * quantity
       end
-    end.compact.reduce(:+)
+    end.compact.sum
 
     [total_amount, products_with_attributes_count]
   end

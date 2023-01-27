@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe ParticipantActionsExporter do
   let(:result_1) do
     instance_double(
-      'ExperimentResult',
+      ExperimentResult,
       experiment_id: 1,
       experiment_name: 'The Best Experiment',
       condition_name: 'Control Condition',
@@ -21,7 +21,7 @@ RSpec.describe ParticipantActionsExporter do
   end
   let(:result_2) do
     instance_double(
-      'ExperimentResult',
+      ExperimentResult,
       experiment_id: 1,
       experiment_name: 'The Best Experiment',
       condition_name: 'Control Condition',
@@ -37,7 +37,7 @@ RSpec.describe ParticipantActionsExporter do
   end
   let(:result_3) do
     instance_double(
-      'ExperimentResult',
+      ExperimentResult,
       experiment_id: 1,
       experiment_name: 'The Best Experiment',
       condition_name: 'Control Condition',
@@ -54,7 +54,7 @@ RSpec.describe ParticipantActionsExporter do
 
   let(:experiment) do
     instance_double(
-      'Experiment',
+      Experiment,
       experiment_results: [result_1, result_2, result_3]
     )
   end

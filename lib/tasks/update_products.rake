@@ -2,6 +2,7 @@
 
 load './lib/scripts/product_exporter.rb'
 
+desc 'Updates all the products'
 task update_products: :environment do
   ProductImporter.new.import
   if Product.where(aws_image_url: nil).any?

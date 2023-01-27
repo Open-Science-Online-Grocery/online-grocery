@@ -5,9 +5,7 @@ require 'rails_helper'
 RSpec.describe CsvFileManagers::ProductAttribute do
   let(:csv) do
     ActionDispatch::Http::UploadedFile.new(
-      tempfile: File.open(
-        Rails.root.join('spec/fixtures/files/product_attribute/good.csv')
-      ),
+      tempfile: Rails.root.join('spec/fixtures/files/product_attribute/good.csv').open,
       filename: 'good.csv'
     )
   end
@@ -19,10 +17,10 @@ RSpec.describe CsvFileManagers::ProductAttribute do
       custom_product_attributes: existing_attribute_relation
     )
   end
-  let(:custom_product_attribute) { instance_double 'CustomProductAttribute', save: true }
+  let(:custom_product_attribute) { instance_double CustomProductAttribute, save: true }
   let(:existing_attribute_relation) do
     instance_double(
-      'CustomProductAttribute::ActiveRecord_Associations_CollectionProxy',
+      ActiveRecord::Associations::CollectionProxy,
       new: custom_product_attribute,
       exists?: false,
       delete_all: true
@@ -48,7 +46,7 @@ RSpec.describe CsvFileManagers::ProductAttribute do
   describe '#import' do
     context 'when loading a new file' do
       it 'returns true and has no errors' do
-        expect(subject.import).to eq true
+        expect(subject.import).to be true
         expect(subject.errors).to be_empty
         expect(existing_attribute_relation).to have_received(:delete_all)
         expect(custom_product_attribute).to have_received(:save).twice
@@ -65,14 +63,14 @@ RSpec.describe CsvFileManagers::ProductAttribute do
         end
 
         it 'returns false and has errors' do
-          expect(subject.import).to eq false
+          expect(subject.import).to be false
           expect(subject.errors.first).to include "Can't find product"
         end
       end
 
       context 'when a CustomProductAttribute fails to save' do
         let(:custom_product_attribute) do
-          instance_double 'CustomProductAttribute', save: false
+          instance_double CustomProductAttribute, save: false
         end
 
         before do
@@ -82,7 +80,7 @@ RSpec.describe CsvFileManagers::ProductAttribute do
         end
 
         it 'returns false and has errors' do
-          expect(subject.import).to eq false
+          expect(subject.import).to be false
           expect(subject.errors).to include 'problem'
         end
       end
@@ -91,7 +89,7 @@ RSpec.describe CsvFileManagers::ProductAttribute do
     context 'when file has been loaded previously' do
       let(:existing_attribute_relation) do
         instance_double(
-          'CustomProductAttribute::ActiveRecord_Associations_CollectionProxy',
+          ActiveRecord::Associations::CollectionProxy,
           new: custom_product_attribute,
           exists?: true,
           delete_all: true
@@ -99,7 +97,7 @@ RSpec.describe CsvFileManagers::ProductAttribute do
       end
 
       it 'does not build new custom_product_attribute' do
-        expect(subject.import).to eq true
+        expect(subject.import).to be true
         expect(subject.errors).to be_empty
         expect(existing_attribute_relation).to have_received(:delete_all)
         expect(custom_product_attribute).not_to have_received(:save)
@@ -112,7 +110,7 @@ RSpec.describe CsvFileManagers::ProductAttribute do
       end
 
       it 'does not build new custom_product_attribute' do
-        expect(subject.import).to eq true
+        expect(subject.import).to be true
         expect(subject.errors).to be_empty
         expect(existing_attribute_relation).to have_received(:delete_all)
         expect(custom_product_attribute).not_to have_received(:save)

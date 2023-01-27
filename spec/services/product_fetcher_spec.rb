@@ -73,7 +73,7 @@ RSpec.describe ProductFetcher do
     # returns the expected products
     allow(ProductSorter).to receive(:new) do |args|
       instance_double(
-        'ProductSorter',
+        ProductSorter,
         sorted_products: args[:product_relation]
       )
     end

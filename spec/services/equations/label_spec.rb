@@ -66,7 +66,7 @@ RSpec.describe Equations::Label do
       let(:product) { build(:product, calories: 500) }
 
       it 'returns false' do
-        expect(subject.evaluate(product.attributes)).to eq false
+        expect(subject.evaluate(product.attributes)).to be false
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe Equations::Label do
       let(:product) { build(:product, calories: 499) }
 
       it 'returns true' do
-        expect(subject.evaluate(product.attributes)).to eq true
+        expect(subject.evaluate(product.attributes)).to be true
       end
     end
 

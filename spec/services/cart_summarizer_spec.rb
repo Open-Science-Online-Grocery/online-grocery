@@ -14,7 +14,7 @@ RSpec.describe CartSummarizer do
   let(:label_2) { build(:label, name: 'bar label') }
   let(:cart) do
     instance_double(
-      'Cart',
+      Cart,
       total_products: 10,
       number_of_products_with_each_label: {
         label_1.name => 3,
@@ -63,7 +63,7 @@ RSpec.describe CartSummarizer do
       context 'when a label is not present in any products' do
         let(:cart) do
           instance_double(
-            'Cart',
+            Cart,
             total_products: 10,
             number_of_products_with_each_label: {
               label_1.name => 3,
@@ -100,7 +100,7 @@ RSpec.describe CartSummarizer do
       context 'when a label is not present in any products' do
         let(:cart) do
           instance_double(
-            'Cart',
+            Cart,
             total_products: 10,
             number_of_products_with_each_label: {
               label_1.name => 3,

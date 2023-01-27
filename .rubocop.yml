@@ -290,6 +290,8 @@ Style/Lambda:
   EnforcedStyle: literal
 Style/NumericPredicate:
   Enabled: false
+Style/OpenStructUse:
+  Enabled: false
 Style/OptionHash:
   Enabled: true
 Style/RedundantAssignment:

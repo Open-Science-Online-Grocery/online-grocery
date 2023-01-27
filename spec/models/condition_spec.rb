@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Condition, type: :model do
+RSpec.describe Condition do
   subject { build(:condition) }
 
   describe 'validations' do

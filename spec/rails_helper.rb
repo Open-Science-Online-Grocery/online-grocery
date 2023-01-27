@@ -29,7 +29,7 @@ end
 FactoryBot.use_parent_strategy = true
 
 # Include all shared examples and other files in the spec/support directory.
-Dir['./spec/**/support/**/*.rb'].sort.each { |f| require f }
+Dir['./spec/**/support/**/*.rb'].each { |f| require f }
 
 # Checks for pending migration and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove this line.

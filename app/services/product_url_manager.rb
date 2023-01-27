@@ -131,7 +131,7 @@ class ProductUrlManager
     # calculate size of directory that will be deleted
     tmp_images_dir_size = Dir.glob(
       File.join(@local_tmp_images_path, '**', '*')
-    ).map { |file| File.size(file) }.reduce(:+)
+    ).sum { |file| File.size(file) }
 
     # Extra check in place to make sure we don't accidentally delete something
     # bigger than we intended, just in case the file path got messed up somehow.

@@ -45,7 +45,7 @@ RSpec.describe CsvFileManagers::Category do
   end
 
   describe '.generate_csv' do
-    let(:condition) { instance_double('Condition') }
+    let(:condition) { instance_double(Condition) }
     let(:category_1) { create(:category, name: 'Category 1') }
     let(:category_2) { create(:category, name: 'Category 2') }
     let(:subcategory_1) { create(:subcategory, name: 'Subcategory 1') }

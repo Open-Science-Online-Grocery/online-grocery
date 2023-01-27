@@ -38,10 +38,12 @@ class CartSummarizer
     "#{percentage}% of products have"
   end
 
+  # rubocop:disable Lint/NoReturnInBeginEndBlocks
   private def label_name(label)
     @label_name ||= begin
       return "the #{label.name} label" if label.name.present?
       'a health label'
     end
   end
+  # rubocop:enable Lint/NoReturnInBeginEndBlocks
 end

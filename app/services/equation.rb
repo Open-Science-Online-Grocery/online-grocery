@@ -58,7 +58,7 @@ class Equation
   end
 
   def variable_tokens
-    @tokens.map { |token| token[:value] if token[:type] == 'variable' }.compact
+    @tokens.filter_map { |token| token[:value] if token[:type] == 'variable' }
   end
 
   # here we test the equation by evaluating it against fake attributes to check

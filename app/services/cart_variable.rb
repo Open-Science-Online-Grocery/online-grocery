@@ -56,7 +56,7 @@ class CartVariable < Variable
   end
 
   def self.total_fields(condition)
-    ProductVariable.all(condition).map do |product_variable|
+    ProductVariable.all(condition).filter_map do |product_variable|
       next if product_variable.attribute == :custom_attribute
       new(
         token_name: "total_#{product_variable.token_name}",
@@ -64,11 +64,11 @@ class CartVariable < Variable
         attribute: product_variable.attribute,
         condition: condition
       )
-    end.compact
+    end
   end
 
   def self.average_fields(condition)
-    ProductVariable.all(condition).map do |product_variable|
+    ProductVariable.all(condition).filter_map do |product_variable|
       next if product_variable.attribute == :custom_attribute
       new(
         token_name: "avg_#{product_variable.token_name}",
@@ -76,7 +76,7 @@ class CartVariable < Variable
         attribute: product_variable.attribute,
         condition: condition
       )
-    end.compact
+    end
   end
 
   def self.from_attribute(attribute, condition = nil)
