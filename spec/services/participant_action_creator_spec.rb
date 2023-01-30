@@ -26,7 +26,7 @@ RSpec.describe ParticipantActionCreator do
       performed_at: '2021-12-22 12:01:00 -0500'
     }
   end
-  let(:participant_action) { instance_double('ParticipantAction', save: true) }
+  let(:participant_action) { instance_double(ParticipantAction, save: true) }
 
   subject { described_class.new(condition, [operation_attrs_1, operation_attrs_2]) }
 
@@ -37,7 +37,7 @@ RSpec.describe ParticipantActionCreator do
   describe '#create_participant_actions' do
     context 'when creating actions succeeds' do
       it 'returns true and has no errors' do
-        expect(subject.create_participant_actions).to eq true
+        expect(subject.create_participant_actions).to be true
         expect(subject.errors).to be_empty
         expect(ParticipantAction).to have_received(:new).with(
           session_identifier: 'abc123',
@@ -66,7 +66,7 @@ RSpec.describe ParticipantActionCreator do
     end
 
     context 'when creating actions fails' do
-      let(:participant_action) { instance_double('ParticipantAction', save: false) }
+      let(:participant_action) { instance_double(ParticipantAction, save: false) }
 
       before do
         allow(participant_action).to receive_message_chain(:errors, :full_messages) do
@@ -75,7 +75,7 @@ RSpec.describe ParticipantActionCreator do
       end
 
       it 'returns false and has errors' do
-        expect(subject.create_participant_actions).to eq false
+        expect(subject.create_participant_actions).to be false
         expect(subject.errors).to include 'problem'
       end
     end

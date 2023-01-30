@@ -70,7 +70,7 @@ RSpec.describe Equations::Cart do
       let(:avg_calories_from_fat) { 20 }
 
       it 'returns false' do
-        expect(subject.evaluate(cart)).to eq false
+        expect(subject.evaluate(cart)).to be false
       end
     end
 
@@ -78,7 +78,7 @@ RSpec.describe Equations::Cart do
       let(:avg_calories_from_fat) { 19 }
 
       it 'returns true' do
-        expect(subject.evaluate(cart)).to eq true
+        expect(subject.evaluate(cart)).to be true
       end
     end
 

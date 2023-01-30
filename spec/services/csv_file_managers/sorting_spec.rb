@@ -8,8 +8,8 @@ RSpec.describe CsvFileManagers::Sorting do
   let(:product_2) { build(:product, id: 222) }
 
   describe '.generate_csv' do
-    let(:product_relation) { instance_double('Product::ActiveRecord_Relation') }
-    let(:condition) { instance_double('Condition', products: product_relation) }
+    let(:product_relation) { instance_double(ActiveRecord::Relation) }
+    let(:condition) { instance_double(Condition, products: product_relation) }
 
     before do
       allow(product_relation).to receive(:find_each)
@@ -54,7 +54,7 @@ RSpec.describe CsvFileManagers::Sorting do
 
     context 'when loading a new file' do
       it 'returns true and has no errors' do
-        expect(subject.import).to eq true
+        expect(subject.import).to be true
         expect(subject.errors).to be_empty
         expect(CustomSorting).to have_received(:import).with(
           %i[
@@ -85,7 +85,7 @@ RSpec.describe CsvFileManagers::Sorting do
       let(:filepath) { Rails.root.join('spec/fixtures/files/sorting/bad_1.csv') }
 
       it 'returns false and has errors' do
-        expect(subject.import).to eq false
+        expect(subject.import).to be false
         expect(subject.errors).not_to be_empty
         expect(CustomSorting).not_to have_received(:import)
       end
@@ -95,7 +95,7 @@ RSpec.describe CsvFileManagers::Sorting do
       let(:filepath) { Rails.root.join('spec/fixtures/files/sorting/bad_2.csv') }
 
       it 'returns false and has errors' do
-        expect(subject.import).to eq false
+        expect(subject.import).to be false
         expect(subject.errors).not_to be_empty
         expect(CustomSorting).not_to have_received(:import)
       end
@@ -105,7 +105,7 @@ RSpec.describe CsvFileManagers::Sorting do
       let(:filepath) { Rails.root.join('spec/fixtures/files/sorting/bad_3.csv') }
 
       it 'returns false and has errors' do
-        expect(subject.import).to eq false
+        expect(subject.import).to be false
         expect(subject.errors).not_to be_empty
         expect(CustomSorting).not_to have_received(:import)
       end

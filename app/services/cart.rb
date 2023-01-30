@@ -22,10 +22,12 @@ class Cart
     elsif token_name_in?(
       variable, CartVariable.average_fields(@condition)
     )
+
       return average(variable.attribute)
     elsif token_name_in?(
       variable, CartVariable.custom_attribute_fields(@condition)
     )
+
       return handle_custom_attribute_fields(variable.token_name)
     end
     public_send(variable_token)
@@ -121,7 +123,7 @@ class Cart
         products_with_attributes_count += quantity
         amount.to_f * quantity
       end
-    end.compact.reduce(:+)
+    end.compact.sum
 
     [total_amount, products_with_attributes_count]
   end

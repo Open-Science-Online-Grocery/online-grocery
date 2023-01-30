@@ -102,13 +102,13 @@ class ProductFetcher
   end
 
   private def scope_by_tag
-    if !@condition.show_products_by_subcategory
-      @product_relation = @product_relation.with_tag(
-        @params[:selected_category_id]
-      )
-    else
+    if @condition.show_products_by_subcategory
       @product_relation = @product_relation.with_subtag(
         @params[:selected_subcategory_id]
+      )
+    else
+      @product_relation = @product_relation.with_tag(
+        @params[:selected_category_id]
       )
     end
   end

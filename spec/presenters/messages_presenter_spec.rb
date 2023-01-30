@@ -14,7 +14,7 @@ RSpec.describe MessagesPresenter do
         it 'returns a div whose class is dependent upon the flash key' do
           flash_message = subject.show_messages
 
-          expect(flash_message).to match %r{<div.+</div>}
+          expect(flash_message).to match(/<div.+<\/div>/)
           expect(flash_message).to match 'class="ui message error"'
         end
       end
@@ -33,7 +33,7 @@ RSpec.describe MessagesPresenter do
         it 'returns a list nested within the flash div' do
           flash_message = subject.show_messages
 
-          expect(flash_message).to match %r{<ul.+</ul>}
+          expect(flash_message).to match(/<ul.+<\/ul>/)
           expect(flash_message).to include '<li>first error</li>'
           expect(flash_message).to include '<li>second error</li>'
         end
@@ -48,7 +48,7 @@ RSpec.describe MessagesPresenter do
           flash_message = subject.show_messages
 
           expect(flash_message).to include '<div class="header">HEADER:</div>'
-          expect(flash_message).to match %r{<ul.+</ul>}
+          expect(flash_message).to match(/<ul.+<\/ul>/)
           expect(flash_message).to include '<li>first error</li>'
           expect(flash_message).to include '<li>second error</li>'
         end

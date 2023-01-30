@@ -48,7 +48,7 @@ class TagImporter
         validate_row(row_data, row_number)
         create_tags(row_data, row_number)
       end
-      raise ActiveRecord::Rollback if @errors.any?
+      raise(ActiveRecord::Rollback) if @errors.any?
     end
   end
 
@@ -113,7 +113,7 @@ class TagImporter
   end
 
   private def missing_required_attribute_error(attr, row_number)
-    @errors << "Row #{row_number + 1}: "\
+    @errors << "Row #{row_number + 1}: " \
       "#{attr.to_s.humanize.titleize} is required"
   end
 

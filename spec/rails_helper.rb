@@ -29,7 +29,7 @@ end
 FactoryBot.use_parent_strategy = true
 
 # Include all shared examples and other files in the spec/support directory.
-Dir['./spec/**/support/**/*.rb'].sort.each { |f| require f }
+Dir['./spec/**/support/**/*.rb'].each { |f| require f }
 
 # Checks for pending migration and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
@@ -77,8 +77,8 @@ RSpec.configure do |config|
 
     Capybara::Screenshot.s3_configuration = {
       s3_client_credentials: {
-        access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-        secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+        access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID', nil),
+        secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)
       },
       bucket_name: 'com-scimed-gitlab-ci-screenshots',
       key_prefix: 'howes_grocery_researcher_portal/'
@@ -87,7 +87,7 @@ RSpec.configure do |config|
   Capybara::Screenshot.prune_strategy = { keep: 20 }
 
   Capybara.register_driver :selenium_chrome_headless do |app|
-    browser_options = ::Selenium::WebDriver::Chrome::Options.new
+    browser_options = Selenium::WebDriver::Chrome::Options.new
     unless ENV['BROWSER']
       browser_options.args << '--headless'
       browser_options.args << '--disable-gpu'

@@ -24,7 +24,7 @@ class MessagesPresenter
             flash_html(value)
           end
         end
-      end.reduce(:+)
+      end.sum
     end
   end
 
@@ -52,9 +52,9 @@ class MessagesPresenter
 
   private def render_list(list)
     tag.ul do
-      list.map do |list_item|
+      list.sum do |list_item|
         tag.li(list_item)
-      end.reduce(:+)
+      end
     end
   end
 

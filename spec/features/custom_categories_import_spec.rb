@@ -115,7 +115,7 @@ RSpec.describe 'Importing custom categories for a condition', :feature do
     expect(page).to have_content 'Custom Subcategory 2D'
 
     # remove csv
-    force_click(find('#condition_tag_csv_files_attributes_0_active'))
+    force_click(find_by_id('condition_tag_csv_files_attributes_0_active'))
     force_click_on 'Save'
 
     expect(page).to have_content 'Condition successfully updated'

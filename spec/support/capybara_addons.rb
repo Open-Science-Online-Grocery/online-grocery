@@ -75,7 +75,7 @@ module CapybaraAddons
   def expect_form_refresh
     auth_token = find('input[name="authenticity_token"]').value
     yield
-    expect(page).to have_no_selector("input[value='#{auth_token}']")
+    expect(page).not_to have_selector("input[value='#{auth_token}']")
   end
 
   private def get_target(element)

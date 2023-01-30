@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe ProductSerializer do
   let(:product) do
     instance_double(
-      'Product',
+      Product,
       attributes: { 'foo' => 'bar' },
       add_on_product: false,
       custom_attribute_amount: nil,
@@ -14,7 +14,7 @@ RSpec.describe ProductSerializer do
   end
   let(:condition_label_1) do
     instance_double(
-      'ConditionLabel',
+      ConditionLabel,
       position: 'bottom right',
       size: 20,
       equation: label_equation_1,
@@ -26,7 +26,7 @@ RSpec.describe ProductSerializer do
   end
   let(:condition_label_2) do
     instance_double(
-      'ConditionLabel',
+      ConditionLabel,
       position: 'top left',
       size: 25,
       equation: label_equation_2,
@@ -38,7 +38,7 @@ RSpec.describe ProductSerializer do
   end
   let(:condition) do
     instance_double(
-      'Condition',
+      Condition,
       condition_labels: [condition_label_1, condition_label_2],
       style_use_type: style_use_type,
       nutrition_equation: nutrition_equation,
@@ -53,16 +53,16 @@ RSpec.describe ProductSerializer do
     )
   end
   let(:label_equation_1) do
-    instance_double('Equations::Label', evaluate: label_1_applies)
+    instance_double(Equations::Label, evaluate: label_1_applies)
   end
   let(:label_equation_2) do
-    instance_double('Equations::Label', evaluate: label_2_applies)
+    instance_double(Equations::Label, evaluate: label_2_applies)
   end
   let(:label_1_applies) { true }
   let(:label_2_applies) { true }
   let(:style_use_type) { 'calculation' }
   let(:nutrition_equation) do
-    instance_double('Equations::Nutrition', evaluate: nutrition_equation_applies)
+    instance_double(Equations::Nutrition, evaluate: nutrition_equation_applies)
   end
   let(:nutrition_equation_applies) { false }
 
@@ -209,7 +209,7 @@ RSpec.describe ProductSerializer do
     context 'when the user unchecked both the options to display' do
       let(:product) do
         instance_double(
-          'Product',
+          Product,
           attributes: { 'foo' => 'bar' },
           add_on_product: false,
           custom_attribute_amount: 12
@@ -217,7 +217,7 @@ RSpec.describe ProductSerializer do
       end
       let(:condition) do
         instance_double(
-          'Condition',
+          Condition,
           condition_labels: [condition_label_1, condition_label_2],
           style_use_type: style_use_type,
           nutrition_equation: nutrition_equation,
@@ -240,7 +240,7 @@ RSpec.describe ProductSerializer do
     context 'when the product have custom attributes' do
       let(:product) do
         instance_double(
-          'Product',
+          Product,
           attributes: { 'foo' => 'bar' },
           add_on_product: false,
           custom_attribute_amount: 12
@@ -266,7 +266,7 @@ RSpec.describe ProductSerializer do
     context 'when the product does not have custom prices' do
       let(:product) do
         instance_double(
-          'Product',
+          Product,
           attributes: { 'foo' => 'bar' },
           add_on_product: false,
           custom_attribute_amount: 0,
@@ -285,7 +285,7 @@ RSpec.describe ProductSerializer do
     context 'when the user unchecked both the options to display' do
       let(:product) do
         instance_double(
-          'Product',
+          Product,
           attributes: { 'foo' => 'bar' },
           add_on_product: false,
           custom_price: 12
@@ -293,7 +293,7 @@ RSpec.describe ProductSerializer do
       end
       let(:condition) do
         instance_double(
-          'Condition',
+          Condition,
           condition_labels: [condition_label_1, condition_label_2],
           style_use_type: style_use_type,
           nutrition_equation: nutrition_equation,
@@ -328,7 +328,7 @@ RSpec.describe ProductSerializer do
 
     context 'with an add-on product' do
       let(:add_on_product) do
-        instance_double('Product', attributes: { 'baz' => 'qux' }, custom_attribute_amount: nil)
+        instance_double(Product, attributes: { 'baz' => 'qux' }, custom_attribute_amount: nil)
       end
 
       before do

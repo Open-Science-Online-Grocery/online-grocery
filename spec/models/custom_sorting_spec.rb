@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CustomSorting, type: :model do
+RSpec.describe CustomSorting do
   describe 'validations' do
     it { is_expected.to validate_presence_of :sort_order }
     it { is_expected.to validate_presence_of :session_identifier }
