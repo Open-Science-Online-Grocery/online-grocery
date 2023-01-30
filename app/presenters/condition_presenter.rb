@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#:nodoc:
+# :nodoc:
 class ConditionPresenter < SimpleDelegator
   include ActionView::Helpers::NumberHelper
 
@@ -58,8 +58,8 @@ class ConditionPresenter < SimpleDelegator
 
   private def random_labels
     return [] unless condition.labels.present?
-    condition.labels.map do |label|
+    condition.labels.filter_map do |label|
       label.name if rand(0..100) % 4 == 0
-    end.compact || []
+    end || []
   end
 end

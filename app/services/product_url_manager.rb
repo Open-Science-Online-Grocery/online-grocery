@@ -31,7 +31,7 @@ class ProductUrlManager
     errors = []
 
     ActiveRecord::Base.transaction do
-      raise ActiveRecord::Rollback if errors.present?
+      raise(ActiveRecord::Rollback) if errors.present?
 
       Product.order(:id).find_each do |product|
         # rubocop:disable Rails/SaveBang
@@ -131,7 +131,7 @@ class ProductUrlManager
     # calculate size of directory that will be deleted
     tmp_images_dir_size = Dir.glob(
       File.join(@local_tmp_images_path, '**', '*')
-    ).map { |file| File.size(file) }.reduce(:+)
+    ).sum { |file| File.size(file) }
 
     # Extra check in place to make sure we don't accidentally delete something
     # bigger than we intended, just in case the file path got messed up somehow.
@@ -158,29 +158,35 @@ class ProductUrlManager
 
   # rubocop:disable Rails/Output
   private def product_update_failed_error(product)
-    puts product.errors.full_messages.join(', ')
-    raise ActiveRecord::Rollback
+    puts(product.errors.full_messages.join(', '))
+    raise(ActiveRecord::Rollback)
   end
 
   private def tmp_dir_too_big_error
-    puts "Tmp directory #{@local_tmp_images_path} is too big, "\
-      'please remove it manually.'
+    puts(
+      "Tmp directory #{@local_tmp_images_path} is too big, " \
+        'please remove it manually.'
+    )
   end
 
   private def import_timeout_error
-    puts 'Importing products to the local machine has timed out. Please try '\
-      'again. The imported images so far can be found at '\
-      "#{@local_tmp_images_path}"
+    puts(
+      'Importing products to the local machine has timed out. Please try ' \
+        'again. The imported images so far can be found at ' \
+        "#{@local_tmp_images_path}"
+    )
   end
 
   private def retry_image_copy_message(starting_product_id, retry_count)
-    puts 'Timeout occurred while copying images to local machine. '\
-      "Retry #{retry_count}, starting at ID #{starting_product_id}."
+    puts(
+      'Timeout occurred while copying images to local machine. ' \
+        "Retry #{retry_count}, starting at ID #{starting_product_id}."
+    )
   end
 
   private def print_errors(errors)
-    puts 'Update failed.'
-    puts errors.compact.join(', ')
+    puts('Update failed.')
+    puts(errors.compact.join(', '))
   end
   # rubocop:enable Rails/Output
 end

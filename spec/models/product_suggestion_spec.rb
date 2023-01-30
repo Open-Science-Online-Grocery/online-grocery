@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ProductSuggestion, type: :model do
+RSpec.describe ProductSuggestion do
   describe 'validations' do
     it do
       expect(subject).to validate_uniqueness_of(:product_id)

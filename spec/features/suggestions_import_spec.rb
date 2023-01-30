@@ -49,7 +49,7 @@ RSpec.describe 'Importing suggested add-on products for a condition', :feature d
     expect(condition.product_suggestions.count).to eq 1
 
     # deactivating file
-    force_click(find('#condition_suggestion_csv_files_attributes_0_active'))
+    force_click(find_by_id('condition_suggestion_csv_files_attributes_0_active'))
     force_click_on 'Save'
     expect(page).to have_content 'Condition successfully updated'
     within parent_of(find('[data-tab="suggestions"] h4', text: 'Previously uploaded files')) do

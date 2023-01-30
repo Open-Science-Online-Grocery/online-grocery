@@ -9,20 +9,18 @@
 #    determining the value of the variable.
 class CartVariable < Variable
   def self.all(condition = nil)
-    @all = begin
-      [
-        number_of_products_tokens(condition),
-        percent_of_products_tokens(condition),
-        {
-          token_name: 'total_products',
-          description: 'Total number of products',
-          attribute: nil
-        }
-      ].flatten.map { |attrs| new(attrs) } +
-        total_fields(condition) +
-        average_fields(condition) +
-        custom_attribute_fields(condition)
-    end
+    @all = [
+      number_of_products_tokens(condition),
+      percent_of_products_tokens(condition),
+      {
+        token_name: 'total_products',
+        description: 'Total number of products',
+        attribute: nil
+      }
+    ].flatten.map { |attrs| new(attrs) } +
+      total_fields(condition) +
+      average_fields(condition) +
+      custom_attribute_fields(condition)
   end
 
   def self.custom_attribute_fields(condition)
@@ -58,7 +56,7 @@ class CartVariable < Variable
   end
 
   def self.total_fields(condition)
-    ProductVariable.all(condition).map do |product_variable|
+    ProductVariable.all(condition).filter_map do |product_variable|
       next if product_variable.attribute == :custom_attribute
       new(
         token_name: "total_#{product_variable.token_name}",
@@ -66,11 +64,11 @@ class CartVariable < Variable
         attribute: product_variable.attribute,
         condition: condition
       )
-    end.compact
+    end
   end
 
   def self.average_fields(condition)
-    ProductVariable.all(condition).map do |product_variable|
+    ProductVariable.all(condition).filter_map do |product_variable|
       next if product_variable.attribute == :custom_attribute
       new(
         token_name: "avg_#{product_variable.token_name}",
@@ -78,7 +76,7 @@ class CartVariable < Variable
         attribute: product_variable.attribute,
         condition: condition
       )
-    end.compact
+    end
   end
 
   def self.from_attribute(attribute, condition = nil)

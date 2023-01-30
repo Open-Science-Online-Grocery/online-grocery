@@ -15,7 +15,6 @@ class Cart
     @condition = condition
   end
 
-  # rubocop:disable Style/GuardClause
   def get_value(variable_token)
     variable = CartVariable.from_token(variable_token, @condition)
     if token_name_in?(variable, CartVariable.total_fields(@condition))
@@ -23,15 +22,16 @@ class Cart
     elsif token_name_in?(
       variable, CartVariable.average_fields(@condition)
     )
+
       return average(variable.attribute)
     elsif token_name_in?(
       variable, CartVariable.custom_attribute_fields(@condition)
     )
+
       return handle_custom_attribute_fields(variable.token_name)
     end
     public_send(variable_token)
   end
-  # rubocop:enable Style/GuardClause
 
   def handle_custom_attribute_fields(token_name)
     total_amount, products_with_attributes_count = calculate_product_attributes
@@ -71,10 +71,9 @@ class Cart
   end
 
   def percent_of_products_with_each_label
-    @percent_of_products_with_each_label ||= begin
-      number_of_products_with_each_label.transform_values do |count|
-        total_products.zero? ? 0 : (count / total_products.to_f) * 100
-      end
+    @percent_of_products_with_each_label ||= number_of_products_with_each_label
+      .transform_values do |count|
+      total_products.zero? ? 0 : (count / total_products.to_f) * 100
     end
   end
 
@@ -124,7 +123,7 @@ class Cart
         products_with_attributes_count += quantity
         amount.to_f * quantity
       end
-    end.compact.reduce(:+)
+    end.compact.sum
 
     [total_amount, products_with_attributes_count]
   end

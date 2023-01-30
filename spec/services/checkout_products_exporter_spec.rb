@@ -64,7 +64,7 @@ RSpec.describe CheckoutProductsExporter do
   end
   let(:result_1) do
     instance_double(
-      'ExperimentResult',
+      ExperimentResult,
       session_identifier: 'aaaaa',
       quantity: 1,
       product: product_1
@@ -72,7 +72,7 @@ RSpec.describe CheckoutProductsExporter do
   end
   let(:result_2) do
     instance_double(
-      'ExperimentResult',
+      ExperimentResult,
       session_identifier: 'bbbbb',
       quantity: 1,
       product: product_1
@@ -80,13 +80,13 @@ RSpec.describe CheckoutProductsExporter do
   end
   let(:result_3) do
     instance_double(
-      'ExperimentResult',
+      ExperimentResult,
       session_identifier: 'bbbbb',
       quantity: 2,
       product: product_2
     )
   end
-  let(:experiment) { instance_double('Experiment') }
+  let(:experiment) { instance_double(Experiment) }
   let(:expected_output) do
     <<~CSV
       Participant,Item1_Quantity,Item1_Name,Item1_Price,Item1_Category,Item1_Subcategory,Item1_Serving_size,Item1_Serving_size_grams,Item1_Calories_from_fat,Item1_Calories,Item1_Caloric_density,Item1_Total_fat,Item1_Saturated_fat,Item1_Trans_fat,Item1_Poly_fat,Item1_Mono_fat,Item1_Cholesterol,Item1_Sodium,Item1_Potassium,Item1_Carbs,Item1_Fiber,Item1_Sugar,Item1_Protein,Item1_Starpoints,Item2_Quantity,Item2_Name,Item2_Price,Item2_Category,Item2_Subcategory,Item2_Serving_size,Item2_Serving_size_grams,Item2_Calories_from_fat,Item2_Calories,Item2_Caloric_density,Item2_Total_fat,Item2_Saturated_fat,Item2_Trans_fat,Item2_Poly_fat,Item2_Mono_fat,Item2_Cholesterol,Item2_Sodium,Item2_Potassium,Item2_Carbs,Item2_Fiber,Item2_Sugar,Item2_Protein,Item2_Starpoints,TotalPrice_Pretax,TotalNumItems,Total_Serving_size_grams,Total_Calories_from_fat,Total_Calories,Total_Caloric_density,Total_Total_fat,Total_Saturated_fat,Total_Trans_fat,Total_Poly_fat,Total_Mono_fat,Total_Cholesterol,Total_Sodium,Total_Potassium,Total_Carbs,Total_Fiber,Total_Sugar,Total_Protein,Total_Starpoints

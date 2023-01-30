@@ -20,11 +20,11 @@ module CsvFileManagers
     end
 
     def self.headers
-      raise NotImplementedError
+      raise(NotImplementedError)
     end
 
     def self.product_row(product)
-      raise NotImplementedError
+      raise(NotImplementedError)
     end
 
     # @param condition [Condition] the condition to import config for
@@ -61,19 +61,19 @@ module CsvFileManagers
     end
 
     private def records_previously_loaded?
-      raise NotImplementedError
+      raise(NotImplementedError)
     end
 
     private def current_file
-      raise NotImplementedError
+      raise(NotImplementedError)
     end
 
     private def destroy_obsolete_records
-      raise NotImplementedError
+      raise(NotImplementedError)
     end
 
     private def process_row(row, row_number)
-      raise NotImplementedError
+      raise(NotImplementedError)
     end
 
     private def finalize_records

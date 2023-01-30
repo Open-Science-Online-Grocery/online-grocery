@@ -58,7 +58,7 @@ RSpec.describe 'Using budget constraints in grocery store', :feature do
     force_click(first('.order-delete-item'))
 
     expect(page).to have_no_content 'In order to check out, you must spend less than $11.00.'
-    expect(page).to have_no_css '.checkout-button.disabled'
+    expect(page).not_to have_css '.checkout-button.disabled'
 
     force_click(first('.order-delete-item'))
 

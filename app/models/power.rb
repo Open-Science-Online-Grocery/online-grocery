@@ -28,8 +28,8 @@ class Power
   power :no_fallback do |*_args|
     raise(
       Consul::UncheckedPower,
-      "Please specify a power for the #{@request.params[:action]} action in "\
-      "the #{@request.params[:controller]} controller"
+      "Please specify a power for the #{@request.params[:action]} action in " \
+        "the #{@request.params[:controller]} controller"
     )
   end
 end

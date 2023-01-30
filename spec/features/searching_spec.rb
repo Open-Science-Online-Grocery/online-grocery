@@ -45,18 +45,18 @@ RSpec.describe 'Allowing search (or not)', :feature do
     # disallow searching on researcher side
     visit edit_experiment_condition_path(experiment, condition)
     force_click(find('.item[data-tab="searching"]'))
-    expect(find('#condition_allow_searching')).to be_checked
+    expect(find_by_id('condition_allow_searching')).to be_checked
     force_click(first('label', text: 'Allow participants to search the grocery store by keyword'))
 
     force_click_on 'Save'
     expect(page).to have_content 'Condition successfully updated'
-    expect(find('#condition_allow_searching')).not_to be_checked
+    expect(find_by_id('condition_allow_searching')).not_to be_checked
 
     # check effects in grocery store
     visit store_path(condId: condition.uuid)
     find('.form-input').set('hello')
     force_click('input[type="submit"]')
     expect(page).to have_content(default_product_1.name)
-    expect(page).to have_no_selector('.search-input')
+    expect(page).not_to have_selector('.search-input')
   end
 end

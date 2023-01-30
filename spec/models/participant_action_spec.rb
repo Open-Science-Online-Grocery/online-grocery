@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ParticipantAction, type: :model do
+RSpec.describe ParticipantAction do
   describe 'validations' do
     it { is_expected.to validate_presence_of :session_identifier }
   end

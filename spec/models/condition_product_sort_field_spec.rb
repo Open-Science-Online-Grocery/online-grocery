@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ConditionProductSortField, type: :model do
+RSpec.describe ConditionProductSortField do
   describe 'associations' do
     it { is_expected.to belong_to(:condition) }
     it { is_expected.to belong_to(:product_sort_field) }

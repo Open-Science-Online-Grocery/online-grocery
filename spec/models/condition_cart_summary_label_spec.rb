@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ConditionCartSummaryLabel, type: :model do
+RSpec.describe ConditionCartSummaryLabel do
   describe 'delegations' do
     it { is_expected.to delegate_method(:built_in).to(:cart_summary_label) }
     it { is_expected.to delegate_method(:name).to(:cart_summary_label) }
@@ -67,7 +67,7 @@ RSpec.describe ConditionCartSummaryLabel, type: :model do
   end
 
   describe '#applies_to_cart?' do
-    let(:cart) { instance_double('Cart') }
+    let(:cart) { instance_double(Cart) }
 
     context 'when label should always be shown' do
       before do
@@ -75,7 +75,7 @@ RSpec.describe ConditionCartSummaryLabel, type: :model do
       end
 
       it 'returns true' do
-        expect(subject.applies_to_cart?(cart)).to eq true
+        expect(subject.applies_to_cart?(cart)).to be true
       end
     end
 
@@ -88,28 +88,28 @@ RSpec.describe ConditionCartSummaryLabel, type: :model do
       context 'when equation evaluates to true' do
         let(:equation) do
           instance_double(
-            'Equations::Cart',
+            Equations::Cart,
             evaluate: true,
             prepare_cart_data: {}
           )
         end
 
         it 'returns true' do
-          expect(subject.applies_to_cart?(cart)).to eq true
+          expect(subject.applies_to_cart?(cart)).to be true
         end
       end
 
       context 'when equation evaluates to false' do
         let(:equation) do
           instance_double(
-            'Equations::Cart',
+            Equations::Cart,
             evaluate: false,
             prepare_cart_data: {}
           )
         end
 
         it 'returns false' do
-          expect(subject.applies_to_cart?(cart)).to eq false
+          expect(subject.applies_to_cart?(cart)).to be false
         end
       end
     end

@@ -18,7 +18,7 @@ class ParticipantActionCreator
   def create_participant_actions
     ActiveRecord::Base.transaction do
       @operations.each { |operation_attrs| create_action(operation_attrs) }
-      raise ActiveRecord::Rollback if @errors.any?
+      raise(ActiveRecord::Rollback) if @errors.any?
     end
     @errors.none?
   end

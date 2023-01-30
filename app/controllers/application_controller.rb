@@ -2,7 +2,7 @@
 
 class ApplicationController < ActionController::Base
   include Consul::Controller
-  include Concerns::AjaxHelper
+  include Support::AjaxHelper
 
   require_power_check if: -> { !authentication_controller? }
 
