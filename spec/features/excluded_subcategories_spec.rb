@@ -62,7 +62,7 @@ RSpec.describe 'Configuring hidden subcategories', :feature do
 
     expect(page).to have_no_content category_1.to_s
     expect(page).to have_content category_2.to_s
-    find('.top-nav .tab').hover
+    find('.top-nav .tab-container').hover
     expect(page).to have_content subcategory_3.to_s
     expect(page).to have_no_content subcategory_4.to_s
   end
