@@ -16,7 +16,8 @@ module Equations
     private def prepare_product_data(product_attributes)
       evaluator = ProductEvaluator.new(@condition, product_attributes)
       variable_tokens.each_with_object({}) do |variable_token, new_hash|
-        new_hash[variable_token] = evaluator.get_value(variable_token).to_f
+        value = evaluator.get_value(variable_token)
+        new_hash[variable_token] = value.is_a?(String) ? value.to_f : value
         new_hash
       end
     end
@@ -26,7 +27,7 @@ module Equations
     end
 
     private def fake_product_data
-      ProductVariable.all(@condition).map(&:attribute)
+      ProductVariable.all(@condition).compact.map(&:attribute)
         .each_with_object({}) do |colname, data|
           data[colname] = 1
           data

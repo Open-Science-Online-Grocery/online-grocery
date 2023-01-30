@@ -12,7 +12,8 @@ const mapStateToProps = (state, ownProps) => {
     showGuidingStars: state.user.showGuidingStars,
     displayCustomAttrOnDetail: state.user.displayCustomAttrOnDetail,
     customAttrName: state.user.customAttrName,
-    customAttrUnit: state.user.customAttrUnit
+    customAttrUnit: state.user.customAttrUnit,
+    displayOldPrice: state.user.displayOldPrice
   };
 };
 

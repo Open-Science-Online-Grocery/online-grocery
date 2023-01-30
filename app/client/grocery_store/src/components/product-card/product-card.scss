@@ -86,6 +86,28 @@
   }
 }
 
+.product-card-price-container {
+  display: flex;
+}
+
+.discount-price {
+  color: rgba(red, 0.5);
+  text-decoration: none;
+  position: relative;
+  margin-left: 5px;
+  &:before {
+    content: " ";
+    display: block;
+    width: 100%;
+    border-top: 2px solid rgba(red, 0.5);
+    height: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: rotate(-7deg);
+  }
+}
+
 a {
   text-decoration: none;
 }

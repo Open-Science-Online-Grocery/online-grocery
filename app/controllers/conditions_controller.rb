@@ -104,6 +104,7 @@ class ConditionsController < ApplicationController
       :new_product_price_file,
       :show_custom_attribute_on_checkout,
       :show_custom_attribute_on_product,
+      :display_old_price,
       :new_sort_file,
       :show_products_by_subcategory,
       :allow_searching,
