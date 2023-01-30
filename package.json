@@ -23,6 +23,7 @@
     "babel-loader": "^8.0.6",
     "core-js": "3",
     "css-loader": "^6.7.3",
+    "decode-uri-component": "0.2.1",
     "humps": "^2.0.1",
     "immutable": "^3.8.2",
     "improved-yarn-audit": "^2.3.3",
