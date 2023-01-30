@@ -65,3 +65,5 @@ howes_grocery.pub
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+.rubocop-https---raw-githubusercontent-com-SciMed-style-guide-master--rubocop-yml
