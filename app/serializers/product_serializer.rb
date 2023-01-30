@@ -5,9 +5,10 @@
 class ProductSerializer
   extend Memoist
 
-  def initialize(product, condition)
+  def initialize(product, condition, preloaded_data = {})
     @product = product
     @condition = condition
+    @preloaded_data = preloaded_data
   end
 
   def serialize(include_add_on: true)
@@ -73,13 +74,13 @@ class ProductSerializer
 
   private def custom_attributes_info
     {
-      'custom_attribute_amount' => custom_attribute_amount
+      'custom_attribute_amount' => @preloaded_data[:custom_attribute_amount]
     }
   end
 
   private def custom_price_info
     {
-      'price' => custom_price_amount
+      'custom_price_amount' => @preloaded_data[:custom_price_amount]
     }
   end
 
