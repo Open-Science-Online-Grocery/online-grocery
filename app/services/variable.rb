@@ -8,7 +8,7 @@ class Variable
   attr_accessor :token_name, :description, :attribute, :condition
 
   def self.from_token(token_name, condition = nil)
-    all(condition, include_custom_price: true).find do |variable|
+    all(condition).find do |variable|
       variable.token_name == token_name
     end
   end
@@ -23,9 +23,13 @@ class Variable
 
   def incomplete_data?
     return false unless attribute
-    if attribute == :custom_attribute
+    if attribute == :custom_attribute_amount
       Product.where.not(
         id: CustomProductAttribute.where(condition: @condition)
+      ).any?
+    elsif attribute == :custom_price
+      Product.where.not(
+        id: CustomProductPrice.where(condition: @condition)
       ).any?
     else
       Product.where(attribute => nil).any?
