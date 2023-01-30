@@ -93,6 +93,7 @@ RSpec.configure do |config|
       browser_options.args << '--disable-gpu'
       browser_options.args << '--no-sandbox'
       browser_options.args << '--window-size=1440,900'
+      browser_options.args << '--disable-dev-shm-usage'
       browser_options.accept_insecure_certs = true
     end
     client = Selenium::WebDriver::Remote::Http::Default.new
