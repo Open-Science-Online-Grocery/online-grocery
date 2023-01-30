@@ -80,7 +80,7 @@ class ProductSerializer
 
   private def custom_price_info
     {
-      'custom_price_amount' => @preloaded_data[:custom_price_amount]
+      'price' => @preloaded_data[:custom_price_amount]
     }
   end
 

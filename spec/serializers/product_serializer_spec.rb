@@ -230,6 +230,16 @@ RSpec.describe ProductSerializer do
         )
       end
 
+      subject do
+        described_class.new(
+          product,
+          condition,
+          {
+            custom_attribute_amount: 12
+          }
+        )
+      end
+
       describe '#serialize' do
         it 'returns the product\'s attributes without the custom attributes field' do
           expect(subject.serialize).not_to have_key(:custom_attribute)
@@ -242,12 +252,21 @@ RSpec.describe ProductSerializer do
         instance_double(
           'Product',
           attributes: { 'foo' => 'bar' },
-          add_on_product: false,
-          custom_attribute_amount: 12
+          add_on_product: false
         )
       end
       let(:label_1_applies) { false }
       let(:label_2_applies) { false }
+
+      subject do
+        described_class.new(
+          product,
+          condition,
+          {
+            custom_attribute_amount: 12
+          }
+        )
+      end
 
       describe '#serialize' do
         it 'returns the product\'s attributes with the custom attributes field' do
@@ -287,8 +306,7 @@ RSpec.describe ProductSerializer do
         instance_double(
           'Product',
           attributes: { 'foo' => 'bar' },
-          add_on_product: false,
-          custom_price: 12
+          add_on_product: false
         )
       end
       let(:condition) do
@@ -301,6 +319,16 @@ RSpec.describe ProductSerializer do
           nutrition_styles: 'some styles',
           uses_custom_attributes?: false,
           uses_custom_prices?: true
+        )
+      end
+
+      subject do
+        described_class.new(
+          product,
+          condition,
+          {
+            custom_price_amount: 12
+          }
         )
       end
 
