@@ -14,11 +14,13 @@ class ProductSerializer
   def serialize(include_add_on: true)
     attrs = @product.attributes
 
-    if @condition.uses_custom_attributes?
+    if @preloaded_data[:custom_attribute_amount].present?
       attrs = attrs.merge(custom_attributes_info)
     end
+    if @preloaded_data[:custom_price_amount].present?
+      attrs = attrs.merge(custom_price_info)
+    end
 
-    attrs = attrs.merge(custom_price_info) if @condition.uses_custom_prices?
     attrs = attrs.merge(labels: product_labels(attrs))
       .merge(nutrition_information(attrs))
     include_add_on ? attrs.merge(add_on_info) : attrs
@@ -36,16 +38,6 @@ class ProductSerializer
     end.compact
   end
   memoize :product_labels
-
-  private def custom_attribute_amount
-    @product.custom_attribute_amount(@condition)
-  end
-  memoize :custom_attribute_amount
-
-  private def custom_price_amount
-    @product.custom_price(@condition)
-  end
-  memoize :custom_price_amount
 
   private def label_information(condition_label, attrs)
     return nil unless gets_label?(condition_label, attrs)
@@ -80,7 +72,7 @@ class ProductSerializer
 
   private def custom_price_info
     {
-      'price' => @preloaded_data[:custom_price_amount]
+      'price' => @preloaded_data[:custom_price_amount] || @product.price
     }
   end
 

@@ -108,8 +108,8 @@ class ProductSorter
   end
 
   private def as_serializers(products)
-    custom_attributes = load_relational_data(:custom_product_attributes)
-    custom_prices = load_relational_data(:custom_product_prices)
+    custom_attributes, custom_prices = load_custom_fields
+
     products.map do |product|
       ProductSerializer.new(
         product,
@@ -123,8 +123,19 @@ class ProductSorter
     end
   end
 
+  private def load_custom_fields
+    custom_attributes = custom_prices = []
+    if @condition.uses_custom_attributes?
+      custom_attributes = load_relational_data(:custom_product_attributes)
+    end
+    if @condition.uses_custom_prices?
+      custom_prices = load_relational_data(:custom_product_prices)
+    end
+    [custom_attributes, custom_prices]
+  end
+
   private def load_relational_data(relation_attr)
-    @condition.public_send(relation_attr).index_by(&:product_id)
+    @condition.public_send(relation_attr).index_by(&:product_id) || []
   end
 
   private def manual_sort_field_name

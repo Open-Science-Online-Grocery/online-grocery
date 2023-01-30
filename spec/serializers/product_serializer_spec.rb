@@ -8,7 +8,6 @@ RSpec.describe ProductSerializer do
       'Product',
       attributes: { 'foo' => 'bar' },
       add_on_product: false,
-      custom_attribute_amount: nil,
       price: 100
     )
   end
@@ -75,7 +74,7 @@ RSpec.describe ProductSerializer do
 
       describe '#serialize' do
         it 'returns the product\'s attributes and an empty labels array' do
-          expected_output = { 'custom_attribute_amount' => nil, 'foo' => 'bar', labels: [] }
+          expected_output = { 'foo' => 'bar', labels: [] }
           expect(subject.serialize).to eq expected_output
         end
       end
@@ -93,7 +92,6 @@ RSpec.describe ProductSerializer do
       describe '#serialize' do
         it 'returns the product\'s attributes plus the applicable label attributes' do
           expected_output = {
-            'custom_attribute_amount' => nil,
             'foo' => 'bar',
             labels: [
               {
@@ -122,7 +120,6 @@ RSpec.describe ProductSerializer do
       describe '#serialize' do
         it 'returns the product\'s attributes plus the applicable labels attributes' do
           expected_output = {
-            'custom_attribute_amount' => nil,
             'foo' => 'bar',
             labels: [
               {
@@ -164,7 +161,6 @@ RSpec.describe ProductSerializer do
 
       it 'returns the product\'s attributes plus the nutrition styles' do
         expected_output = {
-          'custom_attribute_amount' => nil,
           'foo' => 'bar',
           'nutrition_style_rules' => 'some styles',
           labels: []
@@ -176,7 +172,7 @@ RSpec.describe ProductSerializer do
     context 'when condition applies nutrition styling via calculation' do
       context 'when calculation does not apply' do
         it 'returns only the product\'s attributes' do
-          expected_output = { 'foo' => 'bar', labels: [], 'custom_attribute_amount' => nil }
+          expected_output = { 'foo' => 'bar', labels: [] }
           expect(subject.serialize).to eq expected_output
         end
       end
@@ -186,7 +182,6 @@ RSpec.describe ProductSerializer do
 
         it 'returns the product\'s attributes plus the nutrition styles' do
           expected_output = {
-            'custom_attribute_amount' => nil,
             'foo' => 'bar',
             'nutrition_style_rules' => 'some styles',
             labels: []
@@ -289,7 +284,6 @@ RSpec.describe ProductSerializer do
           attributes: { 'foo' => 'bar' },
           add_on_product: false,
           custom_attribute_amount: 0,
-          custom_price: 10,
           price: 100
         )
       end
@@ -356,7 +350,7 @@ RSpec.describe ProductSerializer do
 
     context 'with an add-on product' do
       let(:add_on_product) do
-        instance_double('Product', attributes: { 'baz' => 'qux' }, custom_attribute_amount: nil)
+        instance_double('Product', attributes: { 'baz' => 'qux' })
       end
 
       before do
