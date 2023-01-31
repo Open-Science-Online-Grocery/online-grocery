@@ -42,7 +42,7 @@ class CartVariable < Variable
       token_name: "avg_#{format_attr_name(condition.custom_attribute_name)}",
       description: "Average #{condition.custom_attribute_name}
       (#{condition.custom_attribute_units})".capitalize,
-      attribute: :custom_attribute,
+      attribute: :custom_attribute_amount,
       condition: condition
     )
   end
@@ -52,14 +52,14 @@ class CartVariable < Variable
       token_name: "total_#{format_attr_name(condition.custom_attribute_name)}",
       description: "total #{condition.custom_attribute_name}
       (#{condition.custom_attribute_units})".capitalize,
-      attribute: :custom_attribute,
+      attribute: :custom_attribute_amount,
       condition: condition
     )
   end
 
   def self.total_fields(condition)
     ProductVariable.all(condition).map do |product_variable|
-      next if product_variable.attribute == :custom_attribute
+      next if product_variable.attribute == :custom_attribute_amount
       new(
         token_name: "total_#{product_variable.token_name}",
         description: "Total #{product_variable.description}".capitalize,
@@ -71,7 +71,7 @@ class CartVariable < Variable
 
   def self.average_fields(condition)
     ProductVariable.all(condition).map do |product_variable|
-      next if product_variable.attribute == :custom_attribute
+      next if product_variable.attribute == :custom_attribute_amount
       new(
         token_name: "avg_#{product_variable.token_name}",
         description: "Average #{product_variable.description}".capitalize,

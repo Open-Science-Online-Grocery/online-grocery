@@ -6,6 +6,10 @@ module Equations
   class Label < Equation
     include Equations::EvaluatesProduct
 
+    def variables
+      ProductVariable.all(@condition, include_custom_price: true)
+    end
+
     private def should_return_boolean?
       true
     end

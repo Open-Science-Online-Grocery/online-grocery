@@ -16,6 +16,10 @@ class NullCondition
     []
   end
 
+  def display_old_price
+    false
+  end
+
   def custom_product_attributes
     []
   end
