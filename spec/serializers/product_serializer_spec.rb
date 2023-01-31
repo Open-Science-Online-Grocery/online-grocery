@@ -300,7 +300,8 @@ RSpec.describe ProductSerializer do
         instance_double(
           'Product',
           attributes: { 'foo' => 'bar' },
-          add_on_product: false
+          add_on_product: false,
+          price: 10
         )
       end
       let(:condition) do
