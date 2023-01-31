@@ -60,7 +60,7 @@ class ProductDownloadsController < ApplicationController
   end
 
   private def redirect_to_download(csv_generator_class, filename)
-    tempfile = Tempfile.new(filename)
+    tempfile = File.new(Rails.root.join("tmp/#{filename}"), 'w')
     tempfile.write(csv_generator_class.generate_csv(@condition))
     url = condition_product_download_path(
       @condition,
