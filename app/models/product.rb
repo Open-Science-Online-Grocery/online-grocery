@@ -39,10 +39,4 @@ class Product < ApplicationRecord
       .find_by(condition: condition)
       &.custom_attribute_amount
   end
-
-  def custom_price(condition)
-    custom_product_prices
-      .find_by(condition: condition)
-      &.new_price
-  end
 end

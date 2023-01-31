@@ -5,19 +5,19 @@
 class ProductSerializer
   extend Memoist
 
-  def initialize(product, condition)
+  def initialize(product, condition, preloaded_data = {})
     @product = product
     @condition = condition
+    @preloaded_data = preloaded_data
   end
 
   def serialize(include_add_on: true)
     attrs = @product.attributes
 
-    if @condition.uses_custom_attributes?
+    if @preloaded_data[:custom_attribute_amount].present?
       attrs = attrs.merge(custom_attributes_info)
     end
-
-    if @condition.uses_custom_prices? && custom_price_info['price'].present?
+    if @preloaded_data[:custom_price_amount].present?
       attrs = attrs.merge(custom_price_info)
     end
 
@@ -38,16 +38,6 @@ class ProductSerializer
     end.compact
   end
   memoize :product_labels
-
-  private def custom_attribute_amount
-    @product.custom_attribute_amount(@condition)
-  end
-  memoize :custom_attribute_amount
-
-  private def custom_price_amount
-    @product.custom_price(@condition)
-  end
-  memoize :custom_price_amount
 
   private def label_information(condition_label, attrs)
     return nil unless gets_label?(condition_label, attrs)
@@ -76,13 +66,13 @@ class ProductSerializer
 
   private def custom_attributes_info
     {
-      'custom_attribute_amount' => custom_attribute_amount
+      'custom_attribute_amount' => @preloaded_data[:custom_attribute_amount]
     }
   end
 
   private def custom_price_info
     {
-      'price' => custom_price_amount,
+      'price' => @preloaded_data[:custom_price_amount] || @product.price,
       'original_price' => @product.price
     }
   end

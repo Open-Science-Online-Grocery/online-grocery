@@ -20,6 +20,14 @@ class NullCondition
     false
   end
 
+  def custom_product_attributes
+    []
+  end
+
+  def custom_product_prices
+    []
+  end
+
   def uses_custom_attributes?
     false
   end
