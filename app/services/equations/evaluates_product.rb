@@ -17,7 +17,11 @@ module Equations
       evaluator = ProductEvaluator.new(@condition, product_attributes)
       variable_tokens.each_with_object({}) do |variable_token, new_hash|
         value = evaluator.get_value(variable_token)
-        new_hash[variable_token] = value.is_a?(String) ? value.to_f : value
+        if value.nil?
+          new_hash[variable_token] = 0
+        else
+          new_hash[variable_token] = value.is_a?(String) ? value.to_f : value
+        end
         new_hash
       end
     end

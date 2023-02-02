@@ -18,7 +18,7 @@ class Variable
   end
 
   def self.format_attr_name(attr)
-    attr.underscore.tr(' ', '_')
+    attr.underscore.tr(' ', '_').delete('()')
   end
 
   def incomplete_data?
