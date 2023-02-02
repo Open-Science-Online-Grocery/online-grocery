@@ -25,7 +25,7 @@ RSpec.describe CsvFilesOrganizer do
   describe '#handle_csv_file' do
     context 'when the csv file does not exist on the tmp folder' do
       it 'creates a new file and returns its data' do
-        expect(subject.handle_csv_file).to eql(['filepath', 'testfile.csv'])
+        expect(subject.handle_csv_file).to eql('filepath')
         expect(File).to have_received(:new).with(
           Rails.root.join('tmp/testfile.csv'),
           'w'
@@ -39,7 +39,7 @@ RSpec.describe CsvFilesOrganizer do
       end
 
       it 'finds the file and returns its data' do
-        expect(subject.handle_csv_file).to eql(['tmp/testfile.csv', 'testfile.csv'])
+        expect(subject.handle_csv_file).to eql(Rails.root.join('tmp/testfile.csv').to_s)
         expect(File).not_to have_received(:new).with(
           Rails.root.join('tmp/testfile.csv'),
           'w'
