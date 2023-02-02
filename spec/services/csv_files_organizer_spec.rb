@@ -17,7 +17,6 @@ RSpec.describe CsvFilesOrganizer do
   end
 
   before do
-    allow(Time).to receive_message_chain(:zone, :now, :strftime) { 'time' }
     allow(Time).to receive_message_chain(:zone, :today) { 'time' }
     allow(File).to receive(:new) { file }
     allow(csv_generator_class).to receive(:generate_csv) { true }
@@ -26,9 +25,9 @@ RSpec.describe CsvFilesOrganizer do
   describe '#handle_csv_file' do
     context 'when the csv file does not exist on the tmp folder' do
       it 'creates a new file and returns its data' do
-        expect(subject.handle_csv_file).to eql(['filepath', 'time_testfile.csv'])
+        expect(subject.handle_csv_file).to eql(['filepath', 'testfile.csv'])
         expect(File).to have_received(:new).with(
-          Rails.root.join('tmp/time_testfile.csv'),
+          Rails.root.join('tmp/testfile.csv'),
           'w'
         )
       end
@@ -36,13 +35,13 @@ RSpec.describe CsvFilesOrganizer do
 
     context 'when the csv file exist on the tmp folder' do
       before do
-        allow(subject).to receive(:search_existing_file) { 'time_testfile.csv' }
+        allow(subject).to receive(:search_existing_file) { 'testfile.csv' }
       end
 
       it 'finds the file and returns its data' do
-        expect(subject.handle_csv_file).to eql(['tmp/time_testfile.csv', 'time_testfile.csv'])
+        expect(subject.handle_csv_file).to eql(['tmp/testfile.csv', 'testfile.csv'])
         expect(File).not_to have_received(:new).with(
-          Rails.root.join('tmp/time_testfile.csv'),
+          Rails.root.join('tmp/testfile.csv'),
           'w'
         )
       end
