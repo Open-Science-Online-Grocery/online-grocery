@@ -32,6 +32,10 @@ class ProductSerializer
     product_labels.count * -1
   end
 
+  def custom_attribute_amount
+    @preloaded_data[:custom_attribute_amount].to_f
+  end
+
   private def product_labels(attrs = @product.attributes)
     @condition.condition_labels.map do |condition_label|
       label_information(condition_label, attrs)

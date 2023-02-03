@@ -29,6 +29,7 @@ class ConditionManager
       update_suggestions if @errors.none?
       update_custom_sortings if @errors.none?
       update_custom_product_attribute if @errors.none?
+      update_custom_attribute_sort_field if @errors.none?
       update_custom_product_price if @errors.none?
       raise ActiveRecord::Rollback if @errors.any?
     end
@@ -71,6 +72,24 @@ class ConditionManager
       condition: @condition
     )
     importer.import || @errors += importer.errors
+  end
+
+  private def update_custom_attribute_sort_field
+    sort_field = ProductSortField.find_by(
+      name: 'custom_attribute_amount'
+    )
+    description = "#{@params['custom_attribute_name']}
+      (#{@params['custom_attribute_units']})".capitalize
+    if sort_field
+      sort_field.update!(
+        description: description
+      )
+    else
+      ProductSortField.create!(
+        name: 'custom_attribute_amount',
+        description: description
+      )
+    end
   end
 
   private def update_suggestions
