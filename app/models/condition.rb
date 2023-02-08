@@ -20,19 +20,28 @@ class Condition < ApplicationRecord
 
   belongs_to :experiment
   belongs_to :default_sort_field, optional: true, class_name: 'ProductSortField'
+
+  # CAUTION: for some of these relations we are using `dependent: :delete_all`.
+  # this is because a condition may have a large number (hundreds of thousands)
+  # of such records and `dependent: :destroy` will instantiate each child record
+  # in memory before deleting it in order to run its deletion callbacks if
+  # present. we are using `:delete_all` to avoid this, but this means any
+  # deletion callbacks on those associated records won't be run. these classes
+  # don't currently use deletion callbacks, but be wary of changing other
+  # relations to use `dependent: :delete_all`.
   has_many :condition_product_sort_fields, dependent: :destroy
   has_many :product_sort_fields, through: :condition_product_sort_fields
   has_many :tag_csv_files, dependent: :destroy
   has_many :suggestion_csv_files, dependent: :destroy
   has_many :product_attribute_csv_files, dependent: :destroy
   has_many :product_price_csv_files, dependent: :destroy
-  has_many :custom_product_prices, dependent: :destroy
+  has_many :custom_product_prices, dependent: :delete_all
   has_many :sort_files, dependent: :destroy
-  has_many :product_tags, dependent: :destroy
+  has_many :product_tags, dependent: :delete_all
   has_many :tags, through: :product_tags
   has_many :subtags, through: :product_tags
-  has_many :product_suggestions, dependent: :destroy
-  has_many :custom_product_attributes, dependent: :destroy
+  has_many :product_suggestions, dependent: :delete_all
+  has_many :custom_product_attributes, dependent: :delete_all
   has_many :condition_cart_summary_labels, dependent: :destroy
   has_many :cart_summary_labels, through: :condition_cart_summary_labels
   has_many :condition_labels, dependent: :destroy
@@ -41,7 +50,7 @@ class Condition < ApplicationRecord
   has_many :excluded_subcategories,
            through: :subcategory_exclusions,
            source: :subcategory
-  has_many :custom_sortings, dependent: :destroy
+  has_many :custom_sortings, dependent: :delete_all
 
   accepts_nested_attributes_for :product_sort_fields
   accepts_nested_attributes_for :condition_cart_summary_labels,
