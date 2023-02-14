@@ -50,11 +50,9 @@ export default class ProductCard extends React.Component {
   }
 
   price() {
-    const displayDiscount = this.props.product.originalPrice && this.props.displayOldPrice
+    const displayDiscount = this.props.product.originalPrice && this.props.displayOldPrice;
     return (
       <div className="product-card-price-container">
-        ${parseFloat(Math.round(this.props.product.price * 100) / 100).toFixed(2)}
-
         {displayDiscount && (
           <div className="discount-price">
             <span>
@@ -62,6 +60,7 @@ export default class ProductCard extends React.Component {
             </span>
           </div>
         )}
+        ${parseFloat(Math.round(this.props.product.price * 100) / 100).toFixed(2)}
       </div>
     );
   }
