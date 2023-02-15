@@ -16,9 +16,11 @@ class ProductEvaluator
     variable = ProductVariable.from_token(variable_token.to_s, @condition)
     if variable.token_name ==
         ProductVariable.custom_attribute_field(@condition)&.token_name
+
       handle_custom_attribute_field
     elsif variable.token_name ==
         ProductVariable.custom_price_field(@condition).token_name
+
       handle_custom_price_field
     else
       evaluate_product(variable_token)
