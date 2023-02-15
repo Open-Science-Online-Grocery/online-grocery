@@ -60,11 +60,15 @@ class ProductDownloadsController < ApplicationController
   end
 
   private def redirect_to_download(csv_generator_class, filename)
-    tempfile = Tempfile.new(filename)
-    tempfile.write(csv_generator_class.generate_csv(@condition))
+    filepath, filename = CsvFilesOrganizer.new(
+      filename,
+      csv_generator_class,
+      @condition
+    ).handle_csv_file
+
     url = condition_product_download_path(
       @condition,
-      filepath: tempfile.path,
+      filepath: filepath,
       filename: filename
     )
     respond_to do |format|

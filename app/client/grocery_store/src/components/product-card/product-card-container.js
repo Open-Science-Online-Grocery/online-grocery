@@ -4,7 +4,8 @@ import ProductCard from './product-card';
 const mapStateToProps = state => (
   {
     showAddToCartButton: !state.user.onlyAddToCartFromDetailPage,
-    showGuidingStars: state.user.showGuidingStars
+    showGuidingStars: state.user.showGuidingStars,
+    displayOldPrice: state.user.displayOldPrice
   }
 );
 

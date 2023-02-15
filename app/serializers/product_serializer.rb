@@ -5,47 +5,43 @@
 class ProductSerializer
   extend Memoist
 
-  def initialize(product, condition)
+  def initialize(product, condition, preloaded_data = {})
     @product = product
     @condition = condition
+    @preloaded_data = preloaded_data
   end
 
   def serialize(include_add_on: true)
-    @serialize ||= begin
-      attrs = @product.attributes
+    attrs = @product.attributes
 
-      if @condition.uses_custom_attributes?
-        attrs = attrs.merge(custom_attributes_info)
-      end
-
-      attrs = attrs.merge(custom_price_info) if @condition.uses_custom_prices?
-      attrs = attrs.merge(labels: product_labels(attrs))
-        .merge(nutrition_information(attrs))
-      include_add_on ? attrs.merge(add_on_info) : attrs
+    if @preloaded_data[:custom_attribute_amount].present?
+      attrs = attrs.merge(custom_attributes_info)
     end
+    if @preloaded_data[:custom_price_amount].present?
+      attrs = attrs.merge(custom_price_info)
+    end
+
+    attrs = attrs.merge(labels: product_labels(attrs))
+      .merge(nutrition_information(attrs))
+    include_add_on ? attrs.merge(add_on_info) : attrs
   end
+  memoize :serialize
 
   # when sorting by labels, show products the the most labels first
   def label_sort
     product_labels.count * -1
   end
 
+  def custom_attribute_amount
+    @preloaded_data[:custom_attribute_amount].to_f
+  end
+
   private def product_labels(attrs = @product.attributes)
-    @condition.condition_labels.filter_map do |condition_label|
+    @condition.condition_labels.map do |condition_label|
       label_information(condition_label, attrs)
-    end
+    end.compact
   end
   memoize :product_labels
-
-  private def custom_attribute_amount
-    @product.custom_attribute_amount(@condition)
-  end
-  memoize :custom_attribute_amount
-
-  private def custom_price_amount
-    @product.custom_price(@condition)
-  end
-  memoize :custom_price_amount
 
   private def label_information(condition_label, attrs)
     return nil unless gets_label?(condition_label, attrs)
@@ -74,13 +70,14 @@ class ProductSerializer
 
   private def custom_attributes_info
     {
-      'custom_attribute_amount' => custom_attribute_amount
+      'custom_attribute_amount' => @preloaded_data[:custom_attribute_amount]
     }
   end
 
   private def custom_price_info
     {
-      'price' => custom_price_amount
+      'price' => @preloaded_data[:custom_price_amount] || @product.price,
+      'original_price' => @product.price
     }
   end
 

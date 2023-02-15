@@ -22,6 +22,7 @@ class ProductImporter
       end
       Product.where.not(id: @imported_ids).destroy_all
     end
+    CsvFilesOrganizer.clear_files
   end
   # rubocop:enable Rails/Output
 

@@ -49,6 +49,22 @@ export default class ProductCard extends React.Component {
     );
   }
 
+  price() {
+    const displayDiscount = this.props.product.originalPrice && this.props.displayOldPrice;
+    return (
+      <div className="product-card-price-container">
+        {displayDiscount && (
+          <div className="discount-price">
+            <span>
+              ${parseFloat(Math.round(this.props.product.originalPrice * 100) / 100).toFixed(2)}
+            </span>
+          </div>
+        )}
+        ${parseFloat(Math.round(this.props.product.price * 100) / 100).toFixed(2)}
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="product-card">
@@ -62,7 +78,7 @@ export default class ProductCard extends React.Component {
         <div>
           <div className="product-card-size">{this.props.product.size}</div>
           <div className="product-card-price bold">
-            ${parseFloat(Math.round(this.props.product.price * 100) / 100).toFixed(2)}
+            {this.price()}
           </div>
           <div className="product-card-buttons">
             {this.guidingStars()}
@@ -87,6 +103,7 @@ ProductCard.propTypes = {
     awsImageUrl: PropTypes.string,
     size: PropTypes.string,
     price: PropTypes.string,
+    originalPrice: PropTypes.string,
     starpoints: PropTypes.number,
     labels: PropTypes.arrayOf(
       PropTypes.shape({

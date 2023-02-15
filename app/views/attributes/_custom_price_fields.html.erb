@@ -54,6 +54,15 @@
 
 <div class="ui grid">
   <div class="eight wide column">
+    <div class="field">
+      <label>Display Settings</label>
+      <div class="ui checkbox">
+        <%= f.check_box :display_old_price %>
+        <%= f.label :display_old_price, 'Show the old price as discount' %>
+      </div>
+    </div>
+  </div>
+  <div class="eight wide column">
     <%=
       render(
         'config_files/historical_files_table',

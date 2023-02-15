@@ -124,6 +124,7 @@ CREATE TABLE `conditions` (
   `show_custom_attribute_on_checkout` tinyint(1) NOT NULL DEFAULT '0',
   `custom_attribute_units` varchar(255) DEFAULT NULL,
   `custom_attribute_name` varchar(255) DEFAULT NULL,
+  `display_old_price` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_conditions_on_experiment_id` (`experiment_id`),
   KEY `index_conditions_on_default_sort_field_id` (`default_sort_field_id`)
@@ -141,7 +142,8 @@ CREATE TABLE `config_files` (
   `updated_at` datetime NOT NULL,
   `type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_config_files_on_condition_id` (`condition_id`)
+  KEY `index_config_files_on_condition_id` (`condition_id`),
+  KEY `index_config_files_on_id_and_type` (`id`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `custom_product_attributes`;
@@ -375,7 +377,9 @@ CREATE TABLE `products` (
   `serving_size_grams` decimal(6,1) DEFAULT NULL,
   `caloric_density` decimal(6,1) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_products_on_subsubcategory_id` (`subsubcategory_id`)
+  KEY `index_products_on_subsubcategory_id` (`subsubcategory_id`),
+  KEY `index_products_on_category_id` (`category_id`),
+  KEY `index_products_on_subcategory_id` (`subcategory_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `schema_migrations`;
@@ -396,7 +400,8 @@ CREATE TABLE `subcategories` (
   `name` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `index_subcategories_on_category_id` (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `subcategory_exclusions`;
@@ -410,7 +415,8 @@ CREATE TABLE `subcategory_exclusions` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_subcategory_exclusions_on_condition_id` (`condition_id`),
-  KEY `index_subcategory_exclusions_on_subcategory_id` (`subcategory_id`)
+  KEY `index_subcategory_exclusions_on_subcategory_id` (`subcategory_id`),
+  KEY `index_subcategory_exclusions_on_condition_id_and_subcategory_id` (`condition_id`,`subcategory_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `subsubcategories`;
@@ -569,6 +575,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20221229180249'),
 ('20230102153452'),
 ('20230119135913'),
-('20230119140755');
+('20230119140755'),
+('20230123192926'),
+('20230208163854');
 
 

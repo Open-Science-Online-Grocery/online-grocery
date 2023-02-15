@@ -40,12 +40,37 @@ export default class ProductDetails extends React.Component {
       return (
         <div className="custom-attribute-container">
           <div className="bold">{this.props.customAttrName}:</div>
-          <div>{this.props.customAttributeAmount}</div>
-          <div>{this.props.customAttrUnit}</div>
+          {this.props.customAttributeAmount ? (
+            <>
+              <div>{this.props.customAttributeAmount}</div>
+              <div>{this.props.customAttrUnit}</div>
+            </>
+          ) : (
+            <>
+              <div>N/A</div>
+            </>
+          )}
         </div>
+
       );
     }
     return <></>;
+  }
+
+  price() {
+    const displayDiscount = this.props.originalPrice && this.props.displayOldPrice
+    return (
+      <div className="product-card-price-container">
+        {displayDiscount && (
+          <div className="discount-price">
+            <span>
+              ${parseFloat(Math.round(this.props.originalPrice * 100) / 100).toFixed(2)}
+            </span>
+          </div>
+        )}
+        ${parseFloat(Math.round(this.props.price * 100) / 100).toFixed(2)}
+      </div>
+    );
   }
 
   render() {
@@ -55,7 +80,7 @@ export default class ProductDetails extends React.Component {
           <div className="product-details-name">{this.props.name}</div>
           <div className="product-details-size">{this.props.size}</div>
           <div className="product-details-price bold">
-            ${parseFloat(Math.round(this.props.price * 100) / 100).toFixed(2)}
+            {this.price()}
           </div>
           <div className="product-details-buttons-wrapper">
             <div className="product-details-buttons">
@@ -116,6 +141,8 @@ ProductDetails.propTypes = {
   ingredients: PropTypes.string,
   serialPosition: PropTypes.number,
   customAttributeAmount: PropTypes.string,
+  originalPrice: PropTypes.string,
+  displayOldPrice: PropTypes.bool,
   labels: PropTypes.arrayOf(
     PropTypes.shape({
       labelName: PropTypes.string,
@@ -151,6 +178,9 @@ ProductDetails.defaultProps = {
   ingredients: null,
   labels: [],
   description: null,
+  customAttributeAmount: null,
+  originalPrice: null,
+  displayOldPrice: null,
   servings: null,
   servingSize: null,
   calories: null,
