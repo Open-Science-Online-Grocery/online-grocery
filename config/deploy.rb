@@ -1,5 +1,5 @@
 # config valid for current version and patch releases of Capistrano
-lock '~> 3.15.0'
+lock '~> 3.17.1'
 
 set :application, 'howes_grocery'
 set :repo_url, 'git@gitlab.com:scimedsolutions/HowesGrocery/howes_grocery_researcher_portal.git'
