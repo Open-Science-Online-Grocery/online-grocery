@@ -26,7 +26,6 @@ gem 'rails', '~> 6'
 gem 'rake'
 gem 'sassc-rails'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'uglifier'
 gem 'jsbundling-rails'
 gem 'whenever', require: false
 
