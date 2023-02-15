@@ -18,7 +18,7 @@ RSpec.describe 'Configuring condition sorting', :feature do
   it 'allows sorting configuration', :js do
     force_click(find('.item[data-tab="sorting"]'))
 
-    expect(find('#condition_sort_type_none')).to be_checked
+    expect(find_by_id('condition_sort_type_none')).to be_checked
 
     expect_form_refresh do
       force_click(first('label', text: 'A specified field'))
@@ -61,7 +61,7 @@ RSpec.describe 'Configuring condition sorting', :feature do
 
     force_click_on 'Save'
     expect(page).to have_content 'Condition successfully updated'
-    expect(page).to have_no_selector('[data-tab="sorting"] .item.active:not(.filtered)', text: 'Calories')
-    expect(page).to have_no_selector('[data-tab="sorting"] .item.active:not(.filtered)', text: 'Descending')
+    expect(page).not_to have_selector('[data-tab="sorting"] .item.active:not(.filtered)', text: 'Calories')
+    expect(page).not_to have_selector('[data-tab="sorting"] .item.active:not(.filtered)', text: 'Descending')
   end
 end

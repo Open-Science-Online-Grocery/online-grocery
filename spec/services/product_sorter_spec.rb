@@ -183,9 +183,11 @@ RSpec.describe ProductSorter do
         let(:manual_sort_order) { nil }
         let(:sort_type) { Condition.sort_types.calculation }
         let(:condition) do
-          build :condition,
-                sort_type: sort_type,
-                sort_equation_tokens: sort_equation_tokens
+          build(
+            :condition,
+            sort_type: sort_type,
+            sort_equation_tokens: sort_equation_tokens
+          )
         end
         let(:sort_equation_tokens) do
           [

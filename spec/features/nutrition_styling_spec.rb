@@ -19,13 +19,13 @@ RSpec.describe 'Setting custom nutrition label styling', :feature do
     expect(page).to have_content '8 servings per container'
 
     force_click(find('.nutrition-facts-title'))
-    force_click(find('#italic'))
+    force_click(find_by_id('italic'))
     semantic_select('Font', 'Comic Sans MS')
     expect(find('.nutrition-facts-title').native.style('font-family')).to eq '"Comic Sans MS"'
     expect(find('.nutrition-facts-title').native.style('font-style')).to eq 'italic'
 
     force_click(find('.calories-label'))
-    force_click(find('#strikethrough'))
+    force_click(find_by_id('strikethrough'))
     expect(find('.calories-label').native.style('text-decoration')).to match 'line-through'
 
     expect_form_refresh do

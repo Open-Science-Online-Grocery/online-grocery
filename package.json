@@ -3,7 +3,14 @@
   "private": true,
   "scripts": {
     "eslint": "eslint --format codeframe --ignore-pattern \"**/app/client/grocery_store/**/*.js*\" \"**/app/client/**/*.js*\"",
-    "test": "jest"
+    "test": "jest",
+    "build": "webpack --config ./config/webpack/webpack.config.js"
+  },
+  "babel": {
+    "presets": [
+      "@babel/env",
+      "@babel/preset-react"
+    ]
   },
   "dependencies": {
     "@babel/core": "^7.0.0",
@@ -12,14 +19,16 @@
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
-    "@rails/webpacker": "5.4.3",
     "babel-core": "^7.0.0-bridge.0",
     "babel-loader": "^8.0.6",
     "core-js": "3",
+    "css-loader": "^6.7.3",
+    "decode-uri-component": "0.2.1",
     "humps": "^2.0.1",
     "immutable": "^3.8.2",
     "improved-yarn-audit": "^2.3.3",
     "jquery": "^3.3.1",
+    "mini-css-extract-plugin": "^2.7.2",
     "prop-types": "^15.6.2",
     "query-string": "^7.0.1",
     "react": "^17.0.1",
@@ -35,10 +44,14 @@
     "redux-thunk": "^2.3.0",
     "resolve-url-loader": "^4.0.0",
     "rgb-to-hex": "^0.0.0",
-    "sass-loader": "^10.0",
+    "sass": "^1.57.1",
+    "sass-loader": "^13.2.0",
     "semantic-ui-css": "^2.4.0",
     "semantic-ui-react": "^2.0.3",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-remove-empty-scripts": "^1.0.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
@@ -51,8 +64,7 @@
     "eslint-plugin-react": "^7.11.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.2.4",
-    "regenerator-runtime": "^0.13.3",
-    "webpack-dev-server": "^3.11.2"
+    "regenerator-runtime": "^0.13.3"
   },
   "version": "1.0.0",
   "main": "index.js",

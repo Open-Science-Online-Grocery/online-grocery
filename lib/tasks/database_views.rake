@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 namespace :db do
+  desc 'Create the database views'
   task create_views: :environment do
     sql_filepaths = Dir.glob('db/views/*.sql')
     sql_filepaths.each do |sql_filepath|
@@ -13,8 +14,10 @@ namespace :db do
     end
   end
 
+  desc 'Drop the database views'
   task drop_views: :environment do
-    database = ActiveRecord::Base.connection_config[:database]
+    database = ActiveRecord::Base
+      .connection_db_config.configuration_hash[:database]
     views = ActiveRecord::Base.connection.execute(
       <<~SQL
         SELECT TABLE_NAME

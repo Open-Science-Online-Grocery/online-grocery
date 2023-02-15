@@ -18,8 +18,8 @@ RSpec.describe 'Configuring the cart summary', :feature do
   it 'allows cart summary label configuration', :js do
     force_click(find('.item[data-tab="cart-summary"]'))
 
-    expect(find('#condition_show_price_total')).to be_checked
-    expect(find('#condition_show_food_count')).not_to be_checked
+    expect(find_by_id('condition_show_price_total')).to be_checked
+    expect(find_by_id('condition_show_food_count')).not_to be_checked
 
     expect_form_refresh do
       force_click(first('label', text: 'Show count of foods with health labels'))
@@ -29,7 +29,7 @@ RSpec.describe 'Configuring the cart summary', :feature do
     end
 
     within('.tab.segment[data-tab="cart-summary"]') do
-      expect(page).to have_no_css '[data-cart-summary-label]'
+      expect(page).not_to have_css '[data-cart-summary-label]'
     end
 
     force_click_on('Add a cart summary image')

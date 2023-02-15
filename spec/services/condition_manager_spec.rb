@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe ConditionManager do
   let(:condition) { Condition.new(show_custom_attribute_on_product: true) }
-  let(:condition_label) { build :condition_label, condition: condition }
+  let(:condition_label) { build(:condition_label, condition: condition) }
   let(:orig_params) do
     { foo: 'bar' }
   end
@@ -13,20 +13,20 @@ RSpec.describe ConditionManager do
   end
   let(:params_adjuster) do
     instance_double(
-      'ConditionParamsAdjuster',
+      ConditionParamsAdjuster,
       adjusted_params: adjusted_params
     )
   end
   let(:suggestion_manager) do
-    instance_double 'CsvFileManagers::Suggestion', import: true
+    instance_double CsvFileManagers::Suggestion, import: true
   end
   let(:sorting_manager) do
-    instance_double 'CsvFileManagers::Sorting', import: true
+    instance_double CsvFileManagers::Sorting, import: true
   end
   let(:product_attribute_manager) do
-    instance_double 'CsvFileManagers::ProductAttribute', import: true
+    instance_double CsvFileManagers::ProductAttribute, import: true
   end
-  let(:tag_importer) { instance_double 'TagImporter', import: true }
+  let(:tag_importer) { instance_double TagImporter, import: true }
 
   subject { described_class.new(condition, orig_params) }
 
@@ -49,7 +49,7 @@ RSpec.describe ConditionManager do
 
   describe '#update_condition' do
     it 'coordinates with the expected classes' do
-      expect(subject.update_condition).to eq true
+      expect(subject.update_condition).to be true
       expect(subject.errors).to be_empty
       expect(CsvFileManagers::Suggestion).to have_received(:new).with(condition)
       expect(CsvFileManagers::Sorting).to have_received(:new).with(condition)
@@ -158,7 +158,7 @@ RSpec.describe ConditionManager do
 
       context 'when current tag file does not change' do
         it 'does not call the TagImporter' do
-          expect(subject.update_condition).to eq true
+          expect(subject.update_condition).to be true
           expect(subject.errors).to be_empty
           expect(TagImporter).not_to have_received(:new)
         end
@@ -172,7 +172,7 @@ RSpec.describe ConditionManager do
         end
 
         it 'calls the TagImporter' do
-          expect(subject.update_condition).to eq true
+          expect(subject.update_condition).to be true
           expect(subject.errors).to be_empty
           expect(TagImporter).to have_received(:new).with(
             file: nil,
@@ -195,7 +195,7 @@ RSpec.describe ConditionManager do
         end
 
         it 'calls the TagImporter' do
-          expect(subject.update_condition).to eq true
+          expect(subject.update_condition).to be true
           expect(subject.errors).to be_empty
           expect(TagImporter).to have_received(:new).with(
             file: new_tag_file,
@@ -206,11 +206,11 @@ RSpec.describe ConditionManager do
 
         context 'when tag import fails' do
           let(:tag_importer) do
-            instance_double 'TagImporter', import: false, errors: ['boom']
+            instance_double TagImporter, import: false, errors: ['boom']
           end
 
           it 'returns false and has errors' do
-            expect(subject.update_condition).to eq false
+            expect(subject.update_condition).to be false
             expect(subject.errors).to include 'boom'
           end
         end
@@ -220,14 +220,14 @@ RSpec.describe ConditionManager do
     context 'when updating suggestions fails' do
       let(:suggestion_manager) do
         instance_double(
-          'CsvFileManagers::Suggestion',
+          CsvFileManagers::Suggestion,
           import: false,
           errors: ['kapow']
         )
       end
 
       it 'returns false and has errors' do
-        expect(subject.update_condition).to eq false
+        expect(subject.update_condition).to be false
         expect(subject.errors).to include 'kapow'
       end
     end
@@ -235,14 +235,14 @@ RSpec.describe ConditionManager do
     context 'when updating custom sortings fails' do
       let(:sorting_manager) do
         instance_double(
-          'CsvFileManagers::Sorting',
+          CsvFileManagers::Sorting,
           import: false,
           errors: ['ouch']
         )
       end
 
       it 'returns false and has errors' do
-        expect(subject.update_condition).to eq false
+        expect(subject.update_condition).to be false
         expect(subject.errors).to include 'ouch'
       end
     end
@@ -250,14 +250,14 @@ RSpec.describe ConditionManager do
     context 'when updating custom product attributes fails' do
       let(:product_attribute_manager) do
         instance_double(
-          'CsvFileManagers::ProductAttribute',
+          CsvFileManagers::ProductAttribute,
           import: false,
           errors: ['ouch']
         )
       end
 
       it 'returns false and has errors' do
-        expect(subject.update_condition).to eq false
+        expect(subject.update_condition).to be false
         expect(subject.errors).to include 'ouch'
       end
     end

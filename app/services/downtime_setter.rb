@@ -50,7 +50,7 @@ class DowntimeSetter
 
   def self.show_downtime_message
     FileUtils.cp(
-      Rails.root.join('public/application_unavailable.html'),
+      Rails.public_path.join('application_unavailable.html'),
       maintenance_page_location
     )
   end
@@ -91,6 +91,6 @@ class DowntimeSetter
   end
 
   def self.maintenance_page_location
-    Rails.root.join('public/system/maintenance.html')
+    Rails.public_path.join('system/maintenance.html')
   end
 end

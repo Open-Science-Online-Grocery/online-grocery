@@ -15,8 +15,8 @@ DROP TABLE IF EXISTS `ar_internal_metadata`;
 CREATE TABLE `ar_internal_metadata` (
   `key` varchar(255) NOT NULL,
   `value` varchar(255) DEFAULT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;

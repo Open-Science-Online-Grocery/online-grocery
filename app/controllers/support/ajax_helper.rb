@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Concerns
+module Support
   module AjaxHelper
     private def in_cancelable_modal(partial_name, modal_selector = nil)
       in_modal(partial_name, cancelable: true, modal_selector: modal_selector)

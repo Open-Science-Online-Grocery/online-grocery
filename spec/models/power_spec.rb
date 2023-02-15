@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Power do
   let(:request) do
     instance_double(
-      'ActionDispatch::Request',
+      ActionDispatch::Request,
       params: { action: 'foo', controller: 'bar' }
     )
   end

@@ -4,7 +4,6 @@
 class Experiment < ApplicationRecord
   validates :name, presence: true
   validates :name, uniqueness: { scope: :user_id }
-  validates :user, presence: true
 
   belongs_to :user
   has_many :experiment_results, dependent: false

@@ -1,7 +1,5 @@
-require:
-  - rubocop-performance
-  - rubocop-rails
-  - rubocop-rspec
+inherit_from:
+  - https://raw.githubusercontent.com/SciMed/style-guide/master/.rubocop.yml
 
 AllCops:
   Exclude:
@@ -17,8 +15,8 @@ AllCops:
     - '**/Vagrantfile'
     - '**/db/schema.rb'
     - '**/lib/scripts/**/*'
-  TargetRubyVersion: 2.7
-  TargetRailsVersion: 5.2
+  TargetRubyVersion: 3.1
+  TargetRailsVersion: 6.1 
 
 Layout/CaseIndentation:
   IndentOneStep: true
@@ -105,6 +103,8 @@ Metrics/PerceivedComplexity:
 Naming/AccessorMethodName:
   Exclude:
     - '**/app/controllers/**/*'
+Naming/BlockForwarding:
+  Enabled: false
 Naming/BlockParameterName:
   AllowedNames:
     - id
@@ -279,6 +279,8 @@ Style/HashEachMethods:
   Enabled: true
 Style/HashLikeCase:
   Enabled: true
+Style/HashSyntax:
+  Enabled: false
 Style/HashTransformKeys:
   Enabled: true
 Style/HashTransformValues:
@@ -288,6 +290,8 @@ Style/IpAddresses:
 Style/Lambda:
   EnforcedStyle: literal
 Style/NumericPredicate:
+  Enabled: false
+Style/OpenStructUse:
   Enabled: false
 Style/OptionHash:
   Enabled: true

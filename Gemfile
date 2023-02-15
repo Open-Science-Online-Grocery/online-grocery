@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.4'
+ruby '3.1.3'
 
 gem 'activerecord-import'
 gem 'aws-sdk-s3'
@@ -19,14 +19,15 @@ gem 'fog-aws'
 gem 'faraday'
 gem 'jbuilder'
 gem 'memoist'
+gem 'psych'
 gem 'mysql2'
 gem 'puma'
-gem 'rails', '~> 5.2'
+gem 'rails', '~> 6'
 gem 'rake'
 gem 'sassc-rails'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'uglifier'
-gem 'webpacker'
+gem 'jsbundling-rails'
 gem 'whenever', require: false
 
 group :development, :test do
@@ -38,6 +39,7 @@ group :development, :test do
   gem 'pry-nav'
   gem 'rspec-rails'
   gem 'rubocop', require: false
+  gem 'rubocop-rake', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'rubocop-performance', require: false
