@@ -32,7 +32,8 @@ class ConditionLabel < ApplicationRecord
   def equation
     @equation ||= Equation.for_type(
       Equation.types.label,
-      equation_tokens
+      equation_tokens,
+      condition
     )
   end
 

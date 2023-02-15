@@ -18,7 +18,7 @@ class ConditionManager
     @condition.attributes = adjusted_params
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
   def update_condition
     ActiveRecord::Base.transaction do
       assign_params
@@ -28,11 +28,14 @@ class ConditionManager
       handle_tag_file_change if @errors.none?
       update_suggestions if @errors.none?
       update_custom_sortings if @errors.none?
+      update_custom_product_attribute if @errors.none?
+      update_custom_attribute_sort_field if @errors.none?
+      update_custom_product_price if @errors.none?
       raise ActiveRecord::Rollback if @errors.any?
     end
     @errors.none?
   end
-  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
 
   private def adjusted_params
     adjuster = ConditionParamsAdjuster.new(@params)
@@ -71,6 +74,24 @@ class ConditionManager
     importer.import || @errors += importer.errors
   end
 
+  private def update_custom_attribute_sort_field
+    sort_field = ProductSortField.find_by(
+      name: 'custom_attribute_amount'
+    )
+    description = "#{@params['custom_attribute_name']}
+      (#{@params['custom_attribute_units']})".capitalize
+    if sort_field
+      sort_field.update!(
+        description: description
+      )
+    else
+      ProductSortField.create!(
+        name: 'custom_attribute_amount',
+        description: description
+      )
+    end
+  end
+
   private def update_suggestions
     manager = CsvFileManagers::Suggestion.new(@condition)
     manager.import || @errors += manager.errors
@@ -78,6 +99,16 @@ class ConditionManager
 
   private def update_custom_sortings
     manager = CsvFileManagers::Sorting.new(@condition)
+    manager.import || @errors += manager.errors
+  end
+
+  private def update_custom_product_attribute
+    manager = CsvFileManagers::ProductAttribute.new(@condition)
+    manager.import || @errors += manager.errors
+  end
+
+  private def update_custom_product_price
+    manager = CsvFileManagers::ProductPrice.new(@condition)
     manager.import || @errors += manager.errors
   end
 

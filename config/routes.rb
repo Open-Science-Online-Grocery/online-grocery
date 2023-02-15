@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     resource :product_download, only: [:show] do
       collection do
         get :custom_categories
+        get :custom_product_prices
+        get :custom_product_attribute
         get :suggestions
         get :sorting
       end

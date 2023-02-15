@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Popup } from 'semantic-ui-react'
+import { Popup } from 'semantic-ui-react';
 
 export default class GuidingStars extends React.Component {
   // webpack's `require` seems to have problems with interpolated strings and
@@ -27,9 +27,11 @@ export default class GuidingStars extends React.Component {
         className="store-tooltip"
         content="The Guiding Stars® program evaluates the nutrient content of foods using nutrition data gleaned from the Nutrition Facts table and the ingredient list on product packaging. Click to learn more!"
         trigger={
-          <a href="https://guidingstars.com/what-is-guiding-stars/">
-            <img className="product-card-guiding-stars" src={this.starImagePath()} />
-          </a>
+          (
+            <a onMouseEnter={() => this.props.handleHoverAction(this.props.product)} href="https://guidingstars.com/what-is-guiding-stars/">
+              <img className="product-card-guiding-stars" src={this.starImagePath()} />
+            </a>
+          )
         }
       />
     );
@@ -37,9 +39,15 @@ export default class GuidingStars extends React.Component {
 }
 
 GuidingStars.propTypes = {
-  starpoints: PropTypes.number
+  starpoints: PropTypes.number,
+  handleHoverAction: PropTypes.func.isRequired,
+  product: PropTypes.shape({
+    id: PropTypes.number,
+    serialPosition: PropTypes.number
+  })
 };
 
 GuidingStars.defaultProps = {
-  starpoints: null
+  starpoints: null,
+  product: null
 };

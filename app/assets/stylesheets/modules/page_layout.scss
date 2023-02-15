@@ -2,6 +2,19 @@
   text-align: right;
 }
 
+.menu-container {
+  display: flex;
+  gap: 10px;
+}
+
+.menu-container .content { 
+  width: 100%;
+}
+
+.menu-container .vertical.pointing.menu {
+  height: fit-content;
+}
+
 .ui.divider {
   &.tall {
     margin-top: 2rem;

@@ -9,19 +9,53 @@
 #  - `attribute` indicates an attribute on Product corresponding to the value of
 #    the variable.
 class ProductVariable < Variable
-  def self.all
-    @all ||= nutrition + [
+  def self.all(condition = nil, include_custom_price: false)
+    @all = nutrition(condition) + [
       new(
         token_name: 'price',
         description: 'Price',
-        attribute: :price
+        attribute: :price,
+        condition: condition
       )
-    ]
+    ] + [custom_attribute_field(condition)]
+
+    @all += [custom_price_field(condition)] if include_custom_price
+    @all = @all.compact.flatten
+  end
+
+  def self.from_token(token_name, condition = nil)
+    all(condition, include_custom_price: true).find do |variable|
+      variable.token_name == token_name
+    end
+  end
+
+  def self.custom_attribute_field(condition)
+    @custom_attribute_field = product_attribute_field(condition)
+  end
+
+  def self.custom_price_field(condition)
+    @custom_price_field = new(
+      token_name: 'custom_price',
+      description: 'Uses custom price',
+      attribute: :custom_price,
+      condition: condition
+    )
+  end
+
+  def self.product_attribute_field(condition)
+    return unless condition&.uses_custom_attributes?
+    new(
+      token_name: format_attr_name(condition.custom_attribute_name),
+      description: "#{condition.custom_attribute_name}
+        (#{condition.custom_attribute_units})".capitalize,
+      attribute: :custom_attribute_amount,
+      condition: condition
+    )
   end
 
   # rubocop:disable Metrics/MethodLength
-  def self.nutrition
-    @nutrition ||= [
+  def self.nutrition(condition = nil)
+    @nutrition = [
       {
         token_name: 'serving_size_grams',
         description: 'Serving size (g)',
@@ -107,7 +141,7 @@ class ProductVariable < Variable
         description: 'Star points',
         attribute: :starpoints
       }
-    ].map { |attrs| new(attrs) }
+    ].map { |attrs| new(attrs.merge(condition: condition)) }
   end
   # rubocop:enable Metrics/MethodLength
 end

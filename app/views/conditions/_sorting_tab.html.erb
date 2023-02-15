@@ -1,6 +1,6 @@
-<div class="ui bottom attached tab segment" data-tab="sorting">
+<div class="tab ui segment no-top-margin" data-tab="sorting">
   <div class="ui grid">
-    <div class="eight wide column">
+    <div class="ten wide column">
       <div class="page-sub-heading">
         <h3>Default Sorting</h3>
       </div>
@@ -70,6 +70,7 @@
               data-variables="<%= VariableSerializer.new(condition.sort_equation_variables).serialize %>"
               data-input-name="condition[sort_equation_tokens]"
               data-tokens="<%= condition.sort_equation_tokens || [] %>"
+              data-condition-id="<%= @condition.id %>"
               data-equation-type="<%= Equation.types.sort %>"
             ></div>
           </div>
@@ -149,7 +150,7 @@
         </div>
       </div>
     </div>
-    <div class="eight wide column">
+    <div class="six wide column">
       <div class="page-sub-heading">
         <h3>Sorting by Participant</h3>
       </div>

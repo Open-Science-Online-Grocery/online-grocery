@@ -100,6 +100,7 @@
         <label>Show this label on all products where the following calculation is true:</label>
         <div
           data-calculator
+          data-condition-id="<%= @condition.id %>"
           data-variables="<%= VariableSerializer.new(condition_label.equation_variables).serialize %>"
           data-input-name="<%# added by CocoonCallbacks.js %>"
           data-tokens="<%= condition_label.equation_tokens || [] %>"

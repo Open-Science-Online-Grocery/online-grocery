@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ConditionManager do
-  let(:condition) { Condition.new }
+  let(:condition) { Condition.new(show_custom_attribute_on_product: true) }
   let(:condition_label) { build :condition_label, condition: condition }
   let(:orig_params) do
     { foo: 'bar' }
@@ -23,6 +23,9 @@ RSpec.describe ConditionManager do
   let(:sorting_manager) do
     instance_double 'CsvFileManagers::Sorting', import: true
   end
+  let(:product_attribute_manager) do
+    instance_double 'CsvFileManagers::ProductAttribute', import: true
+  end
   let(:tag_importer) { instance_double 'TagImporter', import: true }
 
   subject { described_class.new(condition, orig_params) }
@@ -33,6 +36,7 @@ RSpec.describe ConditionManager do
     allow(TagImporter).to receive(:new) { tag_importer }
     allow(CsvFileManagers::Suggestion).to receive(:new) { suggestion_manager }
     allow(CsvFileManagers::Sorting).to receive(:new) { sorting_manager }
+    allow(CsvFileManagers::ProductAttribute).to receive(:new) { product_attribute_manager }
   end
 
   describe '#assign_params' do
@@ -49,6 +53,7 @@ RSpec.describe ConditionManager do
       expect(subject.errors).to be_empty
       expect(CsvFileManagers::Suggestion).to have_received(:new).with(condition)
       expect(CsvFileManagers::Sorting).to have_received(:new).with(condition)
+      expect(CsvFileManagers::ProductAttribute).to have_received(:new).with(condition)
     end
 
     describe 'cart summary label attributes' do
@@ -231,6 +236,21 @@ RSpec.describe ConditionManager do
       let(:sorting_manager) do
         instance_double(
           'CsvFileManagers::Sorting',
+          import: false,
+          errors: ['ouch']
+        )
+      end
+
+      it 'returns false and has errors' do
+        expect(subject.update_condition).to eq false
+        expect(subject.errors).to include 'ouch'
+      end
+    end
+
+    context 'when updating custom product attributes fails' do
+      let(:product_attribute_manager) do
+        instance_double(
+          'CsvFileManagers::ProductAttribute',
           import: false,
           errors: ['ouch']
         )

@@ -74,6 +74,16 @@
     margin: 5px 0;
   }
 
+  .custom-attribute-container {
+    display: flex;
+    font-size: 20px;
+    padding-top: 50px;
+
+    div {
+      margin-right: 10px;
+    }
+  }
+
   .product-card-guiding-stars {
     width: auto;
     height: 40px;

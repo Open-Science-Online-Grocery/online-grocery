@@ -27,8 +27,9 @@ class ConditionSerializer
       may_add_to_cart_by_dollar_amount: @condition.may_add_to_cart_by_dollar_amount,
       show_guiding_stars: @condition.show_guiding_stars,
       qualtrics_code: @condition.qualtrics_code,
-      allow_searching: @condition.allow_searching
-    }
+      allow_searching: @condition.allow_searching,
+      display_old_price: @condition.display_old_price
+    }.merge(custom_attributes_info)
   end
   # rubocop:enable Layout/LineLength, Metrics/AbcSize, Metrics/MethodLength
 
@@ -37,7 +38,7 @@ class ConditionSerializer
   end
 
   private def categories
-    Category.sorted.where(id: applicable_subcategories.map(&:category_id))
+    Category.sorted.where(id: applicable_subcategories.map(&:category_id)).to_a
   end
 
   private def subsubcategories
@@ -50,6 +51,20 @@ class ConditionSerializer
   private def subtags
     return [] unless @condition.show_products_by_subcategory
     @condition.subtags.order(:tag_id).uniq
+  end
+
+  private def custom_attributes_info
+    should_display_custom_attr = @condition.show_custom_attribute_on_product ||
+      @condition.show_custom_attribute_on_checkout
+    return {} unless should_display_custom_attr
+    {
+      'display_custom_attr_on_detail' =>
+        @condition.show_custom_attribute_on_product,
+      'display_custom_attr_on_checkout' =>
+        @condition.show_custom_attribute_on_checkout,
+      'custom_attr_unit' => @condition.custom_attribute_units,
+      'custom_attr_name' => @condition.custom_attribute_name
+    }
   end
 
   private def applicable_subcategories

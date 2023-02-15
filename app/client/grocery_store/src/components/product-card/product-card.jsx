@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import AddToCartContainer from '../add-to-cart/add-to-cart-container';
 import OverlayLabel from '../overlay-label/overlay-label';
 import BelowButtonLabel from '../below-button-label/below-button-label';
-import GuidingStars from '../guiding-stars/guiding-stars';
 import './product-card.scss';
+import GuidingStarsContainer from '../guiding-stars/guiding-stars-container';
 
 export default class ProductCard extends React.Component {
   overlayLabels() {
@@ -35,9 +35,32 @@ export default class ProductCard extends React.Component {
     return (
       <div className="product-card-guiding-stars-wrapper">
         {
-          this.props.showGuidingStars &&
-            <GuidingStars starpoints={this.props.product.starpoints} />
+          this.props.showGuidingStars && (
+            <GuidingStarsContainer
+              starpoints={this.props.product.starpoints}
+              product={{
+                id: this.props.product.id,
+                serialPosition: this.props.product.serialPosition
+              }}
+            />
+          )
         }
+      </div>
+    );
+  }
+
+  price() {
+    const displayDiscount = this.props.product.originalPrice && this.props.displayOldPrice;
+    return (
+      <div className="product-card-price-container">
+        {displayDiscount && (
+          <div className="discount-price">
+            <span>
+              ${parseFloat(Math.round(this.props.product.originalPrice * 100) / 100).toFixed(2)}
+            </span>
+          </div>
+        )}
+        ${parseFloat(Math.round(this.props.product.price * 100) / 100).toFixed(2)}
       </div>
     );
   }
@@ -55,7 +78,7 @@ export default class ProductCard extends React.Component {
         <div>
           <div className="product-card-size">{this.props.product.size}</div>
           <div className="product-card-price bold">
-            ${parseFloat(Math.round(this.props.product.price * 100) / 100).toFixed(2)}
+            {this.price()}
           </div>
           <div className="product-card-buttons">
             {this.guidingStars()}
@@ -74,10 +97,13 @@ ProductCard.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
+    customAttributeAmount: PropTypes.string,
+    serialPosition: PropTypes.number,
     imageSrc: PropTypes.string,
     awsImageUrl: PropTypes.string,
     size: PropTypes.string,
     price: PropTypes.string,
+    originalPrice: PropTypes.string,
     starpoints: PropTypes.number,
     labels: PropTypes.arrayOf(
       PropTypes.shape({

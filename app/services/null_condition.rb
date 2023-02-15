@@ -16,6 +16,26 @@ class NullCondition
     []
   end
 
+  def display_old_price
+    false
+  end
+
+  def custom_product_attributes
+    []
+  end
+
+  def custom_product_prices
+    []
+  end
+
+  def uses_custom_attributes?
+    false
+  end
+
+  def uses_custom_prices?
+    false
+  end
+
   def tags
     Tag.none
   end
@@ -98,5 +118,13 @@ class NullCondition
 
   def allow_searching
     true
+  end
+
+  def show_custom_attribute_on_checkout
+    false
+  end
+
+  def show_custom_attribute_on_product
+    false
   end
 end

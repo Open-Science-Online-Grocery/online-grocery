@@ -4,14 +4,20 @@ import NutritionLabel from '../nutrition-label/nutrition-label';
 import AddToCartContainer from '../add-to-cart/add-to-cart-container';
 import OverlayLabel from '../overlay-label/overlay-label';
 import BelowButtonLabel from '../below-button-label/below-button-label';
-import GuidingStars from '../guiding-stars/guiding-stars';
 import './product-details.scss';
+import GuidingStarsContainer from '../guiding-stars/guiding-stars-container';
 
 export default class ProductDetails extends React.Component {
   guidingStars() {
     if (!this.props.showGuidingStars) return null;
     return (
-      <GuidingStars starpoints={this.props.starpoints} />
+      <GuidingStarsContainer
+        starpoints={this.props.starpoints}
+        product={{
+          id: this.props.id,
+          serialPosition: this.props.serialPosition
+        }}
+      />
     );
   }
 
@@ -29,6 +35,44 @@ export default class ProductDetails extends React.Component {
     );
   }
 
+  customAttributes() {
+    if (this.props.displayCustomAttrOnDetail) {
+      return (
+        <div className="custom-attribute-container">
+          <div className="bold">{this.props.customAttrName}:</div>
+          {this.props.customAttributeAmount ? (
+            <>
+              <div>{this.props.customAttributeAmount}</div>
+              <div>{this.props.customAttrUnit}</div>
+            </>
+          ) : (
+            <>
+              <div>N/A</div>
+            </>
+          )}
+        </div>
+
+      );
+    }
+    return <></>;
+  }
+
+  price() {
+    const displayDiscount = this.props.originalPrice && this.props.displayOldPrice
+    return (
+      <div className="product-card-price-container">
+        {displayDiscount && (
+          <div className="discount-price">
+            <span>
+              ${parseFloat(Math.round(this.props.originalPrice * 100) / 100).toFixed(2)}
+            </span>
+          </div>
+        )}
+        ${parseFloat(Math.round(this.props.price * 100) / 100).toFixed(2)}
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="product-details">
@@ -36,7 +80,7 @@ export default class ProductDetails extends React.Component {
           <div className="product-details-name">{this.props.name}</div>
           <div className="product-details-size">{this.props.size}</div>
           <div className="product-details-price bold">
-            ${parseFloat(Math.round(this.props.price * 100) / 100).toFixed(2)}
+            {this.price()}
           </div>
           <div className="product-details-buttons-wrapper">
             <div className="product-details-buttons">
@@ -54,6 +98,7 @@ export default class ProductDetails extends React.Component {
         </div>
         <div className="product-details-right-section">
           {this.guidingStars()}
+          {this.customAttributes()}
           {
             this.props.servingSize
               && (
@@ -94,6 +139,10 @@ ProductDetails.propTypes = {
   awsImageUrl: PropTypes.string.isRequired,
   description: PropTypes.string,
   ingredients: PropTypes.string,
+  serialPosition: PropTypes.number,
+  customAttributeAmount: PropTypes.string,
+  originalPrice: PropTypes.string,
+  displayOldPrice: PropTypes.bool,
   labels: PropTypes.arrayOf(
     PropTypes.shape({
       labelName: PropTypes.string,
@@ -118,7 +167,10 @@ ProductDetails.propTypes = {
   protein: PropTypes.number,
   vitamins: PropTypes.string,
   nutritionLabelCss: PropTypes.string,
-  showGuidingStars: PropTypes.bool.isRequired
+  showGuidingStars: PropTypes.bool.isRequired,
+  displayCustomAttrOnDetail: PropTypes.bool.isRequired,
+  customAttrName: PropTypes.string.isRequired,
+  customAttrUnit: PropTypes.string.isRequired
 };
 
 ProductDetails.defaultProps = {
@@ -126,6 +178,9 @@ ProductDetails.defaultProps = {
   ingredients: null,
   labels: [],
   description: null,
+  customAttributeAmount: null,
+  originalPrice: null,
+  displayOldPrice: null,
   servings: null,
   servingSize: null,
   calories: null,
@@ -139,5 +194,6 @@ ProductDetails.defaultProps = {
   sugar: null,
   protein: null,
   vitamins: null,
-  nutritionLabelCss: null
+  nutritionLabelCss: null,
+  serialPosition: null
 };

@@ -68,7 +68,8 @@ RSpec.describe ConditionSerializer do
         may_add_to_cart_by_dollar_amount: false,
         show_guiding_stars: true,
         qualtrics_code: 'FOOBAR',
-        allow_searching: false
+        allow_searching: false,
+        display_old_price: nil
       }
       expect(subject.serialize).to eq expected_data
     end
@@ -95,7 +96,8 @@ RSpec.describe ConditionSerializer do
           may_add_to_cart_by_dollar_amount: false,
           show_guiding_stars: true,
           qualtrics_code: 'FOOBAR',
-          allow_searching: false
+          allow_searching: false,
+          display_old_price: nil
         }
         expect(subject.serialize).to eq expected_data
       end

@@ -79,6 +79,7 @@ Metrics/BlockLength:
     - '**/lib/**/*'
 Metrics/ClassLength:
   Exclude:
+    - 'app/services/product_sorter.rb'
     - 'app/controllers/conditions_controller.rb'
     - 'app/models/condition.rb'
     - 'app/services/cart.rb'
@@ -86,6 +87,7 @@ Metrics/ClassLength:
     - 'app/services/csv_file_managers/sorting.rb'
     - 'app/services/equation.rb'
     - 'app/services/product_url_manager.rb'
+    - 'app/services/product_variable.rb'
     - '**/db/migrate/**/*'
     - '**/db/seeds/**/*'
 Metrics/CyclomaticComplexity:

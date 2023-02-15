@@ -10,6 +10,7 @@ RSpec.describe Product, type: :model do
     it { is_expected.to have_many(:product_tags) }
     it { is_expected.to have_many(:product_suggestions) }
     it { is_expected.to have_many(:custom_sortings) }
+    it { is_expected.to have_many(:custom_product_attributes) }
   end
 
   describe '.nutrition_fields' do
