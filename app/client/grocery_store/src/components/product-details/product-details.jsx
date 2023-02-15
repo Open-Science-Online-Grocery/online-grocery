@@ -40,9 +40,18 @@ export default class ProductDetails extends React.Component {
       return (
         <div className="custom-attribute-container">
           <div className="bold">{this.props.customAttrName}:</div>
-          <div>{this.props.customAttributeAmount}</div>
-          <div>{this.props.customAttrUnit}</div>
+          {this.props.customAttributeAmount ? (
+            <>
+              <div>{this.props.customAttributeAmount}</div>
+              <div>{this.props.customAttrUnit}</div>
+            </>
+          ) : (
+            <>
+              <div>N/A</div>
+            </>
+          )}
         </div>
+
       );
     }
     return <></>;
