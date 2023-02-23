@@ -54,7 +54,13 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|eot|woff2|woff|ttf|svg)$/i,
-        type: 'asset/resource'
+        type: 'asset/resource',
+        generator: {
+          // this prevents the rails asset pipeline (sprockets) from adding its
+          // own digest hash to the filename so that JS files can refer to
+          // these assets in a predictable fashion.
+          filename: '[name]-[hash].digested[ext]'
+        }
       }
     ]
   },
