@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#:nodoc:
+# :nodoc:
 class ExperimentResultPresenter < SimpleDelegator
   include ActionView::Helpers::TranslationHelper
 

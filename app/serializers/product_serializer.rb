@@ -25,7 +25,6 @@ class ProductSerializer
       .merge(nutrition_information(attrs))
     include_add_on ? attrs.merge(add_on_info) : attrs
   end
-  memoize :serialize
 
   # when sorting by labels, show products the the most labels first
   def label_sort
@@ -37,9 +36,9 @@ class ProductSerializer
   end
 
   private def product_labels(attrs = @product.attributes)
-    @condition.condition_labels.map do |condition_label|
+    @condition.condition_labels.filter_map do |condition_label|
       label_information(condition_label, attrs)
-    end.compact
+    end
   end
   memoize :product_labels
 

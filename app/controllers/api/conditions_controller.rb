@@ -2,7 +2,7 @@
 
 module Api
   class ConditionsController < ApplicationController
-    include Concerns::GetsCondition
+    include Support::GetsCondition
 
     skip_power_check
     skip_before_action :authenticate_user!

@@ -5,7 +5,7 @@ def clean_with_deletion
 end
 
 def database_views
-  database = ActiveRecord::Base.connection_config[:database]
+  database = ActiveRecord::Base.connection_db_config.configuration_hash[:database]
   ActiveRecord::Base.connection.execute(
     <<~SQL
       SELECT TABLE_NAME

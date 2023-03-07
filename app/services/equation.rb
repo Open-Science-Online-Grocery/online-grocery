@@ -58,7 +58,7 @@ class Equation
   end
 
   def variable_tokens
-    @tokens.map { |token| token[:value] if token[:type] == 'variable' }.compact
+    @tokens.filter_map { |token| token[:value] if token[:type] == 'variable' }
   end
 
   # here we test the equation by evaluating it against fake attributes to check
@@ -91,8 +91,8 @@ class Equation
     return unless test_value.nil?
     errors.add(
       :base,
-      'This calculation has an error. Please change the calculation and try '\
-      'again.'
+      'This calculation has an error. Please change the calculation and try ' \
+        'again.'
     )
   end
 

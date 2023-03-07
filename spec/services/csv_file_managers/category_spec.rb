@@ -45,24 +45,28 @@ RSpec.describe CsvFileManagers::Category do
   end
 
   describe '.generate_csv' do
-    let(:condition) { instance_double('Condition') }
-    let(:category_1) { create :category, name: 'Category 1' }
-    let(:category_2) { create :category, name: 'Category 2' }
-    let(:subcategory_1) { create :subcategory, name: 'Subcategory 1' }
-    let(:subcategory_2) { create :subcategory, name: 'Subcategory 2' }
+    let(:condition) { instance_double(Condition) }
+    let(:category_1) { create(:category, name: 'Category 1') }
+    let(:category_2) { create(:category, name: 'Category 2') }
+    let(:subcategory_1) { create(:subcategory, name: 'Subcategory 1') }
+    let(:subcategory_2) { create(:subcategory, name: 'Subcategory 2') }
     let(:product_1) do
-      create :product,
-             id: 98,
-             name: 'Product 1',
-             category_id: category_1.id,
-             subcategory_id: subcategory_1.id
+      create(
+        :product,
+        id: 98,
+        name: 'Product 1',
+        category_id: category_1.id,
+        subcategory_id: subcategory_1.id
+      )
     end
     let(:product_2) do
-      create :product,
-             id: 99,
-             name: 'Product 2',
-             category_id: category_2.id,
-             subcategory_id: subcategory_2.id
+      create(
+        :product,
+        id: 99,
+        name: 'Product 2',
+        category_id: category_2.id,
+        subcategory_id: subcategory_2.id
+      )
     end
     let(:product_scope) { ActiveRecord::Relation.new(Product) }
 

@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Condition, type: :model do
-  subject { build :condition }
+RSpec.describe Condition do
+  subject { build(:condition) }
 
   describe 'validations' do
     it { is_expected.to validate_presence_of :name }
@@ -12,7 +12,7 @@ RSpec.describe Condition, type: :model do
     it { is_expected.to validate_presence_of :sort_type }
     it do
       expect(subject).to validate_uniqueness_of(:name)
-        .scoped_to(:experiment_id)
+        .scoped_to(:experiment_id).case_insensitive
     end
 
     describe 'sort file presence' do

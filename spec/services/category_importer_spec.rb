@@ -9,7 +9,6 @@ RSpec.describe CategoryImporter do
 
   # rubocop:disable RSpec/LetSetup
   let!(:defunct_category) { create(:category) }
-  let!(:category_to_update) { create(:category, id: 1, name: 'OLD NAME') }
   # rubocop:enable RSpec/LetSetup
 
   before do

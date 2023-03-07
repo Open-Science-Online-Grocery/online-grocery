@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe TagImporter do
   describe '#import' do
+    define_negated_matcher :not_change, :change
     let(:condition) { create(:condition) }
     let(:uploaded_file) { File.new(file_fixture(file_with_path)) }
     let(:file_with_path) { "tag_imports/#{file_name}" }
@@ -53,9 +54,9 @@ RSpec.describe TagImporter do
         end
 
         it 'does not create any data' do
-          expect { subject.import }.to change { Tag.count }.by(0)
-            .and change { Subtag.count }.by(0)
-            .and change { ProductTag.count }.by(0)
+          expect { subject.import }.to not_change { Tag.count }
+            .and not_change { Subtag.count }
+            .and not_change { ProductTag.count }
         end
       end
 
@@ -68,9 +69,9 @@ RSpec.describe TagImporter do
         end
 
         it 'does not create any data' do
-          expect { subject.import }.to change { Tag.count }.by(0)
-            .and change { Subtag.count }.by(0)
-            .and change { ProductTag.count }.by(0)
+          expect { subject.import }.to not_change { Tag.count }
+            .and not_change { Subtag.count }
+            .and not_change { ProductTag.count }
         end
       end
 
@@ -98,9 +99,9 @@ RSpec.describe TagImporter do
         end
 
         it 'does not create any data' do
-          expect { subject.import }.to change { Tag.count }.by(0)
-            .and change { Subtag.count }.by(0)
-            .and change { ProductTag.count }.by(0)
+          expect { subject.import }.to not_change { Tag.count }
+            .and not_change { Subtag.count }
+            .and not_change { ProductTag.count }
         end
       end
 
@@ -114,9 +115,9 @@ RSpec.describe TagImporter do
         end
 
         it 'does not create any data' do
-          expect { subject.import }.to change { Tag.count }.by(0)
-            .and change { Subtag.count }.by(0)
-            .and change { ProductTag.count }.by(0)
+          expect { subject.import }.to not_change { Tag.count }
+            .and not_change { Subtag.count }
+            .and not_change { ProductTag.count }
         end
       end
 
@@ -146,9 +147,9 @@ RSpec.describe TagImporter do
       end
 
       it 'does not create any data' do
-        expect { subject.import }.to change { Tag.count }.by(0)
-          .and change { Subtag.count }.by(0)
-          .and change { ProductTag.count }.by(0)
+        expect { subject.import }.to not_change { Tag.count }
+          .and not_change { Subtag.count }
+          .and not_change { ProductTag.count }
       end
     end
 

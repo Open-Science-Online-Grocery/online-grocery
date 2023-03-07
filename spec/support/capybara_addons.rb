@@ -37,6 +37,19 @@ module CapybaraAddons
     force_click(first('a, button', text: link_or_button_text))
   end
 
+  def force_hover(element)
+    script = <<~JS
+      arguments[0].dispatchEvent(
+        new MouseEvent(
+          'mouseover',
+          {'view': window, 'bubbles': true, 'cancelable': true }
+        )
+      );
+    JS
+    target = get_target(element)
+    Capybara.current_session.driver.browser.execute_script(script, target)
+  end
+
   def semantic_select(label_text, option_text)
     within(parent_of(find('label', text: label_text, exact_text: true))) do
       force_click find('.ui.selection.dropdown')
@@ -62,7 +75,7 @@ module CapybaraAddons
   def expect_form_refresh
     auth_token = find('input[name="authenticity_token"]').value
     yield
-    expect(page).to have_no_selector("input[value='#{auth_token}']")
+    expect(page).not_to have_selector("input[value='#{auth_token}']")
   end
 
   private def get_target(element)

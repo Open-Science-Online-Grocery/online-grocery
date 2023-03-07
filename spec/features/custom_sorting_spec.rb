@@ -67,7 +67,7 @@ RSpec.describe 'Importing custom sort data for a condition', :feature do
     expect(condition.custom_sortings.count).to eq 1
 
     # deactivating file
-    force_click(find('#condition_sort_files_attributes_0_active'))
+    force_click(find_by_id('condition_sort_files_attributes_0_active'))
     expect_form_refresh do
       force_click(first('label', text: 'Random order'))
     end

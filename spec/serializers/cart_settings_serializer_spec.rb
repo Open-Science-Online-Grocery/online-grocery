@@ -5,29 +5,29 @@ require 'rails_helper'
 RSpec.describe CartSettingsSerializer do
   let(:label_1) do
     instance_double(
-      'ConditionCartSummaryLabel',
+      ConditionCartSummaryLabel,
       applies_to_cart?: true,
       cart_summary_label_image_url: 'first/label/url'
     )
   end
   let(:label_2) do
     instance_double(
-      'ConditionCartSummaryLabel',
+      ConditionCartSummaryLabel,
       applies_to_cart?: false,
       cart_summary_label_image_url: 'second/label/url'
     )
   end
   let(:label_3) do
     instance_double(
-      'ConditionCartSummaryLabel',
+      ConditionCartSummaryLabel,
       applies_to_cart?: true,
       cart_summary_label_image_url: 'third/label/url'
     )
   end
   let(:condition) { build(:condition) }
-  let(:cart) { instance_double('Cart') }
+  let(:cart) { instance_double(Cart) }
   let(:cart_summarizer) do
-    instance_double('CartSummarizer', health_label_summaries: ['a summary!'])
+    instance_double(CartSummarizer, health_label_summaries: ['a summary!'])
   end
 
   subject { described_class.new(condition, []) }

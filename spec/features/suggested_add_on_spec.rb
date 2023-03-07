@@ -45,11 +45,11 @@ RSpec.describe 'Triggering the suggested add-on feature', :feature do
       expect(page).to have_content 'Jelly'
     end
     force_click(first('.modal-window button'))
-    expect(page).to have_no_selector '.suggestion-popup'
+    expect(page).not_to have_selector '.suggestion-popup'
 
     # add a product that doesn't have a suggested add-on
     add_to_cart('Mustard')
     expect(find('.cart-count').text).to eq '2'
-    expect(page).to have_no_selector '.suggestion-popup'
+    expect(page).not_to have_selector '.suggestion-popup'
   end
 end

@@ -19,6 +19,10 @@ class ConditionsController < ApplicationController
     @resource_name = 'Add Condition'
   end
 
+  def edit
+    @resource_name = "Condition: #{@condition.name}"
+  end
+
   def create
     if @condition.update(condition_params.merge(uuid: SecureRandom.uuid))
       flash[:success] = 'Condition successfully created'
@@ -32,10 +36,6 @@ class ConditionsController < ApplicationController
       @resource_name = 'Add Condition'
       render :new
     end
-  end
-
-  def edit
-    @resource_name = "Condition: #{@condition.name}"
   end
 
   def update

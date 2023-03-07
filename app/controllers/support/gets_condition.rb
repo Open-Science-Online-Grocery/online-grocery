@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Concerns
+module Support
   # identifies a Condition based on its uuid; returns a NullCondition otherwise
   module GetsCondition
     def condition_from_uuid

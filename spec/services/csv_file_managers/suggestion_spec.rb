@@ -5,9 +5,7 @@ require 'rails_helper'
 RSpec.describe CsvFileManagers::Suggestion do
   let(:csv) do
     ActionDispatch::Http::UploadedFile.new(
-      tempfile: File.open(
-        Rails.root.join('spec/fixtures/files/suggestions/good_1.csv')
-      ),
+      tempfile: Rails.root.join('spec/fixtures/files/suggestions/good_1.csv').open,
       filename: 'good_1.csv'
     )
   end
@@ -18,15 +16,15 @@ RSpec.describe CsvFileManagers::Suggestion do
   let(:add_on_2) { build(:product) }
   let(:condition) do
     instance_double(
-      'Condition',
+      Condition,
       current_suggestion_csv_file: suggestion_file,
       product_suggestions: existing_suggestions_relation
     )
   end
-  let(:product_suggestion) { instance_double 'ProductSuggestion', save: true }
+  let(:product_suggestion) { instance_double ProductSuggestion, save: true }
   let(:existing_suggestions_relation) do
     instance_double(
-      'ProductSuggestion::ActiveRecord_Associations_CollectionProxy',
+      ActiveRecord::Associations::CollectionProxy,
       build: product_suggestion,
       exists?: false,
       destroy_all: true
@@ -52,7 +50,7 @@ RSpec.describe CsvFileManagers::Suggestion do
   describe '#import' do
     context 'when loading a new file' do
       it 'returns true and has no errors' do
-        expect(subject.import).to eq true
+        expect(subject.import).to be true
         expect(subject.errors).to be_empty
         expect(existing_suggestions_relation).to have_received(:destroy_all)
         expect(product_suggestion).to have_received(:save).twice
@@ -71,14 +69,14 @@ RSpec.describe CsvFileManagers::Suggestion do
         end
 
         it 'returns false and has errors' do
-          expect(subject.import).to eq false
+          expect(subject.import).to be false
           expect(subject.errors.first).to include "Can't find product"
         end
       end
 
       context 'when a ProductSuggestion fails to save' do
         let(:product_suggestion) do
-          instance_double 'ProductSuggestion', save: false
+          instance_double ProductSuggestion, save: false
         end
 
         before do
@@ -88,7 +86,7 @@ RSpec.describe CsvFileManagers::Suggestion do
         end
 
         it 'returns false and has errors' do
-          expect(subject.import).to eq false
+          expect(subject.import).to be false
           expect(subject.errors).to include 'problem'
         end
       end
@@ -97,7 +95,7 @@ RSpec.describe CsvFileManagers::Suggestion do
     context 'when file has been loaded previously' do
       let(:existing_suggestions_relation) do
         instance_double(
-          'ProductSuggestion::ActiveRecord_Associations_CollectionProxy',
+          ActiveRecord::Associations::CollectionProxy,
           build: product_suggestion,
           exists?: true,
           destroy_all: true
@@ -105,7 +103,7 @@ RSpec.describe CsvFileManagers::Suggestion do
       end
 
       it 'does not build new product_suggestions' do
-        expect(subject.import).to eq true
+        expect(subject.import).to be true
         expect(subject.errors).to be_empty
         expect(existing_suggestions_relation).to have_received(:destroy_all)
         expect(product_suggestion).not_to have_received(:save)
@@ -118,7 +116,7 @@ RSpec.describe CsvFileManagers::Suggestion do
       end
 
       it 'does not build new product_suggestions' do
-        expect(subject.import).to eq true
+        expect(subject.import).to be true
         expect(subject.errors).to be_empty
         expect(existing_suggestions_relation).to have_received(:destroy_all)
         expect(product_suggestion).not_to have_received(:save)

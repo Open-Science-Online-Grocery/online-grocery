@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe ProductSortField, type: :model do
+RSpec.describe ProductSortField do
   describe 'validations' do
     it { is_expected.to validate_presence_of :name }
     it { is_expected.to validate_presence_of :description }
-    it { is_expected.to validate_uniqueness_of :name }
-    it { is_expected.to validate_uniqueness_of :description }
+    it { is_expected.to validate_uniqueness_of(:name).case_insensitive }
+    it { is_expected.to validate_uniqueness_of(:description).case_insensitive }
   end
 
   describe '#incomplete_data?' do
@@ -20,7 +20,7 @@ RSpec.describe ProductSortField, type: :model do
       subject { described_class.new(name: 'foo') }
 
       it 'returns false' do
-        expect(subject.incomplete_data?).to eq false
+        expect(subject.incomplete_data?).to be false
       end
     end
 
@@ -29,7 +29,7 @@ RSpec.describe ProductSortField, type: :model do
         subject { described_class.new(name: 'calories') }
 
         it 'returns false' do
-          expect(subject.incomplete_data?).to eq false
+          expect(subject.incomplete_data?).to be false
         end
       end
 
@@ -37,7 +37,7 @@ RSpec.describe ProductSortField, type: :model do
         subject { described_class.new(name: 'total_fat') }
 
         it 'returns true' do
-          expect(subject.incomplete_data?).to eq true
+          expect(subject.incomplete_data?).to be true
         end
       end
     end
