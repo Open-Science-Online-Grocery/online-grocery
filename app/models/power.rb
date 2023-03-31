@@ -14,6 +14,10 @@ class Power
     Experiment.where(user_id: @user.id)
   end
 
+  power :may_create_experiments do
+    !@user.needs_to_pay_subscription?
+  end
+
   power :manageable_conditions do
     Condition.where(experiment_id: own_experiments.select(:id))
   end

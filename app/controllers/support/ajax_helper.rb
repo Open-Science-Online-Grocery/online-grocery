@@ -6,15 +6,11 @@ module Support
       in_modal(partial_name, cancelable: true, modal_selector: modal_selector)
     end
 
-    # A "cancelable" modal has some UI element (like an "X" or a cancel button)
-    # that will close the modal without taking any other action.
-    private def in_modal(partial_name, cancelable: false, modal_selector: nil)
+    private def in_modal(partial_name)
       render(
         '/shared/show_in_modal',
         locals: {
-          partial_name: partial_name,
-          cancelable: cancelable,
-          modal_selector: modal_selector
+          partial_name: partial_name
         }
       )
     end

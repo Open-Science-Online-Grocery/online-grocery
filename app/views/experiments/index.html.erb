@@ -2,7 +2,7 @@
   <h2>My Experiments</h2>
 
   <div class="heading-buttons">
-    <%= link_to new_experiment_url, class: 'ui primary button' do %>
+    <%= link_to verify_payment_experiments_path, class: 'ui primary button', data: { remote: true } do %>
       <i class="add icon"></i> Add Experiment
     <% end %>
   </div>

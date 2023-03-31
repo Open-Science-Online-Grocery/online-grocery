@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   end
 
   resources :experiments do
+    collection do
+      get :verify_payment
+    end
     resources :conditions do
       collection do
         put :refresh_form
