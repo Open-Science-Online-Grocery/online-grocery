@@ -18,10 +18,12 @@ class ExperimentsController < ApplicationController
   end
 
   def verify_payment
-    if current_user.needs_to_pay_subscription?
-      return in_modal('subscription_modal')
+    manager = PaymentsManager.new(current_user)
+    if manager.has_valid_subscription?
+      js_redirect(new_experiment_url)
+    else
+      in_modal('subscription_modal')
     end
-    js_redirect(new_experiment_url)
   end
 
   def new

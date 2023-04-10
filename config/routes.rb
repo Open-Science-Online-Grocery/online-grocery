@@ -43,6 +43,8 @@ Rails.application.routes.draw do
   end
 
   resources :config_files, only: [:show]
+  
+  resources :paypal, defaults: { format: :json }
 
   resources :pages, only: [] do
     collection do
