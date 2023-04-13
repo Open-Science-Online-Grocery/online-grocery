@@ -427,6 +427,7 @@ CREATE TABLE `subscriptions` (
   `paypal_subscription_id` varchar(255) DEFAULT NULL,
   `user_id` bigint DEFAULT NULL,
   `start_date` datetime DEFAULT NULL,
+  `perpetual_membership` tinyint(1) DEFAULT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -592,6 +593,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20230119140755'),
 ('20230123192926'),
 ('20230208163854'),
-('20230410123410');
+('20230410123410'),
+('20230413155749');
 
 

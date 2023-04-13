@@ -13,7 +13,7 @@ class PaypalButtons {
       },
       createSubscription(data, actions) {
         return actions.subscription.create({
-          plan_id: 'P-41L18107F6495561SMQZDXBI'
+          plan_id: 'P-0JF6342859915923DMQ4D55A'
         });
       },
 

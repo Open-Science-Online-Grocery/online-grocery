@@ -6,6 +6,7 @@ class CreateSubscription < ActiveRecord::Migration[6.1]
       t.string :paypal_subscription_id
       t.belongs_to :user
       t.datetime :start_date
+      t.boolean :perpetual_membership
 
       t.timestamps
     end
