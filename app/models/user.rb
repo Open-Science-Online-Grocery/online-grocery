@@ -7,8 +7,9 @@ class User < ApplicationRecord
          :confirmable
 
   has_many :experiments, dependent: :destroy
+  has_one :subscription, dependent: :destroy
 
-  def needs_to_pay_subscription?
+  def needs_subscription?
     experiments.map(&:condition_ids).flatten.count > 1
   end
 end

@@ -15,7 +15,7 @@ class Power
   end
 
   power :may_create_experiments do
-    !@user.needs_to_pay_subscription?
+    PaymentsManager.new(@user).valid_subscription?
   end
 
   power :manageable_conditions do

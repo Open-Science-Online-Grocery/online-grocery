@@ -1,5 +1,3 @@
-<%= javascript_include_tag 'paypal', defer: true %>
-
 <div class="header">
 </div>
 
@@ -27,6 +25,13 @@
     host the website on your own servers.
   </p>
 </div>
-<div class="actions">
+<div class="ui center aligned container">
+  <div class="ui hidden divider"></div>
   <div id="paypal-button-container"></div>
+  <div class="ui hidden divider"></div>
 </div>
+
+<%= javascript_include_tag 'paypal', defer: true %>
+<script>
+  new PaypalButtons().init();
+</script>
