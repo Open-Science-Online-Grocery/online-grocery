@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe PaymentsManager do
   let(:user) { build(:user) }
   let(:paypal_subscription_id) { '1234' }
-  let(:subscription) { instance_double(Subscription, needs_to_pay?: false) }
+  let(:subscription) { instance_double(Subscription, needs_to_pay?: false, perpetual_membership: false) }
 
   subject do
     described_class.new(
@@ -20,6 +20,7 @@ RSpec.describe PaymentsManager do
 
     allow(user).to receive(:save) { true }
     allow(user).to receive(:subscription=) { true }
+    allow(user).to receive(:subscription) { subscription }
     allow(user).to receive(:needs_subscription?) { true }
     allow(subject).to receive(:request_subscription_info) { { 'status' => 'ACTIVE' } }
   end
@@ -48,7 +49,6 @@ RSpec.describe PaymentsManager do
         allow(user).to receive(:errors) { ['ouch'] }
         allow(user).to receive(:subscription=) { true }
         allow(user).to receive(:needs_subscription?) { true }
-        allow(subject).to receive(:request_subscription_info) { { 'status' => 'ACTIVE' } }
       end
 
       it 'does not create a subscription and returns false' do

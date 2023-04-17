@@ -8,5 +8,4 @@ class ExperimentManager
     @current_user = current_user
     @errors = []
   end
-
 end
