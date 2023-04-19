@@ -1,8 +1,6 @@
-class PaypalButtons {
-  constructor() {
-    this.segment = document.querySelector('.ui.segment');
-  }
+import FlashMessage from './utils/FlashMessage';
 
+export default class PaypalButtons {
   init() {
     paypal.Buttons({
       style: {
@@ -36,6 +34,14 @@ class PaypalButtons {
 
         document.body.appendChild(form);
         form.submit();
+      },
+
+      onError(error) {
+        new FlashMessage(
+          'error',
+          'There was a problem creating the subscription',
+          [error]
+        ).showFlash();
       }
     }).render('#paypal-button-container');
   }
