@@ -22,7 +22,7 @@ class ExperimentsController < ApplicationController
     if manager.valid_subscription?
       js_redirect(new_experiment_url)
     else
-      in_modal('subscription_modal')
+      in_modal('shared/subscription_modal')
     end
   end
 

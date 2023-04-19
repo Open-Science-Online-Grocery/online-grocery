@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resources :conditions do
       collection do
         put :refresh_form
+        get :verify_payment
       end
     end
     resources :data_downloads, only: [:index, :create]

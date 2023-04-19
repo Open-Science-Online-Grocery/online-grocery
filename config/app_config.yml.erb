@@ -1,0 +1,22 @@
+base: &base
+  paypal_client_id: <%= Rails.application.credentials.dig(:paypal_api, :sandbox_id) %>
+  paypal_client_secret: <%= Rails.application.credentials.dig(:paypal_api, :sandbox_secret) %>
+  paypal_url: <%= Rails.application.credentials.dig(:paypal_api, :sandbox_url) %>
+
+development:
+  <<: *base
+
+test:
+  <<: *base
+
+staging:
+  <<: *base
+  paypal_client_id: <%= Rails.application.credentials.dig(:paypal_api, :client_id) %>
+  paypal_client_secret: <%= Rails.application.credentials.dig(:paypal_api, :client_secret) %>
+  paypal_url: <%= Rails.application.credentials.dig(:paypal_api, :api_url) %>
+
+production:
+  <<: *base
+  paypal_client_id: <%= Rails.application.credentials.dig(:paypal_api, :client_id) %>
+  paypal_client_secret: <%= Rails.application.credentials.dig(:paypal_api, :client_secret) %>
+  paypal_url: <%= Rails.application.credentials.dig(:paypal_api, :api_url) %>

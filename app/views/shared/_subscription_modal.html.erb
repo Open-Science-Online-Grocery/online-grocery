@@ -1,3 +1,5 @@
+<%= javascript_include_tag 'paypal', defer: true %>
+
 <div class="header">
 </div>
 
@@ -21,7 +23,7 @@
 
   <p>
     If you prefer not to pay, the source code for the website is all open
-    source and available at . You would need to create your own domain name and
+    source and available at <a href="https://github.com/Open-Science-Online-Grocery/online-grocery">Github</a>. You would need to create your own domain name and
     host the website on your own servers.
   </p>
 </div>
@@ -30,8 +32,3 @@
   <div id="paypal-button-container"></div>
   <div class="ui hidden divider"></div>
 </div>
-
-<%= javascript_include_tag 'paypal', defer: true %>
-<script>
-  new PaypalButtons().init();
-</script>

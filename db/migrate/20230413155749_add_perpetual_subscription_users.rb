@@ -5,12 +5,11 @@ class AddPerpetualSubscriptionUsers < ActiveRecord::Migration[6.1]
     ActiveRecord::Base.connection.schema_cache.clear!
     User.reset_column_information
 
-    users_emails = []
     scimed_users = User.where('email LIKE ?', '%scimedsolutions.com%')
     scimed_users.each { |user| create_subscription(user) }
 
     users_emails.each do |email|
-      user = User.find(email: email)
+      user = User.find_by(email: email)
       next unless user
       create_subscription(user)
     end

@@ -1,3 +1,5 @@
 import PaypalButtons from '../PaypalButtons';
 
-new PaypalButtons().init();
+document.addEventListener('initialize', () => {
+  new PaypalButtons().init();
+});

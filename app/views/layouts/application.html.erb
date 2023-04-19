@@ -11,7 +11,7 @@
     <%= stylesheet_link_tag 'style' %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= favicon_link_tag 'favicon.ico' %>
-    <script src="https://www.paypal.com/sdk/js?client-id=AWWC9rqbbF1tComRNB2bqZtp2HJNNV8FQKp5xp9B7E2nPuTjeFqCLVN0I-JhRONmbQqd6cREgXzmDKTC&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=<%= APP_CONFIG[:paypal_client_id] %>&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
   </head>
 
   <body>

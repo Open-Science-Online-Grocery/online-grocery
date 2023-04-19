@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-CLIENT_ID = Rails.application.credentials.dig(:paypal_api, :client_id)
-CLIENT_SECRET = Rails.application.credentials.dig(:paypal_api, :client_secret)
-
 # Class that handles subscriptions and requests made to the Paypal payments API
 class PaymentsManager
   attr_accessor :errors
@@ -52,10 +49,9 @@ class PaymentsManager
     )
   end
 
-  # TODO: replace for encrypted client id and secret
   private def access_token
     connection = Faraday.new do |conn|
-      conn.request(:authorization, :basic, CLIENT_ID, CLIENT_SECRET)
+      conn.request(:authorization, :basic, APP_CONFIG[:paypal_client_id], APP_CONFIG[:paypal_client_secret])
     end
     response = JSON.parse(
       connection.post(
@@ -72,6 +68,6 @@ class PaymentsManager
   # rubocop:enable Layout/LineLength
 
   private def paypal_base_url
-    'https://api-m.sandbox.paypal.com/v1'
+    APP_CONFIG[:paypal_url]
   end
 end

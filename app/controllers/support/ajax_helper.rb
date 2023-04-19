@@ -3,7 +3,7 @@
 module Support
   module AjaxHelper
     private def in_cancelable_modal(partial_name, modal_selector = nil)
-      in_modal(partial_name, cancelable: true, modal_selector: modal_selector)
+      in_modal(partial_name)
     end
 
     private def in_modal(partial_name)
