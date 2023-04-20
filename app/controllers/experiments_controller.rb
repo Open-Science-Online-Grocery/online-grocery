@@ -2,7 +2,8 @@
 
 class ExperimentsController < ApplicationController
   power :no_fallback, as: :experiment_scope, map: {
-    %i[index new create show edit update destroy] => :own_experiments
+    %i[index show edit update destroy verify_payment] => :own_experiments,
+    %i[new create] => :may_create_experiments
   }
 
   before_action :set_experiment, only: %i[show edit update destroy]
@@ -14,6 +15,15 @@ class ExperimentsController < ApplicationController
   def show
     @resource_name = "Experiment: #{@experiment.name}"
     @conditions = @experiment.conditions
+  end
+
+  def verify_payment
+    manager = PaymentsManager.new(current_user)
+    if manager.valid_subscription?
+      js_redirect(new_experiment_url)
+    else
+      in_modal('shared/subscription_modal')
+    end
   end
 
   def new

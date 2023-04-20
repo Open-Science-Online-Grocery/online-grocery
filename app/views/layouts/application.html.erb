@@ -11,6 +11,7 @@
     <%= stylesheet_link_tag 'style' %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= favicon_link_tag 'favicon.ico' %>
+    <script src="https://www.paypal.com/sdk/js?client-id=<%= APP_CONFIG[:paypal_client_id] %>&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
   </head>
 
   <body>
@@ -33,6 +34,7 @@
           <%= yield %>
         </div>
       </div>
+      <div class="ui modal shared-modal"></div>
       <%= render 'layouts/confirm_modal' %>
     </main>
     <footer class='ui container center aligned'>

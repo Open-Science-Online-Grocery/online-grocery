@@ -1,0 +1,11 @@
+<% partial = render partial: partial_name, layout: false, locals: local_assigns  %>
+
+$modal = $('.ui.modal.shared-modal');
+$modal.html("<%= escape_javascript(partial) %>")
+// the does-not-exist part prevents the modal from closing if a user attempts
+// to submit an invalid form.
+$modal.modal({ allowMultiple: true, closable: false, selector: { approve: 'does-not-exist' } })
+  .modal('attach events', '.cancel', 'hide')
+  .modal('show')
+  .modal('refresh');
+document.dispatchEvent(new CustomEvent('initialize', { detail: $modal[0] }));
