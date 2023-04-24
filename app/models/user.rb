@@ -10,6 +10,6 @@ class User < ApplicationRecord
   has_one :subscription, dependent: :destroy
 
   def needs_subscription?
-    experiments.map(&:condition_ids).flatten.count > 1
+    experiments.map(&:condition_ids).flatten.count >= 1
   end
 end
