@@ -146,11 +146,11 @@ To update the products in the store on a server:
 
 We currently use the [PayPal JavaScript SDK](https://developer.paypal.com/docs/business/javascript-sdk/) 
 to manage the subscriptions on the system. In a non-production environment, sandbox credentials 
-are used (see `config/app_config.yml.erb`). All of the app configuration is stored on Holly's paypal account
+are used (see `config/app_config.yml.erb`). All of the app configuration is stored on Holly's [paypal account](https://credentials.scimedsolutions.com/credentials/1123)
 
 While in production, we use the `client_id` of the app as set up in the client's real
 PayPal account, the change between these credentials is determined on the `config/app_config.yml.erb`
 
-To test payments in non-production environments, use the sandbox accounts to create subscriptions. 
+To test payments in non-production environments, use the sandbox accounts to create subscriptions, the credentials can be found [here](https://credentials.scimedsolutions.com/credentials/1124). 
 If you log in with that account at [https://www.sandbox.paypal.com](https://www.sandbox.paypal.com),
 you should see the payments that have been made.
