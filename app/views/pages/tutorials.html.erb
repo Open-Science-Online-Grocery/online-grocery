@@ -7,6 +7,49 @@
 <div class="ui accordion">
   <div class="title bold large">
     <i class="dropdown icon"></i>
+    Is the store validated? How can I cite it?
+  </div>
+  <div class="content">
+    The store has been described and validated in the following JACR
+    article:
+    <ul>
+      <li>
+
+        Howe, H. S., Ubel, P. A., & Fitzsimons, G. J. (2022). Open Science Online
+        Grocery: A tool for studying choice context and food choice. Journal of the
+        Association for Consumer Research, 7(4), 393-402. doi: 10.1086/720449
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
+    Does it cost anything to use the store?
+  </div>
+  <div class="content">
+    Researchers using the store are asked to pay $75 annually to access the store. 
+    <ul>
+      <li>
+        This money is used solely to fund (1) web-hosting for the store, and
+        (2) periodic updates (both routine maintenance and the addition of new
+        features). We do not make any profits from the store.
+      </li>
+      <li>
+        If you do not wish to pay to access the store, all the code is
+        available for free at <a
+        href='https://github.com/Open-Science-Online-Grocery/online-grocery'>Github</a>.
+        To run the store, you would need to purchase your own domain and pay
+        web-hosting fees. 
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="ui accordion">
+  <div class="title bold large">
+    <i class="dropdown icon"></i>
     How do I sign up?
   </div>
   <div class="content">
@@ -268,17 +311,6 @@
 <div class="ui accordion">
   <div class="title bold large">
     <i class="dropdown icon"></i>
-    I would like to use a label that is not based on nutrition
-    information (like "Organic" or "SNAP Eligible").
-  </div>
-  <div class="content">
-    <%= render 'unavailable_feature' %>
-  </div>
-</div>
-
-<div class="ui accordion">
-  <div class="title bold large">
-    <i class="dropdown icon"></i>
     Can I add more than one label to foods?
   </div>
   <div class="content">
@@ -305,53 +337,17 @@
     How can I change the way products are sorted/ordered?
   </div>
   <div class="content">
-    <ul>
-      <li>
-        By default, products are ordered by product ID number.
-        This number is based on how products were ordered when
-        we scraped them from grocery websites
-      </li>
-      <li>
-        Under the "sorting" tab, researchers can change how products are ordered
-      </li>
-      <li>
-        If you would like to sort by a single variable (e.g., price, calories)
-        you can do that by clicking "A specific field" in the sorting tab and
-        inputting the field you would like to sort by
-      </li>
-      <li>
-        If you would like to sort based on a calculation (e.g., Protein/serving
-        + Fiber/serving) you can do that by clicking "The following calculation"
-        in the sorting tab and entering your equation
-      </li>
-      <li>
-        If you would like to allow participants to choose how the store is sorted,
-        you can add options by clicking the dropdown menu on the right side of the
-        sorting page. From there, you can select what features you would like
-        participants to be able to sort by
-      </li>
-    </ul>
-  </div>
-</div>
-
-<div class="ui accordion">
-  <div class="title bold large">
-    <i class="dropdown icon"></i>
-    I would like to add my own way of ordering the store (e.g., showing "WIC
-    Eligible" or "Organic" items on top)
-  </div>
-  <div class="content">
-    We are working on creating this function right now. Stay tuned!
-  </div>
-</div>
-
-<div class="ui accordion">
-  <div class="title bold large">
-    <i class="dropdown icon"></i>
-    Can I see the order that items were presented to my participants?
-  </div>
-  <div class="content">
-    We are working on creating this function right now. Stay tuned!
+    <p>
+      Yes, researchers can change the way items are sorted and ordered in the
+      store. See the video below for a detailed explanation:
+    </p>
+    <iframe
+      src="https://youtube.com/embed/eohsIq5s1n0 "
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
   </div>
 </div>
 
@@ -401,8 +397,9 @@
   </div>
   <div class="content">
     You may want to remove certain categories (e.g., meat) from the store and
-    observe how this changes participants behavior. We are currently working on
-    creating this function. Stay tuned!
+    observe how this changes participants behavior. You can do so under the
+    “categories” tab wherein you are given the option to toggle on and off all
+    the visible categories within the store. 
   </div>
 </div>
 
@@ -423,12 +420,19 @@
         a price total
       </li>
       <li>
-        You can choose whether you want to show participants how healthy their
-        purchases were (e.g., "8/10 purchases you made had a health label")
+        You can choose whether you want to summarize the number of labelled
+        products (e.g., "8/10 purchases you made had a health label") 
       </li>
       <li>
         You can also add a custom image that shows up for all participants, or
         participants whose cart met a nutritional threshold.
+      </li>
+      <li>
+        If you include a custom attribute to the store (see videos on labelling
+        and sorting for examples of how to do so), you can also show the cart
+        total for that attribute. For example, if all items in the store had
+        the attribute of “CO2 produced”, you could choose to sum that attribute
+        on the check-out page.
       </li>
     </ol>
 
@@ -532,7 +536,17 @@
     Can I provide participants with a price promotion on certain products?
   </div>
   <div class="content">
-    Yes, researchers can offer custom price promotions on any product(s) in the store
+    <p>
+      Yes, researchers can offer custom price promotions on any product(s) in the
+      store. See the video below for a detailed explanation:
+    </p>
+    <iframe
+      src="https://youtube.com/embed/9UkFwzSrn8U"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
   </div>
 </div>
 

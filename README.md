@@ -141,3 +141,16 @@ To update the products in the store on a server:
 1. In this directory on the server, run the command appropriate to the server you are on:
 	*  For the staging server, run `bundle exec rake update_products RAILS_ENV=staging`
 	*  For the production server, run `bundle exec rake update_products RAILS_ENV=production`
+
+## PayPal integration
+
+We currently use the [PayPal JavaScript SDK](https://developer.paypal.com/docs/business/javascript-sdk/) 
+to manage the subscriptions on the system. In a non-production environment, sandbox credentials 
+are used (see `config/app_config.yml.erb`). All of the app configuration is stored on Holly's [paypal account](https://credentials.scimedsolutions.com/credentials/1123)
+
+While in production, we use the `client_id` of the app as set up in the client's real
+PayPal account, the change between these credentials is determined on the `config/app_config.yml.erb`
+
+To test payments in non-production environments, use the sandbox accounts to create subscriptions, the credentials can be found [here](https://credentials.scimedsolutions.com/credentials/1124). 
+If you log in with that account at [https://www.sandbox.paypal.com](https://www.sandbox.paypal.com),
+you should see the payments that have been made.

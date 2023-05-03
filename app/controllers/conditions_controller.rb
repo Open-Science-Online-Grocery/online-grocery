@@ -2,7 +2,9 @@
 
 class ConditionsController < ApplicationController
   power :no_fallback, context: :set_experiment, map: {
-    %i[refresh_form new create edit update destroy] => :own_experiment
+    %i[
+      refresh_form new create edit update destroy verify_payment
+    ] => :own_experiment
   }
 
   before_action :set_condition
@@ -13,6 +15,15 @@ class ConditionsController < ApplicationController
     manager = ConditionManager.new(@condition, condition_params)
     manager.assign_params
     render @condition.id? ? 'edit' : 'new'
+  end
+
+  def verify_payment
+    manager = PaymentsManager.new(current_user)
+    if manager.valid_subscription?
+      js_redirect(new_experiment_condition_url(@experiment))
+    else
+      in_modal('shared/subscription_modal')
+    end
   end
 
   def new

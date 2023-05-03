@@ -19,7 +19,7 @@
   <h3>Conditions</h3>
 
   <div class="heading-buttons">
-    <%= link_to new_experiment_condition_path(@experiment), class: 'ui primary button' do %>
+    <%= link_to verify_payment_experiment_conditions_path(@experiment), class: 'ui primary button', data: { remote: true } do %>
       <i class="add icon"></i> Add Condition
     <% end %>
   </div>
