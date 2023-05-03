@@ -11,7 +11,7 @@ export default class PaypalButtons {
       },
       createSubscription(data, actions) {
         return actions.subscription.create({
-          plan_id: 'P-0JF6342859915923DMQ4D55A'
+          plan_id: 'P-46D44894FC950632XMQ4ATXQ'
         });
       },
 
