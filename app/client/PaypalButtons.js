@@ -2,6 +2,7 @@ import FlashMessage from './utils/FlashMessage';
 
 export default class PaypalButtons {
   init() {
+    // eslint-disable-next-line no-undef
     paypal.Buttons({
       style: {
         shape: 'rect',
@@ -9,7 +10,7 @@ export default class PaypalButtons {
         layout: 'horizontal',
         label: 'subscribe'
       },
-      createSubscription(data, actions) {
+      createSubscription(_data, actions) {
         return actions.subscription.create({
           plan_id: 'P-46D44894FC950632XMQ4ATXQ'
         });
