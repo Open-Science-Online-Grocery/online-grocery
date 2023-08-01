@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NutritionLabel from '../nutrition-label/nutrition-label';
 import AddToCartContainer from '../add-to-cart/add-to-cart-container';
-import OverlayLabel from '../overlay-label/overlay-label';
+import OverlayLabelContainer from '../overlay-label/overlay-label-container';
 import BelowButtonLabel from '../below-button-label/below-button-label';
 import './product-details.scss';
 import GuidingStarsContainer from '../guiding-stars/guiding-stars-container';
@@ -24,7 +24,14 @@ export default class ProductDetails extends React.Component {
   overlayLabels() {
     const labels = this.props.labels.filter(label => !label.labelBelowButton);
     return labels.map(
-      label => <OverlayLabel {...label} key={label.labelImageUrl}/>
+      label => (
+        <OverlayLabelContainer
+          {...label}
+          productId={this.props.id}
+          productSerialPosition={this.props.serialPosition}
+          key={label.labelImageUrl}
+        />
+      )
     );
   }
 

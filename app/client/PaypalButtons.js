@@ -8,7 +8,8 @@ export default class PaypalButtons {
         shape: 'rect',
         color: 'gold',
         layout: 'horizontal',
-        label: 'subscribe'
+        label: 'subscribe',
+        disableMaxWidth: true
       },
       createSubscription(_data, actions) {
         return actions.subscription.create({

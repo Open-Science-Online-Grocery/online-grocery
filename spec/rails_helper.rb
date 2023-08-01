@@ -17,7 +17,6 @@ require 'database_cleaner'
 require 'factory_bot'
 require 'shoulda-matchers'
 require 'capybara-screenshot/rspec'
-require 'webdrivers'
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|

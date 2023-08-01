@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AddToCartContainer from '../add-to-cart/add-to-cart-container';
-import OverlayLabel from '../overlay-label/overlay-label';
+import OverlayLabelContainer from '../overlay-label/overlay-label-container';
 import BelowButtonLabel from '../below-button-label/below-button-label';
 import './product-card.scss';
 import GuidingStarsContainer from '../guiding-stars/guiding-stars-container';
@@ -13,7 +13,14 @@ export default class ProductCard extends React.Component {
       label => !label.labelBelowButton
     );
     return labels.map(
-      label => <OverlayLabel {...label} key={label.labelImageUrl}/>
+      label => (
+        <OverlayLabelContainer
+          {...label}
+          productId={this.props.product.id}
+          productSerialPosition={this.props.product.serialPosition}
+          key={label.labelImageUrl}
+        />
+      )
     );
   }
 
