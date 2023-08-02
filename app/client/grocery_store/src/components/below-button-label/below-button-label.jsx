@@ -17,7 +17,7 @@ export default class BelowButtonLabel extends React.Component {
   }
 
   tooltipLabel() {
-    const { labelImageUrl, labelTooltip } = this.props;
+    const { labelTooltip } = this.props;
     return (
       <Popup
         hoverable
