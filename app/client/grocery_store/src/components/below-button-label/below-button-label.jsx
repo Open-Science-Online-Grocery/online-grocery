@@ -12,12 +12,16 @@ export default class BelowButtonLabel extends React.Component {
 
   labelElement() {
     return (
-      <img src={this.props.labelImageUrl} style={this.styles()} />
+      <img
+        onMouseEnter={() => this.props.handleHoverAction()}
+        src={this.props.labelImageUrl}
+        style={this.styles()}
+      />
     );
   }
 
   tooltipLabel() {
-    const { labelImageUrl, labelTooltip } = this.props;
+    const { labelTooltip } = this.props;
     return (
       <Popup
         hoverable
@@ -48,5 +52,8 @@ export default class BelowButtonLabel extends React.Component {
 BelowButtonLabel.propTypes = {
   labelImageUrl: PropTypes.string,
   labelSize: PropTypes.number,
-  labelTooltip: PropTypes.string
+  labelTooltip: PropTypes.string,
+  productId: PropTypes.number,
+  productSerialPosition: PropTypes.number,
+  handleHoverAction: PropTypes.func.isRequired
 };

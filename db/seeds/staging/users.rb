@@ -12,6 +12,11 @@ module Seeds
           password_confirmation: 'adminadmin!1'
         )
         user.skip_confirmation!
+        user.subscription = Subscription.new(
+          paypal_subscription_id: 'I-0WJY0YXGJYJY',
+          start_date: Time.zone.now,
+          perpetual_membership: true
+        )
         user.save!
       end
     end

@@ -1,3 +1,17 @@
+.clickable {
+  cursor: pointer;
+}
+
+footer img {
+  margin: 20px 10px 0px 5px;
+  height: 100px;
+  object-fit: cover;
+}
+
+footer img.scimed-logo {
+  height: 50px;
+}
+
 #main.content {
   padding: 1.5rem;
   margin: 0 auto;

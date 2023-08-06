@@ -17,6 +17,7 @@ export default class OverlayLabel extends React.Component {
   labelElement() {
     return (
       <div
+        onMouseEnter={() => this.props.handleHoverAction()}
         className="overlay-label"
         style={this.styles()}
       />
@@ -45,8 +46,12 @@ export default class OverlayLabel extends React.Component {
 }
 
 OverlayLabel.propTypes = {
+  labelName: PropTypes.string,
   labelImageUrl: PropTypes.string,
   labelPosition: PropTypes.string,
   labelSize: PropTypes.number,
-  labelTooltip: PropTypes.string
+  labelTooltip: PropTypes.string,
+  productId: PropTypes.number,
+  productSerialPosition: PropTypes.number,
+  handleHoverAction: PropTypes.func.isRequired,
 };

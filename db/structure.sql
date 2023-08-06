@@ -15,8 +15,8 @@ DROP TABLE IF EXISTS `ar_internal_metadata`;
 CREATE TABLE `ar_internal_metadata` (
   `key` varchar(255) NOT NULL,
   `value` varchar(255) DEFAULT NULL,
-  `created_at` datetime(6) NOT NULL,
-  `updated_at` datetime(6) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -419,6 +419,21 @@ CREATE TABLE `subcategory_exclusions` (
   KEY `index_subcategory_exclusions_on_condition_id_and_subcategory_id` (`condition_id`,`subcategory_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `subscriptions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `subscriptions` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `paypal_subscription_id` varchar(255) DEFAULT NULL,
+  `user_id` bigint DEFAULT NULL,
+  `start_date` datetime DEFAULT NULL,
+  `perpetual_membership` tinyint(1) DEFAULT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_subscriptions_on_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `subsubcategories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -577,6 +592,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20230119135913'),
 ('20230119140755'),
 ('20230123192926'),
-('20230208163854');
+('20230208163854'),
+('20230410123410'),
+('20230413155749');
 
 

@@ -1,0 +1,34 @@
+<%= javascript_include_tag 'paypal', defer: true %>
+
+<div class="header">
+</div>
+
+<div class="content">
+  <h2>
+    <strong>
+      Thank you for your interest in using the Open Science Online Grocery.
+    </strong>
+  </h2>
+
+  <p>
+    To cover our costs, we will now be charging users an annual fee of $75 to
+    use the store. You can pay this fee on PayPal.
+  </p>
+
+  <p>
+    We do not make any profit from the store. Rather this fee covers our
+    expenses including web-hosting and providing regular updates to the store
+    (e.g., bug fixes, new capabilities).
+  </p>
+
+  <p>
+    If you prefer not to pay, the source code for the website is all open
+    source and available at <a href="https://github.com/Open-Science-Online-Grocery/online-grocery">Github</a>. You would need to create your own domain name and
+    host the website on your own servers.
+  </p>
+  <div class="ui center aligned container">
+    <div class="ui hidden divider"></div>
+    <div id="paypal-button-container"></div>
+    <div class="ui hidden divider"></div>
+  </div>
+</div>

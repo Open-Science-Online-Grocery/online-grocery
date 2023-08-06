@@ -39,17 +39,19 @@ export default class TopNav extends React.Component {
   }
 
   tagTab() {
-    const { displayedTag } = this.props;
-    if (displayedTag) {
-      return (
-        <TabContainer
-          tabName={displayedTag.name}
-          key={`tag-${displayedTag.id}`}
-          categoryId={displayedTag.id}
-          categoryType="tag"
-          flyoutDirection="left" // always flyout left since it's the rightmost tab on the screen
-        />
-      );
+    const { tags } = this.props;
+    if (tags) {
+      return tags.map((tag) => {
+        return (
+          <TabContainer
+            tabName={tag.name}
+            key={`tag-${tag.id}`}
+            categoryId={tag.id}
+            categoryType="tag"
+            flyoutDirection="left" // always flyout left since it's the rightmost tab on the screen
+          />
+        );
+      });
     }
     return null;
   }
