@@ -10,9 +10,13 @@ Rails.application.routes.draw do
   end
 
   resources :experiments do
+    collection do
+      get :verify_payment
+    end
     resources :conditions do
       collection do
         put :refresh_form
+        get :verify_payment
       end
     end
     resources :data_downloads, only: [:index, :create]
@@ -40,6 +44,8 @@ Rails.application.routes.draw do
   end
 
   resources :config_files, only: [:show]
+  
+  resources :subscriptions, defaults: { format: :json }
 
   resources :pages, only: [] do
     collection do

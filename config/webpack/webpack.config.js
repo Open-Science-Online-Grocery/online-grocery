@@ -10,10 +10,11 @@ module.exports = {
   mode,
   entry: {
     main: [
-      path.resolve(__dirname, '..', '..', './app/client/packs/main.js'),
+      path.resolve(__dirname, '..', '..', './app/client/packs/main.js')
     ],
     style: path.resolve(__dirname, '..', '..', './app/client/packs/style.scss'),
-    grocery_store: path.resolve(__dirname, '..', '..', './app/client/packs/grocery_store.js') 
+    grocery_store: path.resolve(__dirname, '..', '..', './app/client/packs/grocery_store.js'),
+    paypal: path.resolve(__dirname, '..', '..', './app/client/packs/paypal.js')
   },
   context: path.resolve(__dirname, 'app/client/packs'),
   output: {
