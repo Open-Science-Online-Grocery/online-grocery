@@ -11,8 +11,13 @@
 # in order to give the server the right permissions to do these operations,
 # an IAM Role has been attached to the EC2 instance. that role has a policy
 # set that allows it to (only) start and stop its specific RDS instance.
+#
+# Tempus Task #242924
+# Downtime will be temporarily skipped on production until October 1, 2023
 class DowntimeSetter
   def self.turn_off_database
+    return log_skip_reason('db shutdown') if skip_shutdown?
+
     log.info('Starting to turn off database.')
     status = stop_database
     log.info("New database status: #{status}")
@@ -22,6 +27,8 @@ class DowntimeSetter
   end
 
   def self.turn_off_application
+    return log_skip_reason('app shutdown') if skip_shutdown?
+
     log.info('Starting to put app into downtime.')
     show_downtime_message
     log.info('Application put into downtime.')
@@ -31,6 +38,8 @@ class DowntimeSetter
   end
 
   def self.turn_on_database
+    return log_skip_reason('db boot') if skip_shutdown?
+
     log.info('Starting to turn on database.')
     status = start_database
     log.info("New database status: #{status}")
@@ -40,6 +49,8 @@ class DowntimeSetter
   end
 
   def self.turn_on_application
+    return log_skip_reason('app boot') if skip_shutdown?
+
     log.info('Starting to bring app back from downtime.')
     remove_downtime_message
     log.info('Application brought back from downtime.')
@@ -92,5 +103,17 @@ class DowntimeSetter
 
   def self.maintenance_page_location
     Rails.public_path.join('system/maintenance.html')
+  end
+
+  def self.log_skip_reason(process)
+    log.info("Skipping #{process} until Oct 10, 2023.")
+  end
+
+  def self.skip_shutdown?
+    full_uptime_end_date = Date.parse('1/10/2023')
+
+    Rails.env.production? && (
+      Date.today < full_uptime_end_date
+    )
   end
 end
