@@ -15,7 +15,7 @@ to allow researchers to customize the behavior of the React app.
 * Copy `config/database.yml.example` to `config/database.yml` and fill in the
   needed mysql password (if the `root` database user needs a password).
 * Copy `howes_grocery.priv.example` to `howes_grocery.priv`.
-* Get the `config/master.key` file from another developer on the project or (SciMed Solutions developers only) from [this credential](https://credentials.scimedsolutions.com/credentials/972).
+* *OSOG developers*: Get the `config/master.key` file from another developer on the project or (SciMed developers only) from Credential #972.  *Other developers*: The `master.key` and Rails credentials pertain only to the primary OSOG application.  If you are using this codebase to run your own application, You will need to generate your own `master.key` and provide credentials to your own servers, etc.
 * Set the local ruby version to the one defined in `.ruby-version` using a ruby version manager like `rbenv`
 * From the root directory of the application, run the following commands:
   * `gem install bundler`
@@ -144,13 +144,13 @@ To update the products in the store on a server:
 
 ## PayPal integration
 
-We currently use the [PayPal JavaScript SDK](https://developer.paypal.com/docs/business/javascript-sdk/) 
-to manage the subscriptions on the system. In a non-production environment, sandbox credentials 
-are used (see `config/app_config.yml.erb`). All of the app configuration is stored on Holly's [paypal account](https://credentials.scimedsolutions.com/credentials/1123)
+We currently use the [PayPal JavaScript SDK](https://developer.paypal.com/docs/business/javascript-sdk/)
+to manage the subscriptions on the system. In a non-production environment, sandbox credentials
+are used (see `config/app_config.yml.erb`). All of the app configuration is stored on Holly's paypal account (SciMed developers, see Credential #1123).
 
 While in production, we use the `client_id` of the app as set up in the client's real
 PayPal account, the change between these credentials is determined on the `config/app_config.yml.erb`
 
-To test payments in non-production environments, use the sandbox accounts to create subscriptions, the credentials can be found [here](https://credentials.scimedsolutions.com/credentials/1124). 
+To test payments in non-production environments, use the sandbox accounts to create subscriptions (SciMed developers, see Credential #1124).
 If you log in with that account at [https://www.sandbox.paypal.com](https://www.sandbox.paypal.com),
 you should see the payments that have been made.
