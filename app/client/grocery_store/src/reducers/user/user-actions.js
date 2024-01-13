@@ -73,6 +73,14 @@ function sessionIdSubmitted(sessionId) {
       dispatch(setInitialCategory(data));
     };
 
+    const apiResponse = fromApi.jsonApiCall(
+      routes.tempCart(),
+      { sessionId, conditionIdentifier },
+      (data) => {
+        console.log(data);
+        data.cartItems.forEach((item) => dispatch(cartActionCreators.addToCart(item.product, item.quantity, false)));
+      });
+
     return fromApi.jsonApiCall(
       routes.condition(),
       { conditionIdentifier },
@@ -168,6 +176,7 @@ function sendOperationsToServer({ onSuccess, onFailure }) {
 function addCheckoutOperations() {
   return (dispatch, getState) => {
     const products = getState().cart.items;
+    debugger
     products.forEach((product) => {
       dispatch(
         addOperation({

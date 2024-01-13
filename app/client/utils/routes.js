@@ -26,6 +26,13 @@ export function condition() {
   };
 }
 
+export function tempCart() {
+  return {
+    url: '/api/cart/find_by_session_id',
+    method: 'GET'
+  };
+}
+
 export function cartSettings() {
   return {
     url: '/api/cart_settings',

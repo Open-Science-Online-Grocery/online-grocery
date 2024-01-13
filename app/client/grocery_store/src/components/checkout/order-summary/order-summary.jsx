@@ -16,6 +16,7 @@ export default class OrderSummary extends React.Component {
   }
 
   productLabels(item) {
+    debugger
     return (
       item.labels.map((label) => (
         <div

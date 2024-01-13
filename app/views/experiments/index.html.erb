@@ -1,3 +1,44 @@
+<div class="ui segment">
+  <div class="page-heading">
+    <h2>Api Access Token</h2>
+  </div>
+  <% if @api_token_request.id.blank? %>
+    <%= form_for @api_token_request, html: { class: "ui form segment" }, data: { form_validation: true } do |f| %>
+      <div class="field">
+        <%= f.label :note, 'Note (Optional)' %>
+        <%= f.text_field :note, placeholder: 'Why I need Api Access Token'%>
+      </div>
+
+      <div class="button-wrapper centered">
+        <button type="submit" class="ui positive button">
+          <i class="add icon"></i>
+          Request Access Token
+        </button>
+      </div>
+    <% end %>
+  <% else %>
+  <div class="ui segment">
+    <% if @api_token_request.pending? %>
+    <p>Your Api Access Token request is submitted to admins. </p>
+    <% elsif @api_token_request.rejected? %>
+    <p>Your Api Access Token request was rejected by admins.
+    </p>
+    <p>
+    <%= "Remarks by Admins: #{@api_token_request.admin_note}" if @api_token_request.admin_note.present? %>
+    </p>
+
+    <% elsif @api_token_request.approved? %>
+    <p>Your Api Access Token is: <b><%= current_user.api_token.uuid %></b></p>
+    <p>
+    <%= "Remarks by Admins: #{@api_token_request.admin_note}" if @api_token_request.admin_note.present? %>
+    </p>
+    <% end %>
+  </div>
+  <% end %>
+</div>
+
+
+
 <div class="page-heading">
   <h2>My Experiments</h2>
 
