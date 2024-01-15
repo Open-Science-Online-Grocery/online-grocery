@@ -1116,8 +1116,9 @@ ALTER SEQUENCE public.tags_id_seq OWNED BY public.tags.id;
 
 CREATE TABLE public.temp_carts (
     id bigint NOT NULL,
-    condition_id character varying,
+    condition_identifier character varying,
     session_id character varying,
+    pop_up_message character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );

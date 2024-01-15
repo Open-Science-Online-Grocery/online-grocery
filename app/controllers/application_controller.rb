@@ -77,6 +77,6 @@ class ApplicationController < ActionController::Base
   end
 
   private def active_admin_controller?
-    controller_path.starts_with?('admin/')
+    controller_path.starts_with?('admin', 'devise', 'active_admin')
   end
 end

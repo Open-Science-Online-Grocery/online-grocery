@@ -1,8 +1,9 @@
 class CreateCartAndCartItems < ActiveRecord::Migration[6.1]
   def change
     create_table :temp_carts do |t|
-      t.string :condition_id
+      t.string :condition_identifier
       t.string :session_id
+      t.string :pop_up_message
 
       t.timestamps
     end
