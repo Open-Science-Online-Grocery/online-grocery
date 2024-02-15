@@ -42,7 +42,6 @@ module Api
                },
                status: :not_found
       else
-        load_custom_fields
         cart_attributes = generate_cart_attributes
         render json: cart_attributes
       end
@@ -98,6 +97,7 @@ module Api
     end
 
     private def generate_cart_item_attributes(cart_item)
+      custom_attributes, custom_prices = load_custom_fields
       product_serializer = ProductSerializer.new(
         cart_item.product, @condition,
         custom_attribute_amount: custom_attributes[cart_item.product.id]
