@@ -4,7 +4,7 @@
 <p>
   <%= "Researcher note: #{@api_token_request.note}" if @api_token_request.note.present? %>
 </p>
-<p>Please click <%= link_to 'here', "http://localhost:3000/admin/api_token_requests" %> to approve/reject</p>
+<p>Please click <%= link_to 'here', admin_api_token_requests_url %> to approve/reject</p>
 
 <p>
 Thanks and Regards, </br>
