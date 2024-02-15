@@ -1,0 +1,12 @@
+<p>Hi Admin!</p>
+
+<p> A Researcher with email: <%= @user.email %> has requested an Api Token. Please check the admin panel to see more details.</p>
+<p>
+  <%= "Researcher note: #{@api_token_request.note}" if @api_token_request.note.present? %>
+</p>
+<p>Please click <%= link_to 'here', admin_api_token_requests_url %> to approve/reject</p>
+
+<p>
+Thanks and Regards, </br>
+Team Online Grocery
+</p>

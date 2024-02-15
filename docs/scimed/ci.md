@@ -1,6 +1,6 @@
 # CI
 
-Note: this pertains only to developers at SciMed Solutions regarding our internal
+Note: this pertains only to developers at SciMed regarding our internal
 CI process.
 
 To fetch screenshots of feature specs that fail on CI, complete this one-time setup:

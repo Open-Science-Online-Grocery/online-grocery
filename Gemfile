@@ -69,3 +69,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
 end
+gem 'activeadmin'
+gem 'cancancan'
+gem 'draper'
+gem 'pundit'

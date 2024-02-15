@@ -1,24 +1,23 @@
 ## Servers and Credentials
 
+**NOTE**: These details pertain to the primary OSOG application. If you are using this codebase to run your own application, this information will not apply.
+
 At present, we have a staging server and a production server. These are hosted
 under Holly Howe's AWS account.
 
-For SciMed Solutions developers, credentials can be accessed
-[here](https://credentials.scimedsolutions.com/credentials/1062).
-
-For other contributors, contact Holly Howe.
+For SciMed developers, credentials can be accessed at Credential #1062. For other contributors, contact Holly Howe.
 
 ### Staging
 
 * [Application](https://howes-grocery.scimed-test.com/)
-* [Credentials (SciMed only; other developers: please contact Holly)](https://credentials.scimedsolutions.com/servers/229)
+* Credentials: (SciMed developers, see Credential #229; other developers, please contact Holly)
 * SSH: `ssh deployer@howes-grocery.scimed-test.com`
 * Rails environment: `staging`
 
 ### Production
 
 * [Application](https://openscience-onlinegrocery.com/)
-* [Credentials (SciMed only; other developers: please contact Holly)](https://credentials.scimedsolutions.com/servers/237)
+* Credentials: (SciMed developers, see Credential #237; other developers, please contact Holly)
 * SSH: `ssh deployer@18.204.34.178`
 * Rails environment: `production`
 

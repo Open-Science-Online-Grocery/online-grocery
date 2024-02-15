@@ -9,6 +9,7 @@ class ExperimentsController < ApplicationController
   before_action :set_experiment, only: %i[show edit update destroy]
 
   def index
+    @api_token_request = current_user.api_token_request || ApiTokenRequest.new
     @experiments = Experiment.for_user(current_user).order(created_at: :desc)
   end
 

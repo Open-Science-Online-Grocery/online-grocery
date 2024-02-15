@@ -24,7 +24,7 @@ RSpec.describe 'Configuring condition labels', :feature do
     expect(first('label', text: 'Use custom label').sibling('input')).to be_checked
 
     expect_form_refresh do
-      force_click(first('label', text: 'Use provided label'))
+      force_click(previous_sibling_of(first('label', text: 'Use provided label')))
     end
     expect_form_refresh do
       semantic_select('Label', 'Organic')

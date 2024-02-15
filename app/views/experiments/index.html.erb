@@ -1,3 +1,48 @@
+<div class="ui segment">
+  <div class="page-heading">
+    <h2>API Access Token</h2>
+  </div>
+  <div>
+    <span class="" style="font-size: 1.2rem; font-weight: bold;">API Description: </span></br>
+    <span class="page-sub-heading-text">You can use the API to skip the login screen and pre-populate the shopping cart for participants. They will receive a pop-up with customizable text explaining this when they arrive.</span>
+  </div>
+  <% if @api_token_request.id.blank? %>
+    <%= form_for @api_token_request, html: { class: "ui form segment" }, data: { form_validation: true } do |f| %>
+      <div class="field">
+        <%= f.label :note, 'Note (Optional)' %>
+        <%= f.text_field :note, placeholder: 'Why I need API Access Token'%>
+      </div>
+
+      <div class="button-wrapper centered">
+        <button type="submit" class="ui positive button">
+          <i class="add icon"></i>
+          Request Access Token
+        </button>
+      </div>
+    <% end %>
+  <% else %>
+  <div class="ui segment">
+    <% if @api_token_request.pending? %>
+    <p>Your API Access Token request is submitted to admins. </p>
+    <% elsif @api_token_request.rejected? %>
+    <p>Your API Access Token request was rejected by admins.
+    </p>
+    <p>
+    <%= "Remarks by Admins: #{@api_token_request.admin_note}" if @api_token_request.admin_note.present? %>
+    </p>
+
+    <% elsif @api_token_request.approved? %>
+    <p>Your API Access Token is: <b><%= current_user.api_token.uuid %></b></p>
+    <p>
+    <%= "Remarks by Admins: #{@api_token_request.admin_note}" if @api_token_request.admin_note.present? %>
+    </p>
+    <% end %>
+  </div>
+  <% end %>
+</div>
+
+
+
 <div class="page-heading">
   <h2>My Experiments</h2>
 

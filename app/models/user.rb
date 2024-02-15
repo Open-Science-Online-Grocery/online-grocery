@@ -8,6 +8,8 @@ class User < ApplicationRecord
 
   has_many :experiments, dependent: :destroy
   has_one :subscription, dependent: :destroy
+  has_one :api_token, dependent: :destroy
+  has_one :api_token_request, dependent: :destroy
 
   def needs_subscription?
     experiments.map(&:condition_ids).flatten.count >= 1

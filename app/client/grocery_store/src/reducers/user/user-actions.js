@@ -67,11 +67,29 @@ function sessionIdSubmitted(sessionId) {
 
     const conditionIdentifier = qs.parse(window.location.search).condId;
     dispatch(setUser(sessionId, conditionIdentifier));
+    const api_key = qs.parse(window.location.search).apiKey;
+    const popUpMessage = qs.parse(window.location.search).message;
 
     const onSuccess = (data) => {
       dispatch(setConditionData(data));
       dispatch(setInitialCategory(data));
     };
+
+    const apiResponse = fromApi.jsonApiCall(
+      routes.tempCart(),
+      { sessionId, conditionIdentifier, api_key },
+      (data) => {
+        console.log(data);
+        if(data.cartItems !== null && data.cartItems !== undefined && data.cartItems.length !== 0){
+          data.cartItems.forEach((item) => dispatch(cartActionCreators.addToCart(item.product, item.quantity, false)));
+          let message = popUpMessage || data.popUpMessage
+          if (message === '' || message === null || message === undefined) {
+            message = "Items have been added to your cart. Before you begin shopping, please review the contents of your cart."
+          }
+          window.alert(message);
+        }
+      });
+
 
     return fromApi.jsonApiCall(
       routes.condition(),

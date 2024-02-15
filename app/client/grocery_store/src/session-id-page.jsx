@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useLocation } from 'react-router-dom';
 import './session-id-page.scss';
 
 class SessionIDPage extends React.Component {
@@ -25,7 +25,23 @@ class SessionIDPage extends React.Component {
     }
   }
 
+  getSessionId() {
+    const queryParams = new URLSearchParams(this.props.location.search);
+    const userId = queryParams.get('userId');
+
+    if(userId !== null){
+      this.setState({ value: userId });
+      this.props.handleSessionIdSubmitted(userId);
+
+
+        this.props.history.push({
+        pathname: '/store/home'
+      });
+    }
+  }
+
   render() {
+    this.getSessionId()
     const staticText = 'Please enter your session ID given to you by Qualtrics:';
     return (
       <div className="form-container session-id-page">

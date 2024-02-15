@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   require_power_check if: -> { !authentication_controller? }
 
   protect_from_forgery with: :exception
-  before_action :authenticate_user!
+  before_action :authenticate_user!, if: -> { !active_admin_controller? }
 
   layout :layout
 
@@ -32,7 +32,11 @@ class ApplicationController < ActionController::Base
   end
 
   private def after_sign_in_path_for(user)
-    stored_location_for(user) || experiments_path
+    if user.instance_of?(User)
+      stored_location_for(user) || experiments_path
+    elsif user.instance_of?(AdminUser)
+      admin_dashboard_path
+    end
   end
 
   private def set_error_messages(record, record_name = nil, header = nil)
@@ -53,6 +57,7 @@ class ApplicationController < ActionController::Base
   private def authentication_controller?
     authentication_controllers = [
       Devise::SessionsController,
+      ActiveAdmin::Devise::SessionsController,
       Devise::RegistrationsController,
       Devise::PasswordsController,
       Devise::ConfirmationsController,
@@ -69,5 +74,9 @@ class ApplicationController < ActionController::Base
       'update' => 'update',
       'destroy' => 'delete'
     }[params[:action]] || 'process'
+  end
+
+  private def active_admin_controller?
+    controller_path.starts_with?('admin', 'devise', 'active_admin')
   end
 end

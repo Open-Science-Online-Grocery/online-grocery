@@ -17,6 +17,10 @@ module CapybaraAddons
     element.first(:xpath, './/..')
   end
 
+  def previous_sibling_of(element)
+    element.first(:xpath, 'preceding-sibling::*')
+  end
+
   def next_sibling_of(element)
     element.first(:xpath, 'following-sibling::*')
   end

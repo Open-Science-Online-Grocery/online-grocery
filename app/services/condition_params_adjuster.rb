@@ -47,7 +47,7 @@ class ConditionParamsAdjuster
 
   private def clear_cart_summary_label_fields
     return unless @params[:condition_cart_summary_labels_attributes]
-    @params[:condition_cart_summary_labels_attributes].each do |_, val|
+    @params[:condition_cart_summary_labels_attributes].each_value do |val|
       label_type = val[:label_type]
       if label_type == ConditionCartSummaryLabel.label_types.custom
         val.delete(:cart_summary_label_id)
