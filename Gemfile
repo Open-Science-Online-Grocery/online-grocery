@@ -73,7 +73,3 @@ gem 'activeadmin'
 gem 'cancancan'
 gem 'draper'
 gem 'pundit'
-
-
-
-gem 'pg'
