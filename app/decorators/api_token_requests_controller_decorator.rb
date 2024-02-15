@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# :nodoc:
 class ApiTokenRequestsControllerDecorator < Draper::Decorator
   delegate_all
 
@@ -9,5 +12,4 @@ class ApiTokenRequestsControllerDecorator < Draper::Decorator
   #       object.created_at.strftime("%a %m/%d/%y")
   #     end
   #   end
-
 end

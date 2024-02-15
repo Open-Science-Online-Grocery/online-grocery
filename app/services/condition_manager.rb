@@ -51,7 +51,7 @@ class ConditionManager
     params_to_validate =
       adjusted_params[:condition_cart_summary_labels_attributes]
     return unless params_to_validate
-    params_to_validate.each do |_, label_attrs|
+    params_to_validate.each_value do |label_attrs|
       cart_summary_label_missing_error unless cart_image_exists?(label_attrs)
     end
   end

@@ -82,7 +82,7 @@ RSpec.describe CsvFileManagers::Category do
     it 'returns a CSV with the expected headers and data' do
       expected_csv = file_fixture(
         'product_data_csv_files/product_data_default_scope.csv'
-      ).read.gsub(/\r\n/, "\n") # gsub to fix newline character discrepancy
+      ).read.gsub("\r\n", "\n") # gsub to fix newline character discrepancy
       expect(described_class.generate_csv(condition)).to eql expected_csv
     end
   end

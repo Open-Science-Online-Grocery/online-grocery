@@ -32,9 +32,9 @@ class ApplicationController < ActionController::Base
   end
 
   private def after_sign_in_path_for(user)
-    if user.class == User
+    if user.instance_of?(User)
       stored_location_for(user) || experiments_path
-    elsif user.class == AdminUser
+    elsif user.instance_of?(AdminUser)
       admin_dashboard_path
     end
   end

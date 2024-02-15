@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateApiTokenRequests < ActiveRecord::Migration[6.1]
   def change
     create_table :api_token_requests do |t|
@@ -5,7 +7,6 @@ class CreateApiTokenRequests < ActiveRecord::Migration[6.1]
       t.references :user, null: false, foreign_key: true
       t.text :note
       t.text :admin_note
-
 
       t.timestamps
     end

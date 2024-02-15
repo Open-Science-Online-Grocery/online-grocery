@@ -1,5 +1,7 @@
-ActiveAdmin.register ApiTokenRequest do
+# frozen_string_literal: true
 
+# rubocop:disable Metrics/BlockLength
+ActiveAdmin.register(ApiTokenRequest) do
   permit_params :user_id, :note, :admin_note, :status
 
   controller do
@@ -10,18 +12,17 @@ ActiveAdmin.register ApiTokenRequest do
     end
   end
 
-
   member_action :approve, method: :patch do
-    resource.update(status: :approved)
-    redirect_to request.referrer
+    resource.update!(status: :approved)
+    redirect_to request.referer
   end
 
   member_action :reject, method: :patch do
-    resource.api_token.destroy if resource.api_token.present?
+    resource.api_token.destroy! if resource.api_token.present?
     if resource.update(status: :rejected, admin_note: params[:admin_note])
-      render json: {success: true}
+      render json: { success: true }
     else
-      render json: {success: false}, status: :unprocessable_entity
+      render json: { success: false }, status: :unprocessable_entity
     end
   end
 
@@ -38,20 +39,36 @@ ActiveAdmin.register ApiTokenRequest do
     column :created_at
     column :updated_at
     column :actions do |api_token_request|
-      span link_to "View", admin_api_token_request_path(api_token_request)
-      span link_to "Edit", edit_admin_api_token_request_path(api_token_request)
-      span link_to "Delete", admin_api_token_request_path(api_token_request), method: :delete
-      (span link_to "Approve", approve_admin_api_token_request_path(api_token_request), method: :patch) unless api_token_request.approved?
-      (span link_to (api_token_request.approved? ? 'Revoke' : "Reject"), '#', class: 'add-note-link', 'data-api-token-request-id': api_token_request.id, 'data-admin-note': api_token_request.admin_note) unless api_token_request.rejected?
+      span link_to('View', admin_api_token_request_path(api_token_request))
+      span link_to('Edit', edit_admin_api_token_request_path(api_token_request))
+      span link_to(
+        'Delete', admin_api_token_request_path(api_token_request),
+        method: :delete
+      )
+      unless api_token_request.approved?
+        (span link_to(
+          'Approve',
+          approve_admin_api_token_request_path(api_token_request),
+          method: :patch
+        ))
+      end
+      unless api_token_request.rejected?
+        (span link_to(
+          (api_token_request.approved? ? 'Revoke' : 'Reject'), '#',
+          class: 'add-note-link',
+          'data-api-token-request-id': api_token_request.id,
+          'data-admin-note': api_token_request.admin_note
+        ))
+      end
     end
   end
 
   form do |f|
     f.inputs do
-      f.input :user_id
-      f.input :status
-      f.input :note
-      f.input :admin_note
+      f.input(:user_id)
+      f.input(:status)
+      f.input(:note)
+      f.input(:admin_note)
     end
     f.actions
   end
@@ -69,20 +86,23 @@ ActiveAdmin.register ApiTokenRequest do
       row :updated_at
       row :approve do |req|
         if req.approved?
-          "Already Approved"
+          'Already Approved'
         else
-          link_to "Approve", approve_admin_api_token_request_path(req), method: :patch
+          link_to 'Approve', approve_admin_api_token_request_path(req),
+                  method: :patch
         end
       end
       row 'Reject / Revoke' do |req|
         if req.rejected?
-          "Already Rejected / Revoked"
+          'Already Rejected / Revoked'
         else
-          link_to (api_token_request.approved? ? 'Revoke' : "Reject"),'#', class: 'add-note-link', 'data-api-token-request-id': api_token_request.id, 'data-admin-note': api_token_request.admin_note
+          link_to (api_token_request.approved? ? 'Revoke' : 'Reject'), '#',
+                  class: 'add-note-link',
+                  'data-api-token-request-id': api_token_request.id,
+                  'data-admin-note': api_token_request.admin_note
         end
       end
-
     end
   end
-
 end
+# rubocop:enable Metrics/BlockLength
