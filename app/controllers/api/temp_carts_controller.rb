@@ -52,7 +52,8 @@ module Api
 
     private def temp_cart_params
       params.permit(
-        :session_id, :condition_identifier, :popup_message, :popup_message_enabled,
+        :session_id, :condition_identifier, :popup_message,
+        :popup_message_enabled,
         cart_items_attributes: %i[product_id quantity]
       )
     end

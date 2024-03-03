@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# :no doc:
 class AddPopupMessageEnabledToTempCarts < ActiveRecord::Migration[6.1]
   def change
     rename_column :temp_carts, :pop_up_message, :popup_message
