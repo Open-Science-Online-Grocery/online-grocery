@@ -1118,9 +1118,10 @@ CREATE TABLE public.temp_carts (
     id bigint NOT NULL,
     condition_identifier character varying,
     session_id character varying,
-    pop_up_message character varying,
+    popup_message character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    popup_message_enabled boolean DEFAULT true
 );
 
 
@@ -2166,6 +2167,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240107003456'),
 ('20240108030728'),
 ('20240108031219'),
-('20240109221053');
+('20240109221053'),
+('20240303085255');
 
 
