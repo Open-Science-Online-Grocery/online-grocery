@@ -83,10 +83,9 @@ function sessionIdSubmitted(sessionId) {
         if(data.cartItems !== null && data.cartItems !== undefined && data.cartItems.length !== 0){
           data.cartItems.forEach((item) => dispatch(cartActionCreators.addToCart(item.product, item.quantity, false)));
           let message = popUpMessage || data.popUpMessage
-          if (message === '' || message === null || message === undefined) {
-            message = "Items have been added to your cart. Before you begin shopping, please review the contents of your cart."
+          if (message !== '' && message !== null && message !== undefined) {
+            window.alert(message);
           }
-          window.alert(message);
         }
       });
 

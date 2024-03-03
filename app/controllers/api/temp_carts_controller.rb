@@ -20,9 +20,10 @@ module Api
 
     def create
       @condition = Condition.find_by(uuid: params[:condition_id])
-
-      @cart = TempCart.new(temp_cart_params)
-      if @cart.save
+      # rubocop:disable Rails/SaveBang
+      @cart = TempCart.find_or_create_by(session_id: params[:session_id])
+      # rubocop:enable Rails/SaveBang
+      if @cart.update(temp_cart_params)
         render json: @cart
       else
         render json: @cart.errors, status: :unprocessable_entity
