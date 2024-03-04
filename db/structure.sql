@@ -561,9 +561,10 @@ CREATE TABLE `temp_carts` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `condition_identifier` varchar(255) DEFAULT NULL,
   `session_id` varchar(255) DEFAULT NULL,
-  `pop_up_message` varchar(255) DEFAULT NULL,
+  `popup_message` varchar(255) DEFAULT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
+  `popup_message_enabled` tinyint(1) DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -694,6 +695,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20240107003456'),
 ('20240108030728'),
 ('20240108031219'),
-('20240109221053');
+('20240109221053'),
+('20240303085255');
 
 

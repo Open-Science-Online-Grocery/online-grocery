@@ -21,6 +21,9 @@ module Api
     def create
       @condition = Condition.find_by(uuid: params[:condition_id])
 
+      prev_carts = TempCart.where(session_id: params[:session_id])
+      prev_carts.map(&:destroy) if prev_carts.present?
+
       @cart = TempCart.new(temp_cart_params)
       if @cart.save
         render json: @cart
@@ -49,7 +52,8 @@ module Api
 
     private def temp_cart_params
       params.permit(
-        :session_id, :condition_identifier, :pop_up_message,
+        :session_id, :condition_identifier, :popup_message,
+        :popup_message_enabled,
         cart_items_attributes: %i[product_id quantity]
       )
     end
