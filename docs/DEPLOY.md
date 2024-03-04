@@ -10,14 +10,14 @@ For SciMed developers, credentials can be accessed at Credential #1062. For othe
 ### Staging
 
 * [Application](https://howes-grocery.scimed-test.com/)
-* Credentials: (SciMed developers, see Credential #229; other developers, please contact Holly)
+* Credentials: (SciMed developers, see Credential #899; other developers, please contact Holly)
 * SSH: `ssh deployer@howes-grocery.scimed-test.com`
 * Rails environment: `staging`
 
 ### Production
 
 * [Application](https://openscience-onlinegrocery.com/)
-* Credentials: (SciMed developers, see Credential #237; other developers, please contact Holly)
+* Credentials: (SciMed developers, see Credential #925; other developers, please contact Holly)
 * SSH: `ssh deployer@18.204.34.178`
 * Rails environment: `production`
 
