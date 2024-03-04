@@ -113,7 +113,7 @@ class DowntimeSetter
     full_uptime_end_date = Date.parse('1/10/2023')
 
     Rails.env.production? && (
-      Date.today < full_uptime_end_date
+      Time.zone.today < full_uptime_end_date
     )
   end
 end

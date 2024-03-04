@@ -223,7 +223,7 @@ class Condition < ApplicationRecord
   end
 
   private def sort_file_present_if_needed
-    return if sort_type != sort_types.file || sort_files.select(&:active?).any?
+    return if sort_type != sort_types.file || sort_files.any?(&:active?)
     errors.add(
       :base,
       'Please upload a custom sort file or choose a different sort type'

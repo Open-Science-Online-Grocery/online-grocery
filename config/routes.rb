@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   devise_for :users, controllers: { registrations: 'registrations' }
 
   namespace :api, defaults: { format: :json } do
+    post :cart, to: 'temp_carts#create'
+    get 'cart/find_by_session_id', to: 'temp_carts#find_by_session_id'
+    get 'cart/:id', to: 'temp_carts#show'
     resource :cart_settings, only: [:show]
     resource :condition, only: [:show]
     resource :equation_validation, only: [:show]
@@ -44,7 +49,7 @@ Rails.application.routes.draw do
   end
 
   resources :config_files, only: [:show]
-  
+
   resources :subscriptions, defaults: { format: :json }
 
   resources :pages, only: [] do
@@ -53,6 +58,8 @@ Rails.application.routes.draw do
       get :tutorials
     end
   end
+
+  resource :api_token_requests, only: :create
 
   get '/store/thank-you', to: 'stores#thank_you'
 

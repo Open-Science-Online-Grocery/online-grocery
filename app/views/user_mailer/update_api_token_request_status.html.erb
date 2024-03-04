@@ -1,0 +1,15 @@
+<p>Hello <%= @user.email %>!</p>
+
+<% if @api_token_request.approved? %>
+  <p>Congratulations! Your api token request is approved by admins. Now you can use api with this Access Token <b><%= @api_token_request.api_token&.uuid %> </b></p>
+<% elsif @api_token_request.rejected? %>
+  <p>We're contacting you to notify you that your api token request was rejected/revoked by admins.</p>
+<% end %>
+<p>
+  <%= "Remarks by Admins: #{@api_token_request.admin_note}" if @api_token_request.admin_note.present? %>
+</p>
+
+<p>
+Regards, </br>
+Team Online Grocery
+</p>
