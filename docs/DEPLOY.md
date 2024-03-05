@@ -18,7 +18,7 @@ For SciMed developers, credentials can be accessed at Credential #1062. For othe
 
 * [Application](https://openscience-onlinegrocery.com/)
 * Credentials: (SciMed developers, see Credential #925; other developers, please contact Holly)
-* SSH: `ssh deployer@18.204.34.178`
+* SSH: `ssh deployer@openscience-onlinegrocery.com`
 * Rails environment: `production`
 
 ## Deploying

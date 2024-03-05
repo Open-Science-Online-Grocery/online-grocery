@@ -6,7 +6,7 @@ set :rails_env, 'production'
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
 
-server '18.204.34.178', user: 'deployer', roles: %w[app db web]
+server 'openscience-onlinegrocery.com', user: 'deployer', roles: %w[app db web]
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
